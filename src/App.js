@@ -4,6 +4,7 @@ import './App.css';
 import axios from 'axios';
 import Navbar from './Navbar.jsx';
 import Footer from './Footer.jsx';
+import Home from './Home.jsx';
 
 class App extends Component {
   componentDidMount() {
@@ -32,6 +33,7 @@ class App extends Component {
     return (
       <div>
       <Navbar />
+      <Home />
       <Footer />
       </div>
     );
