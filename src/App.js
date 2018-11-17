@@ -20,6 +20,7 @@ class App extends Component {
 
 searchResult(word) {
   console.log("I'm in App.js Search Result function")
+  this.setState({searchWord: word});
 }
 
 
