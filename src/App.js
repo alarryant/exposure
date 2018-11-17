@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 import Navbar from './Navbar.jsx';
+<<<<<<< HEAD
 import Search from './Search.jsx';
+=======
+import Footer from './Footer.jsx';
+import Home from './Home.jsx';
+>>>>>>> a2b4fe86dfd93d2cc6099cb592cad0fabfea99c3
 
 class App extends Component {
 
@@ -51,7 +56,12 @@ searchResult(word) {
     return (
       <div>
       <Navbar />
+<<<<<<< HEAD
       <Search searchResult = { this.searchResult }/>
+=======
+      <Home />
+      <Footer />
+>>>>>>> a2b4fe86dfd93d2cc6099cb592cad0fabfea99c3
       </div>
     );
   }
