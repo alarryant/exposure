@@ -135,3 +135,7 @@ a {
   border-top-right-radius: 50% !important;
   border-bottom-right-radius: 50% !important;
 }
+
+.DayPicker-Day .DayPicker-Day--disabled {
+  /*color: red !important;*/
+}

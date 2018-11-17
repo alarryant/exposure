@@ -30,10 +30,13 @@ class Example extends React.Component {
   handleSubmitClick() {
     this.props.saveAvailability({start_date: this.state.from, end_date: this.state.to});
   }
+
+  disabledDays() {
+
+  }
   render() {
     // this.props.saveAvailability({from, to});
     const { from, to } = this.state;
-    console.log("this is the state after select date", this.state);
     const modifiers = { start: from, end: to };
     return (
       <div className="RangeExample">
@@ -51,7 +54,7 @@ class Example extends React.Component {
               </button>
 
             )}
-            <button onClick={this.handleSubmitClick} >Testing</button>
+            <button onClick={this.handleSubmitClick}>Submit</button>
         </p>
         <DayPicker
           className="Selectable"
@@ -59,6 +62,15 @@ class Example extends React.Component {
           selectedDays={[from, { from, to }]}
           modifiers={modifiers}
           onDayClick={this.handleDayClick}
+          initialMonth={new Date(2018, 11)}
+          disabledDays={[
+        new Date(2018, 11, 12),
+        new Date(2018, 11, 2),
+        {
+          after: new Date(2018, 11, 20),
+          before: new Date(2018, 11, 25),
+        },
+      ]}
         />
       </div>
     );

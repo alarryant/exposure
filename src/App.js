@@ -14,6 +14,7 @@ class App extends Component {
     super(props);
 
     this.state = {
+      user: {id: 1},
       categories: [],
       searchWord: "",
       availability: {
@@ -35,9 +36,9 @@ searchResult(word) {
 }
 
 saveAvailability(dates) {
-  console.log("this is dates on apps", dates);
   this.setState({availability: {start_date: dates.start_date, end_date: dates.end_date}});
-  console.log(this.state);
+  axios.post(`/artists/${this.state.user.id}/availability`, {availability: this.state.availability})
+    .then(res => console.log(res.data, 'availability data received from server'));
 }
 
 

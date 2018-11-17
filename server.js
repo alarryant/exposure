@@ -6,10 +6,10 @@ const bodyParser = require("body-parser")
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
-const knexConfig = require('./knexfile');
-const knex = require('knex')(knexConfig[ENV]);
-const morgan = require('morgan');
-const knexLogger = require('knex-logger');
+// const knexConfig = require('./knexfile');
+// const knex = require('knex')(knexConfig[ENV]);
+// const morgan = require('morgan');
+// const knexLogger = require('knex-logger');
 
 // Seperated Routes for each Resource
 // const usersRoutes = require('./routes');
@@ -20,13 +20,13 @@ app.use(express.static('public'));
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 
 // Log knex SQL queries to STDOUT as well
-app.use(knexLogger(knex));
+// app.use(knexLogger(knex));
 
 function randomImgGenerator(category) {
-  knex('images').where("specialization", "=", category).orderBy(random()).limit(6);
+  // knex('images').where("specialization", "=", category).orderBy(random()).limit(6);
 };
 
 
@@ -39,16 +39,16 @@ app.use((req, res, next) => {
 
 ///////////////
 app.get("/", (req, res) => {
-  console.log("Homepage");
-  res.send("Homepage");
-  knex.select('*')
-      .from('images')
-      .groupBy('specialization')
-      .asCallback((err, data) => {
-        if (err) throw err;
-        console.log(data);
-        res.json(data);
-      });
+  // console.log("Homepage");
+  // res.send("Homepage");
+  // knex.select('*')
+  //     .from('images')
+  //     .groupBy('specialization')
+  //     .asCallback((err, data) => {
+  //       if (err) throw err;
+  //       console.log(data);
+  //       res.json(data);
+  //     });
 });
 
 app.post("/login", (req, res) => {
@@ -99,6 +99,7 @@ app.post("/artists/:id/review", (req, res) => {
 });
 
 app.post("/artists/:id/availability", (req, res) => {
+  console.log("this is server side", req.body.availability);
   res.send("Artist Availability");
 });
 
