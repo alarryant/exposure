@@ -11,11 +11,16 @@ class Search extends Component {
 
   handleChange(event) {
     this.setState({value: event.target.value});
+    console.log(event.target.value)
   }
 
   handleSubmit(event) {
-    alert('A search was submitted: ' + this.state.value);
     event.preventDefault();
+    let search_item = event.target
+    alert('A search was submitted: ' + this.state.value);
+    this.props.searchResult(search_item.value)
+    search_item.value = '';
+    //should send to GET /SEARCH?
   }
 
   render() {
@@ -36,7 +41,6 @@ class Search extends Component {
     );
   }
 }
-
 
 
 export default Search;
