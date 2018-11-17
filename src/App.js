@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 import Navbar from './Navbar.jsx';
-import Search from './Search.jsx';
+import SearchBar from './SearchBar.jsx';
 import Footer from './Footer.jsx';
 import Home from './Home.jsx';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import SearchResults from './SearchResults.jsx'
+import ErrorPath from './Error404.jsx'
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 
 class App extends Component {
@@ -34,8 +36,8 @@ searchResult(word) {
   componentDidMount() {
 
     //This is how you use axios for get requests! Axios is like an ajax library
-    axios.get("/")
-      .then(res => console.log(JSON.parse(res.data)));
+    // axios.get("/")
+    //   .then(res => console.log(JSON.parse(res.data)));
 
     // axios.get("/search")
     //   .then(res => console.log(res.data));
@@ -55,12 +57,20 @@ searchResult(word) {
 
   render() {
     return (
-      <div>
-      <Navbar />
-      <Search searchResult = { this.searchResult }/>
-      <Home {category: this.state.categories}/>
-      <Footer />
-      </div>
+      <BrowserRouter>
+        <div>
+          <Navbar />
+          <SearchBar searchResult = { this.searchResult }/>
+
+          <Switch>
+            <Route path='/' component={Home} exact />
+            <Route path='/search' component={SearchResults} />
+            <Route component={ErrorPath} />
+          </Switch>
+
+          <Footer />
+        </div>
+      </BrowserRouter>
     );
   }
 }
