@@ -21,6 +21,8 @@ class App extends Component {
 searchResult(word) {
   console.log("I'm in App.js Search Result function")
   this.setState({searchWord: word});
+  axios.post("/search", {searchWord: word})
+   .then(res => console.log(res.data, 'Data received from Server!'))
 }
 
 
