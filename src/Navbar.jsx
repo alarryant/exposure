@@ -6,7 +6,7 @@ class Navbar extends React.Component {
 
   return (
     <nav>
-      <a href="#"><img class="logo" src="/LOGO1-fast.gif" /></a>
+      <a href="#"><img className="logo" src="/LOGO1-fast.gif" /></a>
       <div className="dropdown-container">
         <div className="dropdown">
           <button className="dropbtn">Home <i class="fas fa-bars"></i></button>

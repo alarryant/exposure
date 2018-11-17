@@ -7,11 +7,19 @@ import Footer from './Footer.jsx';
 import Home from './Home.jsx';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      categories: []
+    };
+  }
+
   componentDidMount() {
 
     //This is how you use axios for get requests! Axios is like an ajax library
-    // axios.get("/")
-    //   .then(res => console.log(res.data));
+    axios.get("/")
+      .then(res => console.log(JSON.parse(res.data)));
 
     // axios.get("/search")
     //   .then(res => console.log(res.data));
@@ -33,7 +41,7 @@ class App extends Component {
     return (
       <div>
       <Navbar />
-      <Home />
+      <Home {category: this.state.categories}/>
       <Footer />
       </div>
     );

@@ -21,6 +21,10 @@ app.use(morgan('dev'));
 // Log knex SQL queries to STDOUT as well
 app.use(knexLogger(knex));
 
+function randomImgGenerator(category) {
+  knex('images').where("specialization", "=", category).orderBy(random()).limit(6);
+};
+
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
