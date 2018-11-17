@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import Navbar from './Navbar.jsx';
+import Footer from './Footer.jsx';
 
 class App extends Component {
   componentDidMount() {
@@ -31,6 +32,7 @@ class App extends Component {
     return (
       <div>
       <Navbar />
+      <Footer />
       </div>
     );
   }
