@@ -1,19 +1,33 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import Navbar from './Navbar.jsx';
+import Search from './Search.jsx';
 import Footer from './Footer.jsx';
 import Home from './Home.jsx';
 
 class App extends Component {
+
   constructor(props) {
     super(props);
 
     this.state = {
-      categories: []
+      categories: [],
+      searchWord: ""
     };
+
+    this.searchResult = this.searchResult.bind(this);
+
   }
+
+searchResult(word) {
+  console.log("I'm in App.js Search Result function");
+  this.setState({searchWord: word});
+  axios.post("/search", {searchWord: word})
+   .then(res => console.log(res.data, 'Data received from Server!'));
+}
+
+
 
   componentDidMount() {
 
@@ -41,6 +55,7 @@ class App extends Component {
     return (
       <div>
       <Navbar />
+      <Search searchResult = { this.searchResult }/>
       <Home {category: this.state.categories}/>
       <Footer />
       </div>
