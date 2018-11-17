@@ -6,9 +6,27 @@ import Navbar from './Navbar.jsx';
 
 class App extends Component {
   componentDidMount() {
-    axios.get("/test_json")
-    .then(res => console.log(res.data.success));
+
+    //This is how you use axios for get requests! Axios is like an ajax library
+    // axios.get("/")
+    //   .then(res => console.log(res.data));
+
+    // axios.get("/search")
+    //   .then(res => console.log(res.data));
+
+    // axios.get("/artist/:id")
+    //   .then(res => console.log(res.data));
+
+    // axios.get("/artist/:id/dashboard")
+    //   .then(res => console.log(res.data));
+
+    // axios.get("/opportunity")
+    //   .then(res => console.log(res.data));
+
+    // axios.get("/client/:id/dashboard")
+    //   .then(res => console.log(res.data));
   }
+
   render() {
     return (
       <div>
