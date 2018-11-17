@@ -5,6 +5,8 @@ import Navbar from './Navbar.jsx';
 import Search from './Search.jsx';
 import Footer from './Footer.jsx';
 import Home from './Home.jsx';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 
 class App extends Component {
 
