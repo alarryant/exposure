@@ -6,6 +6,23 @@ import Navbar from './Navbar.jsx';
 import Search from './Search.jsx';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      searchWord: ""
+    };
+
+    this.searchResult = this.searchResult.bind(this)
+
+  }
+
+searchResult(word) {
+  console.log("I'm in App.js Search Result function")
+}
+
+
   componentDidMount() {
 
     //This is how you use axios for get requests! Axios is like an ajax library
@@ -32,7 +49,7 @@ class App extends Component {
     return (
       <div>
       <Navbar />
-      <Search />
+      <Search searchResult = { this.searchResult }/>
       </div>
     );
   }
