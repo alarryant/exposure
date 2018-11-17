@@ -5,6 +5,8 @@ import Navbar from './Navbar.jsx';
 import Search from './Search.jsx';
 import Footer from './Footer.jsx';
 import Home from './Home.jsx';
+import Availability from './Availability.jsx';
+
 
 class App extends Component {
 
@@ -13,10 +15,15 @@ class App extends Component {
 
     this.state = {
       categories: [],
-      searchWord: ""
+      searchWord: "",
+      availability: {
+        start_date: null,
+        end_date: null
+      }
     };
 
     this.searchResult = this.searchResult.bind(this);
+    this.saveAvailability = this.saveAvailability.bind(this);
 
   }
 
@@ -27,13 +34,19 @@ searchResult(word) {
    .then(res => console.log(res.data, 'Data received from Server!'));
 }
 
+saveAvailability(dates) {
+  console.log("this is dates on apps", dates);
+  this.setState({availability: {start_date: dates.start_date, end_date: dates.end_date}});
+  console.log(this.state);
+}
+
 
 
   componentDidMount() {
 
     //This is how you use axios for get requests! Axios is like an ajax library
-    axios.get("/")
-      .then(res => console.log(JSON.parse(res.data)));
+    // axios.get("/")
+    //   .then(res => console.log(JSON.parse(res.data)));
 
     // axios.get("/search")
     //   .then(res => console.log(res.data));
@@ -49,6 +62,9 @@ searchResult(word) {
 
     // axios.get("/client/:id/dashboard")
     //   .then(res => console.log(res.data));
+
+
+    // <Home {category: this.state.categories}/>
   }
 
   render() {
@@ -56,7 +72,7 @@ searchResult(word) {
       <div>
       <Navbar />
       <Search searchResult = { this.searchResult }/>
-      <Home {category: this.state.categories}/>
+      <Availability saveAvailability = {this.saveAvailability }/>
       <Footer />
       </div>
     );
