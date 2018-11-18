@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import { NavLink } from "react-router-dom"
 
 class SearchBar extends Component {
-  constructor() {
-    super()
-    this.state = {value: ''};
+  constructor(props) {
+    super(props)
+    this.state = {
+      value: ''
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -12,18 +13,18 @@ class SearchBar extends Component {
 
   handleChange(event) {
     this.setState({value: event.target.value});
-    console.log("event", event.target.value)
+    console.log("event", event.target.value);
   }
 
   handleSubmit(event) {
     event.preventDefault();
     let search_item = this.state.value
     this.props.searchResult(search_item);
-    this.setState({value: ''})
   }
 
   render() {
     return(
+      <div>
       <form onSubmit={ this.handleSubmit }>
        <label>
         Search:
@@ -35,10 +36,9 @@ class SearchBar extends Component {
           onChange={this.handleChange}
         />
       </label>
-      <NavLink to="/search">
         <input type="submit" value="Submit"/>
-      </NavLink>
       </form>
+      </div>
     );
   }
 }
