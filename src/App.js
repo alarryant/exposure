@@ -85,7 +85,6 @@ class App extends Component {
 
   }
 
-            // <Route path='/search' name='search' component={SearchResults} searchWord={this.state.searchWord} />
 
   render() {
     return (
@@ -97,6 +96,7 @@ class App extends Component {
           <Switch>
             <Route path='/home' render={() => <Home homecategory={this.state.homecategory} />} />
             <Route path='/search' name='search' render={() => <SearchResults searchWord={this.state.searchWord} />} />
+            <Route exact path="/" render={() => (<Redirect to="/home" />)} />
             <Route component={ErrorPath} />
           </Switch>
           <Footer />
