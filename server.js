@@ -41,8 +41,10 @@ app.use((req, res, next) => {
 
 ///////////////
 app.get("/", (req, res) => {
-  // console.log("Homepage");
-  // res.send("Homepage");
+  console.log(req)
+  console.log("I'm in the BACKEND SERVER!")
+  console.log("Homepage");
+  res.send("Homepage");
   // knex.select('*')
   //     .from('images')
   //     .groupBy('specialization')
