@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
+import { NavLink } from "react-router-dom"
 
-class Search extends Component {
+class SearchBar extends Component {
   constructor() {
     super()
     this.state = {value: ''};
@@ -33,12 +34,14 @@ class Search extends Component {
           value={ this.state.value }
           onChange={this.handleChange}
         />
-        </label>
-      <input type="submit" value="Submit"/>
+      </label>
+      <NavLink to="/search">
+        <input type="submit" value="Submit"/>
+      </NavLink>
       </form>
     );
   }
 }
 
 
-export default Search;
+export default SearchBar;

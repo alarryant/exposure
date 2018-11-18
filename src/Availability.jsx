@@ -31,9 +31,6 @@ class Example extends React.Component {
     this.props.saveAvailability({start_date: this.state.from, end_date: this.state.to});
   }
 
-  disabledDays() {
-
-  }
   render() {
     // this.props.saveAvailability({from, to});
     const { from, to } = this.state;

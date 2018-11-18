@@ -180,6 +180,17 @@ a {
 .profilecontainer h1 {
   text-align: center;
   font-weight: 700;
+  width: 250px;
+}
+
+.profiledesc {
+  float: right;
+  width: 500px;
+}
+
+.profilebtn {
+  width: 200px;
+  margin-right: 0px;
 }
 
 .Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
