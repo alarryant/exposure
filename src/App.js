@@ -80,8 +80,8 @@ saveAvailability(dates) {
           <Availability saveAvailability = {this.saveAvailability }/>
 
           <Switch>
-            <Route path='/' component={Home} exact />
-            <Route path='/search' component={SearchResults} />
+            <Route path='/' name='homepage' component={Home} exact />
+            <Route path='/search' name='search' component={SearchResults} />
             <Route component={ErrorPath} />
           </Switch>
 
