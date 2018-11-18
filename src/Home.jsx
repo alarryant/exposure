@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Splashart from './Splashart.jpg';
 import Carousel from 'react-bootstrap/lib/Carousel';
 

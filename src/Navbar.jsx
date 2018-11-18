@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { NavLink } from "react-router-dom"
 
 
@@ -8,10 +8,10 @@ class Navbar extends React.Component {
 
   return (
     <nav>
-      <NavLink to="/"><img className="logo" src="/LOGO1-fast.gif" /></NavLink>
+      <NavLink to="/"><img className="logo" alt="Exposure Logo" src="/LOGO1-fast.gif" /></NavLink>
        <div className="dropdown-container">
         <div className="dropdown">
-          <button className="dropbtn">Home <i class="fas fa-bars"></i></button>
+          <NavLink to="/"><button className="dropbtn">Home <i className="fas fa-bars"></i></button></NavLink>
           <div className="dropdown-content">
             <NavLink to="/dashboard">Dashboard</NavLink>
             <NavLink to="/settings">Settings</NavLink>
