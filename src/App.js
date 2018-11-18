@@ -7,7 +7,7 @@ import Footer from './Footer.jsx';
 import Home from './Home.jsx';
 import SearchResults from './SearchResults.jsx'
 import ErrorPath from './Error404.jsx'
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Availability from './Availability.jsx';
 
 
@@ -20,6 +20,7 @@ class App extends Component {
       user: {id: 1},
       categories: [],
       searchWord: "",
+      redirect: false,
       availability: {
         start_date: null,
         end_date: null
@@ -27,30 +28,39 @@ class App extends Component {
     };
 
     this.searchResult = this.searchResult.bind(this);
+    this.renderRedirect = this.renderRedirect.bind(this);
     this.saveAvailability = this.saveAvailability.bind(this);
-
   }
 
-searchResult(word) {
-  console.log("I'm in App.js Search Result function");
-  this.setState({searchWord: word});
-  axios.post("/search", {searchWord: word})
-   .then(res => console.log(res.data, 'Data received from Server!'));
-}
+  //SEARCH FEATURE
+  searchResult(word) {
+    axios.post("/search", {searchWord: word})
+     .then((res) => {
+        this.setState({redirect: true, searchWord: word});
+      })
+  }
 
-saveAvailability(dates) {
-  this.setState({availability: {start_date: dates.start_date, end_date: dates.end_date}});
-  axios.post(`/artists/${this.state.user.id}/availability`, {availability: this.state.availability})
-    .then(res => console.log(res.data, 'availability data received from server'));
-}
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      this.setState({redirect: false})
+      return <Redirect to='/search' />
+    }
+  }
 
-
+  //AVAILABILITY FEATURE
+  saveAvailability(dates) {
+    this.setState({availability: {start_date: dates.start_date, end_date: dates.end_date}});
+    axios.post(`/artists/${this.state.user.id}/availability`, {availability: this.state.availability})
+    .then(function(res){
+      console.log(res.data, 'availability data received from server');
+    })
+  }
 
   componentDidMount() {
 
     //This is how you use axios for get requests! Axios is like an ajax library
     // axios.get("/")
-    //   .then(res => console.log(JSON.parse(res.data)));
+    //   .then(res => console.log(res.data));
 
     // axios.get("/search")
     //   .then(res => console.log(res.data));
@@ -71,17 +81,20 @@ saveAvailability(dates) {
     // <Home {category: this.state.categories}/>
   }
 
+            // <Route path='/search' name='search' component={SearchResults} searchWord={this.state.searchWord} />
+
   render() {
     return (
       <BrowserRouter>
         <div>
+          {this.renderRedirect()}
           <Navbar />
           <SearchBar searchResult = { this.searchResult }/>
           <Availability saveAvailability = {this.saveAvailability }/>
 
           <Switch>
             <Route path='/' name='homepage' component={Home} exact />
-            <Route path='/search' name='search' component={SearchResults} />
+            <Route path='/search' name='search' render={() => <SearchResults searchWord={this.state.searchWord} />} />
             <Route component={ErrorPath} />
           </Switch>
 
