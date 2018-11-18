@@ -23,14 +23,18 @@ class SearchResults extends Component {
     this.getQueryWord()
   }
 
+
+//http://localhost:3000/search?word=wedding : "Results for "Wedding"
   render() {
     console.log("Search results: ", this.props)
     return(
       <div>
-      <p>
-      Results for: {this.state.displayWord}
-      This is where grid of pictures go
-      </p>
+        <p>
+        RESULTS: Images for "{this.state.displayWord}"
+        </p>
+        <section>
+        This is where grid conponent of pictures go
+        </section>
       </div>
     );
   }
