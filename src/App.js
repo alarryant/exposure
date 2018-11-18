@@ -43,7 +43,11 @@ class App extends Component {
 
   //SEARCH FEATURE
   searchResult(word) {
-    axios.post("/search", {searchWord: word})
+    axios.get("/search", {
+      params: {
+        searchWord: word
+      }
+    })
      .then((res) => {
         this.setState({redirect: true, searchWord: word});
       });
