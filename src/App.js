@@ -8,6 +8,7 @@ import Home from './Home.jsx';
 import SearchResults from './SearchResults.jsx'
 import ErrorPath from './Error404.jsx'
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Availability from './Availability.jsx';
 
 
 class App extends Component {
@@ -16,11 +17,17 @@ class App extends Component {
     super(props);
 
     this.state = {
+      user: {id: 1},
       categories: [],
-      searchWord: ""
+      searchWord: "",
+      availability: {
+        start_date: null,
+        end_date: null
+      }
     };
 
     this.searchResult = this.searchResult.bind(this);
+    this.saveAvailability = this.saveAvailability.bind(this);
 
   }
 
@@ -29,6 +36,12 @@ searchResult(word) {
   this.setState({searchWord: word});
   axios.post("/search", {searchWord: word})
    .then(res => console.log(res.data, 'Data received from Server!'));
+}
+
+saveAvailability(dates) {
+  this.setState({availability: {start_date: dates.start_date, end_date: dates.end_date}});
+  axios.post(`/artists/${this.state.user.id}/availability`, {availability: this.state.availability})
+    .then(res => console.log(res.data, 'availability data received from server'));
 }
 
 
@@ -53,6 +66,9 @@ searchResult(word) {
 
     // axios.get("/client/:id/dashboard")
     //   .then(res => console.log(res.data));
+
+
+    // <Home {category: this.state.categories}/>
   }
 
   render() {
@@ -61,6 +77,7 @@ searchResult(word) {
         <div>
           <Navbar />
           <SearchBar searchResult = { this.searchResult }/>
+          <Availability saveAvailability = {this.saveAvailability }/>
 
           <Switch>
             <Route path='/' component={Home} exact />

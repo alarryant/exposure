@@ -25,9 +25,11 @@ app.use(express.static('public'));
 // Log knex SQL queries to STDOUT as well
 // app.use(knexLogger(knex));
 
-// function randomImgGenerator(category) {
-//   knex('images').where("specialization", "=", category).orderBy(random()).limit(6);
-// };
+
+function randomImgGenerator(category) {
+  // knex('images').where("specialization", "=", category).orderBy(random()).limit(6);
+};
+
 
 
 //TESTING ONLY - Shows req.path
@@ -39,8 +41,8 @@ app.use((req, res, next) => {
 
 ///////////////
 app.get("/", (req, res) => {
-  console.log("Homepage");
-  res.send("Homepage");
+  // console.log("Homepage");
+  // res.send("Homepage");
   // knex.select('*')
   //     .from('images')
   //     .groupBy('specialization')
@@ -99,6 +101,7 @@ app.post("/artists/:id/review", (req, res) => {
 });
 
 app.post("/artists/:id/availability", (req, res) => {
+  console.log("this is server side", req.body.availability);
   res.send("Artist Availability");
 });
 
