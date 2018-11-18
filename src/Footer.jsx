@@ -6,10 +6,10 @@ class Footer extends React.Component {
 
   return (
     <div className="footer">
-   <p><i class="fab fa-facebook-f"></i><i class="fab fa-twitter"></i><i class="fab fa-instagram"></i></p>
+   <p><i className="fab fa-facebook-f"></i><i className="fab fa-twitter"></i><i className="fab fa-instagram"></i></p>
    <a href="/about">About</a>
    <a href="/contact">Contact us</a>
-   <p><i class="far fa-copyright"></i>Exposure Inc. 2018. All rights reserved.</p>
+   <p><i className="far fa-copyright"></i>Exposure Inc. 2018. All rights reserved.</p>
    </div>
    );
  }

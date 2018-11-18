@@ -6,6 +6,7 @@ import Search from './Search.jsx';
 import Footer from './Footer.jsx';
 import Home from './Home.jsx';
 import Availability from './Availability.jsx';
+import Profile from './Profile.jsx';
 
 
 class App extends Component {
@@ -66,6 +67,7 @@ saveAvailability(dates) {
 
 
     // <Home {category: this.state.categories}/>
+    // <Availability saveAvailability = {this.saveAvailability }/>
   }
 
   render() {
@@ -73,7 +75,7 @@ saveAvailability(dates) {
       <div>
       <Navbar />
       <Search searchResult = { this.searchResult }/>
-      <Availability saveAvailability = {this.saveAvailability }/>
+      <Profile />
       <Footer />
       </div>
     );
