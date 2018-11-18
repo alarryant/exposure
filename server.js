@@ -60,15 +60,20 @@ app.post("/register", (req, res) => {
 
 // SEARCH
 app.get("/search", (req, res) => {
-  console.log("Search Page");
-  res.send("Search Page");
+  let queryWord = req.query.searchWord
+  console.log(queryWord)
+  knex('image').where
+
+  res.send("Getting Search Page");
 });
 
 
-app.post("/search", (req, res) => {
-  console.log(req.body.searchWord);
-  res.send("Search Page");
-});
+// app.post("/search", (req, res) => {
+//   console.log(req.body.searchWord);
+//   console.log("POSTING SEARCH!")
+//   res.redirect("/search")
+//   // res.send("Search Page");
+// });
 
 
 //IMAGE
