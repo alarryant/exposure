@@ -10,6 +10,7 @@
     "knex": "^0.15.2",
     "mailgun-js": "^0.22.0",
     "pg": "^7.6.1",
+    "query-string": "^6.2.0",
     "react": "^16.6.3",
     "react-bootstrap": "^0.32.4",
     "react-day-picker": "^7.2.4",
