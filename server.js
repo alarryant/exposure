@@ -69,7 +69,6 @@ app.post("/register", (req, res) => {
 // SEARCH
 app.get("/search", (req, res) => {
   let queryWord = (req.query.searchWord).toLowerCase()
-  console.log(queryWord)
   knex('images')
     .where(
       knex.raw('LOWER("title") like ?',`%${queryWord}%`))
@@ -79,19 +78,9 @@ app.get("/search", (req, res) => {
       knex.raw('LOWER("category") like ?', `%${queryWord}%`))
     .select('*')
     .then(function(images) {
-      console.log("SEARCH RESULTS FROM DB:", images)
       res.json(images)
     })
 });
-
-
-// app.post("/search", (req, res) => {
-//   console.log(req.body.searchWord);
-//   console.log("POSTING SEARCH!")
-//   res.redirect("/search")
-//   // res.send("Search Page");
-// });
-
 
 //IMAGE
 app.post("/images/:id", (req, res) => {
