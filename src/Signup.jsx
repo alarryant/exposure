@@ -30,7 +30,7 @@ class Signup extends Component {
     handleChange(event) {
         event.preventDefault();
         this.setState({ [event.target.name]: event.target.value });
-      }
+    }
 
     render() {
         return (
@@ -43,7 +43,7 @@ class Signup extends Component {
                 <Modal.Header closeButton>
                 <Modal.Title>Create Your Account</Modal.Title>
                 </Modal.Header>
-                <form onSubmit={this.handleLogin}>
+                <form onSubmit={this.handleSignup}>
                     <Modal.Body>
                         <h4>First Name</h4>
                         <input type="text" placeholder="First Name" name="firstName" onChange={this.handleChange}></input>

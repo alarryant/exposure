@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import Signup from './Signup';
 
 
 class Login extends Component {
@@ -16,6 +15,7 @@ class Login extends Component {
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     
     handleClose() {
@@ -27,11 +27,17 @@ class Login extends Component {
     }
 
       
-  handleChange(event) {
+    handleChange(event) {
     event.preventDefault();
     this.setState({ [event.target.name]: event.target.value });
-  }
+    }
 
+    handleSubmit(event){
+    event.preventDefault();
+    const email = this.state.email;
+    const password = this.state.password;
+    this.props.loginInfo(email, password);
+    }
 
     render() {
         return (
@@ -39,13 +45,12 @@ class Login extends Component {
             <Button bsStyle="default" bsSize="medium" onClick={this.handleShow}>
                 Login
             </Button>
-            <Signup />
 
             <Modal show={this.state.show} onHide={this.handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Login to Your Account</Modal.Title>
                 </Modal.Header>
-                <form onSubmit={this.handleLogin}>
+                <form onSubmit={this.handleSubmit}>
                     <Modal.Body>
                         <h4>Email</h4>
                         <input type="email" placeholder="Email" name="email" onChange={this.handleChange}></input>

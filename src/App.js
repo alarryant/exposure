@@ -21,6 +21,8 @@ class App extends Component {
       user: {id: 1},
       categories: [],
       searchWord: "",
+      email: "",
+      password: "",
       redirect: false,
       availability: {
         start_date: null,
@@ -28,6 +30,7 @@ class App extends Component {
       }
     };
 
+    this.loginInfo = this.loginInfo.bind(this);
     this.searchResult = this.searchResult.bind(this);
     this.renderRedirect = this.renderRedirect.bind(this);
     // this.saveAvailability = this.saveAvailability.bind(this);
@@ -39,6 +42,19 @@ class App extends Component {
 //   axios.post(`/artists/${this.state.user.id}/availability`, {availability: this.state.availability})
 //     .then(res => console.log(res.data, 'availability data received from server'));
 // }
+
+
+  //LOGIN FEATURE
+  loginInfo(email, password) {
+    // let data = {email: email, password: password}
+    // console.log("DATA OBJ", data)
+    axios.post("/login", {email: email, password: password})
+     .then((res) => {
+        this.setState({redirect: true, email: email, password: password});
+      });
+  }
+
+  //REGISTER FEATURE
 
 
   //SEARCH FEATURE
@@ -91,7 +107,7 @@ class App extends Component {
       <BrowserRouter>
         <div>
           {this.renderRedirect()}
-          <Navbar />
+          <Navbar loginInfo = { this.loginInfo }/>
           <SearchBar searchResult = { this.searchResult }/>
           <Switch>
             <Route path='/home' render={() => <Home homecategory={this.state.homecategory} />} />
