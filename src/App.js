@@ -7,7 +7,7 @@ import Footer from './Footer.jsx';
 import Home from './Home.jsx';
 import SearchResults from './SearchResults.jsx';
 import ErrorPath from './Error404.jsx';
-// import Profile from './Profile.jsx';
+import Profile from './Profile.jsx';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Availability from './Availability.jsx';
 
@@ -19,7 +19,7 @@ class App extends Component {
 
     this.state = {
       user: {id: 1},
-      categories: [],
+      // categories: [],
       searchWord: "",
       redirect: false,
       availability: {
@@ -65,8 +65,14 @@ class App extends Component {
 
     //This is how you use axios for get requests! Axios is like an ajax library
 
-    axios.get("/home")
-      .then(res => this.setState({homecategory: res.data}));
+    axios.get("/homephotos")
+      .then(res => this.setState({homephotos: res.data}));
+
+    axios.get("/featured")
+      .then(res => this.setState({featuredphotos: res.data}));
+
+    axios.get("/packages")
+      .then(res => this.setState({packages: res.data}));
 
 
     // axios.get("/search")
@@ -84,14 +90,13 @@ class App extends Component {
     // axios.get("/client/:id/dashboard")
     //   .then(res => console.log(res.data));
 
-
-    // <Home {category: this.state.categories}/>
     // <Availability saveAvailability = {this.saveAvailability }/>
 
   }
 
 
   render() {
+    console.log("this is app.jsx", this.state.packages);
     return (
       <BrowserRouter>
         <div>
@@ -99,7 +104,9 @@ class App extends Component {
           <Navbar />
           <SearchBar searchResult = { this.searchResult }/>
           <Switch>
-            <Route path='/home' render={() => <Home homecategory={this.state.homecategory} />} />
+            <Route path='/home' render={() => <Home homephotos={this.state.homephotos} />} />
+            <Route path='/profile' render={() => <Profile featuredphotos={this.state.featuredphotos}
+                                                          packages={this.state.packages}/>} />
             <Route path='/search' name='search' render={() => <SearchResults searchWord={this.state.searchWord} />} />
             <Route exact path="/" render={() => (<Redirect to="/home" />)} />
             <Route component={ErrorPath} />
