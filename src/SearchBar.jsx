@@ -20,6 +20,8 @@ class SearchBar extends Component {
     event.preventDefault();
     let search_item = this.state.value
     this.props.searchResult(search_item);
+    this.setState({value: ""});
+
   }
 
   render() {
