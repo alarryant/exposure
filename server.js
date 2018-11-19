@@ -25,13 +25,6 @@ app.use(morgan('dev'));
 // Log knex SQL queries to STDOUT as well
 // app.use(knexLogger(knex));
 
-
-function randomImgGenerator(category) {
-  // knex('images').where("specialization", "=", category).orderBy(random()).limit(6);
-};
-
-
-
 //TESTING ONLY - Shows req.path
 
 app.use((req, res, next) => {
@@ -40,13 +33,27 @@ app.use((req, res, next) => {
 });
 
 ///////////////
-app.get("/home", (req, res) => {
-  console.log("does this work");
+app.get("/homephotos", (req, res) => {
   knex('images').select('id', 'src', 'category')
       .asCallback((err, data) => {
         if (err) throw err;
         res.json(data);
       });
+});
+
+app.get("/featured", (req, res) => {
+  knex('images').select('*').where("featured", "like", "true").asCallback((err, data) => {
+    if (err) throw err;
+    res.json(data);
+  });
+});
+
+app.get("/packages", (req, res) => {
+  knex('price_packages').select('*').where("user_id", "=", 1).asCallback((err, data) => {
+    if (err) throw err;
+    console.log("this is server side query results", data);
+    res.json(data);
+  });
 });
 
 app.post("/login", (req, res) => {
