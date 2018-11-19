@@ -89,7 +89,6 @@ class App extends Component {
 
   }
 
-            // <Route path='/search' name='search' component={SearchResults} searchWord={this.state.searchWord} />
 
   render() {
     console.log("this is app.jsx", this.state.packages);
@@ -104,6 +103,7 @@ class App extends Component {
             <Route path='/profile' render={() => <Profile featuredphotos={this.state.featuredphotos}
                                                           packages={this.state.packages}/>} />
             <Route path='/search' name='search' render={() => <SearchResults searchWord={this.state.searchWord} />} />
+            <Route exact path="/" render={() => (<Redirect to="/home" />)} />
             <Route component={ErrorPath} />
           </Switch>
           <Footer />
