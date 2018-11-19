@@ -5,6 +5,7 @@ import Navbar from './Navbar.jsx';
 import SearchBar from './SearchBar.jsx';
 import Footer from './Footer.jsx';
 import Home from './Home.jsx';
+import Dashboard from './Dashboard.jsx';
 import SearchResults from './SearchResults.jsx';
 import ErrorPath from './Error404.jsx';
 // import Profile from './Profile.jsx';
@@ -96,6 +97,7 @@ class App extends Component {
           <Switch>
             <Route path='/home' render={() => <Home homecategory={this.state.homecategory} />} />
             <Route path='/search' name='search' render={() => <SearchResults searchWord={this.state.searchWord} />} />
+            <Route path='/artist/:id/dashboard' name='dashboard' render={() => <Dashboard />} />
             <Route exact path="/" render={() => (<Redirect to="/home" />)} />
             <Route component={ErrorPath} />
           </Switch>
