@@ -60,11 +60,20 @@ app.post("/register", (req, res) => {
 
 // SEARCH
 app.get("/search", (req, res) => {
-  let queryWord = req.query.searchWord
+  let queryWord = (req.query.searchWord).toLowerCase()
   console.log(queryWord)
-  knex('image').where
-
-  res.send("Getting Search Page");
+  knex('images')
+    .where(
+      knex.raw('LOWER("title") like ?',`%${queryWord}%`))
+    .orWhere(
+      knex.raw('LOWER("description") like ?',`%${queryWord}%`))
+    .orWhere(
+      knex.raw('LOWER("category") like ?', `%${queryWord}%`))
+    .select('*')
+    .then(function(images) {
+      console.log("SEARCH RESULTS FROM DB:", images)
+      res.json(images)
+    })
 });
 
 

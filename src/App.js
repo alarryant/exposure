@@ -49,6 +49,7 @@ class App extends Component {
       }
     })
      .then((res) => {
+        console.log("SearchResult, App.js", res)
         this.setState({redirect: true, searchWord: word});
       });
   }
