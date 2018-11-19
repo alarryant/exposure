@@ -3,16 +3,30 @@ import React, {Component} from 'react';
 class SearchResults extends Component {
   constructor(props) {
     super(props);
+
+    this.displaySearchedImages = this.displaySearchedImages.bind(this);
+  }
+
+  displaySearchedImages(images) {
+    console.log("displayedSearch", images)
+    if (!images || images.length === 0 ) {
+      return (<p> Sorry! Nothing matches this description!</p>)
+    } else {
+      return images.map(function(image) {
+        return <img alt="900x500" src={image.src} />
+      })
+    }
   }
 
   render() {
+
     return(
       <div>
         <p>
-        RESULTS: Images for "{this.props.searchWord}"
+        Here's what we found on "{this.props.searchWord}"
         </p>
         <section>
-        This is where grid conponent of pictures go
+        {this.displaySearchedImages(this.props.searchimages)}
         </section>
       </div>
     );
