@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Carousel from 'react-bootstrap/lib/Carousel';
 import SeeAvailability from './SeeAvailability.jsx';
+import Portfolio from './Portfolio.jsx';
 // import ProfilePic from '../public/artist_profile.jpg';
 
 
@@ -88,8 +89,8 @@ class AvailabilityCard extends React.Component {
 
 // https://blog.campvanilla.com/reactjs-dropdown-menus-b6e06ae3a8fe
 class PackagesCard extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       showMenu: false,
@@ -97,6 +98,27 @@ class PackagesCard extends React.Component {
 
     this.showMenu = this.showMenu.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
+    this.renderPricePackage = this.renderPricePackage.bind(this);
+  }
+
+  renderPricePackage(pricepackages=[]) {
+    let tier;
+    return pricepackages.map(function(pricepackage) {
+      if (pricepackage.tier === 1) {
+      let tier = "Basic";
+    } else if (pricepackage.tier === 2) {
+      let tier = "Intermediate";
+    } else {
+      let tier = "Deluxe";
+    }
+      return (
+        <div>
+          <h5>{tier}</h5><br/>
+          <p>{pricepackage.price}</p>
+        </div>
+        )
+    })
+
   }
 
   showMenu(event) {
@@ -119,6 +141,7 @@ class PackagesCard extends React.Component {
   }
 
   render() {
+    console.log("this is packages from server", this.props.packages);
     return (
       <div className="profilebtn" >
         <button onClick={this.showMenu}>
@@ -134,7 +157,7 @@ class PackagesCard extends React.Component {
                   this.dropdownMenu = element;
                 }}
               >
-                <button>testing</button>
+              {this.renderPricePackage(this.props.packages)}
               </div>
             )
             : (
@@ -148,6 +171,22 @@ class PackagesCard extends React.Component {
 
 class Profile extends React.Component {
 
+  constructor(props) {
+    super(props);
+
+    this.addCarouselPhotos = this.addCarouselPhotos.bind(this);
+  }
+
+  addCarouselPhotos(photos=[]) {
+    return photos.map(function(photo) {
+      return (
+        <Carousel.Item>
+          <img alt="900x500" src={photo.src} />
+        </Carousel.Item>
+        )
+    });
+  }
+
   render() {
 
   return (
@@ -155,8 +194,17 @@ class Profile extends React.Component {
   <div className="profile">
     <Avatar />
     <ProfileDesc />
+    <div className="featuredPortfolio">
+      <h1>Featured Photos:</h1>
+      <Carousel>
+      {this.addCarouselPhotos(this.props.featuredphotos)}
+      </Carousel>
+      <br />
+      <a href="/portfolio"><h5>See full portfolio</h5></a>
+    </div>
+    <Portfolio />
     <AvailabilityCard />
-    <PackagesCard />
+    <PackagesCard packages={this.props.packages}/>
   </div>
   );
  }
