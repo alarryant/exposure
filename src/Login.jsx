@@ -1,0 +1,65 @@
+import React, { Component } from 'react';
+import { Button, Modal } from 'react-bootstrap';
+import Signup from './Signup';
+
+
+class Login extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = { 
+            show: false,
+            email: '',
+            password: ''
+        };
+
+        this.handleShow = this.handleShow.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+    
+    handleClose() {
+    this.setState({ show: false });
+    }
+
+    handleShow() {
+    this.setState({ show: true });
+    }
+
+      
+  handleChange(event) {
+    event.preventDefault();
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+
+    render() {
+        return (
+            <div>
+            <Button bsStyle="default" bsSize="medium" onClick={this.handleShow}>
+                Login
+            </Button>
+            <Signup />
+
+            <Modal show={this.state.show} onHide={this.handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Login to Your Account</Modal.Title>
+                </Modal.Header>
+                <form onSubmit={this.handleLogin}>
+                    <Modal.Body>
+                        <h4>Email</h4>
+                        <input type="email" placeholder="Email" name="email" onChange={this.handleChange}></input>
+                        <h4>Password</h4>
+                        <input type="password" placeholder="Password" name='password' onChange={this.handleChange}></input>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button type="submit" onClick={this.handleClose}>Login</Button>
+                    </Modal.Footer>
+                </form>
+            </Modal>
+            </div>
+        );
+    }
+}
+
+export default Login

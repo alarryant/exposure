@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink } from "react-router-dom"
 
+import Login from './Login'
+
 
 class Navbar extends React.Component {
 
@@ -19,6 +21,7 @@ class Navbar extends React.Component {
         </div>
       </div>
       <div className="userauth">
+        <Login />
         <NavLink to="/login">Login</NavLink>
         <NavLink to="/signup">Sign Up</NavLink>
       </div>
