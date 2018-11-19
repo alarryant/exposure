@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 
-class Search extends Component {
-  constructor() {
-    super()
-    this.state = {value: ''};
+class SearchBar extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      value: ''
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -11,18 +13,18 @@ class Search extends Component {
 
   handleChange(event) {
     this.setState({value: event.target.value});
-    console.log("event", event.target.value)
+    console.log("event", event.target.value);
   }
 
   handleSubmit(event) {
     event.preventDefault();
     let search_item = this.state.value
     this.props.searchResult(search_item);
-    this.setState({value: ''})
   }
 
   render() {
     return(
+      <div>
       <form onSubmit={ this.handleSubmit }>
        <label>
         Search:
@@ -33,12 +35,13 @@ class Search extends Component {
           value={ this.state.value }
           onChange={this.handleChange}
         />
-        </label>
-      <input type="submit" value="Submit"/>
+      </label>
+        <input type="submit" value="Submit"/>
       </form>
+      </div>
     );
   }
 }
 
 
-export default Search;
+export default SearchBar;

@@ -1,7 +1,7 @@
 
 exports.up = function(knex, Promise) {
     return knex.schema.createTable('event_interests', function (table) {
-        table.increments('id')
+        table.increments('id').primary();
 
         table.integer('event_id').notNull();
         table.foreign('event_id').references('id').inTable('events').onDelete('CASCADE');
