@@ -37,6 +37,7 @@ app.get("/homephotos", (req, res) => {
   knex('images').select('id', 'src', 'category')
       .asCallback((err, data) => {
         if (err) throw err;
+        console.log(data);
         res.json(data);
       });
 });

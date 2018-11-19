@@ -1,6 +1,7 @@
 import React from 'react';
 import Splashart from './Splashart.jpg';
 import Carousel from 'react-bootstrap/lib/Carousel';
+import sampleSize from 'lodash.samplesize';
 
 class Home extends React.Component {
 
@@ -12,15 +13,8 @@ class Home extends React.Component {
   }
 
   categorizePhotos(category, photos=[]) {
-    let newArray = [];
-    photos.forEach(function(photo) {
-      if (photo.category.includes(category)) {
-        while (newArray.length <= 6) {
-          newArray.push(photo);
-        }
-      }
-    });
-    return newArray;
+    let photoCollection = photos.filter(photo => photo.category.includes(category));
+    return sampleSize(photoCollection, [6]);
   }
 
   addCarouselPhotos(category, photos=[]) {
@@ -29,11 +23,13 @@ class Home extends React.Component {
     return filteredPhotos.map(function(photo) {
       return (
         <Carousel.Item>
-          <img alt="900x500" src={photo.src} />
+          <img alt="900x500" src={(photo.src)} />
         </Carousel.Item>
         )
     });
   }
+
+
 
   render() {
 
