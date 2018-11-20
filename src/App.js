@@ -30,6 +30,7 @@ class App extends Component {
       facebookUrl: "",
       twitterUrl: "",
       location: "",
+      currentUser: null,
       redirect: false,
       availability: {
         start_date: null,
@@ -38,6 +39,7 @@ class App extends Component {
     };
 
     this.loginInfo = this.loginInfo.bind(this);
+    this.logout = this.logout.bind(this);
     this.signupInfo = this.signupInfo.bind(this);
     this.searchResult = this.searchResult.bind(this);
     this.renderRedirect = this.renderRedirect.bind(this);
@@ -54,18 +56,27 @@ class App extends Component {
 
   //LOGIN FEATURE
   loginInfo(email, password) {
-    axios.post("/login", {email: email, password: password})
-     .then((res) => {
-        this.setState({redirect: true, email: email, password: password});
-      });
+      axios.post("/login", {email: email, password: password})
+      .then((res) => {
+         this.setState({redirect: true, currentUser: res.data});
+       });
   }
+
+  //LOGOUT FEATURE
+  logout(event) {
+    axios.post("/logout")
+    .then((res) => {
+      console.log("res.data: ", res.data);
+      this.setState({redirect: true, currentUser: null});
+    });
+}
+
 
   //REGISTER FEATURE
   signupInfo(firstName, lastName, email, password, userType) {
     axios.post("/register", {firstName:firstName, lastName:lastName, email: email, password: password, userType: userType})
      .then((res) => {
-       console.log("I'm back on Client", res.data)
-        this.setState({redirect: true, firstName:firstName, lastName:lastName, email: email, password: password, userType: userType});
+        this.setState({redirect: true, currentUser: res.data});
       });
   }
 
@@ -141,7 +152,9 @@ class App extends Component {
         <div>
           {this.renderRedirect()}
           <Navbar loginInfo = { this.loginInfo }
-                  signupInfo = { this.signupInfo }/>
+                  signupInfo = { this.signupInfo }
+                  currentUser = { this.state.currentUser }
+                  logout = { this.logout }/>
           <SearchBar searchResult = { this.searchResult }/>
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos} />} />

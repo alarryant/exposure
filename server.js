@@ -25,7 +25,6 @@ function randomImgGenerator(category) {
   // knex('images').where("specialization", "=", category).orderBy(random()).limit(6);
 };
 
-
 // --------------- ROUTES --------------- //
 
 //TESTING ONLY - Shows req.path
@@ -62,11 +61,23 @@ app.get("/packages", (req, res) => {
 app.post("/login", (req, res) => {
   let userEmail = req.body.email;
   let userPassword = req.body.password;
-    knex("users").select("*").where("email", "=", userEmail).where("password", "=", userPassword).asCallback((err, data) => {
-      if (err) throw err;
+
+  if (req.session.user_id) {
+    res.json(req.session.user_id);
+  } else {
+    knex("users").select("*").where("email", "=", userEmail).where("password", "=", userPassword).then((data) => {
+      req.session.user_id = data[0].id
       res.json(data);
-  })
-});
+    })
+  }
+  });
+
+// LOGOUT
+app.post("/logout", (req, res) => {
+  req.session.user_id = null;
+  res.json(req.session.user_id);
+  });
+
 
 
 // REGISTER
@@ -85,11 +96,11 @@ knex('users').where('email', email).then((data) => {
     knex("users").insert({first_name: firstName,
                           last_name: lastName,
                           email: email,
-                          password: bcrypt.hashSync(password),
+                          password: bcrypt.hashSync(password, 10),
                           user_type_id: userType}).returning("id")
       .then((user_id) => {
-        console.log("Need to assign to cookie session? ", req.session)
-        res.json(req.session.userId);
+        req.session.user_id = +user_id;
+        res.json(req.session.user_id);
         });
       }
     });
