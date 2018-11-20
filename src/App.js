@@ -31,7 +31,7 @@ class App extends Component {
 
     this.searchResult = this.searchResult.bind(this);
     this.renderRedirect = this.renderRedirect.bind(this);
-    this.queryByArtist = this.queryByArtist.bind(this);
+    // this.queryByArtist = this.queryByArtist.bind(this);
     // this.saveAvailability = this.saveAvailability.bind(this);
 
   }
@@ -63,17 +63,17 @@ class App extends Component {
     }
   }
 
-  queryByArtist(id) {
-    axios.get(`/artist/${id}`, {
-      params: {
-        artistId: id
-      }
-    })
-    .then((res) => {
-      console.log("artist profile query, app.js", res)
-      this.setState({redirect: true, artistId: id, searchArtist: res.data});
-    });
-  }
+  // queryByArtist(id) {
+  //   axios.get(`/artists/${id}`, {
+  //     params: {
+  //       artistId: id
+  //     }
+  //   })
+  //   .then((res) => {
+  //     console.log("artist profile query, app.js", res);
+  //     this.setState({redirect: true, artistId: id, searchArtist: res.data});
+  //   });
+  // }
 
   componentDidMount() {
 
@@ -119,13 +119,13 @@ class App extends Component {
           <SearchBar searchResult = { this.searchResult }/>
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos} />} />
-            <Route path='/artist/:id' render={props => <Profile
+            <Route path='/artists/:id' render={props => <Profile
                                                           { ...props }
                                                           featuredphotos={this.state.featuredphotos}
-                                                          packages={this.state.packages}/>} />
+                                                          packages={this.state.packages} />} />
             <Route path='/search' name='search' render={() => <SearchResults searchWord={this.state.searchWord}
                                                                              searchimages={this.state.searchimages} />} />
-            <Route path='/artist/:id/portfolio' render={() => <Portfolio /> } />
+            <Route path='/artists/:id/portfolio' render={() => <Portfolio /> } />
             <Route exact path="/" render={() => (<Redirect to="/home" />)} />
             <Route component={ErrorPath} />
           </Switch>

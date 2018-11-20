@@ -5,16 +5,25 @@ import Slider from "react-slick";
 
 import Link from 'react-router-dom';
 import axios from 'axios';
-// import ProfilePic from '../public/artist_profile.jpg';
 
 class Avatar extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  // componentDidMount() {
+    // this.props.queryByArtist(this.props.artistId);
+
+  // }
+
+
   render() {
     return (
       <div className="profilecontainer">
         <div className="profilepic-container">
           <img className="profilepic" src={require("./artist_profile.jpg")}/>
         </div>
-        <h1>Steve Irwin</h1>
+        <h1></h1>
       </div>
     );
   }
@@ -202,10 +211,20 @@ class Profile extends React.Component {
 
     const { id } = this.props.match.params;
 
-    axios.get(`/artists/${ id }`)
-    .then(artist => {
-      debugger;
+    axios.get(`/artists/${ id }`, {
+      params: {
+        artistId: id
+      }
     })
+    .then((res) => {
+      console.log("artist profile query, app.js", res.data);
+      this.setState({redirect: true, artistId: id, searchArtist: res.data});
+    });
+
+      // axios.get(`/artists/${ id }`)
+      // .then(artist => {
+      //   debugger;
+      // })
   }
 
   render() {
@@ -226,8 +245,8 @@ class Profile extends React.Component {
   return (
 
   <div className="profile">
-    <Avatar />
-    <ProfileDesc />
+    <Avatar artistId={ this.props.match.params }/>
+    <ProfileDesc artistId={ this.props.match.params }/>
     <div className="featuredPortfolio">
       <h1>Featured Photos:</h1>
       <Slider {...settings} >
