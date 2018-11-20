@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom'
 
 class SearchResults extends Component {
   constructor(props) {
@@ -13,14 +14,17 @@ class SearchResults extends Component {
       return (<p> Sorry! Nothing matches this description!</p>)
     } else {
       return images.map(function(image) {
-        return <img className="searchResult" src={image.src} />
+        return (
+          <Link to={`/artists/${ image.image_owner }`}>
+            <img className="searchResult" src={image.src} />
+          </Link>
+        )
         // Need to link image to profile page
       })
     }
   }
 
   render() {
-
     return(
       <div>
         <section className="wrapper">
