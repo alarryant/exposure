@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import SeeAvailability from './SeeAvailability.jsx';
-import Portfolio from './Portfolio.jsx';
+import Portfolio from './components/Portfolio.jsx';
 import Avatar from './components/Avatar.jsx';
 import Slider from "react-slick";
 
