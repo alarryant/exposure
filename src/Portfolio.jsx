@@ -15,7 +15,7 @@ class Portfolio extends React.Component {
     <h1>Steve Irwin's Portfolio</h1>
   </div>
   );
- }
-}
+ };
+};
 
 export default Portfolio;

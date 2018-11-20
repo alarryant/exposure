@@ -36,18 +36,19 @@ class Home extends React.Component {
   render() {
     const settings = {
       className: "slider variable-width",
-      dots: true,
       infinite: true,
       centerMode: true,
       slidesToShow: 3,
       slidesToScroll: 1,
       variableWidth: true,
-      rows: 1
+      rows: 1,
+      autoplay: true,
+      focusOnSelect: true,
     };
 
   return (
 
-    <div>
+    <div className="homeContainer">
       <div className="splashcontainer">
         <img className="splashart" alt="splash" src={Splashart} />
       </div>

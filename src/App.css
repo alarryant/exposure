@@ -203,6 +203,7 @@ a {
 
 .slider {
   background-color: white;
+  margin: 25px 300px;
 }
 
 .sliderImg {
@@ -213,7 +214,20 @@ a {
 .sliderImg img {
   height: 90%;
   width: 90%;
-  margin: auto
+  margin: auto;
+}
+
+.featuredPortfolio {
+  margin-left: 0px;
+  margin-right: 75px;
+  float: right;
+}
+
+.homeContainer h1 {
+  width: 200px;
+  text-align: center;
+  margin: auto;
+  margin-top: 25px;
 }
 
 .Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
