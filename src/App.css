@@ -1,6 +1,6 @@
 body {
-  font-family: 'Raleway', sans-serif;
   min-width: 1024px;
+  font-family: 'Josefin Sans', sans-serif;
 }
 
 nav {
@@ -203,6 +203,37 @@ a {
   margin-left: 75px;
 }
 
+.slider {
+  background-color: white;
+  margin: 25px 150px;
+  max-height: 350px;
+}
+
+.sliderImg {
+  max-width: 400px;
+  max-height: 350px;
+  overflow: hidden;
+}
+
+.sliderImg img {
+  height: 95%;
+  width: 95%;
+  margin: auto;
+}
+
+.featuredPortfolio {
+  margin-left: 0px;
+  margin-right: 75px;
+  float: right;
+}
+
+.homeContainer h1 {
+  width: 200px;
+  text-align: center;
+  margin: auto;
+  margin-top: 25px;
+}
+
 .Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
     background-color: #f0f8ff !important;
     color: #4a90e2;
@@ -224,4 +255,43 @@ a {
 
 .DayPicker-Day .DayPicker-Day--disabled {
   /*color: red !important;*/
+}
+
+/*SEARCH PAGE*/
+.wrapper {
+  width: 80%;
+  margin: auto;
+  padding: 5px;
+}
+
+.searchResult {
+  padding: 5px;
+  width: 30%;
+  height: 30%;
+
+}
+
+/*SEARCH BAR*/
+.searchBar {
+  width: 100%;
+  display: flex;
+}
+
+.searchForm{
+  margin: auto;
+  margin-top: 50px;
+}
+
+.searchInput {
+  padding: 10px 20px;
+  width: 700px;
+  border: 1px solid black;
+}
+
+.searchButton {
+  margin: 5px;
+  padding: 10px 15px;
+  border: 1px solid grey;
+  background-color: white;
+
 }
