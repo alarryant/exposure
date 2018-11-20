@@ -11,7 +11,7 @@ import ErrorPath from './Error404.jsx';
 import Profile from './Profile.jsx';
 import { BrowserRouter, Route, Switch, Redirect, withRouter } from "react-router-dom";
 import Availability from './components/Availability.jsx';
-import Portfolio from './Portfolio.jsx';
+import Portfolio from './components/Portfolio.jsx';
 
 
 class App extends Component {
@@ -22,6 +22,16 @@ class App extends Component {
     this.state = {
       user: { id: 1 },
       searchWord: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      websiteUrl: "",
+      instagramUrl: "",
+      facebookUrl: "",
+      twitterUrl: "",
+      location: "",
+      currentUser: null,
       redirect: false,
       availability: {
         start_date: null,
@@ -29,6 +39,9 @@ class App extends Component {
       }
     };
 
+    this.loginInfo = this.loginInfo.bind(this);
+    this.logout = this.logout.bind(this);
+    this.signupInfo = this.signupInfo.bind(this);
     this.searchResult = this.searchResult.bind(this);
     this.renderRedirect = this.renderRedirect.bind(this);
     // this.saveAvailability = this.saveAvailability.bind(this);
@@ -40,6 +53,48 @@ class App extends Component {
   //   axios.post(`/artists/${this.state.user.id}/availability`, {availability: this.state.availability})
   //     .then(res => console.log(res.data, 'availability data received from server'));
   // }
+
+
+  //LOGIN FEATURE
+  loginInfo(email, password) {
+    axios.post("/login", { email: email, password: password })
+      .then((res) => {
+        this.setState({ redirect: true, currentUser: res.data });
+      });
+  }
+
+  //LOGOUT FEATURE
+  logout(event) {
+    axios.post("/logout")
+      .then((res) => {
+        console.log("res.data: ", res.data);
+        this.setState({ redirect: true, currentUser: null });
+      });
+  }
+
+
+  //REGISTER FEATURE
+  signupInfo(firstName, lastName, email, password, userType) {
+    axios.post("/register", { firstName: firstName, lastName: lastName, email: email, password: password, userType: userType })
+      .then((res) => {
+        this.setState({ redirect: true, currentUser: res.data });
+      });
+  }
+
+  //EDIT PROFILE FEATURE
+  editProfileInfo(firstName, lastName, email, password, website, instagram, facebook, twitter, location) {
+    axios.post("/search", { firstName: firstName, lastName: lastName, email: email, password: password, website: website, instagram: instagram, facebook: facebook, twitter: twitter, location: location })
+      .then((res) => {
+        this.setState({ redirect: true, firstName: firstName, lastName: lastName, email: email, password: password, website: website, instagram: instagram, facebook: facebook, twitter: twitter, location: location });
+      });
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      this.setState({ redirect: false })
+      return <Redirect to='/search' />
+    }
+  }
 
 
   //SEARCH FEATURE
@@ -100,16 +155,23 @@ class App extends Component {
       <BrowserRouter>
         <div>
           {this.renderRedirect()}
-          <Navbar />
+          <Navbar loginInfo={this.loginInfo}
+            signupInfo={this.signupInfo}
+            currentUser={this.state.currentUser}
+            logout={this.logout} />
           <SearchBar searchResult={this.searchResult} />
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos} />} />
-            <Route path='/artist/:id' render={props => <Profile
+
+            <Route path='/artists/:id' render={props => <Profile
               {...props}
               featuredphotos={this.state.featuredphotos}
               packages={this.state.packages} />} />
+            {/* <Route path='/availability' name='dashboard' render={() => <Availability currentUser={this.state.user}/>} /> */}
             <Route path='/artists/:id/dashboard' name='dashboard' render={(props) => <Dashboard {...props} />} />
-            <Route path='/search' name='search' render={() => <SearchResults searchWord={this.state.searchWord}
+            <Route path='/search' name='search' render={props => <SearchResults
+              {...props}
+              searchWord={this.state.searchWord}
               searchimages={this.state.searchimages} />} />
             <Route path='/artist/:id/portfolio' render={() => <Portfolio />} />
             <Route exact path="/" render={() => (<Redirect to="/home" />)} />
