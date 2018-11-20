@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import SeeAvailability from './SeeAvailability.jsx';
-import Portfolio from './Portfolio.jsx';
+import Portfolio from './components/Portfolio.jsx';
 import Avatar from './components/Avatar.jsx';
 import Slider from "react-slick";
-import Link from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Url from 'url-parse';
 
@@ -203,10 +203,13 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      artist: {}
+      artist: {},
+      photoview: 'featured'
     }
     this.addCarouselPhotos = this.addCarouselPhotos.bind(this);
     this.areFeaturedPhotos = this.areFeaturedPhotos.bind(this);
+    this.showPortfolio = this.showPortfolio.bind(this)
+    this.showFeatures = this.showFeatures.bind(this)
   }
 
   areFeaturedPhotos(photos=[]) {
@@ -225,7 +228,15 @@ class Profile extends React.Component {
     });
   }
 
-  componentWillMount() {
+  showPortfolio = () => {
+    this.setState({photoview: "portfolio"})
+  }
+
+  showFeatures = () => {
+    this.setState({photoview: "featured"})
+  }
+
+  componentDidMount() {
 
     const { id } = this.props.match.params;
 
@@ -245,14 +256,10 @@ class Profile extends React.Component {
       let instagram = res.data.images[0].instagram_url;
       this.setState({redirect: true, twitter: twitter, facebook: facebook, instagram: instagram, fullName: fullName, avatarImage: avatarImage, packages: packages, collection: collection, bio: bio});
     });
-
-      // axios.get(`/artists/${ id }`)
-      // .then(artist => {
-      //   debugger;
-      // })
   }
 
   render() {
+
     const settings = {
       infinite: true,
       centerMode: true,
@@ -263,25 +270,50 @@ class Profile extends React.Component {
       focusOnSelect: true,
     };
 
-  return (
-
-  <div className="profile">
-    <Avatar name={ this.state.fullName } avatar={ this.state.avatarImage }/>
-    <ProfileDesc bio={this.state.bio}/>
-    <SocialMedia twitter={this.state.twitter} facebook={this.state.facebook} instagram={this.state.instagram}/>
-    <div className="featuredPortfolio">
-      <h1>Featured Photos:</h1>
-      <Slider {...settings} >
-        {this.addCarouselPhotos(this.state.collection)}
-      </Slider>
-      <br />
-    </div>
-    <Portfolio />
-    <AvailabilityCard />
-    <PackagesCard packages={this.state.packages}/>
-  </div>
-  );
- }
+    if(this.state.photoview === 'featured') {
+      return (
+      <div className="profile">
+        <Avatar name={ this.state.fullName } avatar={ this.state.avatarImage }/>
+        <ProfileDesc bio={this.state.bio}/>
+        <SocialMedia twitter={this.state.twitter} facebook={this.state.facebook} instagram={this.state.instagram}/>
+      <div className="featuredPortfolio">
+        <button onClick={this.showPortfolio}>
+          View Portfolio
+        </button>
+        <button onClick={this.showFeatures}>
+          Featured Photos
+        </button>
+        <h1>Featured Photos:</h1>
+        <Slider {...settings} >
+          {this.addCarouselPhotos(this.state.collection)}
+        </Slider>
+        <br />
+      </div>
+        <AvailabilityCard />
+        <PackagesCard packages={this.props.packages}/>
+      </div>
+      );
+    } else {
+      return (
+        <div className="profile">
+          <Avatar name={ this.state.fullName } avatar={ this.state.avatarImage }/>
+          <ProfileDesc bio={this.state.bio}/>
+          <SocialMedia twitter={this.state.twitter} facebook={this.state.facebook} instagram={this.state.instagram}/>
+        <div className="featuredPortfolio">
+          <button onClick={this.showPortfolio}>
+            View Portfolio
+          </button>
+          <button onClick={this.showFeatures}>
+            Featured Photos
+          </button>
+          <h1>Portfolio Photos:</h1>
+          <Portfolio artistPhotos={this.state.collection} />
+        </div>
+          <AvailabilityCard />
+          <PackagesCard packages={this.props.packages}/>
+        </div>
+    )}
+  }
 }
 
 export default Profile;
