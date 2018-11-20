@@ -20,7 +20,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      user: {id: 1},
+      user: {id: null},
       searchWord: "",
       redirect: false,
       availability: {
@@ -32,7 +32,6 @@ class App extends Component {
 
     this.searchResult = this.searchResult.bind(this);
     this.renderRedirect = this.renderRedirect.bind(this);
-    // this.queryByArtist = this.queryByArtist.bind(this);
     // this.saveAvailability = this.saveAvailability.bind(this);
 
   }
@@ -52,7 +51,6 @@ class App extends Component {
       }
     })
      .then((res) => {
-        console.log("SearchResult, App.js", res)
         this.setState({redirect: true, searchWord: word, searchimages: res.data});
       });
   }
@@ -63,18 +61,6 @@ class App extends Component {
       return <Redirect to='/search' />
     }
   }
-
-  // queryByArtist(id) {
-  //   axios.get(`/artists/${id}`, {
-  //     params: {
-  //       artistId: id
-  //     }
-  //   })
-  //   .then((res) => {
-  //     console.log("artist profile query, app.js", res);
-  //     this.setState({redirect: true, artistId: id, searchArtist: res.data});
-  //   });
-  // }
 
   componentDidMount() {
 
@@ -109,7 +95,6 @@ class App extends Component {
   }
 
   render() {
-    console.log("this is app.jsx", this.state.packages);
     return (
       <BrowserRouter>
         <div>
@@ -119,9 +104,7 @@ class App extends Component {
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos} />} />
             <Route path='/artists/:id' render={props => <Profile
-                                                          { ...props }
-                                                          featuredphotos={this.state.featuredphotos}
-                                                          packages={this.state.packages}/>} />
+                                                          { ...props }/>} />
             {/* <Route path='/availability' name='dashboard' render={() => <Availability currentUser={this.state.user}/>} /> */}
             <Route path='/artists/:id/dashboard' name='dashboard' render={(props) => <Dashboard { ...props } />} />
             <Route path='/search' name='search' render={() => <SearchResults searchWord={this.state.searchWord}

@@ -3,40 +3,56 @@ import SeeAvailability from './SeeAvailability.jsx';
 import Portfolio from './Portfolio.jsx';
 import Avatar from './components/Avatar.jsx';
 import Slider from "react-slick";
-
 import Link from 'react-router-dom';
 import axios from 'axios';
-
-class Avatar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div className="profilecontainer">
-        <div className="profilepic-container">
-          <img className="profilepic" src={require("./artist_profile.jpg")}/>
-        </div>
-        <h1></h1>
-      </div>
-    );
-  }
-}
+import Url from 'url-parse';
 
 class ProfileDesc extends React.Component {
   render() {
     return (
       <div className="profiledesc">
-        <h2>A little about me....</h2>
-        <p>I have no fear of losing my life - if I have to save a koala or a crocodile or a kangaroo or a snake, mate, I will save it.
-        I believe that education is all about being excited about something.
-        Seeing passion and enthusiasm helps push an educational message.
-        Where I live if someone gives you a hug it's from the heart.
-        Yeah, I'm a thrill seeker, but crikey, education's the most important thing.
-        So fear helps me from making mistakes, but I make lot of mistakes.</p>
+        <p>{this.props.bio}</p>
       </div>
     )
+  }
+}
+
+class SocialMedia extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.parseUrl = this.parseUrl.bind(this);
+  }
+
+  parseUrl(url) {
+      let newUrl = new Url(url);
+      let trimmedUrl = newUrl.pathname.replace(/^\/|\/$/g, '');
+      return trimmedUrl;
+  }
+
+  render () {
+
+    return (
+      <div className="socialMediaContainer">
+        {this.props.facebook !== "null" ?
+          (
+          <p>
+            <i className="fab fa-facebook-f"></i>
+            <a href={this.props.facebook} target="_blank"> {this.parseUrl(this.props.facebook)}</a>
+          </p>) : ''}
+        {this.props.twitter !== "null" ?
+        (
+        <p>
+          <i className="fab fa-twitter"></i>
+          <a href={this.props.twitter} target="_blank"> {this.parseUrl(this.props.twitter)}</a>
+        </p>) : ''}
+        {this.props.instagram !== "null" ?
+          (
+          <p><i className="fab fa-instagram"></i>
+            <a href={this.props.instagram} target="_blank">{this.parseUrl(this.props.instagram)}</a>
+          </p>) : ''}
+      </div>
+      )
   }
 }
 
@@ -116,17 +132,18 @@ class PackagesCard extends React.Component {
 
   renderPricePackage(pricepackages=[]) {
     let tier;
+
     return pricepackages.map(function(pricepackage) {
       if (pricepackage.tier === 1) {
-      let tier = "Basic";
+      tier = "Basic";
     } else if (pricepackage.tier === 2) {
-      let tier = "Intermediate";
-    } else {
-      let tier = "Deluxe";
+      tier = "Intermediate";
+    } else if (pricepackage.tier === 3) {
+      tier = "Deluxe";
     }
       return (
         <div>
-          <h5>{tier}</h5><br/>
+          <h5>{tier}</h5>
           <p>{pricepackage.price}</p>
         </div>
         )
@@ -154,7 +171,6 @@ class PackagesCard extends React.Component {
   }
 
   render() {
-    console.log("this is packages from server", this.props.packages);
     return (
       <div className="profilebtn" >
         <button onClick={this.showMenu}>
@@ -190,10 +206,17 @@ class Profile extends React.Component {
       artist: {}
     }
     this.addCarouselPhotos = this.addCarouselPhotos.bind(this);
+    this.areFeaturedPhotos = this.areFeaturedPhotos.bind(this);
+  }
+
+  areFeaturedPhotos(photos=[]) {
+    return photos.filter(photo => photo.featured.includes("true"));
   }
 
   addCarouselPhotos(photos=[]) {
-    return photos.map(function(photo) {
+    let filteredPhotos = this.areFeaturedPhotos(photos);
+
+    return filteredPhotos.map(function(photo) {
       return (
         <div className="sliderImg" >
           <img alt="900x500" src={photo.src} />
@@ -212,8 +235,15 @@ class Profile extends React.Component {
       }
     })
     .then((res) => {
-      console.log("artist profile query, app.js", res.data);
-      this.setState({redirect: true, artistId: id, searchArtist: res.data});
+      let collection = res.data.images;
+      let packages = res.data.packages;
+      let bio = res.data.images[0].bio;
+      let fullName = res.data.images[0].first_name + ' ' + res.data.images[0].last_name;
+      let avatarImage = res.data.images[0].profile_image;
+      let twitter = res.data.images[0].twitter_url;
+      let facebook = res.data.images[0].facebook_url;
+      let instagram = res.data.images[0].instagram_url;
+      this.setState({redirect: true, twitter: twitter, facebook: facebook, instagram: instagram, fullName: fullName, avatarImage: avatarImage, packages: packages, collection: collection, bio: bio});
     });
 
       // axios.get(`/artists/${ id }`)
@@ -223,9 +253,6 @@ class Profile extends React.Component {
   }
 
   render() {
-
-    console.log("Profile Page params ID", this.props.params)
-
     const settings = {
       infinite: true,
       centerMode: true,
@@ -236,23 +263,22 @@ class Profile extends React.Component {
       focusOnSelect: true,
     };
 
-
   return (
 
   <div className="profile">
-    <Avatar artistId={ this.props.match.params }/>
-    <ProfileDesc artistId={ this.props.match.params }/>
+    <Avatar name={ this.state.fullName } avatar={ this.state.avatarImage }/>
+    <ProfileDesc bio={this.state.bio}/>
+    <SocialMedia twitter={this.state.twitter} facebook={this.state.facebook} instagram={this.state.instagram}/>
     <div className="featuredPortfolio">
       <h1>Featured Photos:</h1>
       <Slider {...settings} >
-        {this.addCarouselPhotos(this.props.featuredphotos)}
+        {this.addCarouselPhotos(this.state.collection)}
       </Slider>
       <br />
-      {/*<a href="/portfolio"><h5>See full portfolio</h5></a>*/}
     </div>
-      <Portfolio />
+    <Portfolio />
     <AvailabilityCard />
-    <PackagesCard packages={this.props.packages}/>
+    <PackagesCard packages={this.state.packages}/>
   </div>
   );
  }

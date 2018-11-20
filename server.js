@@ -41,20 +41,6 @@ app.get("/homephotos", (req, res) => {
       });
 });
 
-app.get("/featured", (req, res) => {
-  knex('images').select('*').where("featured", "like", "true").asCallback((err, data) => {
-    if (err) throw err;
-    res.json(data);
-  });
-});
-
-app.get("/packages", (req, res) => {
-  knex('price_packages').select('*').where("user_id", "=", 1).asCallback((err, data) => {
-    if (err) throw err;
-    res.json(data);
-  });
-});
-
 app.post("/login", (req, res) => {
   res.send("Login");
 });
@@ -76,8 +62,8 @@ app.get("/search", (req, res) => {
       knex.raw('LOWER("category") like ?', `%${queryWord}%`))
     .select('*')
     .then(function(images) {
-      res.json(images)
-    })
+      res.json(images);
+    });
 });
 
 //IMAGE
@@ -89,10 +75,21 @@ app.post("/images/:id", (req, res) => {
 //ARTIST
 app.get("/artists/:id", (req, res) => {
   let artistId = req.params.id;
-  knex('images').join("users", "image_owner", "=", "users.id").where("image_owner", artistId).asCallback((err, data) => {
-    if (err) throw err;
-    res.json(data);
-  });
+  let images = knex('images')
+    .join("users", "image_owner", "=", "users.id")
+    .where("image_owner", artistId)
+    .then((images) => {
+      knex('price_packages')
+        .join("users", "price_packages.user_id", "=", "users.id")
+        .where("price_packages.user_id", artistId).orderBy("tier")
+        .then((packages) => {
+          let artistData = {
+            images: images,
+            packages: packages
+          };
+          res.json(artistData);
+        });
+    });
 });
 
 app.get("/artists/:id/portfolio", (req, res) => {
@@ -104,7 +101,6 @@ app.get("/artists/:id/dashboard", (req, res) => {
   console.log("Artist Dashboard")
   knex('users').select('*').first().where({id : 5}).asCallback((err, data) => {
     if (err) throw err;
-    // console.log("Artist Dashboard", data);
     res.json(data);
   });
 });
@@ -126,7 +122,7 @@ app.post("/artists/:id/availability", (req, res) => {
 //OPPORTUNITIES
 
 app.get("/opportunities", (req, res) => {
-  console.log("Opportunity")
+  console.log("Opportunity");
   res.send("Opportunity");
 });
 
@@ -144,7 +140,7 @@ app.post("/opportunities/:id/apply", (req, res) => {
 
 //DASHBOARD
 app.get("/clients/:id/dashboard", (req, res) => {
-  console.log("Client Dashboard")
+  console.log("Client Dashboard");
   res.send("Client Dashboard");
 });
 

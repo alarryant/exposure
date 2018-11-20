@@ -165,27 +165,6 @@ a {
   width: 200px;
 }
 
-.profilepic-container {
-  width: 200px;
-  height: 200px;
-  overflow: hidden;
-  border-radius: 100px;
-  margin: 0px 25px;
-}
-
-.profilecontainer {
-  height: 250px;
-  width: 250px;
-  margin: 50px;
-  float: left;
-}
-
-.profilecontainer h1 {
-  text-align: center;
-  font-weight: 700;
-  width: 250px;
-}
-
 .profiledesc {
   display: inline-block;
   width: 500px;
