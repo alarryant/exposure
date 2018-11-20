@@ -110,8 +110,10 @@ class App extends Component {
                                                           packages={this.state.packages}/>} />
             {/* <Route path='/availability' name='dashboard' render={() => <Availability currentUser={this.state.user}/>} /> */}
             <Route path='/artists/:id/dashboard' name='dashboard' render={(props) => <Dashboard { ...props } />} />
-            <Route path='/search' name='search' render={() => <SearchResults searchWord={this.state.searchWord}
-                                                                             searchimages={this.state.searchimages} />} />
+            <Route path='/search' name='search' render={props => <SearchResults
+                                                                              { ...props }
+                                                                              searchWord={this.state.searchWord}
+                                                                              searchimages={this.state.searchimages} />} />
             <Route path='/artists/:id/portfolio' render={() => <Portfolio /> } />
             <Route exact path="/" render={() => (<Redirect to="/home" />)} />
             <Route component={ErrorPath} />
