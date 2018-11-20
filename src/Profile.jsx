@@ -199,7 +199,13 @@ class Profile extends React.Component {
     });
   }
 
+  componentDidMount() {
+    console.log("ComponentDidMount params ID", props.params.id)
+
+  }
+
   render() {
+    console.log("Profile Page params ID", this.props.params)
 
   return (
 
@@ -214,7 +220,7 @@ class Profile extends React.Component {
       <br />
       <a href="/portfolio"><h5>See full portfolio</h5></a>
     </div>
-    <Portfolio />
+      <Portfolio />
     <AvailabilityCard />
     <PackagesCard packages={this.props.packages}/>
   </div>
