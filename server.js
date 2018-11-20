@@ -35,7 +35,7 @@ app.use((req, res, next) => {
 });
 
 app.get("/homephotos", (req, res) => {
-  knex('images').select('id', 'src', 'category')
+  knex('images').select('id', 'src', 'category', 'image_owner')
       .asCallback((err, data) => {
         if (err) throw err;
         res.json(data);
@@ -109,16 +109,19 @@ knex('users').where('email', email).then((data) => {
 
 // SEARCH
 app.get("/search", (req, res) => {
-  console.log("Search Page");
-  res.send("Search Page");
+  let queryWord = (req.query.searchWord).toLowerCase()
+  knex('images')
+    .where(
+      knex.raw('LOWER("title") like ?',`%${queryWord}%`))
+    .orWhere(
+      knex.raw('LOWER("description") like ?',`%${queryWord}%`))
+    .orWhere(
+      knex.raw('LOWER("category") like ?', `%${queryWord}%`))
+    .select('*')
+    .then(function(images) {
+      res.json(images)
+    })
 });
-
-
-app.post("/search", (req, res) => {
-  console.log(req.body.searchWord);
-  res.send("Search Page");
-});
-
 
 //IMAGE
 app.post("/images/:id", (req, res) => {
@@ -132,9 +135,18 @@ app.get("/artists/:id", (req, res) => {
   res.send("Artist Profile Page");
 });
 
-app.get("/artists/:id/dashboard", (req, res) => {
+app.get("/artists/:id/portfolio", (req, res) => {
+  console.log("Artist Profile Page")
+  res.send("Artist Profile Page");
+});
+
+app.get("/api/artists/:id/dashboard", (req, res) => {
   console.log("Artist Dashboard")
-  res.send("Artist Dashboard");
+  knex('users').select('*').first().where({id : 5}).asCallback((err, data) => {
+    if (err) throw err;
+    // console.log("Artist Dashboard", data);
+    res.json(data);
+  });
 });
 
 app.post("/artists/:id/edit", (req, res) => {

@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
-import Carousel from 'react-bootstrap/lib/Carousel';
 import SeeAvailability from './SeeAvailability.jsx';
 import Portfolio from './Portfolio.jsx';
+import Avatar from './components/Avatar.jsx';
+import Slider from "react-slick";
+
+import Link from 'react-router-dom';
+import axios from 'axios';
 // import ProfilePic from '../public/artist_profile.jpg';
 
 
@@ -10,18 +14,6 @@ import Portfolio from './Portfolio.jsx';
 
 // }
 
-class Avatar extends React.Component {
-  render() {
-    return (
-      <div className="profilecontainer">
-        <div className="profilepic-container">
-          <img className="profilepic" src={require("./artist_profile.jpg")}/>
-        </div>
-        <h1>Steve Irwin</h1>
-      </div>
-    );
-  }
-}
 
 class ProfileDesc extends React.Component {
   render() {
@@ -185,21 +177,47 @@ class Profile extends React.Component {
 
   constructor(props) {
     super(props);
-
+    this.state = {
+      artist: {}
+    }
     this.addCarouselPhotos = this.addCarouselPhotos.bind(this);
   }
 
   addCarouselPhotos(photos=[]) {
     return photos.map(function(photo) {
       return (
-        <Carousel.Item>
+        <div className="sliderImg" >
           <img alt="900x500" src={photo.src} />
-        </Carousel.Item>
+        </div>
         )
     });
   }
 
+  componentWillMount() {
+
+    const { id } = this.props.match.params;
+
+    axios.get(`/artists/${ id }`)
+    .then(artist => {
+      debugger;
+    })
+
+  }
+
   render() {
+
+    console.log("Profile Page params ID", this.props.params)
+
+    const settings = {
+      infinite: true,
+      centerMode: true,
+      slidesToShow: 2,
+      slidesToScroll: 1,
+      rows: 1,
+      autoplay: true,
+      focusOnSelect: true,
+    };
+
 
   return (
 
@@ -208,13 +226,13 @@ class Profile extends React.Component {
     <ProfileDesc />
     <div className="featuredPortfolio">
       <h1>Featured Photos:</h1>
-      <Carousel>
-      {this.addCarouselPhotos(this.props.featuredphotos)}
-      </Carousel>
+      <Slider {...settings} >
+        {this.addCarouselPhotos(this.props.featuredphotos)}
+      </Slider>
       <br />
-      <a href="/portfolio"><h5>See full portfolio</h5></a>
+      {/*<a href="/portfolio"><h5>See full portfolio</h5></a>*/}
     </div>
-    <Portfolio />
+      <Portfolio />
     <AvailabilityCard />
     <PackagesCard packages={this.props.packages}/>
   </div>

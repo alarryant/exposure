@@ -5,11 +5,13 @@ import Navbar from './Navbar.jsx';
 import SearchBar from './SearchBar.jsx';
 import Footer from './Footer.jsx';
 import Home from './Home.jsx';
+import Dashboard from './Dashboard.jsx';
 import SearchResults from './SearchResults.jsx';
 import ErrorPath from './Error404.jsx';
 import Profile from './Profile.jsx';
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect, withRouter } from "react-router-dom";
 import Availability from './Availability.jsx';
+import Portfolio from './Portfolio.jsx';
 
 
 class App extends Component {
@@ -19,7 +21,6 @@ class App extends Component {
 
     this.state = {
       user: {id: 1},
-      // categories: [],
       searchWord: "",
       firstName: "",
       lastName: "",
@@ -98,9 +99,14 @@ class App extends Component {
 
   //SEARCH FEATURE
   searchResult(word) {
-    axios.post("/search", {searchWord: word})
+    axios.get("/search", {
+      params: {
+        searchWord: word
+      }
+    })
      .then((res) => {
-        this.setState({redirect: true, searchWord: word});
+        console.log("SearchResult, App.js", res)
+        this.setState({redirect: true, searchWord: word, searchimages: res.data});
       });
   }
 
@@ -124,7 +130,6 @@ class App extends Component {
     axios.get("/packages")
       .then(res => this.setState({packages: res.data}));
 
-
     // axios.get("/search")
     //   .then(res => console.log(res.data));
 
@@ -144,7 +149,6 @@ class App extends Component {
 
   }
 
-
   render() {
     console.log("this is app.jsx", this.state.packages);
     return (
@@ -158,9 +162,15 @@ class App extends Component {
           <SearchBar searchResult = { this.searchResult }/>
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos} />} />
-            <Route path='/profile' render={() => <Profile featuredphotos={this.state.featuredphotos}
+            <Route path='/artist/:id' render={props => <Profile
+                                                          { ...props }
+                                                          featuredphotos={this.state.featuredphotos}
                                                           packages={this.state.packages}/>} />
-            <Route path='/search' name='search' render={() => <SearchResults searchWord={this.state.searchWord} />} />
+            {/* <Route path='/availability' name='dashboard' render={() => <Availability currentUser={this.state.user}/>} /> */}
+            <Route path='/artists/:id/dashboard' name='dashboard' render={(props) => <Dashboard { ...props } />} />
+            <Route path='/search' name='search' render={() => <SearchResults searchWord={this.state.searchWord}
+                                                                             searchimages={this.state.searchimages} />} />
+            <Route path='/artist/:id/portfolio' render={() => <Portfolio /> } />
             <Route exact path="/" render={() => (<Redirect to="/home" />)} />
             <Route component={ErrorPath} />
           </Switch>
