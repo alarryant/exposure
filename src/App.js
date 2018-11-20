@@ -25,6 +25,11 @@ class App extends Component {
       lastName: "",
       email: "",
       password: "",
+      websiteUrl: "",
+      instagramUrl: "",
+      facebookUrl: "",
+      twitterUrl: "",
+      location: "",
       redirect: false,
       availability: {
         start_date: null,
@@ -59,10 +64,26 @@ class App extends Component {
   signupInfo(firstName, lastName, email, password, userType) {
     axios.post("/register", {firstName:firstName, lastName:lastName, email: email, password: password, userType: userType})
      .then((res) => {
-       console.log("I'm back on Client")
+       console.log("I'm back on Client", res.data)
         this.setState({redirect: true, firstName:firstName, lastName:lastName, email: email, password: password, userType: userType});
       });
   }
+
+  //EDIT PROFILE FEATURE
+  editProfileInfo(firstName, lastName, email, password, website, instagram, facebook, twitter, location) {
+    axios.post("/search", {firstName:firstName, lastName:lastName, email: email, password: password, website: website, instagram: instagram, facebook: facebook, twitter: twitter, location: location})
+     .then((res) => {
+        this.setState({redirect: true, firstName:firstName, lastName:lastName, email: email, password: password, website: website, instagram: instagram, facebook: facebook, twitter: twitter, location: location});
+      });
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      this.setState({redirect: false})
+      return <Redirect to='/search' />
+    }
+  }
+
 
   //SEARCH FEATURE
   searchResult(word) {

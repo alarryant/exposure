@@ -88,7 +88,7 @@ knex('users').where('email', email).then((data) => {
                           password: bcrypt.hashSync(password),
                           user_type_id: userType}).returning("id")
       .then((user_id) => {
-        req.session.userId = +user_id;
+        console.log("Need to assign to cookie session? ", req.session)
         res.json(req.session.userId);
         });
       }
@@ -127,7 +127,9 @@ app.get("/artists/:id/dashboard", (req, res) => {
 });
 
 app.post("/artists/:id/edit", (req, res) => {
-  res.send("Artist Edit Dashboard");
+console.log(req.body)
+
+  res.send("Artist Edit Profile");
 });
 
 app.post("/artists/:id/review", (req, res) => {
