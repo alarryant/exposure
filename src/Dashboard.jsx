@@ -31,7 +31,7 @@ class Dashboard extends React.Component {
     this.state = {
       name: '',
       avatar: null,
-      events: []
+      // events: []
     }
 
     this.getUser = this.getUser.bind(this);
@@ -40,11 +40,11 @@ class Dashboard extends React.Component {
   componentDidMount() {
     // do an axios call to get information for user
     axios.get(`/api/artists/${this.props.match.params.id}/dashboard`).then(response => {
+      console.log("RESPONSE: ", response.data);
       this.setState((prevState) => {
         return {
-          name: response.data.name,
-          avatar: response.data.avatar,
-          events: response.data.events
+          name: response.data.first_name + " " + response.data.last_name,
+          avatar: response.data.profile_image
         }
       })
     })

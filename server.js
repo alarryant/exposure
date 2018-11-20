@@ -93,27 +93,10 @@ app.get("/artists/:id", (req, res) => {
 
 app.get("/api/artists/:id/dashboard", (req, res) => {
   console.log("Artist Dashboard")
-  // knex('users').select('*').where("id" =  3).asCallback((err, data) => {
-  //   if (err) throw err;
-  //   res.json(data);
-  // });
-  res.json({
-    name: 'Susan Malloy',
-    avatar: 'https://api.adorable.io/avatars/285/abott@adorable.png',
-    events: [
-      {
-        title: 'First Event',
-        date: Date.now(),
-        type: 'Birthday',
-        description: 'A longer description of the birthday'
-      },
-      {
-        title: 'Second Event',
-        date: Date.now(),
-        type: 'Graduation',
-        description: 'A longer description of the graduation'
-      }
-    ]
+  knex('users').select('*').first().where({id : 5}).asCallback((err, data) => {
+    if (err) throw err;
+    // console.log("Artist Dashboard", data);
+    res.json(data);
   });
 });
 
