@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import SeeAvailability from './SeeAvailability.jsx';
 import Portfolio from './Portfolio.jsx';
+import Avatar from './components/Avatar.jsx';
 import Slider from "react-slick";
 
 import Link from 'react-router-dom';
@@ -13,18 +14,6 @@ import axios from 'axios';
 
 // }
 
-class Avatar extends React.Component {
-  render() {
-    return (
-      <div className="profilecontainer">
-        <div className="profilepic-container">
-          <img className="profilepic" src={require("./artist_profile.jpg")}/>
-        </div>
-        <h1>Steve Irwin</h1>
-      </div>
-    );
-  }
-}
 
 class ProfileDesc extends React.Component {
   render() {
