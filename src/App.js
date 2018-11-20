@@ -19,7 +19,6 @@ class App extends Component {
 
     this.state = {
       user: {id: 1},
-      // categories: [],
       searchWord: "",
       redirect: false,
       availability: {

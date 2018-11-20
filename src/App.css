@@ -201,6 +201,21 @@ a {
   margin-left: 75px;
 }
 
+.slider {
+  background-color: white;
+}
+
+.sliderImg {
+  max-width: 400px;
+  max-height: 400px;
+}
+
+.sliderImg img {
+  height: 90%;
+  width: 90%;
+  margin: auto
+}
+
 .Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
     background-color: #f0f8ff !important;
     color: #4a90e2;
