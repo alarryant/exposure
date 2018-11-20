@@ -3,6 +3,7 @@ import Splashart from './Splashart.jpg';
 // import Carousel from 'react-bootstrap/lib/Carousel';
 import sampleSize from 'lodash.samplesize';
 import Slider from "react-slick";
+import { Link } from 'react-router-dom';
 
 
 class Home extends React.Component {
@@ -20,18 +21,18 @@ class Home extends React.Component {
   }
 
   addCarouselPhotos(category, photos=[]) {
+
     let filteredPhotos = this.categorizePhotos(category, photos);
 
     return filteredPhotos.map(function(photo) {
       return (
         <div className="sliderImg" >
           <img alt="900x500" src={photo.src} />
+          <Link to={`/artist/${ photo.image_owner }`}>{ photo.image_owner }</Link>
         </div>
         )
     });
   }
-
-
 
   render() {
     const settings = {
