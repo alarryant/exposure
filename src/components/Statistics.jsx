@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Sparklines, SparklinesLine } from 'react-sparklines';
 
 class Statistics extends React.Component {
     constructor(props) {
@@ -7,7 +8,9 @@ class Statistics extends React.Component {
     render() {
         return (
             <div>
-                <h2>This is the stats widget.</h2>
+                <Sparklines data={[5, 10, 5, 20, 5, 10, 5, 20]}>
+                    <SparklinesLine color="blue" />
+                </Sparklines>
             </div>
         );
     }

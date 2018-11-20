@@ -23,6 +23,7 @@
     "react-router-dom": "^4.4.0-beta.6",
     "react-scripts": "2.1.1",
     "react-slick": "^0.23.2",
+    "react-sparklines": "^1.7.0",
     "react-tabs": "^2.3.0",
     "webpack": "^4.25.1"
   },

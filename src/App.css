@@ -295,3 +295,9 @@ a {
   background-color: white;
 
 }
+
+
+.contentWrapper {
+  overflow: hidden;
+  margin-top: 40px;
+}

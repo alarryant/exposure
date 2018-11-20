@@ -166,7 +166,7 @@ class App extends Component {
               {...props}
               featuredphotos={this.state.featuredphotos}
               packages={this.state.packages} />} />
-            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} />} />
+            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={this.state.currentUser} />} />
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
               searchWord={this.state.searchWord}

@@ -19,6 +19,13 @@ const right = {
   float: 'right'
 };
 
+const tabStyle = {
+  width: '50%',
+  margin: '0 auto'
+};
+
+
+
 class Dashboard extends React.Component {
 
   constructor(props) {
@@ -32,14 +39,13 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    // do an axios call to get information for user
-    axios.get(`/api/artists/${this.props.match.params.id}/dashboard`).then(response => {
-      console.log("RESPONSE: ", response.data);
+    axios.get(`/dashboard`).then(response => {
+      console.log("RESPONSE: ", response.data[0]);
       this.setState((prevState) => {
         return {
-          name: response.data.first_name + " " + response.data.last_name,
-          avatar: response.data.profile_image,
-          type: response.data.user_type_id
+          name: response.data[0].first_name + " " + response.data[0].last_name,
+          avatar: response.data[0].profile_image,
+          type: response.data[0].user_type_id
         }
       })
     })
@@ -47,22 +53,24 @@ class Dashboard extends React.Component {
 
   render() {
     const userType = this.state.type;
+    console.log("THE PROPS: ", this.props.currentUser);
 
     const tabs = (
-      <Tabs>
-        <TabList>
-          <Tab>Availability</Tab>
-          <Tab>Statistics</Tab>
-        </TabList>
+      <div style={tabStyle}>
+        <Tabs>
+          <TabList>
+            <Tab>Availability</Tab>
+            <Tab>Statistics</Tab>
+          </TabList>
 
-        <TabPanel>
-          <Availability />
-        </TabPanel>
-        <TabPanel>
-          <Statistics />
-        </TabPanel>
-      </Tabs>
-
+          <TabPanel>
+            <Availability />
+          </TabPanel>
+          <TabPanel>
+            <Statistics />
+          </TabPanel>
+        </Tabs>
+      </div>
     );
 
     return (
