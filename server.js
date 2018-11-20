@@ -37,7 +37,7 @@ app.get("/homephotos", (req, res) => {
   knex('images').select('id', 'src', 'category', 'image_owner')
       .asCallback((err, data) => {
         if (err) throw err;
-        console.log(data);
+        // console.log(data);
         res.json(data);
       });
 });
@@ -52,7 +52,7 @@ app.get("/featured", (req, res) => {
 app.get("/packages", (req, res) => {
   knex('price_packages').select('*').where("user_id", "=", 1).asCallback((err, data) => {
     if (err) throw err;
-    console.log("this is server side query results", data);
+    // console.log("this is server side query results", data);
     res.json(data);
   });
 });
@@ -90,8 +90,15 @@ app.post("/images/:id", (req, res) => {
 
 //ARTIST
 app.get("/artists/:id", (req, res) => {
-  console.log("Artist Profile Page")
-  res.send("Artist Profile Page");
+  console.log(req.params.id)
+  let artistID = req.params.id
+  knex('images')
+    .where('image_owner', artistID)
+    .select('*')
+    .then(function(images) {
+      console.log(images)
+      res.json(images)
+    })
 });
 
 app.get("/artists/:id/portfolio", (req, res) => {
