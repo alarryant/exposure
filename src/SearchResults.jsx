@@ -14,6 +14,7 @@ class SearchResults extends Component {
     } else {
       return images.map(function(image) {
         return <img className="searchResult" src={image.src} />
+        // Need to link image to profile page
       })
     }
   }
@@ -22,10 +23,10 @@ class SearchResults extends Component {
 
     return(
       <div>
-        <p>
-        Here's what we found on "{this.props.searchWord}"
-        </p>
         <section className="wrapper">
+        <h2>
+        Here's what we found on "{this.props.searchWord}"
+        </h2>
         {this.displaySearchedImages(this.props.searchimages)}
         </section>
       </div>
