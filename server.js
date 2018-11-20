@@ -94,6 +94,11 @@ app.get("/artists/:id", (req, res) => {
   res.send("Artist Profile Page");
 });
 
+app.get("/artists/:id/portfolio", (req, res) => {
+  console.log("Artist Profile Page")
+  res.send("Artist Profile Page");
+});
+
 app.get("/artists/:id/dashboard", (req, res) => {
   console.log("Artist Dashboard")
   res.send("Artist Dashboard");
