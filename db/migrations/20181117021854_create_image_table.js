@@ -1,12 +1,13 @@
 
 exports.up = function(knex, Promise) {
     return knex.schema.createTable('images', function (table) {
-        table.increments('id')
+        table.increments('id').primary();
         table.text('title').notNull();
         table.text('description').notNull();
-        table.string('featured?').notNull();
+        table.string('featured').notNull();
         table.text('category').notNull();
-        
+        table.text('src').notNull();
+
         table.integer('image_owner').notNull();
         table.foreign('image_owner').references('id').inTable('users').onDelete('CASCADE');
     });

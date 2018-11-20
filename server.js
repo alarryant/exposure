@@ -1,18 +1,18 @@
-// require('dotenv').config()
+require('dotenv').config();
+const env = process.env.ENV || 'development';
+
 const express = require("express");
 const app = express();
 const PORT = 3001;
 const bodyParser = require("body-parser")
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 const knexConfig = require('./knexfile');
-const knex = require('knex')(knexConfig[ENV]);
+const knex = require('knex')(knexConfig[env]);
 const morgan = require('morgan');
 const knexLogger = require('knex-logger');
 
-// Seperated Routes for each Resource
-// const usersRoutes = require('./routes');
 
 app.use(express.static('public'));
 
@@ -23,12 +23,7 @@ app.use(express.static('public'));
 app.use(morgan('dev'));
 
 // Log knex SQL queries to STDOUT as well
-app.use(knexLogger(knex));
-
-function randomImgGenerator(category) {
-  knex('images').where("specialization", "=", category).orderBy(random()).limit(6);
-};
-
+// app.use(knexLogger(knex));
 
 //TESTING ONLY - Shows req.path
 
@@ -38,17 +33,28 @@ app.use((req, res, next) => {
 });
 
 ///////////////
-app.get("/", (req, res) => {
-  console.log("Homepage");
-  res.send("Homepage");
-  knex.select('*')
-      .from('images')
-      .groupBy('specialization')
+app.get("/homephotos", (req, res) => {
+  knex('images').select('id', 'src', 'category', 'image_owner')
       .asCallback((err, data) => {
         if (err) throw err;
         console.log(data);
         res.json(data);
       });
+});
+
+app.get("/featured", (req, res) => {
+  knex('images').select('*').where("featured", "like", "true").asCallback((err, data) => {
+    if (err) throw err;
+    res.json(data);
+  });
+});
+
+app.get("/packages", (req, res) => {
+  knex('price_packages').select('*').where("user_id", "=", 1).asCallback((err, data) => {
+    if (err) throw err;
+    console.log("this is server side query results", data);
+    res.json(data);
+  });
 });
 
 app.post("/login", (req, res) => {
@@ -62,16 +68,19 @@ app.post("/register", (req, res) => {
 
 // SEARCH
 app.get("/search", (req, res) => {
-  console.log("Search Page")
-  res.send("Search Page");
+  let queryWord = (req.query.searchWord).toLowerCase()
+  knex('images')
+    .where(
+      knex.raw('LOWER("title") like ?',`%${queryWord}%`))
+    .orWhere(
+      knex.raw('LOWER("description") like ?',`%${queryWord}%`))
+    .orWhere(
+      knex.raw('LOWER("category") like ?', `%${queryWord}%`))
+    .select('*')
+    .then(function(images) {
+      res.json(images)
+    })
 });
-
-
-app.post("/search", (req, res) => {
-  console.log(req.body.searchWord)
-  res.send("Search Page");
-});
-
 
 //IMAGE
 app.post("/images/:id", (req, res) => {
@@ -85,9 +94,18 @@ app.get("/artists/:id", (req, res) => {
   res.send("Artist Profile Page");
 });
 
-app.get("/artists/:id/dashboard", (req, res) => {
+app.get("/artists/:id/portfolio", (req, res) => {
+  console.log("Artist Profile Page")
+  res.send("Artist Profile Page");
+});
+
+app.get("/api/artists/:id/dashboard", (req, res) => {
   console.log("Artist Dashboard")
-  res.send("Artist Dashboard");
+  knex('users').select('*').first().where({id : 5}).asCallback((err, data) => {
+    if (err) throw err;
+    // console.log("Artist Dashboard", data);
+    res.json(data);
+  });
 });
 
 app.post("/artists/:id/edit", (req, res) => {
@@ -99,6 +117,7 @@ app.post("/artists/:id/review", (req, res) => {
 });
 
 app.post("/artists/:id/availability", (req, res) => {
+  console.log("this is server side", req.body.availability);
   res.send("Artist Availability");
 });
 
