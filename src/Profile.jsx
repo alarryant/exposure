@@ -4,7 +4,7 @@ import Portfolio from './Portfolio.jsx';
 import Avatar from './components/Avatar.jsx';
 import Slider from "react-slick";
 
-import Link from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 // import ProfilePic from '../public/artist_profile.jpg';
 
@@ -178,9 +178,12 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      artist: {}
+      artist: {},
+      photoview: 'featured'
     }
     this.addCarouselPhotos = this.addCarouselPhotos.bind(this);
+    this.showPortfolio = this.showPortfolio.bind(this)
+    this.showFeatures = this.showFeatures.bind(this)
   }
 
   addCarouselPhotos(photos=[]) {
@@ -193,21 +196,29 @@ class Profile extends React.Component {
     });
   }
 
+  showPortfolio = () => {
+    console.log("Show Portfolio")
+    this.setState({photoview: "portfolio"}, console.log("Show Portfolio:", this.state))
+  }
+
+  showFeatures = () => {
+    console.log("Show Features")
+    this.setState({photoview: "featured"}, console.log("Show Features", this.state))
+  }
+
   componentDidMount() {
 
     const { id } = this.props.match.params;
-    console.log("Did Mount", id)
 
     axios.get(`/artists/${ id }`)
-    .then(artist => {
-      debugger;
+    .then(photos => {
+      console.log("profile did mount photos", photos.data)
+      this.setState({'portfolio' : photos.data});
     })
 
   }
 
   render() {
-
-    console.log("Profile Page params ID", this.props.params)
 
     const settings = {
       infinite: true,
@@ -219,26 +230,42 @@ class Profile extends React.Component {
       focusOnSelect: true,
     };
 
+    if(this.state.photoview === 'featured') {
+      return (
+        <div className="profile">
+          <Avatar />
+          <ProfileDesc />
+          <div className="featuredPortfolio">
+           <button onClick={this.showPortfolio}>
+              See Full Portfolio
+            </button>
+            <h1>Featured Photos:</h1>
 
-  return (
-
-  <div className="profile">
-    <Avatar />
-    <ProfileDesc />
-    <div className="featuredPortfolio">
-      <h1>Featured Photos:</h1>
-      <Slider {...settings} >
-        {this.addCarouselPhotos(this.props.featuredphotos)}
-      </Slider>
-      <br />
-      {/*<a href="/portfolio"><h5>See full portfolio</h5></a>*/}
-    </div>
-      <Portfolio />
-    <AvailabilityCard />
-    <PackagesCard packages={this.props.packages}/>
-  </div>
-  );
- }
+            <Slider {...settings} >
+              {this.addCarouselPhotos(this.props.featuredphotos)}
+            </Slider>
+          </div>
+          <AvailabilityCard />
+          <PackagesCard packages={this.props.packages}/>
+        </div>
+      );
+    } else {
+      return (
+        <div className="profile">
+          <Avatar />
+          <ProfileDesc />
+          <div className="featuredPortfolio">
+            <button onClick={this.showFeatures}>
+              See Featured Photos
+            </button>
+            <h1>Portfolio Photos:</h1>
+            <Portfolio artistPhotos={this.state.portfolio} />
+          </div>
+          <AvailabilityCard />
+          <PackagesCard packages={this.props.packages}/>
+        </div>
+    )}
+  }
 }
 
 export default Profile;
