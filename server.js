@@ -99,7 +99,7 @@ app.get("/artists/:id/portfolio", (req, res) => {
   res.send("Artist Profile Page");
 });
 
-app.get("/artists/:id/dashboard", (req, res) => {
+app.get("/api/artists/:id/dashboard", (req, res) => {
   console.log("Artist Dashboard")
   knex('users').select('*').first().where({id : 5}).asCallback((err, data) => {
     if (err) throw err;
