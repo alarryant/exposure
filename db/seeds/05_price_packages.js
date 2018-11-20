@@ -1,3 +1,4 @@
+
 exports.seed = function(knex, Promise) {
   return Promise.all([
     knex('price_packages').insert(

@@ -236,8 +236,11 @@ class Profile extends React.Component {
           <Avatar />
           <ProfileDesc />
           <div className="featuredPortfolio">
-           <button onClick={this.showPortfolio}>
-              See Full Portfolio
+            <button onClick={this.showPortfolio}>
+              View Portfolio
+            </button>
+            <button onClick={this.showFeatures}>
+              Featured Photos
             </button>
             <h1>Featured Photos:</h1>
 
@@ -255,8 +258,11 @@ class Profile extends React.Component {
           <Avatar />
           <ProfileDesc />
           <div className="featuredPortfolio">
+            <button onClick={this.showPortfolio}>
+              View Portfolio
+            </button>
             <button onClick={this.showFeatures}>
-              See Featured Photos
+              Featured Photos
             </button>
             <h1>Portfolio Photos:</h1>
             <Portfolio artistPhotos={this.state.portfolio} />
