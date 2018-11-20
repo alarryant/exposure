@@ -104,6 +104,7 @@ class App extends Component {
           <SearchBar searchResult = { this.searchResult }/>
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos} />} />
+
             <Route path='/artists/:id' render={props => <Profile
                                                           { ...props }
                                                           featuredphotos={this.state.featuredphotos}
@@ -114,7 +115,6 @@ class App extends Component {
                                                                               { ...props }
                                                                               searchWord={this.state.searchWord}
                                                                               searchimages={this.state.searchimages} />} />
-            <Route path='/artists/:id/portfolio' render={() => <Portfolio /> } />
             <Route exact path="/" render={() => (<Redirect to="/home" />)} />
             <Route component={ErrorPath} />
           </Switch>
