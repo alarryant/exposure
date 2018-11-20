@@ -5,6 +5,7 @@ import Navbar from './Navbar.jsx';
 import SearchBar from './SearchBar.jsx';
 import Footer from './Footer.jsx';
 import Home from './Home.jsx';
+import Dashboard from './Dashboard.jsx';
 import SearchResults from './SearchResults.jsx';
 import ErrorPath from './Error404.jsx';
 import Profile from './Profile.jsx';
@@ -88,7 +89,6 @@ class App extends Component {
     axios.get("/packages")
       .then(res => this.setState({packages: res.data}));
 
-
     // axios.get("/search")
     //   .then(res => console.log(res.data));
 
@@ -108,7 +108,6 @@ class App extends Component {
 
   }
 
-
   render() {
     console.log("this is app.jsx", this.state.packages);
     return (
@@ -122,7 +121,9 @@ class App extends Component {
             <Route path='/artists/:id' render={props => <Profile
                                                           { ...props }
                                                           featuredphotos={this.state.featuredphotos}
-                                                          packages={this.state.packages} />} />
+                                                          packages={this.state.packages}/>} />
+            {/* <Route path='/availability' name='dashboard' render={() => <Availability currentUser={this.state.user}/>} /> */}
+            <Route path='/artists/:id/dashboard' name='dashboard' render={(props) => <Dashboard { ...props } />} />
             <Route path='/search' name='search' render={() => <SearchResults searchWord={this.state.searchWord}
                                                                              searchimages={this.state.searchimages} />} />
             <Route path='/artists/:id/portfolio' render={() => <Portfolio /> } />

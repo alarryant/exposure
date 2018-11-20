@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import SeeAvailability from './SeeAvailability.jsx';
 import Portfolio from './Portfolio.jsx';
+import Avatar from './components/Avatar.jsx';
 import Slider from "react-slick";
 
 import Link from 'react-router-dom';
@@ -10,12 +11,6 @@ class Avatar extends React.Component {
   constructor(props) {
     super(props);
   }
-
-  // componentDidMount() {
-    // this.props.queryByArtist(this.props.artistId);
-
-  // }
-
 
   render() {
     return (

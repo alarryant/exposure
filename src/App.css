@@ -1,4 +1,5 @@
 body {
+  min-width: 1024px;
   font-family: 'Josefin Sans', sans-serif;
 }
 
@@ -28,6 +29,7 @@ a {
   background-color: #e2ecfc;
   height: 75px;
   text-align: center;
+  clear: both;
 }
 
 .footer i {

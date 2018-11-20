@@ -102,7 +102,11 @@ app.get("/artists/:id/portfolio", (req, res) => {
 
 app.get("/artists/:id/dashboard", (req, res) => {
   console.log("Artist Dashboard")
-  res.send("Artist Dashboard");
+  knex('users').select('*').first().where({id : 5}).asCallback((err, data) => {
+    if (err) throw err;
+    // console.log("Artist Dashboard", data);
+    res.json(data);
+  });
 });
 
 app.post("/artists/:id/edit", (req, res) => {
