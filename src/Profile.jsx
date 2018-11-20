@@ -3,6 +3,8 @@ import SeeAvailability from './SeeAvailability.jsx';
 import Portfolio from './Portfolio.jsx';
 import Slider from "react-slick";
 
+import Link from 'react-router-dom';
+import axios from 'axios';
 // import ProfilePic from '../public/artist_profile.jpg';
 
 
@@ -186,7 +188,9 @@ class Profile extends React.Component {
 
   constructor(props) {
     super(props);
-
+    this.state = {
+      artist: {}
+    }
     this.addCarouselPhotos = this.addCarouselPhotos.bind(this);
   }
 
@@ -200,8 +204,14 @@ class Profile extends React.Component {
     });
   }
 
-  componentDidMount() {
-    console.log("ComponentDidMount params ID", props.params.id)
+  componentWillMount() {
+
+    const { id } = this.props.match.params;
+
+    axios.get(`/artists/${ id }`)
+    .then(artist => {
+      debugger;
+    })
 
   }
 
@@ -231,7 +241,7 @@ class Profile extends React.Component {
         {this.addCarouselPhotos(this.props.featuredphotos)}
       </Slider>
       <br />
-      <a href="/portfolio"><h5>See full portfolio</h5></a>
+      {/*<a href="/portfolio"><h5>See full portfolio</h5></a>*/}
     </div>
       <Portfolio />
     <AvailabilityCard />
