@@ -17,7 +17,6 @@ class Avatar extends React.Component {
     super(props);
   }
     render() {
-      //console.log("IN AVATAR: ", this.props.user.id.first_name);
       return (
         <div className='avatarWidget' style={avatarWidget}>
           { this.props.avatar && <img className='avatarWidget__img' style={avatarWidget__img} src={ this.props.avatar }/> }
