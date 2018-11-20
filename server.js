@@ -35,7 +35,7 @@ app.use((req, res, next) => {
 });
 
 app.get("/homephotos", (req, res) => {
-  knex('images').select('id', 'src', 'category', 'image_owner')
+  knex('images').select('id', 'title', 'description', 'src', 'category', 'image_owner')
       .asCallback((err, data) => {
         if (err) throw err;
         res.json(data);
@@ -72,12 +72,12 @@ app.post("/login", (req, res) => {
   }
   });
 
+
 // LOGOUT
 app.post("/logout", (req, res) => {
   req.session.user_id = null;
   res.json(req.session.user_id);
   });
-
 
 
 // REGISTER
