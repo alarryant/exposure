@@ -34,7 +34,7 @@ app.use((req, res, next) => {
 
 ///////////////
 app.get("/homephotos", (req, res) => {
-  knex('images').select('id', 'src', 'category')
+  knex('images').select('id', 'src', 'category', 'image_owner')
       .asCallback((err, data) => {
         if (err) throw err;
         console.log(data);
@@ -94,6 +94,11 @@ app.get("/artists/:id", (req, res) => {
   knex('images').where('artist_id', artistId).then(function(images) {
     res.json(images);
   });
+});
+
+app.get("/artists/:id/portfolio", (req, res) => {
+  console.log("Artist Profile Page")
+  res.send("Artist Profile Page");
 });
 
 app.get("/artists/:id/dashboard", (req, res) => {

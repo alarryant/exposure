@@ -8,8 +8,9 @@ import Home from './Home.jsx';
 import SearchResults from './SearchResults.jsx';
 import ErrorPath from './Error404.jsx';
 import Profile from './Profile.jsx';
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect, withRouter } from "react-router-dom";
 import Availability from './Availability.jsx';
+import Portfolio from './Portfolio.jsx';
 
 
 class App extends Component {
@@ -118,11 +119,13 @@ class App extends Component {
           <SearchBar searchResult = { this.searchResult }/>
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos} />} />
-            <Route path='/artists/1' render={() => <Profile featuredphotos={this.state.featuredphotos}
-                                                          packages={this.state.packages}
-                                                          queryByArtist={this.queryByArtist}/>} />
+            <Route path='/artist/:id' render={props => <Profile
+                                                          { ...props }
+                                                          featuredphotos={this.state.featuredphotos}
+                                                          packages={this.state.packages}/>} />
             <Route path='/search' name='search' render={() => <SearchResults searchWord={this.state.searchWord}
                                                                              searchimages={this.state.searchimages} />} />
+            <Route path='/artist/:id/portfolio' render={() => <Portfolio /> } />
             <Route exact path="/" render={() => (<Redirect to="/home" />)} />
             <Route component={ErrorPath} />
           </Switch>
