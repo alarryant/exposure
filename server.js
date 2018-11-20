@@ -35,20 +35,11 @@ app.use((req, res, next) => {
 });
 
 app.get("/homephotos", (req, res) => {
-<<<<<<< HEAD
-  knex('images').select('id', 'src', 'category', 'image_owner')
-    .asCallback((err, data) => {
-      if (err) throw err;
-      console.log(data);
-      res.json(data);
-    });
-=======
   knex('images').select('id', 'title', 'description', 'src', 'category', 'image_owner')
       .asCallback((err, data) => {
         if (err) throw err;
         res.json(data);
       });
->>>>>>> feature/image-modal
 });
 
 app.get("/featured", (req, res) => {

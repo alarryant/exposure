@@ -57,7 +57,7 @@ class Home extends React.Component {
                   <p>{photo.description}</p>
                 </Modal.Body>
                 <Modal.Footer>
-                <Link to={`/artist/${ this.state.image_owner }`}>{ photo.image_owner }</Link>
+                <Link to={`/artists/${ photo.image_owner }`}>{ photo.image_owner }</Link>
                 </Modal.Footer>
           </Modal>
         </div>
