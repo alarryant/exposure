@@ -28,7 +28,7 @@ class Home extends React.Component {
       return (
         <div className="sliderImg" >
           <img alt="900x500" src={photo.src} />
-          <Link to={`/artist/${ photo.image_owner }`}>{ photo.image_owner }</Link>
+          <Link to={`/artists/${ photo.image_owner }`}>{ photo.image_owner }</Link>
         </div>
         )
     });
