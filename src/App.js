@@ -162,13 +162,11 @@ class App extends Component {
           <SearchBar searchResult={this.searchResult} />
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos} />} />
-
             <Route path='/artists/:id' render={props => <Profile
               {...props}
               featuredphotos={this.state.featuredphotos}
               packages={this.state.packages} />} />
-            {/* <Route path='/availability' name='dashboard' render={() => <Availability currentUser={this.state.user}/>} /> */}
-            <Route path='/artists/:id/dashboard' name='dashboard' render={(props) => <Dashboard {...props} />} />
+            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} />} />
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
               searchWord={this.state.searchWord}
