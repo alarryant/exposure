@@ -68,16 +68,19 @@ app.post("/register", (req, res) => {
 
 // SEARCH
 app.get("/search", (req, res) => {
-  console.log("Search Page");
-  res.send("Search Page");
+  let queryWord = (req.query.searchWord).toLowerCase()
+  knex('images')
+    .where(
+      knex.raw('LOWER("title") like ?',`%${queryWord}%`))
+    .orWhere(
+      knex.raw('LOWER("description") like ?',`%${queryWord}%`))
+    .orWhere(
+      knex.raw('LOWER("category") like ?', `%${queryWord}%`))
+    .select('*')
+    .then(function(images) {
+      res.json(images)
+    })
 });
-
-
-app.post("/search", (req, res) => {
-  console.log(req.body.searchWord);
-  res.send("Search Page");
-});
-
 
 //IMAGE
 app.post("/images/:id", (req, res) => {

@@ -42,9 +42,14 @@ class App extends Component {
 
   //SEARCH FEATURE
   searchResult(word) {
-    axios.post("/search", {searchWord: word})
+    axios.get("/search", {
+      params: {
+        searchWord: word
+      }
+    })
      .then((res) => {
-        this.setState({redirect: true, searchWord: word});
+        console.log("SearchResult, App.js", res)
+        this.setState({redirect: true, searchWord: word, searchimages: res.data});
       });
   }
 
@@ -101,7 +106,8 @@ class App extends Component {
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos} />} />
             <Route path='/profile' render={() => <Profile featuredphotos={this.state.featuredphotos}
                                                           packages={this.state.packages}/>} />
-            <Route path='/search' name='search' render={() => <SearchResults searchWord={this.state.searchWord} />} />
+            <Route path='/search' name='search' render={() => <SearchResults searchWord={this.state.searchWord}
+                                                                             searchimages={this.state.searchimages} />} />
             <Route exact path="/" render={() => (<Redirect to="/home" />)} />
             <Route component={ErrorPath} />
           </Switch>
