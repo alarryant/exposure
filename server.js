@@ -90,8 +90,10 @@ app.post("/images/:id", (req, res) => {
 
 //ARTIST
 app.get("/artists/:id", (req, res) => {
-  console.log("Artist Profile Page")
-  res.send("Artist Profile Page");
+  let artistId = req.query.artistId;
+  knex('images').where('artist_id', artistId).then(function(images) {
+    res.json(images);
+  });
 });
 
 app.get("/artists/:id/dashboard", (req, res) => {

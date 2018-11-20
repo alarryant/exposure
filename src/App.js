@@ -24,11 +24,13 @@ class App extends Component {
       availability: {
         start_date: null,
         end_date: null
-      }
+      },
+      artistId: null
     };
 
     this.searchResult = this.searchResult.bind(this);
     this.renderRedirect = this.renderRedirect.bind(this);
+    this.queryByArtist = this.queryByArtist.bind(this);
     // this.saveAvailability = this.saveAvailability.bind(this);
 
   }
@@ -58,6 +60,18 @@ class App extends Component {
       this.setState({redirect: false})
       return <Redirect to='/search' />
     }
+  }
+
+  queryByArtist(id) {
+    axios.get(`/artist/${id}`, {
+      params: {
+        artistId: id
+      }
+    })
+    .then((res) => {
+      console.log("artist profile query, app.js", res)
+      this.setState({redirect: true, artistId: id, searchArtist: res.data});
+    });
   }
 
   componentDidMount() {
@@ -104,8 +118,9 @@ class App extends Component {
           <SearchBar searchResult = { this.searchResult }/>
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos} />} />
-            <Route path='/profile' render={() => <Profile featuredphotos={this.state.featuredphotos}
-                                                          packages={this.state.packages}/>} />
+            <Route path='/artists/1' render={() => <Profile featuredphotos={this.state.featuredphotos}
+                                                          packages={this.state.packages}
+                                                          queryByArtist={this.queryByArtist}/>} />
             <Route path='/search' name='search' render={() => <SearchResults searchWord={this.state.searchWord}
                                                                              searchimages={this.state.searchimages} />} />
             <Route exact path="/" render={() => (<Redirect to="/home" />)} />

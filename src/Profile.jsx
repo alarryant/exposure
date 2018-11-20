@@ -5,12 +5,6 @@ import Slider from "react-slick";
 
 // import ProfilePic from '../public/artist_profile.jpg';
 
-
-
-// class Carousel extends React.Component {
-
-// }
-
 class Avatar extends React.Component {
   render() {
     return (
@@ -198,6 +192,11 @@ class Profile extends React.Component {
         </div>
         )
     });
+  }
+
+  componentDidMount() {
+    this.props.queryByArtist(1);
+    console.log("profile jsx right after invocation");
   }
 
   render() {
