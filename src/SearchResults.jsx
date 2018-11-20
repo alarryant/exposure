@@ -13,7 +13,7 @@ class SearchResults extends Component {
       return (<p> Sorry! Nothing matches this description!</p>)
     } else {
       return images.map(function(image) {
-        return <img alt="900x500" src={image.src} />
+        return <img className="searchResult" src={image.src} />
       })
     }
   }
@@ -25,7 +25,7 @@ class SearchResults extends Component {
         <p>
         Here's what we found on "{this.props.searchWord}"
         </p>
-        <section>
+        <section className="wrapper">
         {this.displaySearchedImages(this.props.searchimages)}
         </section>
       </div>
