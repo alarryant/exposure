@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 const avatarWidget = {
   width: '200px',
@@ -15,14 +15,14 @@ class Avatar extends React.Component {
   constructor(props) {
     super(props);
   }
-    render() {
-      return (
-        <div className='avatarWidget' style={avatarWidget}>
-          { this.props.avatar && <img className='avatarWidget__img' style={ avatarWidget__img } src={ this.props.avatar }/> }
-          <h2 className='avatarWidget__name'>{ this.props.name }</h2>
-        </div>
-      );
-    }
+  render() {
+    return (
+      <div className='avatarWidget' style={avatarWidget}>
+        {this.props.avatar && <img className='avatarWidget__img' style={avatarWidget__img} src={this.props.avatar} />}
+        <h2 className='avatarWidget__name'>{this.props.name}</h2>
+      </div>
+    );
   }
+}
 
-  export default Avatar;
+export default Avatar;

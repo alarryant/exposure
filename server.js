@@ -35,11 +35,11 @@ app.use((req, res, next) => {
 ///////////////
 app.get("/homephotos", (req, res) => {
   knex('images').select('id', 'src', 'category', 'image_owner')
-      .asCallback((err, data) => {
-        if (err) throw err;
-        console.log(data);
-        res.json(data);
-      });
+    .asCallback((err, data) => {
+      if (err) throw err;
+      console.log(data);
+      res.json(data);
+    });
 });
 
 app.get("/featured", (req, res) => {
@@ -71,13 +71,13 @@ app.get("/search", (req, res) => {
   let queryWord = (req.query.searchWord).toLowerCase()
   knex('images')
     .where(
-      knex.raw('LOWER("title") like ?',`%${queryWord}%`))
+      knex.raw('LOWER("title") like ?', `%${queryWord}%`))
     .orWhere(
-      knex.raw('LOWER("description") like ?',`%${queryWord}%`))
+      knex.raw('LOWER("description") like ?', `%${queryWord}%`))
     .orWhere(
       knex.raw('LOWER("category") like ?', `%${queryWord}%`))
     .select('*')
-    .then(function(images) {
+    .then(function (images) {
       res.json(images)
     })
 });
@@ -101,7 +101,7 @@ app.get("/artists/:id/portfolio", (req, res) => {
 
 app.get("/api/artists/:id/dashboard", (req, res) => {
   console.log("Artist Dashboard")
-  knex('users').select('*').first().where({id : 5}).asCallback((err, data) => {
+  knex('users').select('*').first().where({ id: 2 }).asCallback((err, data) => {
     if (err) throw err;
     // console.log("Artist Dashboard", data);
     res.json(data);

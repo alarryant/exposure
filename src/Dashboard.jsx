@@ -1,7 +1,12 @@
 import React from 'react';
 import Avatar from './components/Avatar.jsx';
-import DayPicker, { DateUtils } from 'react-day-picker';
-import 'react-day-picker/lib/style.css';
+import Availability from './components/Availability.jsx';
+import Statistics from './components/Statistics.jsx';
+import Opportunities from './components/Opportunities.jsx';
+
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import "react-tabs/style/react-tabs.css";
+
 import axios from 'axios';
 
 const left = {
@@ -14,16 +19,6 @@ const right = {
   float: 'right'
 };
 
-const calendarWidget = {
-  width: '400px',
-  margin: '0 auto'
-};
-
-const statsWidget = {
-  width: '400px',
-  margin: '0 auto'
-};
-
 class Dashboard extends React.Component {
 
   constructor(props) {
@@ -31,10 +26,9 @@ class Dashboard extends React.Component {
     this.state = {
       name: '',
       avatar: null,
+      type: null
       // events: []
     }
-
-    this.getUser = this.getUser.bind(this);
   }
 
   componentDidMount() {
@@ -44,58 +38,55 @@ class Dashboard extends React.Component {
       this.setState((prevState) => {
         return {
           name: response.data.first_name + " " + response.data.last_name,
-          avatar: response.data.profile_image
+          avatar: response.data.profile_image,
+          type: response.data.user_type_id
         }
       })
     })
   }
 
-  getUser(user){
-    this.setState({currentUser : user});
-  }
-
   render() {
-  return (
-    <div className='contentWrapper'>
-      {/* start left */}
-      <div className='left' style={left}>
-        <Avatar name={ this.state.name } avatar={ this.state.avatar } />
-      </div>
+    const userType = this.state.type;
 
-      {/* start right */}
-      <div className='right' style={right}>
-        {/* start Calendar Widget */}
-        <div className='calendarWidget' style={calendarWidget}>
-          <a className='calendarWidget__title'>Calendar</a>
-          <div className='calendarWidget__calendar'>
-            <DayPicker
-              className="Selectable"
-              numberOfMonths={this.props.numberOfMonths}
-              initialMonth={new Date(2018, 11)}
-              disabledDays={[
-              new Date(2018, 11, 12),
-              new Date(2018, 11, 2),
-              {
-                after: new Date(2018, 11, 20),
-                before: new Date(2018, 11, 25),
-              },
-            ]}
-            />
-          </div>
+    const tabs = (
+      <Tabs>
+        <TabList>
+          <Tab>Availability</Tab>
+          <Tab>Statistics</Tab>
+        </TabList>
+
+        <TabPanel>
+          <Availability />
+        </TabPanel>
+        <TabPanel>
+          <Statistics />
+        </TabPanel>
+      </Tabs>
+
+    );
+
+    return (
+      <div className='contentWrapper'>
+
+        {/* start left */}
+        <div className='left' style={left}>
+          <Avatar name={this.state.name} avatar={this.state.avatar} />
         </div>
 
-        {/* start Statistic Widget */}
-        <div className='statsWidget' style={statsWidget}>
-          <a className='statsWidget__title'>Statistics</a>
-          <div className='statsWidget__graph'>
+        {/* start right */}
+        {userType === 1 ? (
+          <div className='right' style={right}>
+            {tabs}
           </div>
-        </div>
+        ) : (
+            <div className='right' style={right}>
+              <Opportunities />
+            </div>
+          )}
 
       </div>
-      
-    </div>
-  );
- }
+    );
+  }
 }
 
 export default Dashboard;

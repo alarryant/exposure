@@ -10,7 +10,7 @@ import SearchResults from './SearchResults.jsx';
 import ErrorPath from './Error404.jsx';
 import Profile from './Profile.jsx';
 import { BrowserRouter, Route, Switch, Redirect, withRouter } from "react-router-dom";
-import Availability from './Availability.jsx';
+import Availability from './components/Availability.jsx';
 import Portfolio from './Portfolio.jsx';
 
 
@@ -20,7 +20,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      user: {id: 1},
+      user: { id: 1 },
       searchWord: "",
       redirect: false,
       availability: {
@@ -35,11 +35,11 @@ class App extends Component {
 
   }
 
-// saveAvailability(dates) {
-//   this.setState({availability: {start_date: dates.start_date, end_date: dates.end_date}});
-//   axios.post(`/artists/${this.state.user.id}/availability`, {availability: this.state.availability})
-//     .then(res => console.log(res.data, 'availability data received from server'));
-// }
+  // saveAvailability(dates) {
+  //   this.setState({availability: {start_date: dates.start_date, end_date: dates.end_date}});
+  //   axios.post(`/artists/${this.state.user.id}/availability`, {availability: this.state.availability})
+  //     .then(res => console.log(res.data, 'availability data received from server'));
+  // }
 
 
   //SEARCH FEATURE
@@ -49,15 +49,15 @@ class App extends Component {
         searchWord: word
       }
     })
-     .then((res) => {
+      .then((res) => {
         console.log("SearchResult, App.js", res)
-        this.setState({redirect: true, searchWord: word, searchimages: res.data});
+        this.setState({ redirect: true, searchWord: word, searchimages: res.data });
       });
   }
 
   renderRedirect = () => {
     if (this.state.redirect) {
-      this.setState({redirect: false})
+      this.setState({ redirect: false })
       return <Redirect to='/search' />
     }
   }
@@ -67,13 +67,13 @@ class App extends Component {
     //This is how you use axios for get requests! Axios is like an ajax library
 
     axios.get("/homephotos")
-      .then(res => this.setState({homephotos: res.data}));
+      .then(res => this.setState({ homephotos: res.data }));
 
     axios.get("/featured")
-      .then(res => this.setState({featuredphotos: res.data}));
+      .then(res => this.setState({ featuredphotos: res.data }));
 
     axios.get("/packages")
-      .then(res => this.setState({packages: res.data}));
+      .then(res => this.setState({ packages: res.data }));
 
     // axios.get("/search")
     //   .then(res => console.log(res.data));
@@ -101,18 +101,17 @@ class App extends Component {
         <div>
           {this.renderRedirect()}
           <Navbar />
-          <SearchBar searchResult = { this.searchResult }/>
+          <SearchBar searchResult={this.searchResult} />
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos} />} />
             <Route path='/artist/:id' render={props => <Profile
-                                                          { ...props }
-                                                          featuredphotos={this.state.featuredphotos}
-                                                          packages={this.state.packages}/>} />
-            {/* <Route path='/availability' name='dashboard' render={() => <Availability currentUser={this.state.user}/>} /> */}
-            <Route path='/artists/:id/dashboard' name='dashboard' render={(props) => <Dashboard { ...props } />} />
+              {...props}
+              featuredphotos={this.state.featuredphotos}
+              packages={this.state.packages} />} />
+            <Route path='/artists/:id/dashboard' name='dashboard' render={(props) => <Dashboard {...props} />} />
             <Route path='/search' name='search' render={() => <SearchResults searchWord={this.state.searchWord}
-                                                                             searchimages={this.state.searchimages} />} />
-            <Route path='/artist/:id/portfolio' render={() => <Portfolio /> } />
+              searchimages={this.state.searchimages} />} />
+            <Route path='/artist/:id/portfolio' render={() => <Portfolio />} />
             <Route exact path="/" render={() => (<Redirect to="/home" />)} />
             <Route component={ErrorPath} />
           </Switch>
