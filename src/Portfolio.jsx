@@ -3,32 +3,26 @@ import React, {Component} from 'react';
 
 class Portfolio extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    // this.displayPortfolio = this.displayPortfolio.bind(this)
+  displayPortofio(images) {
+    if (!images || images.length === 0 ) {
+      return (<p> Sorry! No photos display!</p>)
+    } else {
+      return images.map(function(image) {
+        return <img className="searchResult" src={image.src} />
+      })
+    }
   }
 
-  // displayPortofio(images) {
-  //   console.log("displayPortofio", images)
-  //   if (!images || images.length === 0 ) {
-  //     return (<p> Sorry! No photos to share!</p>)
-  //   } else {
-  //     return images.map(function(image) {
-  //       return <img className="searchResult" src={image.src} />
-  //     })
-  //   }
-  // }
-
   render() {
-    console.log("Portfolio", this.props.match)
+    console.log("In Portfolio")
 
   return (
 
   <div className="profile__portfolio">
     <section className="wrapper">
+      <h1>Portfolio</h1>
+      {this.displayPortofio(this.props.artistPhotos)}
     </section>
-    <h1>Portfolio</h1>
   </div>
   );
  };
