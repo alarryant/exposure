@@ -16,10 +16,9 @@ class SearchResults extends Component {
       return images.map(function(image) {
         return (
           <Link to={`/artists/${ image.image_owner }`}>
-            <img className="searchResult" src={image.src} />
+            <img className="searchResult" alt={image.description} src={image.src} />
           </Link>
         )
-        // Need to link image to profile page
       })
     }
   }
