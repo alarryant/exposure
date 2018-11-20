@@ -11,7 +11,6 @@ import ErrorPath from './Error404.jsx';
 import Profile from './Profile.jsx';
 import { BrowserRouter, Route, Switch, Redirect, withRouter } from "react-router-dom";
 import Availability from './components/Availability.jsx';
-import Portfolio from './components/Portfolio.jsx';
 
 
 class App extends Component {
@@ -171,7 +170,6 @@ class App extends Component {
               {...props}
               searchWord={this.state.searchWord}
               searchimages={this.state.searchimages} />} />
-            <Route path='/artist/:id/portfolio' render={() => <Portfolio />} />
             <Route exact path="/" render={() => (<Redirect to="/home" />)} />
             <Route component={ErrorPath} />
           </Switch>
