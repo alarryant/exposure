@@ -31,7 +31,7 @@ class Portfolio extends React.Component {
     </section>
   </div>
   );
- }
-}
+ };
+};
 
 export default Portfolio;

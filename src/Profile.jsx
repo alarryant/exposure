@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import Carousel from 'react-bootstrap/lib/Carousel';
 import SeeAvailability from './SeeAvailability.jsx';
 import Portfolio from './Portfolio.jsx';
+import Slider from "react-slick";
+
 // import ProfilePic from '../public/artist_profile.jpg';
 
 
@@ -192,9 +193,9 @@ class Profile extends React.Component {
   addCarouselPhotos(photos=[]) {
     return photos.map(function(photo) {
       return (
-        <Carousel.Item>
+        <div className="sliderImg" >
           <img alt="900x500" src={photo.src} />
-        </Carousel.Item>
+        </div>
         )
     });
   }
@@ -205,7 +206,19 @@ class Profile extends React.Component {
   }
 
   render() {
+
     console.log("Profile Page params ID", this.props.params)
+
+    const settings = {
+      infinite: true,
+      centerMode: true,
+      slidesToShow: 2,
+      slidesToScroll: 1,
+      rows: 1,
+      autoplay: true,
+      focusOnSelect: true,
+    };
+
 
   return (
 
@@ -214,9 +227,9 @@ class Profile extends React.Component {
     <ProfileDesc />
     <div className="featuredPortfolio">
       <h1>Featured Photos:</h1>
-      <Carousel>
-      {this.addCarouselPhotos(this.props.featuredphotos)}
-      </Carousel>
+      <Slider {...settings} >
+        {this.addCarouselPhotos(this.props.featuredphotos)}
+      </Slider>
       <br />
       <a href="/portfolio"><h5>See full portfolio</h5></a>
     </div>
