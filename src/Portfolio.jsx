@@ -26,9 +26,9 @@ class Portfolio extends React.Component {
   return (
 
   <div className="profile__portfolio">
-    <h1>Steve Irwin's Portfolio</h1>
     <section className="wrapper">
     </section>
+    <h1>Portfolio</h1>
   </div>
   );
  };

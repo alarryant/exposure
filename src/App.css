@@ -1,5 +1,5 @@
 body {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Josefin Sans', sans-serif;
 }
 
 nav {
@@ -204,16 +204,18 @@ a {
 .slider {
   background-color: white;
   margin: 25px 150px;
+  max-height: 350px;
 }
 
 .sliderImg {
   max-width: 400px;
-  max-height: 400px;
+  max-height: 350px;
+  overflow: hidden;
 }
 
 .sliderImg img {
-  height: 90%;
-  width: 90%;
+  height: 95%;
+  width: 95%;
   margin: auto;
 }
 
