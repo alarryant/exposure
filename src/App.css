@@ -175,6 +175,7 @@ a {
   height: 250px;
   width: 250px;
   margin: 50px;
+  float: left;
 }
 
 .profilecontainer h1 {
@@ -184,13 +185,20 @@ a {
 }
 
 .profiledesc {
-  float: right;
+  display: inline-block;
   width: 500px;
+  margin: 50px;
 }
 
 .profilebtn {
   width: 200px;
   margin-right: 0px;
+}
+
+.featuredPortfolio {
+  width: 750px;
+  display: inline-block;
+  margin-left: 75px;
 }
 
 .Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {

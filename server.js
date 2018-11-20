@@ -5,66 +5,25 @@ const express = require("express");
 const app = express();
 const PORT = 3001;
 const bodyParser = require("body-parser")
-// ****** bcry[t]
+const bcrypt = require('bcryptjs');
+const cookieSession = require('cookie-session')
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 const knexConfig = require('./knexfile');
 const knex = require('knex')(knexConfig[env]);
-const morgan = require('morgan');
-const knexLogger = require('knex-logger');
-
 
 app.use(express.static('public'));
 
-
-// Load the logger first so all (static) HTTP requests are logged to STDOUT
-// 'dev' = Concise output colored by response status for development use.
-//         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
-app.use(morgan('dev'));
-
-// Log knex SQL queries to STDOUT as well
-// app.use(knexLogger(knex));
+app.use(cookieSession({
+  name: 'session',
+  keys: ['cookiemonster']
+}))
 
 
 function randomImgGenerator(category) {
   // knex('images').where("specialization", "=", category).orderBy(random()).limit(6);
 };
-
-
-
-// --------------- HELPER FUNCTIONS --------------- //
-
-const findUser = (userEmail) => {
-  console.log(knex('users').select('*').where('email = ?', [userEmail]));
-}
-
-// const findUser = (userReq) => {
-//   return database.raw("SELECT * FROM users WHERE username = ?", [userReq.username])
-//     .then((data) => data.rows[0])
-// }
-
-// const checkPassword = (reqPassword, foundUser) => {
-//   return new Promise((resolve, reject) =>
-//     bcrypt.compare(reqPassword, foundUser.password_digest, (err, response) => {
-//         if (err) {
-//           reject(err)
-//         }
-//         else if (response) {
-//           resolve(response)
-//         } else {
-//           reject(new Error('Passwords do not match.'))
-//         }
-//     })
-//   )
-// }
-
-// const updateUserToken = (token, user) => {
-//   return database.raw("UPDATE users SET token = ? WHERE id = ? RETURNING id, username, token", [token, user.id])
-//     .then((data) => data.rows[0])
-// }
-
-
 
 
 // --------------- ROUTES --------------- //
@@ -76,8 +35,7 @@ app.use((req, res, next) => {
   next();
 });
 
-///////////////
-app.get("/home", (req, res) => {
+app.get("/homephotos", (req, res) => {
   knex('images').select('id', 'src', 'category')
       .asCallback((err, data) => {
         if (err) throw err;
@@ -85,37 +43,56 @@ app.get("/home", (req, res) => {
       });
 });
 
+app.get("/featured", (req, res) => {
+  knex('images').select('*').where("featured", "like", "true").asCallback((err, data) => {
+    if (err) throw err;
+    res.json(data);
+  });
+});
+
+app.get("/packages", (req, res) => {
+  knex('price_packages').select('*').where("user_id", "=", 1).asCallback((err, data) => {
+    if (err) throw err;
+    res.json(data);
+  });
+});
+
+
 // LOGIN
 app.post("/login", (req, res) => {
   let userEmail = req.body.email;
   let userPassword = req.body.password;
-  // console.log("Email", req.body.email)
-  // console.log("Password", req.body.password)
-  res.send("Login");
+    knex("users").select("*").where("email", "=", userEmail).where("password", "=", userPassword).asCallback((err, data) => {
+      if (err) throw err;
+      res.json(data);
+  })
 });
 
 
-// const userReq = request.body
-//   let user
-
-//   findUser(userReq)
-//     .then(foundUser => {
-//       user = foundUser
-//       return checkPassword(userReq.password, foundUser)
-//     })
-//     .then((res) => createToken())
-//     .then(token => updateUserToken(token, user))
-//     .then(() => {
-//       delete user.password_digest
-//       response.status(200).json(user)
-//     })
-//     .catch((err) => console.error(err))
-// }
-
-
-
+// REGISTER
 app.post("/register", (req, res) => {
-  res.send("Register");
+  let firstName = req.body.firstName;
+  let lastName = req.body.lastName;
+  let email = req.body.email;
+  let password = req.body.password;
+  let userType = +req.body.userType;
+
+
+knex('users').where('email', email).then((data) => {
+  if(data.length !== 0) {
+    res.status(400).send("Invalid email and/or password combination");
+  } else {
+    knex("users").insert({first_name: firstName,
+                          last_name: lastName,
+                          email: email,
+                          password: bcrypt.hashSync(password),
+                          user_type_id: userType}).returning("id")
+      .then((user_id) => {
+        req.session.userId = +user_id;
+        res.json(req.session.userId);
+        });
+      }
+    });
 });
 
 

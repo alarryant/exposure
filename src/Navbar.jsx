@@ -9,6 +9,7 @@ class Navbar extends React.Component {
 
   render() {
   return (
+    
     <nav>
       <NavLink to="/"><img className="logo" alt="Exposure Logo" src="/LOGO1-fast.gif" /></NavLink>
        <div className="dropdownContainer">
@@ -22,9 +23,7 @@ class Navbar extends React.Component {
       </div>
       <div className="userauth">
         <Login loginInfo={this.props.loginInfo}/>
-        <Signup />
-        <NavLink to="/login">Login</NavLink>
-        <NavLink to="/signup">Sign Up</NavLink>
+        <Signup signupInfo={this.props.signupInfo}/>
       </div>
     </nav>
   )
