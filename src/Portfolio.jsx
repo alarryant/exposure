@@ -20,7 +20,6 @@ class Portfolio extends React.Component {
 
   <div className="profile__portfolio">
     <section className="wrapper">
-      <h1>Portfolio</h1>
       {this.displayPortofio(this.props.artistPhotos)}
     </section>
   </div>
