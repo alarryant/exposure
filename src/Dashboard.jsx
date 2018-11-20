@@ -2,6 +2,7 @@ import React from 'react';
 import Avatar from './components/Avatar.jsx';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
+import axios from 'axios';
 
 const left = {
   width: '35%',
@@ -25,13 +26,40 @@ const statsWidget = {
 
 class Dashboard extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      avatar: null,
+      events: []
+    }
+
+    this.getUser = this.getUser.bind(this);
+  }
+
+  componentDidMount() {
+    // do an axios call to get information for user
+    axios.get(`/api/artists/${this.props.match.params.id}/dashboard`).then(response => {
+      this.setState((prevState) => {
+        return {
+          name: response.data.name,
+          avatar: response.data.avatar,
+          events: response.data.events
+        }
+      })
+    })
+  }
+
+  getUser(user){
+    this.setState({currentUser : user});
+  }
+
   render() {
   return (
     <div className='contentWrapper'>
-
       {/* start left */}
       <div className='left' style={left}>
-        <Avatar />
+        <Avatar name={ this.state.name } avatar={ this.state.avatar } />
       </div>
 
       {/* start right */}

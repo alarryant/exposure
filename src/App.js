@@ -70,7 +70,6 @@ class App extends Component {
     axios.get("/packages")
       .then(res => this.setState({packages: res.data}));
 
-
     // axios.get("/search")
     //   .then(res => console.log(res.data));
 
@@ -90,7 +89,6 @@ class App extends Component {
 
   }
 
-
   render() {
     console.log("this is app.jsx", this.state.packages);
     return (
@@ -104,7 +102,8 @@ class App extends Component {
             <Route path='/profile' render={() => <Profile featuredphotos={this.state.featuredphotos}
                                                           packages={this.state.packages}/>} />
             <Route path='/search' name='search' render={() => <SearchResults searchWord={this.state.searchWord} />} />
-            <Route path='/artist/:id/dashboard' name='dashboard' render={() => <Dashboard />} />
+            {/* <Route path='/availability' name='dashboard' render={() => <Availability currentUser={this.state.user}/>} /> */}
+            <Route path='/artists/:id/dashboard' name='dashboard' render={(props) => <Dashboard { ...props } />} />
             <Route exact path="/" render={() => (<Redirect to="/home" />)} />
             <Route component={ErrorPath} />
           </Switch>

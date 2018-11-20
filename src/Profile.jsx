@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Carousel from 'react-bootstrap/lib/Carousel';
 import SeeAvailability from './SeeAvailability.jsx';
 import Portfolio from './Portfolio.jsx';
+import Avatar from './components/Avatar.jsx';
 // import ProfilePic from '../public/artist_profile.jpg';
 
 
