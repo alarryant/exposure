@@ -204,9 +204,10 @@ class Profile extends React.Component {
     });
   }
 
-  componentWillMount() {
+  componentDidMount() {
 
     const { id } = this.props.match.params;
+    console.log("Did Mount", id)
 
     axios.get(`/artists/${ id }`)
     .then(artist => {
