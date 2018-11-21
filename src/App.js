@@ -161,10 +161,10 @@ class App extends Component {
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos} />} />
             <Route path='/artists/:id' render={props => <Profile
-                                                          { ...props }/>} />
-            {/* <Route path='/availability' name='dashboard' render={() => <Availability currentUser={this.state.user}/>} /> */}
-            <Route path='/artists/:id/portfolio' render={() => <Portfolio /> } />
-            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} />} />
+              {...props}
+              featuredphotos={this.state.featuredphotos}
+              packages={this.state.packages} />} />
+            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={this.state.currentUser} />} />
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
               searchWord={this.state.searchWord}

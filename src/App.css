@@ -275,9 +275,9 @@ a {
 
 }
 
-button {
-  text-transform: none;
-  border: none;
+.contentWrapper {
+  overflow: hidden;
+  margin-top: 40px;
 }
 
 .indivImgLrg {
