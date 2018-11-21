@@ -6,6 +6,8 @@ import Slider from "react-slick";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Url from 'url-parse';
+import EditProfile from './EditProfile';
+// import ProfilePic from '../public/artist_profile.jpg';
 
 class ProfileDesc extends React.Component {
   render() {

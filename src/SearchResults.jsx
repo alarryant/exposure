@@ -9,7 +9,6 @@ class SearchResults extends Component {
   }
 
   displaySearchedImages(images) {
-    console.log("displayedSearch", images)
     if (!images || images.length === 0 ) {
       return (<p> Sorry! Nothing matches this description!</p>)
     } else {

@@ -25,16 +25,15 @@ app.use(cookieSession({
 //TESTING ONLY - Shows req.path
 
 app.use((req, res, next) => {
-  console.log(req.path, req.method);
   next();
 });
 
 app.get("/homephotos", (req, res) => {
   knex('images').select('id', 'title', 'description', 'src', 'category', 'image_owner')
-      .asCallback((err, data) => {
-        if (err) throw err;
-        res.json(data);
-      });
+    .asCallback((err, data) => {
+      if (err) throw err;
+      res.json(data);
+    });
 });
 
 // LOGIN
@@ -42,22 +41,18 @@ app.post("/login", (req, res) => {
   let userEmail = req.body.email;
   let userPassword = req.body.password;
 
-  if (req.session.user_id) {
-    res.json(req.session.user_id);
-  } else {
-    knex("users").select("*").where("email", "=", userEmail).where("password", "=", userPassword).then((data) => {
-      req.session.user_id = data[0].id
-      res.json(data);
-    })
-  }
-  });
+  knex("users").select("*").where("email", "=", userEmail).where("password", "=", userPassword).then((data) => {
+    req.session.user_id = data[0].id
+    res.json(data);
+  })
+});
 
 
 // LOGOUT
 app.post("/logout", (req, res) => {
   req.session.user_id = null;
   res.json(req.session.user_id);
-  });
+});
 
 
 // REGISTER
@@ -69,21 +64,23 @@ app.post("/register", (req, res) => {
   let userType = +req.body.userType;
 
 
-knex('users').where('email', email).then((data) => {
-  if(data.length !== 0) {
-    res.status(400).send("Invalid email and/or password combination");
-  } else {
-    knex("users").insert({first_name: firstName,
-                          last_name: lastName,
-                          email: email,
-                          password: bcrypt.hashSync(password, 10),
-                          user_type_id: userType}).returning("id")
-      .then((user_id) => {
-        req.session.user_id = +user_id;
-        res.json(req.session.user_id);
+  knex('users').where('email', email).then((data) => {
+    if (data.length !== 0) {
+      res.status(400).send("Invalid email and/or password combination");
+    } else {
+      knex("users").insert({
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        password: bcrypt.hashSync(password, 10),
+        user_type_id: userType
+      }).returning("id")
+        .then((user_id) => {
+          req.session.user_id = +user_id;
+          res.json(req.session.user_id);
         });
-      }
-    });
+    }
+  });
 });
 
 
@@ -134,17 +131,15 @@ app.get("/artists/:id/portfolio", (req, res) => {
   res.send("Artist Profile Page");
 });
 
-app.get("/api/dashboard", (req, res) => {
-  console.log("Artist Dashboard")
-  knex('users').select('*').first().where({ id: 2 }).asCallback((err, data) => {
+app.get("/dashboard", (req, res) => {
+  console.log("Dashboard Page")
+  knex('users').select('*').where('id', req.session.user_id).asCallback((err, data) => {
     if (err) throw err;
     res.json(data);
   });
 });
 
 app.post("/artists/:id/edit", (req, res) => {
-console.log(req.body)
-
   res.send("Artist Edit Profile");
 });
 
@@ -160,10 +155,16 @@ app.post("/artists/:id/availability", (req, res) => {
 
 //OPPORTUNITIES
 
-app.get("/opportunities", (req, res) => {
-  console.log("Opportunity");
-  res.send("Opportunity");
-});
+app.get("/api/opportunities", (req, res) => {
+  console.log("Opportunity")
+  knex('events')
+    .select('*')
+    .join('users', 'users.id', '=', 'events.creator_id')
+    .then(function(events) {
+    console.log("Opps", events)
+      res.json(events)
+    })
+ });
 
 app.post("/opportunities/:id/add", (req, res) => {
   res.send("Add Opportunity");
@@ -177,19 +178,7 @@ app.post("/opportunities/:id/apply", (req, res) => {
   res.send("Apply for Opportunity");
 });
 
-//DASHBOARD
-app.get("/clients/:id/dashboard", (req, res) => {
-  console.log("Client Dashboard");
-  res.send("Client Dashboard");
-});
 
-app.post("/clients/:id/dashboard/edit", (req, res) => {
-  res.send("Edit Dashboard");
-});
-
-app.post("/clients/:id/like", (req, res) => {
-  res.send("Likes");
-});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
