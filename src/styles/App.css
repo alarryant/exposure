@@ -169,11 +169,11 @@ a {
 .contentWrapper {
   overflow: hidden;
   margin-top: 40px;
-=======
+}
+
 button {
   text-transform: none;
   border: none;
->>>>>>> feature/about:src/styles/App.css
 }
 
 .indivImgLrg {
@@ -181,7 +181,6 @@ button {
   margin: 0 auto;
   width: 100%;
   height: auto;
-<<<<<<< HEAD:src/App.css
 }
 .opportunities {
   padding: 20px;
@@ -230,7 +229,7 @@ button {
 
 .lens:after {
   content: '';
-  background-image: url('iris.gif');
+  background-image: url('../iris.gif');
   background-repeat: no-repeat;
   display: block;
   width: 200px;
@@ -244,11 +243,6 @@ button {
 
 .logo:hover .lens:after {
   transform: rotate(90deg) scale(.2);
-}
-
-
-button {
-  border: none;
 }
 
 .userauth {
@@ -279,6 +273,4 @@ label {
   width: 100%;
   height: 35px;
 }
-=======
-}
->>>>>>> feature/about:src/styles/App.css
+

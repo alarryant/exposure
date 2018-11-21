@@ -127,11 +127,6 @@ app.get("/artists/:id", (req, res) => {
     });
 });
 
-app.get("/artists/:id/portfolio", (req, res) => {
-  console.log("Artist Profile Page")
-  res.send("Artist Profile Page");
-});
-
 app.get("/dashboard", (req, res) => {
   console.log("Dashboard Page")
   knex('users').select('*').where('id', req.session.user_id).asCallback((err, data) => {
@@ -157,14 +152,14 @@ app.post("/artists/:id/availability", (req, res) => {
 //OPPORTUNITIES
 
 app.get("/api/opportunities", (req, res) => {
-  console.log("Opportunity")
+  console.log("Opportunity");
   knex('events')
     .select('*')
     .join('users', 'users.id', '=', 'events.creator_id')
     .then(function(events) {
-    console.log("Opps", events)
-      res.json(events)
-    })
+    console.log("Opps", events);
+      res.json(events);
+    });
  });
 
 app.post("/opportunities/:id/add", (req, res) => {
