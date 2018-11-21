@@ -137,7 +137,6 @@ app.get("/artists/:id", (req, res) => {
     .where('image_owner', artistID)
     .select('*')
     .then(function(images) {
-      console.log(images)
       res.json(images)
     })
 });
@@ -147,7 +146,7 @@ app.get("/artists/:id/portfolio", (req, res) => {
   res.send("Artist Profile Page");
 });
 
-app.get("/api/dashboard", (req, res) => {
+app.get("/dashboard", (req, res) => {
   console.log("Artist Dashboard")
   knex('users').select('*').first().where({ id: 2 }).asCallback((err, data) => {
     if (err) throw err;
@@ -174,10 +173,16 @@ app.post("/artists/:id/availability", (req, res) => {
 
 //OPPORTUNITIES
 
-app.get("/opportunities", (req, res) => {
+app.get("/api/opportunities", (req, res) => {
   console.log("Opportunity")
-  res.send("Opportunity");
-});
+  knex('events')
+    .select('*')
+    .join('users', 'users.id', '=', 'events.creator_id')
+    .then(function(events) {
+    console.log("Opps", events)
+      res.json(events)
+    })
+ });
 
 app.post("/opportunities/:id/add", (req, res) => {
   res.send("Add Opportunity");
