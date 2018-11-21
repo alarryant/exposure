@@ -10,7 +10,6 @@ const { event } = props
       <h3>{event.name}</h3>
       <p>Event Date: {props.date}</p>
       <hr/>
-
       <p>{event.description}</p>
       <p>Contact: {event.first_name} {event.last_name}</p>
     </div>
