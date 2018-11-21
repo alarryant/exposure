@@ -134,6 +134,7 @@ class PackagesCard extends React.Component {
 
   renderPricePackage(pricePackages=[]) {
     let tier;
+    console.log("this is price packages renderpricepackage function", pricePackages);
 
     return pricePackages.map(function(pricePackage) {
       if (pricePackage.tier === 1) {
@@ -292,7 +293,7 @@ class Profile extends React.Component {
             <br />
           </div>
           <AvailabilityCard />
-          <PackagesCard packages={this.props.packages}/>
+          <PackagesCard packages={this.state.packages}/>
         </div>
       ) : (
         <div className="profile">
@@ -310,7 +311,7 @@ class Profile extends React.Component {
             <Portfolio artistPhotos={this.state.collection} />
           </div>
           <AvailabilityCard />
-          <PackagesCard packages={this.props.packages}/>
+          <PackagesCard packages={this.state.packages}/>
         </div>)
       )
     }
