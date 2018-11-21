@@ -21,11 +21,7 @@ class Navbar extends React.Component {
   render() {
   return (
       <nav>
-<<<<<<< HEAD
         { this.props.currentUser === null ?
-=======
-        { this.props.currentUser === null ? 
->>>>>>> feature/edit-profile
         <section className="notLoggedIn">
           <NavLink to="/"><img className="logo" alt="Exposure Logo" src="/LOGO1-fast.gif" /></NavLink>
           <div className="userauth">
@@ -48,7 +44,7 @@ class Navbar extends React.Component {
             </div>
           </div>
           <div className="userauth">
-            <Button type="submit" onClick={this.handleSignout}>Logout</Button>
+            <Button bsStyle="default" bsSize="large" type="submit" onClick={this.handleSignout}>Logout</Button>
           </div>
         </section>
         }

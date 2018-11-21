@@ -285,7 +285,6 @@ a {
   width: 100%;
   height: auto;
 }
-<<<<<<< HEAD
 .opportunities {
   padding: 20px;
 }
@@ -298,8 +297,21 @@ a {
   border: 1px solid grey;
 }
 
+button {
+  border: none;
+}
 
-=======
+.userauth {
+  display: flex;
+}
+
+Button {
+  margin: 25px 10px;
+}
+
+label {
+  font-size: 15px;
+}
 
 .modal-title {
   text-align: center;
@@ -316,4 +328,3 @@ a {
   width: 100%;
   height: 35px;
 }
->>>>>>> feature/edit-profile
