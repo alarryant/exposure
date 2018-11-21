@@ -36,7 +36,12 @@ class Navbar extends React.Component {
         </section>
         :
         <section className="loggedIn">
-          <NavLink to="/"><img className="logo" alt="Exposure Logo" src="/LOGO1-fast.gif" /></NavLink>
+           <NavLink to="/">
+            <div className="logo">
+              <div className="lens"></div>
+              <span href="#" className="logo">Exp<span className="lighter">o</span>sure</span>
+          </div>
+          </NavLink>
           <div className="dropdown-container">
             <div className="dropdown">
               <NavLink to="/"><button className="dropbtn">Home<i className="fas fa-bars"></i></button></NavLink>
