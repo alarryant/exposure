@@ -175,8 +175,7 @@ class App extends Component {
         </div>
       </Router>
     );
-    // console.log('router:', routerInstance);
-    // console.log('router child context:', JSON.stringify(routerInstance.type, null, 2));
+
     return routerInstance;
   }
 }

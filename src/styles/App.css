@@ -199,6 +199,9 @@ button {
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
 .logo {
+  height: 75px;
+  margin: 12px 20px;
+  float: left;
   font-family: 'Montserrat', sans-serif;
   font-weight: bold;
   color: black;
@@ -207,6 +210,8 @@ button {
   display: inline-block;
   -webkit-backface-visibility: hidden;
 }
+
+
 
 .lighter {
   font-family: 'Montserrat', sans-serif;
