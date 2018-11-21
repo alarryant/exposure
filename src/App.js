@@ -11,6 +11,7 @@ import ErrorPath from './Error404.jsx';
 import Profile from './Profile.jsx';
 import { BrowserRouter, Route, Switch, Redirect, withRouter } from "react-router-dom";
 import Availability from './components/Availability.jsx';
+import Opportunities from './components/Opportunities.jsx';
 
 
 class App extends Component {
@@ -165,6 +166,7 @@ class App extends Component {
               {...props}
               featuredphotos={this.state.featuredphotos}
               packages={this.state.packages} />} />
+            <Route path='/opportunities' name='opportunities' render={(props) => <Opportunities {...props} />} />
             <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} />} />
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
