@@ -270,49 +270,47 @@ class Profile extends React.Component {
       focusOnSelect: true,
     };
 
-    if(this.state.photoview === 'featured') {
-      return (
-      <div className="profile">
-        <Avatar name={ this.state.fullName } avatar={ this.state.avatarImage }/>
-        <ProfileDesc bio={this.state.bio}/>
-        <SocialMedia twitter={this.state.twitter} facebook={this.state.facebook} instagram={this.state.instagram}/>
-      <div className="featuredPortfolio">
-        <button onClick={this.showPortfolio}>
-          View Portfolio
-        </button>
-        <button onClick={this.showFeatures}>
-          Featured Photos
-        </button>
-        <h1>Featured Photos:</h1>
-        <Slider {...settings} >
-          {this.addCarouselPhotos(this.state.collection)}
-        </Slider>
-        <br />
-      </div>
-        <AvailabilityCard />
-        <PackagesCard packages={this.props.packages}/>
-      </div>
-      );
-    } else {
-      return (
+    return (
+      this.state.photoview === 'featured' ? (
         <div className="profile">
           <Avatar name={ this.state.fullName } avatar={ this.state.avatarImage }/>
           <ProfileDesc bio={this.state.bio}/>
           <SocialMedia twitter={this.state.twitter} facebook={this.state.facebook} instagram={this.state.instagram}/>
-        <div className="featuredPortfolio">
-          <button onClick={this.showPortfolio}>
-            View Portfolio
-          </button>
-          <button onClick={this.showFeatures}>
-            Featured Photos
-          </button>
-          <h1>Portfolio Photos:</h1>
-          <Portfolio artistPhotos={this.state.collection} />
-        </div>
+          <div className="featuredPortfolio">
+            <button onClick={this.showPortfolio}>
+              View Portfolio
+            </button>
+            <button onClick={this.showFeatures}>
+              Featured Photos
+            </button>
+            <h1>Featured Photos:</h1>
+            <Slider {...settings} >
+              {this.addCarouselPhotos(this.state.collection)}
+            </Slider>
+            <br />
+          </div>
           <AvailabilityCard />
           <PackagesCard packages={this.props.packages}/>
         </div>
-    )}
+      ) : (
+        <div className="profile">
+          <Avatar name={ this.state.fullName } avatar={ this.state.avatarImage }/>
+          <ProfileDesc bio={this.state.bio}/>
+          <SocialMedia twitter={this.state.twitter} facebook={this.state.facebook} instagram={this.state.instagram}/>
+          <div className="featuredPortfolio">
+            <button onClick={this.showPortfolio}>
+              View Portfolio
+            </button>
+            <button onClick={this.showFeatures}>
+              Featured Photos
+            </button>
+            <h1>Portfolio Photos:</h1>
+            <Portfolio artistPhotos={this.state.collection} />
+          </div>
+          <AvailabilityCard />
+          <PackagesCard packages={this.props.packages}/>
+        </div>)
+    )
   }
 }
 
