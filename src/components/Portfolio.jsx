@@ -14,17 +14,15 @@ class Portfolio extends React.Component {
   }
 
   render() {
-    console.log("In Portfolio")
+    return (
 
-  return (
-
-  <div className="profile__portfolio">
-    <section className="wrapper">
-      {this.displayPortofio(this.props.artistPhotos)}
-    </section>
-  </div>
-  );
- };
+    <div className="profile__portfolio">
+      <section className="wrapper">
+        {this.displayPortofio(this.props.artistPhotos)}
+      </section>
+    </div>
+    );
+   };
 };
 
 export default Portfolio;

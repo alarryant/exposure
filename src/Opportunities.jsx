@@ -17,7 +17,6 @@ class Opportunities extends React.Component {
   }
 
   displayEvents(events) {
-    console.log("displayedEvents", events)
     if (!events || events.length === 0 ) {
       return (<p> There are currently no postings! Check back later! </p>)
     } else {

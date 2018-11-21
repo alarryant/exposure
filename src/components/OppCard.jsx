@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 function OppCard(props) {
 
 const { event } = props
-  console.log("in OppCard", event)
 
   return (
     <div className="eventcard">
