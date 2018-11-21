@@ -2,7 +2,6 @@ import React from 'react';
 import Avatar from './components/Avatar.jsx';
 import Availability from './components/Availability.jsx';
 import Statistics from './components/Statistics.jsx';
-import Opportunities from './components/Opportunities.jsx';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
@@ -88,7 +87,6 @@ class Dashboard extends React.Component {
           </div>
         ) : (
             <div className='right' style={right}>
-              <Opportunities />
             </div>
           )}
 

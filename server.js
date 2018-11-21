@@ -159,10 +159,16 @@ app.post("/artists/:id/availability", (req, res) => {
 
 //OPPORTUNITIES
 
-app.get("/opportunities", (req, res) => {
-  console.log("Opportunity");
-  res.send("Opportunity");
-});
+app.get("/api/opportunities", (req, res) => {
+  console.log("Opportunity")
+  knex('events')
+    .select('*')
+    .join('users', 'users.id', '=', 'events.creator_id')
+    .then(function(events) {
+    console.log("Opps", events)
+      res.json(events)
+    })
+ });
 
 app.post("/opportunities/:id/add", (req, res) => {
   res.send("Add Opportunity");
