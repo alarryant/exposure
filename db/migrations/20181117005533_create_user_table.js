@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
         table.string('last_name').notNull();
         table.string('email').notNull();
         table.string('password').notNull();
+        table.text('bio');
         table.text('profile_image');
         table.text('website_url');
         table.text('instagram_url');

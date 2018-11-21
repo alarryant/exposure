@@ -20,11 +20,6 @@ app.use(cookieSession({
   keys: ['cookiemonster']
 }))
 
-
-function randomImgGenerator(category) {
-  // knex('images').where("specialization", "=", category).orderBy(random()).limit(6);
-};
-
 // --------------- ROUTES --------------- //
 
 //TESTING ONLY - Shows req.path
@@ -34,27 +29,12 @@ app.use((req, res, next) => {
 });
 
 app.get("/homephotos", (req, res) => {
-  knex('images').select('id', 'src', 'category', 'image_owner')
+  knex('images').select('id', 'title', 'description', 'src', 'category', 'image_owner')
     .asCallback((err, data) => {
       if (err) throw err;
       res.json(data);
     });
 });
-
-app.get("/featured", (req, res) => {
-  knex('images').select('*').where("featured", "like", "true").asCallback((err, data) => {
-    if (err) throw err;
-    res.json(data);
-  });
-});
-
-app.get("/packages", (req, res) => {
-  knex('price_packages').select('*').where("user_id", "=", 1).asCallback((err, data) => {
-    if (err) throw err;
-    res.json(data);
-  });
-});
-
 
 // LOGIN
 app.post("/login", (req, res) => {
@@ -71,12 +51,12 @@ app.post("/login", (req, res) => {
   }
 });
 
+
 // LOGOUT
 app.post("/logout", (req, res) => {
   req.session.user_id = null;
   res.json(req.session.user_id);
 });
-
 
 
 // REGISTER
@@ -121,7 +101,7 @@ app.get("/search", (req, res) => {
     .select('*')
     .then(function (images) {
       res.json(images)
-    })
+    });
 });
 
 //IMAGE
@@ -132,13 +112,22 @@ app.post("/images/:id", (req, res) => {
 
 //ARTIST
 app.get("/artists/:id", (req, res) => {
-  let artistID = req.params.id
-  knex('images')
-    .where('image_owner', artistID)
-    .select('*')
-    .then(function (images) {
-      res.json(images)
-    })
+  let artistId = req.params.id;
+  let images = knex('images')
+    .join("users", "image_owner", "=", "users.id")
+    .where("image_owner", artistId)
+    .then((images) => {
+      knex('price_packages')
+        .join("users", "price_packages.user_id", "=", "users.id")
+        .where("price_packages.user_id", artistId).orderBy("tier")
+        .then((packages) => {
+          let artistData = {
+            images: images,
+            packages: packages
+          };
+          res.json(artistData);
+        });
+    });
 });
 
 app.get("/artists/:id/portfolio", (req, res) => {
@@ -171,7 +160,7 @@ app.post("/artists/:id/availability", (req, res) => {
 //OPPORTUNITIES
 
 app.get("/opportunities", (req, res) => {
-  console.log("Opportunity")
+  console.log("Opportunity");
   res.send("Opportunity");
 });
 

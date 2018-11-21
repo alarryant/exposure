@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 const avatarWidget = {
   width: '200px',
   padding: '10px',
-  margin: '0 auto'
+  margin: '25px 50px 0px 100px',
+  float: 'left'
 };
 
 const avatarWidget__img = {

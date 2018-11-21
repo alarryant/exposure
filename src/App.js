@@ -11,7 +11,7 @@ import ErrorPath from './Error404.jsx';
 import Profile from './Profile.jsx';
 import { BrowserRouter, Route, Switch, Redirect, withRouter } from "react-router-dom";
 import Availability from './components/Availability.jsx';
-import Portfolio from './components/Portfolio.jsx';
+import Portfolio from './components/Portfolio.jsx'
 
 
 class App extends Component {
@@ -20,7 +20,6 @@ class App extends Component {
     super(props);
 
     this.state = {
-      user: { id: 1 },
       searchWord: "",
       firstName: "",
       lastName: "",
@@ -36,7 +35,8 @@ class App extends Component {
       availability: {
         start_date: null,
         end_date: null
-      }
+      },
+      artistId: null
     };
 
     this.loginInfo = this.loginInfo.bind(this);
@@ -104,9 +104,8 @@ class App extends Component {
         searchWord: word
       }
     })
-      .then((res) => {
-        console.log("SearchResult, App.js", res)
-        this.setState({ redirect: true, searchWord: word, searchimages: res.data });
+     .then((res) => {
+        this.setState({redirect: true, searchWord: word, searchimages: res.data});
       });
   }
 
@@ -150,7 +149,6 @@ class App extends Component {
   }
 
   render() {
-    console.log("this is app.jsx", this.state.packages);
     return (
       <BrowserRouter>
         <div>
@@ -171,7 +169,6 @@ class App extends Component {
               {...props}
               searchWord={this.state.searchWord}
               searchimages={this.state.searchimages} />} />
-            <Route path='/artist/:id/portfolio' render={() => <Portfolio />} />
             <Route exact path="/" render={() => (<Redirect to="/home" />)} />
             <Route component={ErrorPath} />
           </Switch>

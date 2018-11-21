@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
 
         table.integer('tier').notNull();
         table.integer('price').notNull();
+        table.text('description').notNull();
         table.integer('user_id').notNull();
 
         table.foreign('user_id').references('id').inTable('users').onDelete('CASCADE');
