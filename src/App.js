@@ -147,7 +147,7 @@ class App extends Component {
   render() {
     const currentUser = localStorage.getItem('currentUser');
     const routerInstance = (
-      <Router history={history}>
+      <BrowserRouter history={history}>
         <div>
           {this.renderRedirect()}
           <Navbar loginInfo={this.loginInfo}
@@ -175,7 +175,7 @@ class App extends Component {
           </Switch>
           <Footer />
         </div>
-      </Router>
+      </BrowserRouter>
     );
 
     return routerInstance;
