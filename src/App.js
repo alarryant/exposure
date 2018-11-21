@@ -9,12 +9,17 @@ import Dashboard from './Dashboard.jsx';
 import SearchResults from './SearchResults.jsx';
 import ErrorPath from './Error404.jsx';
 import Profile from './Profile.jsx';
-import { BrowserRouter, Route, Switch, Redirect, withRouter } from "react-router-dom";
+import { BrowserRouter, Router, Route, Switch, Redirect, withRouter } from "react-router-dom";
+import { createMemoryHistory } from 'history'; 
 import Availability from './components/Availability.jsx';
 import Opportunities from './Opportunities.jsx';
 
+const history = createMemoryHistory({
+  forceRefresh: false
+});
 
 class App extends Component {
+
 
   constructor(props) {
     super(props);
@@ -30,7 +35,7 @@ class App extends Component {
       facebookUrl: "",
       twitterUrl: "",
       location: "",
-      currentUser: null,
+      // currentUser: null,
       redirect: false,
       availability: {
         start_date: null,
@@ -46,6 +51,11 @@ class App extends Component {
     this.renderRedirect = this.renderRedirect.bind(this);
     // this.saveAvailability = this.saveAvailability.bind(this);
 
+
+    history.listen((location, action) => {
+      console.log("HISTORY CHANGE", action, location);
+      console.log(history.entries);
+    });
   }
 
   // saveAvailability(dates) {
@@ -59,7 +69,8 @@ class App extends Component {
   loginInfo(email, password) {
     axios.post("/login", { email: email, password: password })
       .then((res) => {
-        this.setState({ redirect: true, currentUser: res.data });
+        localStorage.setItem('currentUser', res.data[0].id);
+        this.setState({ redirect: true });
       });
   }
 
@@ -68,7 +79,8 @@ class App extends Component {
     axios.post("/logout")
       .then((res) => {
         console.log("res.data: ", res.data);
-        this.setState({ redirect: true, currentUser: null });
+        localStorage.removeItem('currentUser');
+        this.setState({ redirect: true });
       });
   }
 
@@ -77,7 +89,8 @@ class App extends Component {
   signupInfo(firstName, lastName, email, password, userType) {
     axios.post("/register", { firstName: firstName, lastName: lastName, email: email, password: password, userType: userType })
       .then((res) => {
-        this.setState({ redirect: true, currentUser: res.data });
+        localStorage.setItem('currentUser', res.data[0].id);
+        this.setState({ redirect: true });
       });
   }
 
@@ -88,14 +101,6 @@ class App extends Component {
         this.setState({ redirect: true, firstName: firstName, lastName: lastName, email: email, password: password, website: website, instagram: instagram, facebook: facebook, twitter: twitter, location: location });
       });
   }
-
-  renderRedirect = () => {
-    if (this.state.redirect) {
-      this.setState({ redirect: false })
-      return <Redirect to='/search' />
-    }
-  }
-
 
   //SEARCH FEATURE
   searchResult(word) {
@@ -149,13 +154,14 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <BrowserRouter>
+    const currentUser = localStorage.getItem('currentUser');
+    const routerInstance = (
+      <Router history={history}>
         <div>
           {this.renderRedirect()}
           <Navbar loginInfo={this.loginInfo}
             signupInfo={this.signupInfo}
-            currentUser={this.state.currentUser}
+            currentUser={currentUser}
             logout={this.logout} />
           <SearchBar searchResult={this.searchResult} />
           <Switch>
@@ -163,9 +169,11 @@ class App extends Component {
             <Route path='/artists/:id' render={props => <Profile
               {...props}
               featuredphotos={this.state.featuredphotos}
-              packages={this.state.packages} />} />
+              packages={this.state.packages}
+              currentUser={currentUser} />} />
             <Route path='/opportunities' name='opportunities' render={(props) => <Opportunities {...props} />} />
             <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={this.state.currentUser} />} />
+            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} />} />
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
               searchWord={this.state.searchWord}
@@ -175,8 +183,11 @@ class App extends Component {
           </Switch>
           <Footer />
         </div>
-      </BrowserRouter>
+      </Router>
     );
+    // console.log('router:', routerInstance);
+    // console.log('router child context:', JSON.stringify(routerInstance.type, null, 2));
+    return routerInstance;
   }
 }
 

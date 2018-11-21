@@ -20,9 +20,12 @@ class Navbar extends React.Component {
 
   render() {
   return (
-
       <nav>
+<<<<<<< HEAD
         { this.props.currentUser === null ?
+=======
+        { this.props.currentUser === null ? 
+>>>>>>> feature/edit-profile
         <section className="notLoggedIn">
           <NavLink to="/"><img className="logo" alt="Exposure Logo" src="/LOGO1-fast.gif" /></NavLink>
           <div className="userauth">
