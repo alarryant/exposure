@@ -20,10 +20,9 @@ class Navbar extends React.Component {
 
   render() {
   return (
-
       <nav>
         { this.props.currentUser === null ? 
-        <section class="notLoggedIn">
+        <section className="notLoggedIn">
           <NavLink to="/"><img className="logo" alt="Exposure Logo" src="/LOGO1-fast.gif" /></NavLink>
           <div className="userauth">
             <Login loginInfo = {this.props.loginInfo}/>
@@ -31,7 +30,7 @@ class Navbar extends React.Component {
           </div>
         </section>
         :
-        <section class="loggedIn">
+        <section className="loggedIn">
           <NavLink to="/"><img className="logo" alt="Exposure Logo" src="/LOGO1-fast.gif" /></NavLink>
           <div className="dropdown-container">
             <div className="dropdown">

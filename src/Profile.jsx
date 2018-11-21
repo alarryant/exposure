@@ -6,6 +6,7 @@ import Slider from "react-slick";
 
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import EditProfile from './EditProfile';
 // import ProfilePic from '../public/artist_profile.jpg';
 
 
@@ -16,9 +17,11 @@ import axios from 'axios';
 
 
 class ProfileDesc extends React.Component {
+  
   render() {
     return (
       <div className="profiledesc">
+        <EditProfile />
         <h2>A little about me....</h2>
         <p>I have no fear of losing my life - if I have to save a koala or a crocodile or a kangaroo or a snake, mate, I will save it.
         I believe that education is all about being excited about something.

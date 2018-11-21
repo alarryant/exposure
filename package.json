@@ -10,6 +10,7 @@
     "dotenv": "^6.1.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
+    "history": "^4.7.2",
     "knex": "^0.15.2",
     "knex-logger": "^0.1.0",
     "lodash.samplesize": "^4.2.0",
