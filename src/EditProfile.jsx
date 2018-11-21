@@ -55,8 +55,8 @@ class EditProfile extends Component {
     render() {
         return (
             <div>
-            <Button bsStyle="default" bsSize="medium" onClick={this.handleShow}>
-                <label>Edit</label>
+            <Button bsStyle="default" bsSize="large" onClick={this.handleShow}>
+                Edit
             </Button>
 
             <Modal show={this.state.show} onHide={this.handleClose}>

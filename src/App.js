@@ -18,10 +18,6 @@ import About from './About.jsx';
 import Contact from './Contact.jsx';
 
 
-const history = createMemoryHistory({
-  forceRefresh: false
-});
-
 class App extends Component {
 
 
@@ -55,11 +51,6 @@ class App extends Component {
     this.renderRedirect = this.renderRedirect.bind(this);
     // this.saveAvailability = this.saveAvailability.bind(this);
 
-
-    history.listen((location, action) => {
-      console.log("HISTORY CHANGE", action, location);
-      console.log(history.entries);
-    });
   }
 
   // saveAvailability(dates) {
@@ -146,8 +137,8 @@ class App extends Component {
 
   render() {
     const currentUser = localStorage.getItem('currentUser');
-    const routerInstance = (
-      <BrowserRouter history={history}>
+    return (
+      <BrowserRouter>
         <div>
           {this.renderRedirect()}
           <Navbar loginInfo={this.loginInfo}
@@ -162,8 +153,6 @@ class App extends Component {
               currentUser={currentUser} />} />
             <Route path='/opportunities' name='opportunities' render={(props) => <Opportunities {...props} />} />
             <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={this.state.currentUser} />} />
-            {/*<Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} />} />*/}
-            {/* <Route path='/availability' name='dashboard' render={() => <Availability currentUser={this.state.user}/>} /> */}
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
               searchWord={this.state.searchWord}
@@ -176,9 +165,7 @@ class App extends Component {
           <Footer />
         </div>
       </BrowserRouter>
-    );
-
-    return routerInstance;
+    )
   }
 }
 
