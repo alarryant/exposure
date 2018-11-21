@@ -4,9 +4,9 @@ const env = process.env.ENV || 'development';
 const express = require("express");
 const app = express();
 const PORT = 3001;
-const bodyParser = require("body-parser")
+const bodyParser = require("body-parser");
 const bcrypt = require('bcryptjs');
-const cookieSession = require('cookie-session')
+const cookieSession = require('cookie-session');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -18,7 +18,7 @@ app.use(express.static('public'));
 app.use(cookieSession({
   name: 'session',
   keys: ['cookiemonster']
-}))
+}));
 
 // --------------- ROUTES --------------- //
 
@@ -41,11 +41,23 @@ app.post("/login", (req, res) => {
   let userEmail = req.body.email;
   let userPassword = req.body.password;
 
+<<<<<<< HEAD
   knex("users").select("*").where("email", "=", userEmail).where("password", "=", userPassword).then((data) => {
     req.session.user_id = data[0].id
     res.json(data);
   })
 });
+=======
+  if (req.session.user_id) {
+    res.json(req.session.user_id);
+  } else {
+    knex("users").select("*").where("email", "=", userEmail).where("password", "=", userPassword).then((data) => {
+      req.session.user_id = data[0].id;
+      res.json(data);
+    });
+  }
+  });
+>>>>>>> feature/about
 
 
 // LOGOUT
@@ -86,7 +98,7 @@ app.post("/register", (req, res) => {
 
 // SEARCH
 app.get("/search", (req, res) => {
-  let queryWord = (req.query.searchWord).toLowerCase()
+  let queryWord = (req.query.searchWord).toLowerCase();
   knex('images')
     .where(
       knex.raw('LOWER("title") like ?', `%${queryWord}%`))

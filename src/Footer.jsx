@@ -1,5 +1,6 @@
 import React from 'react';
-import { NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom";
+import './styles/Footer.css';
 
 
 class Footer extends React.Component {
@@ -9,9 +10,9 @@ class Footer extends React.Component {
   return (
   <div className="footer">
     <p>
-      <i className="fab fa-facebook-f"></i>
-      <i className="fab fa-twitter"></i>
-      <i className="fab fa-instagram"></i>
+      <a href="https://www.facebook.com/ExposurePhotography"><i className="fab fa-facebook-f"></i></a>
+      <a href="https://twitter.com/ExposurePhotography"><i className="fab fa-twitter"></i></a>
+      <a href="https://www.instagram.com/ExposurePhotography"><i className="fab fa-instagram"></i></a>
     </p>
     <NavLink to="/about">About</NavLink>
     <NavLink to="/contact">Contact us</NavLink>

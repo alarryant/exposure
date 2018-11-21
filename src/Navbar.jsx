@@ -1,8 +1,9 @@
 import React from 'react';
-import { NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom";
 import { Button } from 'react-bootstrap';
+import './styles/NavBar.css';
 
-import Login from './Login'
+import Login from './Login';
 import Signup from './Signup';
 
 class Navbar extends React.Component {
@@ -22,6 +23,7 @@ class Navbar extends React.Component {
   return (
       <nav>
         { this.props.currentUser === null ?
+<<<<<<< HEAD
         <section className="notLoggedIn">
           <NavLink to="/">
           <div className="logo">
@@ -29,13 +31,21 @@ class Navbar extends React.Component {
             <span href="#" className="logo">Exp<span className="lighter">o</span>sure</span>
           </div>
           </NavLink>
+=======
+        (<section class="notLoggedIn">
+          <NavLink to="/"><img className="logo" alt="Exposure Logo" src="/LOGO1-fast.gif" /></NavLink>
+>>>>>>> feature/about
           <div className="userauth">
             <Login loginInfo = {this.props.loginInfo}/>
             <Signup signupInfo = { this.props.signupInfo }/>
           </div>
-        </section>
+        </section>)
         :
+<<<<<<< HEAD
         <section className="loggedIn">
+=======
+        (<section class="loggedIn">
+>>>>>>> feature/about
           <NavLink to="/"><img className="logo" alt="Exposure Logo" src="/LOGO1-fast.gif" /></NavLink>
           <div className="dropdown-container">
             <div className="dropdown">
@@ -51,7 +61,7 @@ class Navbar extends React.Component {
           <div className="userauth">
             <Button bsStyle="default" bsSize="large" type="submit" onClick={this.handleSignout}>Logout</Button>
           </div>
-        </section>
+        </section>)
         }
       </nav>
     )
