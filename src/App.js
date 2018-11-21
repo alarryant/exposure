@@ -20,7 +20,6 @@ class App extends Component {
     super(props);
 
     this.state = {
-      user: { id: 1 },
       searchWord: "",
       firstName: "",
       lastName: "",
@@ -36,7 +35,8 @@ class App extends Component {
       availability: {
         start_date: null,
         end_date: null
-      }
+      },
+      artistId: null
     };
 
     this.loginInfo = this.loginInfo.bind(this);
@@ -104,9 +104,8 @@ class App extends Component {
         searchWord: word
       }
     })
-      .then((res) => {
-        console.log("SearchResult, App.js", res)
-        this.setState({ redirect: true, searchWord: word, searchimages: res.data });
+     .then((res) => {
+        this.setState({redirect: true, searchWord: word, searchimages: res.data});
       });
   }
 
@@ -150,7 +149,6 @@ class App extends Component {
   }
 
   render() {
-    console.log("this is app.jsx", this.state.packages);
     return (
       <BrowserRouter>
         <div>
@@ -167,7 +165,7 @@ class App extends Component {
               featuredphotos={this.state.featuredphotos}
               packages={this.state.packages} />} />
             <Route path='/opportunities' name='opportunities' render={(props) => <Opportunities {...props} />} />
-            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} />} />
+            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={this.state.currentUser} />} />
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
               searchWord={this.state.searchWord}

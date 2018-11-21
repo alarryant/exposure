@@ -20,42 +20,21 @@ app.use(cookieSession({
   keys: ['cookiemonster']
 }))
 
-
-function randomImgGenerator(category) {
-  // knex('images').where("specialization", "=", category).orderBy(random()).limit(6);
-};
-
 // --------------- ROUTES --------------- //
 
 //TESTING ONLY - Shows req.path
 
 app.use((req, res, next) => {
-  console.log(req.path, req.method);
   next();
 });
 
 app.get("/homephotos", (req, res) => {
   knex('images').select('id', 'title', 'description', 'src', 'category', 'image_owner')
-      .asCallback((err, data) => {
-        if (err) throw err;
-        res.json(data);
-      });
+    .asCallback((err, data) => {
+      if (err) throw err;
+      res.json(data);
+    });
 });
-
-app.get("/featured", (req, res) => {
-  knex('images').select('*').where("featured", "like", "true").asCallback((err, data) => {
-    if (err) throw err;
-    res.json(data);
-  });
-});
-
-app.get("/packages", (req, res) => {
-  knex('price_packages').select('*').where("user_id", "=", 1).asCallback((err, data) => {
-    if (err) throw err;
-    res.json(data);
-  });
-});
-
 
 // LOGIN
 app.post("/login", (req, res) => {
@@ -70,14 +49,14 @@ app.post("/login", (req, res) => {
       res.json(data);
     })
   }
-  });
+});
 
 
 // LOGOUT
 app.post("/logout", (req, res) => {
   req.session.user_id = null;
   res.json(req.session.user_id);
-  });
+});
 
 
 // REGISTER
@@ -89,21 +68,23 @@ app.post("/register", (req, res) => {
   let userType = +req.body.userType;
 
 
-knex('users').where('email', email).then((data) => {
-  if(data.length !== 0) {
-    res.status(400).send("Invalid email and/or password combination");
-  } else {
-    knex("users").insert({first_name: firstName,
-                          last_name: lastName,
-                          email: email,
-                          password: bcrypt.hashSync(password, 10),
-                          user_type_id: userType}).returning("id")
-      .then((user_id) => {
-        req.session.user_id = +user_id;
-        res.json(req.session.user_id);
+  knex('users').where('email', email).then((data) => {
+    if (data.length !== 0) {
+      res.status(400).send("Invalid email and/or password combination");
+    } else {
+      knex("users").insert({
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        password: bcrypt.hashSync(password, 10),
+        user_type_id: userType
+      }).returning("id")
+        .then((user_id) => {
+          req.session.user_id = +user_id;
+          res.json(req.session.user_id);
         });
-      }
-    });
+    }
+  });
 });
 
 
@@ -120,7 +101,7 @@ app.get("/search", (req, res) => {
     .select('*')
     .then(function (images) {
       res.json(images)
-    })
+    });
 });
 
 //IMAGE
@@ -131,14 +112,22 @@ app.post("/images/:id", (req, res) => {
 
 //ARTIST
 app.get("/artists/:id", (req, res) => {
-  console.log(req.params.id)
-  let artistID = req.params.id
-  knex('images')
-    .where('image_owner', artistID)
-    .select('*')
-    .then(function(images) {
-      res.json(images)
-    })
+  let artistId = req.params.id;
+  let images = knex('images')
+    .join("users", "image_owner", "=", "users.id")
+    .where("image_owner", artistId)
+    .then((images) => {
+      knex('price_packages')
+        .join("users", "price_packages.user_id", "=", "users.id")
+        .where("price_packages.user_id", artistId).orderBy("tier")
+        .then((packages) => {
+          let artistData = {
+            images: images,
+            packages: packages
+          };
+          res.json(artistData);
+        });
+    });
 });
 
 app.get("/artists/:id/portfolio", (req, res) => {
@@ -147,17 +136,14 @@ app.get("/artists/:id/portfolio", (req, res) => {
 });
 
 app.get("/dashboard", (req, res) => {
-  console.log("Artist Dashboard")
-  knex('users').select('*').first().where({ id: 2 }).asCallback((err, data) => {
+  console.log("Dashboard Page")
+  knex('users').select('*').where('id', req.session.user_id).asCallback((err, data) => {
     if (err) throw err;
-    // console.log("Artist Dashboard", data);
     res.json(data);
   });
 });
 
 app.post("/artists/:id/edit", (req, res) => {
-console.log(req.body)
-
   res.send("Artist Edit Profile");
 });
 
@@ -196,19 +182,7 @@ app.post("/opportunities/:id/apply", (req, res) => {
   res.send("Apply for Opportunity");
 });
 
-//DASHBOARD
-app.get("/clients/:id/dashboard", (req, res) => {
-  console.log("Client Dashboard")
-  res.send("Client Dashboard");
-});
 
-app.post("/clients/:id/dashboard/edit", (req, res) => {
-  res.send("Edit Dashboard");
-});
-
-app.post("/clients/:id/like", (req, res) => {
-  res.send("Likes");
-});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
