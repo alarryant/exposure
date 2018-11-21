@@ -9,10 +9,6 @@ import Dashboard from './Dashboard.jsx';
 import SearchResults from './SearchResults.jsx';
 import ErrorPath from './Error404.jsx';
 import Profile from './Profile.jsx';
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> e4aa2862eba276c7ace8dd32d0083592b5ac72e3
 import { BrowserRouter, Router, Route, Switch, Redirect, withRouter } from "react-router-dom";
 import { createMemoryHistory } from 'history';
 import Availability from './components/Availability.jsx';
@@ -25,15 +21,6 @@ import Contact from './Contact.jsx';
 const history = createMemoryHistory({
   forceRefresh: false
 });
-<<<<<<< HEAD
-=======
-import { BrowserRouter, Route, Switch, Redirect, withRouter } from "react-router-dom";
-// import Availability from './components/Availability.jsx';
-import About from './About.jsx';
-import Contact from './Contact.jsx';
->>>>>>> feature/about
-=======
->>>>>>> e4aa2862eba276c7ace8dd32d0083592b5ac72e3
 
 class App extends Component {
 
@@ -95,18 +82,8 @@ class App extends Component {
   logout(event) {
     axios.post("/logout")
       .then((res) => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        console.log("res.data: ", res.data);
         localStorage.removeItem('currentUser');
         this.setState({ redirect: true });
-=======
-        this.setState({ redirect: true, currentUser: null });
->>>>>>> feature/about
-=======
-        localStorage.removeItem('currentUser');
-        this.setState({ redirect: true });
->>>>>>> e4aa2862eba276c7ace8dd32d0083592b5ac72e3
       });
   }
 
@@ -181,24 +158,12 @@ class App extends Component {
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos}/>} />
             <Route path='/artists/:id' render={props => <Profile
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> e4aa2862eba276c7ace8dd32d0083592b5ac72e3
               {...props}
               currentUser={currentUser} />} />
             <Route path='/opportunities' name='opportunities' render={(props) => <Opportunities {...props} />} />
             <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={this.state.currentUser} />} />
-<<<<<<< HEAD
-            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} />} />
-=======
-                                                          { ...props }/>} />
+            {/*<Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} />} />*/}
             {/* <Route path='/availability' name='dashboard' render={() => <Availability currentUser={this.state.user}/>} /> */}
-            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props}
-                                                                                    currentUser={this.state.currentUser} />} />
->>>>>>> feature/about
-=======
->>>>>>> e4aa2862eba276c7ace8dd32d0083592b5ac72e3
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
               searchWord={this.state.searchWord}
