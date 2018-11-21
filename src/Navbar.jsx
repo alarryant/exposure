@@ -24,7 +24,12 @@ class Navbar extends React.Component {
       <nav>
         { this.props.currentUser === null ?
         <section className="notLoggedIn">
-          <NavLink to="/"><img className="logo" alt="Exposure Logo" src="/LOGO1-fast.gif" /></NavLink>
+          <NavLink to="/">
+          <div className="logo">
+            <div className="lens"></div>
+            <span href="#" className="logo">Exp<span className="lighter">o</span>sure</span>
+          </div>
+          </NavLink>
           <div className="userauth">
             <Login loginInfo = {this.props.loginInfo}/>
             <Signup signupInfo = { this.props.signupInfo }/>

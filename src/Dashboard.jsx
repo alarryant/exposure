@@ -23,8 +23,6 @@ const tabStyle = {
   margin: '0 auto'
 };
 
-
-
 class Dashboard extends React.Component {
 
   constructor(props) {
