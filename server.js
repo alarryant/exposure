@@ -108,21 +108,28 @@ app.post("/images/:id", (req, res) => {
 //ARTIST
 app.get("/artists/:id", (req, res) => {
   let artistId = req.params.id;
-  let images = knex('images')
-    .join("users", "image_owner", "=", "users.id")
-    .where("image_owner", artistId)
-    .then((images) => {
-      knex('price_packages')
-        .join("users", "price_packages.user_id", "=", "users.id")
-        .where("price_packages.user_id", artistId).orderBy("tier")
-        .then((packages) => {
-          let artistData = {
-            images: images,
-            packages: packages
-          };
-          res.json(artistData);
-        });
-    });
+  let images =
+    knex('images')
+      .join("users", "image_owner", "=", "users.id")
+      .where("image_owner", artistId)
+      .then((images) => {
+        knex('price_packages')
+          .join("users", "price_packages.user_id", "=", "users.id")
+          .where("price_packages.user_id", artistId).orderBy("tier")
+          .then((packages) => {
+            knex('reviews')
+              .join("users", "reviews.user_id", "=", "users.id")
+              .where("reviews.artist_id", artistId)
+              .then((reviews) => {
+                let artistData = {
+                  images: images,
+                  packages: packages,
+                  reviews: reviews
+                };
+                res.json(artistData);
+              });
+          });
+      });
 });
 
 app.get("/dashboard", (req, res) => {

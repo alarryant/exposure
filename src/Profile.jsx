@@ -201,6 +201,83 @@ class PackagesCard extends React.Component {
   }
 }
 
+// https://blog.campvanilla.com/reactjs-dropdown-menus-b6e06ae3a8fe
+class ReviewsCard extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showMenu: false,
+    };
+
+    this.showMenu = this.showMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
+    this.renderReviews = this.renderReviews.bind(this);
+  }
+
+  renderReviews(reviews=[]) {
+
+
+    return reviews.map(function(review) {
+
+      return (
+        <div>
+        <h4>{review.first_name} said:</h4>
+        <h5>{review.rating}/5</h5>
+        <p>{review.description}</p>
+        </div>
+        )
+    })
+
+  }
+
+  showMenu(event) {
+    event.preventDefault();
+
+    this.setState({ showMenu: true }, () => {
+      document.addEventListener('click', this.closeMenu);
+    });
+  }
+
+  closeMenu(event) {
+
+    if (!this.dropdownMenu.contains(event.target)) {
+
+      this.setState({ showMenu: false }, () => {
+        document.removeEventListener('click', this.closeMenu);
+      });
+
+    }
+  }
+
+  render() {
+    return (
+      <div className="profilebtn" >
+        <button onClick={this.showMenu}>
+          Reviews
+        </button>
+
+        {
+          this.state.showMenu
+            ? (
+              <div
+                className="menu"
+                ref={(element) => {
+                  this.dropdownMenu = element;
+                }}
+              >
+              {this.renderReviews(this.props.reviews)}
+              </div>
+            )
+            : (
+              null
+            )
+        }
+      </div>
+    );
+  }
+}
+
 class Profile extends React.Component {
 
   constructor(props) {
@@ -257,7 +334,9 @@ class Profile extends React.Component {
       let twitter = res.data.images[0].twitter_url;
       let facebook = res.data.images[0].facebook_url;
       let instagram = res.data.images[0].instagram_url;
-      this.setState({redirect: true, twitter: twitter, facebook: facebook, instagram: instagram, fullName: fullName, avatarImage: avatarImage, packages: packages, collection: collection, bio: bio});
+      let reviews = res.data.reviews;
+      console.log("this is reviews on profile", reviews);
+      this.setState({redirect: true, twitter: twitter, facebook: facebook, instagram: instagram, fullName: fullName, avatarImage: avatarImage, packages: packages, collection: collection, bio: bio, reviews: reviews});
     });
   }
 
@@ -294,6 +373,7 @@ class Profile extends React.Component {
           </div>
           <AvailabilityCard />
           <PackagesCard packages={this.state.packages}/>
+          <ReviewsCard reviews={this.state.reviews} />
         </div>
       ) : (
         <div className="profile">
@@ -312,6 +392,7 @@ class Profile extends React.Component {
           </div>
           <AvailabilityCard />
           <PackagesCard packages={this.state.packages}/>
+          <ReviewsCard reviews={this.state.reviews} />
         </div>)
       )
     }
