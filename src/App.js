@@ -11,7 +11,7 @@ import ErrorPath from './Error404.jsx';
 import Profile from './Profile.jsx';
 import { BrowserRouter, Route, Switch, Redirect, withRouter } from "react-router-dom";
 import Availability from './components/Availability.jsx';
-import Opportunities from './components/Opportunities.jsx';
+import Opportunities from './Opportunities.jsx';
 
 
 class App extends Component {
