@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Url from 'url-parse';
 import EditProfile from './EditProfile';
+import './styles/Profile.css';
+
 
 class ProfileDesc extends React.Component {
   render() {
@@ -39,18 +41,18 @@ class SocialMedia extends React.Component {
           (
           <p>
             <i className="fab fa-facebook-f"></i>
-            <a href={this.props.facebook} target="_blank"> {this.parseUrl(this.props.facebook)}</a>
+            <a href={this.props.facebook} target="_blank" rel="noopener noreferrer"> {this.parseUrl(this.props.facebook)}</a>
           </p>) : ''}
         {this.props.twitter !== "null" ?
         (
         <p>
           <i className="fab fa-twitter"></i>
-          <a href={this.props.twitter} target="_blank"> {this.parseUrl(this.props.twitter)}</a>
+          <a href={this.props.twitter} target="_blank" rel="noopener noreferrer"> {this.parseUrl(this.props.twitter)}</a>
         </p>) : ''}
         {this.props.instagram !== "null" ?
           (
           <p><i className="fab fa-instagram"></i>
-            <a href={this.props.instagram} target="_blank">{this.parseUrl(this.props.instagram)}</a>
+            <a href={this.props.instagram} target="_blank" rel="noopener noreferrer">{this.parseUrl(this.props.instagram)}</a>
           </p>) : ''}
       </div>
       )
@@ -118,86 +120,86 @@ class AvailabilityCard extends React.Component {
 }
 
 // https://blog.campvanilla.com/reactjs-dropdown-menus-b6e06ae3a8fe
-class PackagesCard extends React.Component {
-  constructor(props) {
-    super(props);
+// class PackagesCard extends React.Component {
+//   constructor(props) {
+//     super(props);
 
-    this.state = {
-      showMenu: false,
-    };
+//     this.state = {
+//       showMenu: false,
+//     };
 
-    this.showMenu = this.showMenu.bind(this);
-    this.closeMenu = this.closeMenu.bind(this);
-    this.renderPricePackage = this.renderPricePackage.bind(this);
-  }
+//     this.showMenu = this.showMenu.bind(this);
+//     this.closeMenu = this.closeMenu.bind(this);
+//     this.renderPricePackage = this.renderPricePackage.bind(this);
+//   }
 
-  renderPricePackage(pricepackages=[]) {
-    let tier;
+//   renderPricePackage(pricePackages=[]) {
+//     let tier;
 
-    return pricepackages.map(function(pricepackage) {
-      if (pricepackage.tier === 1) {
-      tier = "Basic";
-    } else if (pricepackage.tier === 2) {
-      tier = "Intermediate";
-    } else if (pricepackage.tier === 3) {
-      tier = "Deluxe";
-    }
-      return (
-        <div>
-          <h5>{tier}</h5>
-          <p>{pricepackage.price}</p>
-        </div>
-        )
-    })
+//     return pricePackages.map(function(pricePackage) {
+//       if (pricePackage.tier === 1) {
+//       tier = "Basic";
+//     } else if (pricePackage.tier === 2) {
+//       tier = "Intermediate";
+//     } else if (pricePackage.tier === 3) {
+//       tier = "Deluxe";
+//     }
+//       return (
+//         <div>
+//           <h5>{tier}</h5>
+//           <p>{pricePackage.price}</p>
+//         </div>
+//         )
+//     })
 
-  }
+//   }
 
-  showMenu(event) {
-    event.preventDefault();
+//   showMenu(event) {
+//     event.preventDefault();
 
-    this.setState({ showMenu: true }, () => {
-      document.addEventListener('click', this.closeMenu);
-    });
-  }
+//     this.setState({ showMenu: true }, () => {
+//       document.addEventListener('click', this.closeMenu);
+//     });
+//   }
 
-  closeMenu(event) {
+//   closeMenu(event) {
 
-    if (!this.dropdownMenu.contains(event.target)) {
+//     if (!this.dropdownMenu.contains(event.target)) {
 
-      this.setState({ showMenu: false }, () => {
-        document.removeEventListener('click', this.closeMenu);
-      });
+//       this.setState({ showMenu: false }, () => {
+//         document.removeEventListener('click', this.closeMenu);
+//       });
 
-    }
-  }
+//     }
+//   }
 
-  render() {
-    return (
-      <div className="profilebtn" >
-        <button onClick={this.showMenu}>
-          Packages
-        </button>
+//   render() {
+//     return (
+//       <div className="profilebtn" >
+//         <button onClick={this.showMenu}>
+//           Packages
+//         </button>
 
-        {
-          this.state.showMenu
-            ? (
-              <div
-                className="menu"
-                ref={(element) => {
-                  this.dropdownMenu = element;
-                }}
-              >
-              {this.renderPricePackage(this.props.packages)}
-              </div>
-            )
-            : (
-              null
-            )
-        }
-      </div>
-    );
-  }
-}
+//         {
+//           this.state.showMenu
+//             ? (
+//               <div
+//                 className="menu"
+//                 ref={(element) => {
+//                   this.dropdownMenu = element;
+//                 }}
+//               >
+//               {this.renderPricePackage(this.props.packages)}
+//               </div>
+//             )
+//             : (
+//               null
+//             )
+//         }
+//       </div>
+//     );
+//   }
+// }
 
 class Profile extends React.Component {
 
@@ -230,11 +232,11 @@ class Profile extends React.Component {
   }
 
   showPortfolio = () => {
-    this.setState({photoview: "portfolio"})
+    this.setState({photoView: "portfolio"})
   }
 
   showFeatures = () => {
-    this.setState({photoview: "featured"})
+    this.setState({photoView: "featured"})
   }
 
   componentDidMount() {
@@ -272,7 +274,7 @@ class Profile extends React.Component {
     };
 
     return (
-      this.state.photoview === 'featured' ? (
+      {this.state.photoview === 'featured' ? (
         <div className="profile">
           <Avatar name={ this.state.fullName } avatar={ this.state.avatarImage }/>
           <ProfileDesc bio={this.state.bio}/>
@@ -291,7 +293,7 @@ class Profile extends React.Component {
             <br />
           </div>
           <AvailabilityCard />
-          <PackagesCard packages={this.props.packages}/>
+          {/*<PackagesCard packages={this.props.packages}/>*/}
         </div>
       ) : (
         <div className="profile">
@@ -311,8 +313,9 @@ class Profile extends React.Component {
           <AvailabilityCard />
           <PackagesCard packages={this.props.packages}/>
         </div>)
+      }
     )
-  }
+  
 }
 
 export default Profile;

@@ -1,0 +1,9 @@
+nav {
+  height: 100px;
+  background-color: #e2ecfc;
+  padding-right: 20px;
+}
+
+.userauth {
+  float: right;
+}

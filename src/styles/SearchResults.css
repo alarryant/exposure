@@ -1,0 +1,12 @@
+/*SEARCH PAGE*/
+.wrapper {
+  width: 80%;
+  margin: auto;
+  padding: 5px;
+}
+
+.searchResult {
+  padding: 5px;
+  width: 30%;
+  height: 30%;
+}
