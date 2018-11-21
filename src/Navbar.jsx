@@ -22,7 +22,7 @@ class Navbar extends React.Component {
   return (
 
       <nav>
-        { this.props.currentUser === null ? 
+        { this.props.currentUser === null ?
         <section class="notLoggedIn">
           <NavLink to="/"><img className="logo" alt="Exposure Logo" src="/LOGO1-fast.gif" /></NavLink>
           <div className="userauth">
@@ -39,6 +39,8 @@ class Navbar extends React.Component {
               <div className="dropdown-content">
                 <NavLink to="/dashboard">Dashboard</NavLink>
                 <NavLink to="/settings">Settings</NavLink>
+                <NavLink to="/opportunities">Opportunities</NavLink>
+
               </div>
             </div>
           </div>
