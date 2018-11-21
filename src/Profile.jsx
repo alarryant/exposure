@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Url from 'url-parse';
 import EditProfile from './EditProfile';
+import './styles/Profile.css';
 
 class ProfileDesc extends React.Component {
   render() {
@@ -39,18 +40,18 @@ class SocialMedia extends React.Component {
           (
           <p>
             <i className="fab fa-facebook-f"></i>
-            <a href={this.props.facebook} target="_blank"> {this.parseUrl(this.props.facebook)}</a>
+            <a href={this.props.facebook} target="_blank" rel="noopener noreferrer"> {this.parseUrl(this.props.facebook)}</a>
           </p>) : ''}
         {this.props.twitter !== "null" ?
         (
         <p>
           <i className="fab fa-twitter"></i>
-          <a href={this.props.twitter} target="_blank"> {this.parseUrl(this.props.twitter)}</a>
+          <a href={this.props.twitter} target="_blank" rel="noopener noreferrer"> {this.parseUrl(this.props.twitter)}</a>
         </p>) : ''}
         {this.props.instagram !== "null" ?
           (
           <p><i className="fab fa-instagram"></i>
-            <a href={this.props.instagram} target="_blank">{this.parseUrl(this.props.instagram)}</a>
+            <a href={this.props.instagram} target="_blank" rel="noopener noreferrer">{this.parseUrl(this.props.instagram)}</a>
           </p>) : ''}
       </div>
       )
@@ -131,21 +132,21 @@ class PackagesCard extends React.Component {
     this.renderPricePackage = this.renderPricePackage.bind(this);
   }
 
-  renderPricePackage(pricepackages=[]) {
+  renderPricePackage(pricePackages=[]) {
     let tier;
 
-    return pricepackages.map(function(pricepackage) {
-      if (pricepackage.tier === 1) {
+    return pricePackages.map(function(pricePackage) {
+      if (pricePackage.tier === 1) {
       tier = "Basic";
-    } else if (pricepackage.tier === 2) {
+    } else if (pricePackage.tier === 2) {
       tier = "Intermediate";
-    } else if (pricepackage.tier === 3) {
+    } else if (pricePackage.tier === 3) {
       tier = "Deluxe";
     }
       return (
         <div>
           <h5>{tier}</h5>
-          <p>{pricepackage.price}</p>
+          <p>{pricePackage.price}</p>
         </div>
         )
     })
@@ -205,7 +206,7 @@ class Profile extends React.Component {
     super(props);
     this.state = {
       artist: {},
-      photoview: 'featured'
+      photoView: 'featured'
     }
     this.addCarouselPhotos = this.addCarouselPhotos.bind(this);
     this.areFeaturedPhotos = this.areFeaturedPhotos.bind(this);
@@ -230,11 +231,11 @@ class Profile extends React.Component {
   }
 
   showPortfolio = () => {
-    this.setState({photoview: "portfolio"})
+    this.setState({photoView: "portfolio"})
   }
 
   showFeatures = () => {
-    this.setState({photoview: "featured"})
+    this.setState({photoView: "featured"})
   }
 
   componentDidMount() {
@@ -272,7 +273,7 @@ class Profile extends React.Component {
     };
 
     return (
-      this.state.photoview === 'featured' ? (
+      this.state.photoView === 'featured' ? (
         <div className="profile">
           <Avatar name={ this.state.fullName } avatar={ this.state.avatarImage }/>
           <ProfileDesc bio={this.state.bio}/>
@@ -311,8 +312,8 @@ class Profile extends React.Component {
           <AvailabilityCard />
           <PackagesCard packages={this.props.packages}/>
         </div>)
-    )
-  }
+      )
+    }
 }
 
 export default Profile;

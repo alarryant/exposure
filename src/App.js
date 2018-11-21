@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './styles/App.css';
 import axios from 'axios';
 import Navbar from './Navbar.jsx';
 import SearchBar from './SearchBar.jsx';
@@ -10,13 +10,13 @@ import SearchResults from './SearchResults.jsx';
 import ErrorPath from './Error404.jsx';
 import Profile from './Profile.jsx';
 import { BrowserRouter, Router, Route, Switch, Redirect, withRouter } from "react-router-dom";
-import { createMemoryHistory } from 'history'; 
+import { createMemoryHistory } from 'history';
 import Availability from './components/Availability.jsx';
 import Opportunities from './Opportunities.jsx';
+// import Availability from './components/Availability.jsx';
+import About from './About.jsx';
+import Contact from './Contact.jsx';
 
-const history = createMemoryHistory({
-  forceRefresh: false
-});
 
 class App extends Component {
 
@@ -51,11 +51,6 @@ class App extends Component {
     this.renderRedirect = this.renderRedirect.bind(this);
     // this.saveAvailability = this.saveAvailability.bind(this);
 
-
-    history.listen((location, action) => {
-      console.log("HISTORY CHANGE", action, location);
-      console.log(history.entries);
-    });
   }
 
   // saveAvailability(dates) {
@@ -78,7 +73,6 @@ class App extends Component {
   logout(event) {
     axios.post("/logout")
       .then((res) => {
-        console.log("res.data: ", res.data);
         localStorage.removeItem('currentUser');
         this.setState({ redirect: true });
       });
@@ -128,18 +122,6 @@ class App extends Component {
     axios.get("/homephotos")
       .then(res => this.setState({ homephotos: res.data }));
 
-    axios.get("/featured")
-      .then(res => this.setState({ featuredphotos: res.data }));
-
-    axios.get("/packages")
-      .then(res => this.setState({ packages: res.data }));
-
-    // axios.get("/search")
-    //   .then(res => console.log(res.data));
-
-    // axios.get("/artist/:id")
-    //   .then(res => console.log(res.data));
-
     // axios.get("/artist/:id/dashboard")
     //   .then(res => console.log(res.data));
 
@@ -155,39 +137,35 @@ class App extends Component {
 
   render() {
     const currentUser = localStorage.getItem('currentUser');
-    const routerInstance = (
-      <Router history={history}>
+    return (
+      <BrowserRouter>
         <div>
           {this.renderRedirect()}
           <Navbar loginInfo={this.loginInfo}
             signupInfo={this.signupInfo}
             currentUser={currentUser}
             logout={this.logout} />
-          <SearchBar searchResult={this.searchResult} />
+          <SearchBar searchResult={this.searchResult}/>
           <Switch>
-            <Route path='/home' render={() => <Home homephotos={this.state.homephotos} />} />
+            <Route path='/home' render={() => <Home homephotos={this.state.homephotos}/>} />
             <Route path='/artists/:id' render={props => <Profile
               {...props}
-              featuredphotos={this.state.featuredphotos}
-              packages={this.state.packages}
               currentUser={currentUser} />} />
             <Route path='/opportunities' name='opportunities' render={(props) => <Opportunities {...props} />} />
             <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={this.state.currentUser} />} />
-            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} />} />
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
               searchWord={this.state.searchWord}
               searchimages={this.state.searchimages} />} />
+            <Route path ='/about' name='about' render={() => <About />} />
+            <Route path ='/contact' name='contact' render={() => <Contact />} />
             <Route exact path="/" render={() => (<Redirect to="/home" />)} />
             <Route component={ErrorPath} />
           </Switch>
           <Footer />
         </div>
-      </Router>
-    );
-    // console.log('router:', routerInstance);
-    // console.log('router child context:', JSON.stringify(routerInstance.type, null, 2));
-    return routerInstance;
+      </BrowserRouter>
+    )
   }
 }
 

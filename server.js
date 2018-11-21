@@ -4,9 +4,9 @@ const env = process.env.ENV || 'development';
 const express = require("express");
 const app = express();
 const PORT = 3001;
-const bodyParser = require("body-parser")
+const bodyParser = require("body-parser");
 const bcrypt = require('bcryptjs');
-const cookieSession = require('cookie-session')
+const cookieSession = require('cookie-session');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -18,7 +18,7 @@ app.use(express.static('public'));
 app.use(cookieSession({
   name: 'session',
   keys: ['cookiemonster']
-}))
+}));
 
 // --------------- ROUTES --------------- //
 
@@ -46,7 +46,6 @@ app.post("/login", (req, res) => {
     res.json(data);
   })
 });
-
 
 // LOGOUT
 app.post("/logout", (req, res) => {
@@ -86,7 +85,7 @@ app.post("/register", (req, res) => {
 
 // SEARCH
 app.get("/search", (req, res) => {
-  let queryWord = (req.query.searchWord).toLowerCase()
+  let queryWord = (req.query.searchWord).toLowerCase();
   knex('images')
     .where(
       knex.raw('LOWER("title") like ?', `%${queryWord}%`))
@@ -126,11 +125,6 @@ app.get("/artists/:id", (req, res) => {
     });
 });
 
-app.get("/artists/:id/portfolio", (req, res) => {
-  console.log("Artist Profile Page")
-  res.send("Artist Profile Page");
-});
-
 app.get("/dashboard", (req, res) => {
   console.log("Dashboard Page")
   knex('users').select('*').where('id', req.session.user_id).asCallback((err, data) => {
@@ -156,14 +150,14 @@ app.post("/artists/:id/availability", (req, res) => {
 //OPPORTUNITIES
 
 app.get("/api/opportunities", (req, res) => {
-  console.log("Opportunity")
+  console.log("Opportunity");
   knex('events')
     .select('*')
     .join('users', 'users.id', '=', 'events.creator_id')
     .then(function(events) {
-    console.log("Opps", events)
-      res.json(events)
-    })
+    console.log("Opps", events);
+      res.json(events);
+    });
  });
 
 app.post("/opportunities/:id/add", (req, res) => {
