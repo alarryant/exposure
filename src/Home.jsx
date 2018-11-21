@@ -1,5 +1,4 @@
 import React from 'react';
-import Splashart from './Splashart.jpg';
 // import Carousel from 'react-bootstrap/lib/Carousel';
 import sampleSize from 'lodash.samplesize';
 import Slider from "react-slick";
@@ -82,7 +81,7 @@ class Home extends React.Component {
 
     <div className="homeContainer">
       <div className="splashcontainer">
-        <img className="splashart" alt="splash" src={Splashart} />
+        <img className="splashart" alt="splash" src="/images/SplashArt.jpg" />
       </div>
 
       <h1>WEDDING</h1>

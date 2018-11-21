@@ -6,6 +6,7 @@ import Slider from "react-slick";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Url from 'url-parse';
+import './styles/Profile.css';
 
 class ProfileDesc extends React.Component {
   render() {
@@ -38,18 +39,18 @@ class SocialMedia extends React.Component {
           (
           <p>
             <i className="fab fa-facebook-f"></i>
-            <a href={this.props.facebook} target="_blank"> {this.parseUrl(this.props.facebook)}</a>
+            <a href={this.props.facebook} target="_blank" rel="noopener noreferrer"> {this.parseUrl(this.props.facebook)}</a>
           </p>) : ''}
         {this.props.twitter !== "null" ?
         (
         <p>
           <i className="fab fa-twitter"></i>
-          <a href={this.props.twitter} target="_blank"> {this.parseUrl(this.props.twitter)}</a>
+          <a href={this.props.twitter} target="_blank" rel="noopener noreferrer"> {this.parseUrl(this.props.twitter)}</a>
         </p>) : ''}
         {this.props.instagram !== "null" ?
           (
           <p><i className="fab fa-instagram"></i>
-            <a href={this.props.instagram} target="_blank">{this.parseUrl(this.props.instagram)}</a>
+            <a href={this.props.instagram} target="_blank" rel="noopener noreferrer">{this.parseUrl(this.props.instagram)}</a>
           </p>) : ''}
       </div>
       )
@@ -130,21 +131,21 @@ class PackagesCard extends React.Component {
     this.renderPricePackage = this.renderPricePackage.bind(this);
   }
 
-  renderPricePackage(pricepackages=[]) {
+  renderPricePackage(pricePackages=[]) {
     let tier;
 
-    return pricepackages.map(function(pricepackage) {
-      if (pricepackage.tier === 1) {
+    return pricePackages.map(function(pricePackage) {
+      if (pricePackage.tier === 1) {
       tier = "Basic";
-    } else if (pricepackage.tier === 2) {
+    } else if (pricePackage.tier === 2) {
       tier = "Intermediate";
-    } else if (pricepackage.tier === 3) {
+    } else if (pricePackage.tier === 3) {
       tier = "Deluxe";
     }
       return (
         <div>
           <h5>{tier}</h5>
-          <p>{pricepackage.price}</p>
+          <p>{pricePackage.price}</p>
         </div>
         )
     })
@@ -229,11 +230,11 @@ class Profile extends React.Component {
   }
 
   showPortfolio = () => {
-    this.setState({photoview: "portfolio"})
+    this.setState({photoView: "portfolio"})
   }
 
   showFeatures = () => {
-    this.setState({photoview: "featured"})
+    this.setState({photoView: "featured"})
   }
 
   componentDidMount() {
@@ -270,28 +271,28 @@ class Profile extends React.Component {
       focusOnSelect: true,
     };
 
-    if(this.state.photoview === 'featured') {
+    if(this.state.photoView === 'featured') {
       return (
-      <div className="profile">
-        <Avatar name={ this.state.fullName } avatar={ this.state.avatarImage }/>
-        <ProfileDesc bio={this.state.bio}/>
-        <SocialMedia twitter={this.state.twitter} facebook={this.state.facebook} instagram={this.state.instagram}/>
-      <div className="featuredPortfolio">
-        <button onClick={this.showPortfolio}>
-          View Portfolio
-        </button>
-        <button onClick={this.showFeatures}>
-          Featured Photos
-        </button>
-        <h1>Featured Photos:</h1>
-        <Slider {...settings} >
-          {this.addCarouselPhotos(this.state.collection)}
-        </Slider>
-        <br />
-      </div>
-        <AvailabilityCard />
-        <PackagesCard packages={this.props.packages}/>
-      </div>
+        <div className="profile">
+          <Avatar name={ this.state.fullName } avatar={ this.state.avatarImage }/>
+          <ProfileDesc bio={this.state.bio}/>
+          <SocialMedia twitter={this.state.twitter} facebook={this.state.facebook} instagram={this.state.instagram}/>
+        <div className="featuredPortfolio">
+          <button onClick={this.showPortfolio}>
+            View Portfolio
+          </button>
+          <button onClick={this.showFeatures}>
+            Featured Photos
+          </button>
+          <h1>Featured Photos:</h1>
+          <Slider {...settings} >
+            {this.addCarouselPhotos(this.state.collection)}
+          </Slider>
+          <br />
+        </div>
+          <AvailabilityCard />
+          <PackagesCard packages={this.props.packages}/>
+        </div>
       );
     } else {
       return (

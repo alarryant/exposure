@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import './styles/SearchResults.css';
 
 class SearchResults extends Component {
   constructor(props) {

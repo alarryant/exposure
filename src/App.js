@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './styles/App.css';
 import axios from 'axios';
 import Navbar from './Navbar.jsx';
 import SearchBar from './SearchBar.jsx';
@@ -10,9 +10,9 @@ import SearchResults from './SearchResults.jsx';
 import ErrorPath from './Error404.jsx';
 import Profile from './Profile.jsx';
 import { BrowserRouter, Route, Switch, Redirect, withRouter } from "react-router-dom";
-import Availability from './components/Availability.jsx';
-import Portfolio from './components/Portfolio.jsx'
-
+// import Availability from './components/Availability.jsx';
+import About from './About.jsx';
+import Contact from './Contact.jsx';
 
 class App extends Component {
 
@@ -67,7 +67,6 @@ class App extends Component {
   logout(event) {
     axios.post("/logout")
       .then((res) => {
-        console.log("res.data: ", res.data);
         this.setState({ redirect: true, currentUser: null });
       });
   }
@@ -123,18 +122,6 @@ class App extends Component {
     axios.get("/homephotos")
       .then(res => this.setState({ homephotos: res.data }));
 
-    axios.get("/featured")
-      .then(res => this.setState({ featuredphotos: res.data }));
-
-    axios.get("/packages")
-      .then(res => this.setState({ packages: res.data }));
-
-    // axios.get("/search")
-    //   .then(res => console.log(res.data));
-
-    // axios.get("/artist/:id")
-    //   .then(res => console.log(res.data));
-
     // axios.get("/artist/:id/dashboard")
     //   .then(res => console.log(res.data));
 
@@ -157,18 +144,20 @@ class App extends Component {
             signupInfo={this.signupInfo}
             currentUser={this.state.currentUser}
             logout={this.logout} />
-          <SearchBar searchResult={this.searchResult} />
+          <SearchBar searchResult={this.searchResult}/>
           <Switch>
-            <Route path='/home' render={() => <Home homephotos={this.state.homephotos} />} />
+            <Route path='/home' render={() => <Home homephotos={this.state.homephotos}/>} />
             <Route path='/artists/:id' render={props => <Profile
                                                           { ...props }/>} />
             {/* <Route path='/availability' name='dashboard' render={() => <Availability currentUser={this.state.user}/>} /> */}
-            <Route path='/artists/:id/portfolio' render={() => <Portfolio /> } />
-            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} />} />
+            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props}
+                                                                                    currentUser={this.state.currentUser} />} />
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
               searchWord={this.state.searchWord}
               searchimages={this.state.searchimages} />} />
+            <Route path ='/about' name='about' render={() => <About />} />
+            <Route path ='/contact' name='contact' render={() => <Contact />} />
             <Route exact path="/" render={() => (<Redirect to="/home" />)} />
             <Route component={ErrorPath} />
           </Switch>

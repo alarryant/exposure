@@ -1,8 +1,9 @@
 import React from 'react';
-import { NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom";
 import { Button } from 'react-bootstrap';
+import './styles/NavBar.css';
 
-import Login from './Login'
+import Login from './Login';
 import Signup from './Signup';
 
 class Navbar extends React.Component {
@@ -22,16 +23,16 @@ class Navbar extends React.Component {
   return (
 
       <nav>
-        { this.props.currentUser === null ? 
-        <section class="notLoggedIn">
+        { this.props.currentUser === null ?
+        (<section class="notLoggedIn">
           <NavLink to="/"><img className="logo" alt="Exposure Logo" src="/LOGO1-fast.gif" /></NavLink>
           <div className="userauth">
             <Login loginInfo = {this.props.loginInfo}/>
             <Signup signupInfo = { this.props.signupInfo }/>
           </div>
-        </section>
+        </section>)
         :
-        <section class="loggedIn">
+        (<section class="loggedIn">
           <NavLink to="/"><img className="logo" alt="Exposure Logo" src="/LOGO1-fast.gif" /></NavLink>
           <div className="dropdown-container">
             <div className="dropdown">
@@ -45,7 +46,7 @@ class Navbar extends React.Component {
           <div className="userauth">
             <Button type="submit" onClick={this.handleSignout}>Logout</Button>
           </div>
-        </section>
+        </section>)
         }
       </nav>
     )
