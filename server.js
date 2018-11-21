@@ -41,14 +41,10 @@ app.post("/login", (req, res) => {
   let userEmail = req.body.email;
   let userPassword = req.body.password;
 
-  if (req.session.user_id) {
-    res.json(req.session.user_id);
-  } else {
-    knex("users").select("*").where("email", "=", userEmail).where("password", "=", userPassword).then((data) => {
-      req.session.user_id = data[0].id
-      res.json(data);
-    })
-  }
+  knex("users").select("*").where("email", "=", userEmail).where("password", "=", userPassword).then((data) => {
+    req.session.user_id = data[0].id
+    res.json(data);
+  })
 });
 
 

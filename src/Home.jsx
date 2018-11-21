@@ -46,7 +46,7 @@ class Home extends React.Component {
 
     return filteredPhotos.map((photo) => {
       return (
-        <div className="sliderImg" >
+        <div className="sliderImg" key={photo.id}>
           <button className="indivImg" value={photo} onClick={() => handleShowFunction(photo.id)}><img alt="900x500" src={photo.src} /></button>
           <Modal show={this.state.show === photo.id} onHide={handleCloseFunction}>
             <Modal.Header closeButton>
@@ -57,7 +57,7 @@ class Home extends React.Component {
                   <p>{photo.description}</p>
                 </Modal.Body>
                 <Modal.Footer>
-                <Link to={`/artists/${ photo.image_owner }`}>{ photo.image_owner }</Link>
+                <Link to={`/artists/${ photo.image_owner }`}>Photographer's Profile</Link>
                 </Modal.Footer>
           </Modal>
         </div>

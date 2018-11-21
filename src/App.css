@@ -349,3 +349,35 @@ a {
 }
 
 
+button {
+  border: none;
+}
+
+.userauth {
+  display: flex;
+}
+
+Button {
+  margin: 25px 10px;
+}
+
+label {
+  font-size: 15px;
+}
+
+.modal-title {
+  text-align: center;
+  font-size: 30px;
+  margin: 5px 0 0 0;
+}
+
+
+.modal-body p {
+  margin: 10px 0px 0px 10px;
+  font-size: 17px;
+}
+
+.modal-body input {
+  width: 100%;
+  height: 35px;
+}

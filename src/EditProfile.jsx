@@ -56,7 +56,7 @@ class EditProfile extends Component {
         return (
             <div>
             <Button bsStyle="default" bsSize="medium" onClick={this.handleShow}>
-                Edit
+                <label>Edit</label>
             </Button>
 
             <Modal show={this.state.show} onHide={this.handleClose}>
