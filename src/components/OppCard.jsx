@@ -2,8 +2,8 @@ import React from 'react';
 import ApplyEvent from './ApplyEvent.jsx'
 
 function OppCard(props) {
-const { event } = props
-const user_type_id = parseInt(props.usertype)
+  const { event } = props
+  const user_type_id = parseInt(props.usertype)
 
   return (
     <div className="eventcard">
@@ -12,7 +12,7 @@ const user_type_id = parseInt(props.usertype)
       <hr/>
       <p>{event.description}</p>
       <p>Contact: {event.first_name} {event.last_name}</p>
-      {user_type_id === 1 ? <ApplyEvent currentUser={props.currentUser} date={props.date} event={event}/>  : ""}
+      {user_type_id === 1 ? <ApplyEvent eventid={event.event_id} saveApplication={props.saveApplication} currentUser={props.currentUser} date={props.date} event={event}/>  : ""}
     </div>
     )
 }
