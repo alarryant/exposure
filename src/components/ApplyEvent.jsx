@@ -31,11 +31,12 @@ class ApplyEvent extends Component {
     }
 
     handleSubmit(event){
+        console.log("Handle Submit", event)
         event.preventDefault();
-        const title = this.props.event;
+        const event_id = this.props.event.id;
         const description = this.state.description;
-        const date = this.props.date;
-        const location = this.state.location;
+        const currentUser = this.props.currentUser
+        const creatorId = this.props.event.creator_id
         // this.props.editProfileInfo(title, description, date, price, location);
     }
 
@@ -44,26 +45,22 @@ class ApplyEvent extends Component {
         return (
             <div>
             <Button bsStyle="default" bsSize="medium" onClick={this.handleShow}>
-                Interested
+                Apply
             </Button>
 
             <Modal show={this.state.show} onHide={this.handleClose}>
                 <Modal.Header closeButton>
-                <Modal.Title>Send a Message that You are Interested</Modal.Title>
+                <Modal.Title>{this.props.event.name}</Modal.Title>
+                <p>Date: {this.props.date} - Location: {this.props.event.event_location}</p>
                 </Modal.Header>
                 <form onSubmit={this.handleSubmit}>
                     <Modal.Body>
-                        <h4>Title</h4>
-                        <p>{this.props.event}</p>
-                        <h4>Date of Event</h4>
-                        <p>{this.props.date}</p>
-                        <h4>Tell Me About You</h4>
-                        <textarea type="text" name="description" onChange={this.handleChange}></textarea>
-                        <h4>Location</h4>
-                        <input type="text" name="location" onChange={this.handleChange}></input>
+                        <h3>What else would you like to share with the client?</h3>
+                        <textarea className="applyEventForm" type="text" name="description" onChange={this.handleChange}></textarea>
+
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button type="submit" onClick={this.handleClose}>Send</Button>
+                        <Button type="submit" onClick={this.handleClose}>Send {this.props.event.first_name} your application!</Button>
                     </Modal.Footer>
                 </form>
             </Modal>
