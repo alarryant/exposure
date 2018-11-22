@@ -246,7 +246,6 @@ app.post("/opportunities/:id/delete", (req, res) => {
 });
 
 app.post("/opportunities/:id/apply", (req, res) => {
-  console.log("Trying to save applications!", req.body)
   knex('event_interests')
     .insert({
       eventref_id: req.body.event_id,
