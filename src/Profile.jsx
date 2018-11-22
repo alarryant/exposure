@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+import React, { Component } from 'react';
+=======
 import React from 'react';
+>>>>>>> master
 import Portfolio from './components/Portfolio.jsx';
 import Avatar from './components/Avatar.jsx';
 import Slider from "react-slick";
@@ -13,6 +17,20 @@ import PackagesCard from './components/Profile_Packages.jsx';
 import StarPhotographer from './components/Profile_Star.jsx';
 import './styles/Profile.css';
 
+
+class MailButton extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <div>
+        <a href={`mailto:${this.props.email}?subject=${this.props.name}would like to book you for a photoshoot.`} >Contact Me</a>
+      </div>
+    )
+  }
+}
+
 class Profile extends React.Component {
 
   constructor(props) {
@@ -21,70 +39,74 @@ class Profile extends React.Component {
       artist: {},
       photoView: 'featured'
     }
+
     this.addCarouselPhotos = this.addCarouselPhotos.bind(this);
     this.areFeaturedPhotos = this.areFeaturedPhotos.bind(this);
     this.showPortfolio = this.showPortfolio.bind(this);
     this.showFeatures = this.showFeatures.bind(this);
   }
 
-  areFeaturedPhotos(photos=[]) {
+  areFeaturedPhotos(photos = []) {
     return photos.filter(photo => photo.featured.includes("true"));
   }
 
-  addCarouselPhotos(photos=[]) {
+  addCarouselPhotos(photos = []) {
     let filteredPhotos = this.areFeaturedPhotos(photos);
 
-    return filteredPhotos.map(function(photo) {
+    return filteredPhotos.map(function (photo) {
       return (
         <div className="sliderImg" >
           <img alt="900x500" src={photo.src} />
         </div>
-        )
+      )
     });
   }
 
   showPortfolio = () => {
-    this.setState({photoView: "portfolio"})
+    this.setState({ photoView: "portfolio" })
   }
 
   showFeatures = () => {
-    this.setState({photoView: "featured"})
+    this.setState({ photoView: "featured" })
   }
 
   componentDidMount() {
 
     const { id } = this.props.match.params;
 
-    this.setState({artistId: id});
+    this.setState({ artistId: id });
 
-    axios.get(`/artists/${ id }`, {
+    axios.get(`/artists/${id}`, {
       params: {
         artistId: id
       }
     })
-    .then((res) => {
-      let collection = res.data.images;
-      let packages = res.data.packages;
-      let bio = res.data.images[0].bio;
-      let fullName = res.data.images[0].first_name + ' ' + res.data.images[0].last_name;
-      let avatarImage = res.data.images[0].profile_image;
-      let twitter = res.data.images[0].twitter_url;
-      let facebook = res.data.images[0].facebook_url;
-      let instagram = res.data.images[0].instagram_url;
-      let reviews = res.data.reviews;
+      .then((res) => {
+        let collection = res.data.images;
+        let packages = res.data.packages;
+        let bio = res.data.images[0].bio;
+        let fullName = res.data.images[0].first_name + ' ' + res.data.images[0].last_name;
+        let avatarImage = res.data.images[0].profile_image;
+        let twitter = res.data.images[0].twitter_url;
+        let facebook = res.data.images[0].facebook_url;
+        let instagram = res.data.images[0].instagram_url;
+        let reviews = res.data.reviews;
+        let email = res.data.images[0].email;
 
-      this.setState({
-        redirect: true,
-        twitter: twitter,
-        facebook: facebook,
-        instagram: instagram,
-        fullName: fullName,
-        avatarImage: avatarImage,
-        packages: packages,
-        collection: collection,
-        bio: bio,
-        reviews: reviews});
-    });
+        this.setState({
+          redirect: true,
+          twitter: twitter,
+          facebook: facebook,
+          instagram: instagram,
+          fullName: fullName,
+          avatarImage: avatarImage,
+          packages: packages,
+          collection: collection,
+          bio: bio,
+          reviews: reviews,
+          email: email
+        });
+      });
   }
 
   render() {
@@ -101,14 +123,16 @@ class Profile extends React.Component {
 
     return (
       <div className="profile">
-        <Avatar name={ this.state.fullName }
-                avatar={ this.state.avatarImage }/>
+        <Avatar name={this.state.fullName}
+          avatar={this.state.avatarImage} />
+        <MailButton email={this.state.email}
+          name={this.props.currentUserName} />
         <StarPhotographer currentUser={this.props.currentUser}
-                          artistId={this.state.artistId}/>
-        <ProfileDesc bio={this.state.bio}/>
+          artistId={this.state.artistId} />
+        <ProfileDesc bio={this.state.bio} />
         <SocialMedia twitter={this.state.twitter}
-                     facebook={this.state.facebook}
-                     instagram={this.state.instagram}/>
+          facebook={this.state.facebook}
+          instagram={this.state.instagram} />
         <div className="featuredPortfolio">
           <button onClick={this.showPortfolio}>
             View Portfolio
@@ -123,17 +147,17 @@ class Profile extends React.Component {
               </Slider>
               <br />
             </div>
-            ) : (
-            <div>
-              <h1>Portfolio Photos:</h1>
-              <Portfolio artistPhotos={this.state.collection} />
-            </div>
+          ) : (
+              <div>
+                <h1>Portfolio Photos:</h1>
+                <Portfolio artistPhotos={this.state.collection} />
+              </div>
             )}
         </div>
         <AvailabilityCard currentUser={this.propscurrentUser}
-                          disabledDays={this.state.disabledDays}
-                          artistId={this.state.artistId}/>
-        <PackagesCard packages={this.state.packages}/>
+          disabledDays={this.state.disabledDays}
+          artistId={this.state.artistId} />
+        <PackagesCard packages={this.state.packages} />
         <ReviewsCard reviews={this.state.reviews} />
       </div>
     )
