@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Portfolio extends React.Component {
+class EditPortfolio extends React.Component {
 
   displayPortfolio(images) {
     if (!images || images.length === 0 ) {
@@ -9,7 +9,11 @@ class Portfolio extends React.Component {
       return images.map(function(image) {
         return (
         <div className="editPortfolio">
+          { image.featured === 'true' ? 
+          <img className="searchResult" style={{border: '3px solid lightgrey'}} alt="portfolioimg" src={image.src} /> 
+          : 
           <img className="searchResult" alt="portfolioimg" src={image.src} />
+          }
         </div>
         )
       })
@@ -28,4 +32,4 @@ class Portfolio extends React.Component {
    };
 };
 
-export default Portfolio;
+export default EditPortfolio;
