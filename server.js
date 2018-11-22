@@ -129,7 +129,6 @@ app.get("/artists/:id", (req, res) => {
 });
 
 app.get("/dashboard", (req, res) => {
-  console.log("Dashboard Page")
   knex('users').select('*').where('id', req.session.user_id).asCallback((err, data) => {
     if (err) throw err;
     res.json(data);
@@ -234,9 +233,6 @@ app.get("/api/opportunities", (req, res) => {
     .select('*')
     .join('users', 'users.id', '=', 'events.creator_id')
     .then(function(events) {
-
-    console.log("Opps", events);
-
       res.json(events);
     });
  });
@@ -250,7 +246,15 @@ app.post("/opportunities/:id/delete", (req, res) => {
 });
 
 app.post("/opportunities/:id/apply", (req, res) => {
-  res.send("Apply for Opportunity");
+  console.log("Trying to save applications!", req.body)
+  knex('event_interests')
+    .insert({
+      eventref_id: req.body.event_id,
+      artist_id: req.body.artist_id
+    })
+    .then((results) => {
+      res.send("Application successfully saved")
+    })
 });
 
 app.listen(PORT, () => {
