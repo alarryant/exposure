@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import CatDropDown from './components/CatDropDown.jsx'
 import './styles/SearchBar.css';
 
 class SearchBar extends Component {
@@ -13,36 +14,40 @@ class SearchBar extends Component {
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({ value: event.target.value });
   }
 
   handleSubmit(event) {
     event.preventDefault();
     let search_item = this.state.value
     this.props.searchResult(search_item);
-    this.setState({value: ""});
-
+    this.setState({ value: "" });
   }
 
   render() {
-    return(
+    return (
       <div className="searchBar">
-      <form className="searchForm" onSubmit={ this.handleSubmit }>
-       <label>
-        <input className="searchInput"
-          type="text"
-          name="search"
-          placeholder="What are you searching for?"
-          value={ this.state.value }
-          onChange={this.handleChange}
-        />
-      </label>
-        <input className="searchButton" type="submit" value="Search"/>
-      </form>
+        <form className="searchForm" onSubmit={this.handleSubmit}>
+          <label>
+            <input className="searchInput"
+              type="text"
+              name="search"
+              placeholder="What are you searching for?"
+              value={this.state.value}
+              onChange={this.handleChange}
+            />
+          </label>
+          <input className="searchButton" type="submit" value="Search" />
+          <div className="catSearch dropdown-container">
+          <div className="dropdown">
+            <a href="#">Search By Category</a>
+            <CatDropDown searchResult={this.props.searchResult} />
+          </div>
+        </div>
+        </form>
       </div>
     );
   }
 }
-
 
 export default SearchBar;
