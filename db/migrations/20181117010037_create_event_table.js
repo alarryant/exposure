@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
         table.text('description').notNull();
         table.date('event_date').notNull();
         table.integer('price').notNull();
-        table.text('location').notNull();
+        table.text('event_location').notNull();
         table.string('artist_accepted');
 
         table.integer('creator_id').notNull();
