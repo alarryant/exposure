@@ -1,0 +1,8 @@
+.starredContainer {
+  display: flex;
+}
+
+.photographerContainer {
+  width: 150px;
+  text-align: center;
+}
