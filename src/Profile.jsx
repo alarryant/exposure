@@ -7,12 +7,16 @@ import Slider from "react-slick";
 import axios from 'axios';
 // import EditProfile from './EditProfile';
 import SocialMedia from './components/Profile_SocialMedia.jsx';
+import EditSocialMedia from './components/Profile_SocialMedia_Edit';
 import ProfileDesc from './components/Profile_Desc.jsx';
+import EditProfileDesc from './components/Profile_Desc_Edit.jsx';
 import ReviewsCard from './components/Profile_Reviews.jsx';
 import AvailabilityCard from './components/Profile_Availability.jsx';
 import PackagesCard from './components/Profile_Packages.jsx';
+import EditPackagesCard from './components/Profile_Packages_Edit.jsx';
 import StarPhotographer from './components/Profile_Star.jsx';
 import './styles/Profile.css';
+import './styles/Portfolio.css';
 
 
 class MailButton extends React.Component {
@@ -34,13 +38,15 @@ class Profile extends React.Component {
     super(props);
     this.state = {
       artist: {},
-      photoView: 'featured'
+      photoView: 'featured',
+      editable: false
     }
 
     this.addCarouselPhotos = this.addCarouselPhotos.bind(this);
     this.areFeaturedPhotos = this.areFeaturedPhotos.bind(this);
     this.showPortfolio = this.showPortfolio.bind(this);
     this.showFeatures = this.showFeatures.bind(this);
+    this.handleClickEdit = this.handleClickEdit.bind(this);
   }
 
   areFeaturedPhotos(photos = []) {
@@ -106,6 +112,15 @@ class Profile extends React.Component {
       });
   }
 
+  handleClickEdit() {
+    if (this.state.editable === false) {
+      console.log("editable now");
+      this.setState({editable: true})
+    } else {
+      this.setState({editable: false})
+    }
+  }
+
   render() {
 
     const settings = {
@@ -119,7 +134,39 @@ class Profile extends React.Component {
     };
 
     return (
-      <div className="profile">
+      <div>
+      <button onClick={this.handleClickEdit}>Edit</button>
+      {this.state.editable ? (
+        <form>
+
+          <div className="profile">
+            <Avatar name={this.state.fullName}
+              avatar={this.state.avatarImage} />
+            {/*<MailButton email={this.state.email}
+              name={this.props.currentUserName} />
+            <StarPhotographer currentUser={this.props.currentUser}
+              artistId={this.state.artistId} />
+            <EditProfileDesc bio={this.state.bio} />
+            <EditSocialMedia twitter={this.state.twitter}
+                             facebook={this.state.facebook}
+                             instagram={this.state.instagram} />*/}
+            <div className="featuredPortfolio">
+              <div>
+                <h1>Portfolio Photos:</h1>
+                <Portfolio artistPhotos={this.state.collection} />
+              </div>
+            </div>
+          {/*<AvailabilityCard currentUser={this.propscurrentUser}
+            disabledDays={this.state.disabledDays}
+            artistId={this.state.artistId} />*/}
+            <EditPackagesCard packages={this.state.packages} />
+          </div>
+        </form>
+
+
+        ) : (
+
+        <div className="profile">
         <Avatar name={this.state.fullName}
           avatar={this.state.avatarImage} />
         <MailButton email={this.state.email}
@@ -156,7 +203,9 @@ class Profile extends React.Component {
           artistId={this.state.artistId} />
         <PackagesCard packages={this.state.packages} />
         <ReviewsCard reviews={this.state.reviews} />
-      </div>
+      </div>)}
+        </div>
+
     )
   }
 }
