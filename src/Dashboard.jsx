@@ -37,12 +37,11 @@ class Dashboard extends React.Component {
 
   componentDidMount() {
     axios.get(`/dashboard`).then(response => {
-      console.log("RESPONSE: ", response.data[0]);
       this.setState((prevState) => {
         return {
-          name: response.data[0].first_name + " " + response.data[0].last_name,
-          avatar: response.data[0].profile_image,
-          type: response.data[0].user_type_id
+          // name: response.data[0].first_name + " " + response.data[0].last_name,
+          // avatar: response.data[0].profile_image,
+          // type: response.data[0].user_type_id
         }
       })
     })
