@@ -10,6 +10,24 @@ class SeeAvailability extends React.Component {
     super(props);
   }
 
+  formatDate(Year, Month, Day) {
+    return new Date(Year, Month, Day);
+  }
+
+  pushDateIntoProp(arrayOfDates) {
+    arrayOfDates.map(function(date) {
+      formatDate(date);
+    });
+
+  }
+
+  // new Date(2018, 11, 12),
+  //       new Date(2018, 11, 2),
+  //       {
+  //         after: new Date(2018, 11, 20),
+  //         before: new Date(2018, 11, 25),
+  //       },
+
   render() {
     return (
       <div className="RangeExample">
@@ -17,14 +35,7 @@ class SeeAvailability extends React.Component {
           className="Selectable"
           numberOfMonths={this.props.numberOfMonths}
           initialMonth={new Date(2018, 11)}
-          disabledDays={[
-        new Date(2018, 11, 12),
-        new Date(2018, 11, 2),
-        {
-          after: new Date(2018, 11, 20),
-          before: new Date(2018, 11, 25),
-        },
-      ]}
+          disabledDays={this.pushDateIntoProp(this.props.dbquery)}
         />
       </div>
     );

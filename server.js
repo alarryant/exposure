@@ -148,11 +148,35 @@ app.post("/artists/:id/review", (req, res) => {
   res.send("Artist Review");
 });
 
-app.post("/artists/:id/availability", (req, res) => {
-  console.log("this is server side", req.body.availability);
-  res.send("Artist Availability");
-});
+app.post("/artists/:id/editavailability", (req, res) => {
+  let artistId = req.params.id;
 
+// this is ali's refactored version that doesn't work
+  // const getAllAvails = () => {
+  //   return knex('availabilities').where("artist_id", artistId);
+  // }
+
+  // knex('availabilities')
+  //   .insert({
+  //     artist_id: artistId,
+  //     date: req.body.selectedDay
+  //   })
+  //   .then(getAllAvails)
+  //   .then(res.json);
+
+  knex('availabilities')
+    .insert({
+      artist_id: artistId,
+      date: req.body.selectedDay
+    })
+    .then(data => {
+      console.log('after insert', res);
+      knex('availabilities')
+        .where("artist_id", artistId)
+        .then(moredata => res.json(moredata));
+      console.log('after knex');
+    });
+});
 
 //OPPORTUNITIES
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import SeeAvailability from './SeeAvailability.jsx';
+import EditAvailability from './components/Availability.jsx';
 import Portfolio from './components/Portfolio.jsx';
 import Avatar from './components/Avatar.jsx';
 import Slider from "react-slick";
@@ -91,6 +91,7 @@ class AvailabilityCard extends React.Component {
   }
 
   render() {
+    console.log("this is availability card", )
     return (
       <div className="profilebtn">
         <button onClick={this.showMenu}>
@@ -106,7 +107,7 @@ class AvailabilityCard extends React.Component {
                   this.dropdownMenu = element;
                 }}
               >
-                <SeeAvailability />
+                <EditAvailability artistId={this.props.artistId} disabledDays={this.props.disabledDays}/>
               </div>
             )
             : (
@@ -320,6 +321,8 @@ class Profile extends React.Component {
 
     const { id } = this.props.match.params;
 
+    this.setState({artistId: id});
+
     axios.get(`/artists/${ id }`, {
       params: {
         artistId: id
@@ -335,7 +338,7 @@ class Profile extends React.Component {
       let facebook = res.data.images[0].facebook_url;
       let instagram = res.data.images[0].instagram_url;
       let reviews = res.data.reviews;
-      console.log("this is reviews on profile", reviews);
+
       this.setState({redirect: true, twitter: twitter, facebook: facebook, instagram: instagram, fullName: fullName, avatarImage: avatarImage, packages: packages, collection: collection, bio: bio, reviews: reviews});
     });
   }
@@ -353,6 +356,7 @@ class Profile extends React.Component {
     };
 
     return (
+
       this.state.photoView === 'featured' ? (
         <div className="profile">
           <Avatar name={ this.state.fullName } avatar={ this.state.avatarImage }/>
@@ -371,7 +375,7 @@ class Profile extends React.Component {
             </Slider>
             <br />
           </div>
-          <AvailabilityCard />
+          <AvailabilityCard currentUser={this.propscurrentUser} disabledDays={this.state.disabledDays} artistId={this.state.artistId}/>
           <PackagesCard packages={this.state.packages}/>
           <ReviewsCard reviews={this.state.reviews} />
         </div>
@@ -390,7 +394,7 @@ class Profile extends React.Component {
             <h1>Portfolio Photos:</h1>
             <Portfolio artistPhotos={this.state.collection} />
           </div>
-          <AvailabilityCard />
+          <AvailabilityCard currentUser={this.propscurrentUser} disabledDays={this.state.disabledDays} artistId={this.state.artistId}/>
           <PackagesCard packages={this.state.packages}/>
           <ReviewsCard reviews={this.state.reviews} />
         </div>)

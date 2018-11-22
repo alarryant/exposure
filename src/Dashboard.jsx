@@ -1,6 +1,6 @@
 import React from 'react';
 import Avatar from './components/Avatar.jsx';
-import Availability from './components/Availability.jsx';
+// import EditAvailability from './components/Availability.jsx';
 import Statistics from './components/Statistics.jsx';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -60,9 +60,9 @@ class Dashboard extends React.Component {
             <Tab>Statistics</Tab>
           </TabList>
 
-          <TabPanel>
-            <Availability />
-          </TabPanel>
+          {/*<TabPanel>
+            <EditAvailability currentUser={this.props.currentUser}/>
+          </TabPanel>*/}
           <TabPanel>
             <Statistics />
           </TabPanel>
