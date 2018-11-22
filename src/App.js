@@ -155,7 +155,7 @@ class App extends Component {
               {...props}
               currentUser={currentUser} />} />
             <Route path='/opportunities' name='opportunities' render={(props) => <Opportunities {...props} />} />
-            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={this.state.currentUser} />} />
+            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={currentUser} />} />
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
               searchWord={this.state.searchWord}

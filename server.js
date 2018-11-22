@@ -108,21 +108,28 @@ app.post("/images/:id", (req, res) => {
 //ARTIST
 app.get("/artists/:id", (req, res) => {
   let artistId = req.params.id;
-  let images = knex('images')
-    .join("users", "image_owner", "=", "users.id")
-    .where("image_owner", artistId)
-    .then((images) => {
-      knex('price_packages')
-        .join("users", "price_packages.user_id", "=", "users.id")
-        .where("price_packages.user_id", artistId).orderBy("tier")
-        .then((packages) => {
-          let artistData = {
-            images: images,
-            packages: packages
-          };
-          res.json(artistData);
-        });
-    });
+  let images =
+    knex('images')
+      .join("users", "image_owner", "=", "users.id")
+      .where("image_owner", artistId)
+      .then((images) => {
+        knex('price_packages')
+          .join("users", "price_packages.user_id", "=", "users.id")
+          .where("price_packages.user_id", artistId).orderBy("tier")
+          .then((packages) => {
+            knex('reviews')
+              .join("users", "reviews.user_id", "=", "users.id")
+              .where("reviews.artist_id", artistId)
+              .then((reviews) => {
+                let artistData = {
+                  images: images,
+                  packages: packages,
+                  reviews: reviews
+                };
+                res.json(artistData);
+              });
+          });
+      });
 });
 
 app.get("/dashboard", (req, res) => {
@@ -141,21 +148,60 @@ app.post("/artists/:id/review", (req, res) => {
   res.send("Artist Review");
 });
 
-app.post("/artists/:id/availability", (req, res) => {
-  console.log("this is server side", req.body.availability);
-  res.send("Artist Availability");
+app.post("/artists/:id/editavailability", (req, res) => {
+  let artistId = req.params.id;
+
+// this is ali's refactored version that doesn't work
+  // const getAllAvails = () => {
+  //   return knex('availabilities').where("artist_id", artistId);
+  // }
+
+  // knex('availabilities')
+  //   .insert({
+  //     artist_id: artistId,
+  //     date: req.body.selectedDay
+  //   })
+  //   .then(getAllAvails)
+  //   .then(res.json);
+
+  knex('availabilities')
+    .insert({
+      artist_id: artistId,
+      date: req.body.selectedDay
+    })
+    .then(data => {
+      // console.log('after insert', res);
+      knex('availabilities')
+        .where("artist_id", artistId)
+        .then(moredata => res.json(moredata));
+      // console.log('after knex');
+    });
 });
+
+app.get("/artists/:id/availability", (req, res) => {
+  // console.log("this is artist id on testing", req.params);
+  let artistId = req.params.id;
+  knex('availabilities')
+    .select('*')
+    .where("artist_id", artistId)
+    .then(function(disabledDays) {
+    // console.log("this is disabledDays in get req", disabledDays);
+      res.json(disabledDays);
+    });
+ });
+
+
 
 
 //OPPORTUNITIES
 
 app.get("/api/opportunities", (req, res) => {
-  console.log("Opportunity");
+  // console.log("Opportunity");
   knex('events')
     .select('*')
     .join('users', 'users.id', '=', 'events.creator_id')
     .then(function(events) {
-    console.log("Opps", events);
+    // console.log("Opps", events);
       res.json(events);
     });
  });

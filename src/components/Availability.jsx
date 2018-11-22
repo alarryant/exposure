@@ -1,77 +1,54 @@
 import React from 'react';
-import DayPicker, { DateUtils } from 'react-day-picker';
+import DayPicker from 'react-day-picker';
+import axios from 'axios';
+
 import 'react-day-picker/lib/style.css';
 
-class Availability extends React.Component {
-  static defaultProps = {
-    numberOfMonths: 1,
-  };
+class EditAvailability extends React.Component {
   constructor(props) {
     super(props);
     this.handleDayClick = this.handleDayClick.bind(this);
-    this.handleResetClick = this.handleResetClick.bind(this);
-    this.handleSubmitClick = this.handleSubmitClick.bind(this);
-    this.state = this.getInitialState();
-  }
-  getInitialState() {
-    return {
-      from: undefined,
-      to: undefined,
+    this.formatDate = this.formatDate.bind(this);
+    this.state = {
+      selectedDay: null,
+      disabledDays: []
     };
   }
   handleDayClick(day) {
-    const range = DateUtils.addDayToRange(day, this.state);
-    this.setState(range);
-  }
-  handleResetClick() {
-    this.setState(this.getInitialState());
+    axios.post(`/artists/${this.props.artistId}/editavailability`, {selectedDay: day}).then((res) => {
+      this.setState({ selectedDay: day, disabledDays: res.data });
+    });
   }
 
-  handleSubmitClick() {
-    this.props.saveAvailability({start_date: this.state.from, end_date: this.state.to});
+  componentDidMount() {
+    axios.get(`/artists/${this.props.artistId}/availability`)
+     .then((res) => {
+        this.setState({disabledDays: res.data});
+      });
+  }
+
+  formatDate(disabledDays=[]) {
+    return disabledDays.map((day) => {
+      return new Date(day.date);
+    });
   }
 
   render() {
-    // this.props.saveAvailability({from, to});
-    const { from, to } = this.state;
-    const modifiers = { start: from, end: to };
     return (
-      <div className="RangeExample">
-        <p>
-          {!from && !to && 'Please select the first day.'}
-          {from && !to && 'Please select the last day.'}
-          {from &&
-            to &&
-            `Selected from ${from.toLocaleDateString()} to
-                ${to.toLocaleDateString()}`}{' '}
-          {from &&
-            to && (
-              <button className="link" onClick={this.handleResetClick}>
-                Reset
-              </button>
-
-            )}
-            <button onClick={this.handleSubmitClick}>Submit</button>
-        </p>
+      <div>
         <DayPicker
-          className="Selectable"
-          numberOfMonths={this.props.numberOfMonths}
-          selectedDays={[from, { from, to }]}
-          modifiers={modifiers}
           onDayClick={this.handleDayClick}
-          initialMonth={new Date(2018, 11)}
-          disabledDays={[
-        new Date(2018, 11, 12),
-        new Date(2018, 11, 2),
-        {
-          after: new Date(2018, 11, 20),
-          before: new Date(2018, 11, 25),
-        },
-      ]}
+          selectedDays={this.state.selectedDay}
+          disabledDays={this.formatDate(this.state.disabledDays)}
         />
+        {this.state.selectedDay ? (
+          <p>You clicked {this.state.selectedDay.toLocaleDateString()}</p>
+        ) : (
+          <p>Please select a day.</p>
+        )}
       </div>
     );
   }
 }
 
-export default Availability
+export default EditAvailability
