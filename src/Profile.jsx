@@ -1,5 +1,6 @@
 import React from 'react';
-import Portfolio from './components/Portfolio.jsx';
+import Portfolio from './components/Portfolio';
+import EditPortfolio from './components/Profile_Portfolio_Edit';
 import Avatar from './components/Avatar.jsx';
 import Slider from "react-slick";
 // import { Link } from 'react-router-dom';
@@ -15,7 +16,7 @@ import PackagesCard from './components/Profile_Packages.jsx';
 import EditPackagesCard from './components/Profile_Packages_Edit.jsx';
 import StarPhotographer from './components/Profile_Star.jsx';
 import './styles/Profile.css';
-import './styles/Portfolio.css';
+import './styles/SearchResults.css';
 
 
 class MailButton extends React.Component {
@@ -151,8 +152,11 @@ class Profile extends React.Component {
                              instagram={this.state.instagram} />
             <div className="featuredPortfolio">
               <div>
+
                 <h1>Portfolio Photos:</h1>
-                <Portfolio artistPhotos={this.state.collection} />
+                <div>
+                  <EditPortfolio artistPhotos={this.state.collection} />
+                </div>
               </div>
             </div>
           <AvailabilityCard currentUser={this.propscurrentUser}
