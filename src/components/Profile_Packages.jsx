@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 // https://blog.campvanilla.com/reactjs-dropdown-menus-b6e06ae3a8fe
 class PackagesCard extends React.Component {

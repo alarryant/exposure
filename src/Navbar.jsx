@@ -10,9 +10,10 @@ class Navbar extends React.Component {
 
   constructor(props) {
     super(props);
-
+    
     this.handleSignout = this.handleSignout.bind(this);
   }
+  
 
   handleSignout(event){
     event.preventDefault();
