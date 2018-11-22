@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Url from 'url-parse';
 
 class SocialMedia extends React.Component {

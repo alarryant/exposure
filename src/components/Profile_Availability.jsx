@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import EditAvailability from './Availability.jsx';
 
 // https://blog.campvanilla.com/reactjs-dropdown-menus-b6e06ae3a8fe

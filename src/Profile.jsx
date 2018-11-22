@@ -1,15 +1,20 @@
+<<<<<<< HEAD
 import React, { Component } from 'react';
+=======
+import React from 'react';
+>>>>>>> master
 import Portfolio from './components/Portfolio.jsx';
 import Avatar from './components/Avatar.jsx';
 import Slider from "react-slick";
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import axios from 'axios';
-import EditProfile from './EditProfile';
-import SocialMedia from './components/SocialMedia.jsx';
+// import EditProfile from './EditProfile';
+import SocialMedia from './components/Profile_SocialMedia.jsx';
 import ProfileDesc from './components/Profile_Desc.jsx';
 import ReviewsCard from './components/Profile_Reviews.jsx';
 import AvailabilityCard from './components/Profile_Availability.jsx';
 import PackagesCard from './components/Profile_Packages.jsx';
+import StarPhotographer from './components/Profile_Star.jsx';
 import './styles/Profile.css';
 
 
@@ -34,11 +39,11 @@ class Profile extends React.Component {
       artist: {},
       photoView: 'featured'
     }
-    
+
     this.addCarouselPhotos = this.addCarouselPhotos.bind(this);
     this.areFeaturedPhotos = this.areFeaturedPhotos.bind(this);
-    this.showPortfolio = this.showPortfolio.bind(this)
-    this.showFeatures = this.showFeatures.bind(this)
+    this.showPortfolio = this.showPortfolio.bind(this);
+    this.showFeatures = this.showFeatures.bind(this);
   }
 
   areFeaturedPhotos(photos = []) {
@@ -105,7 +110,7 @@ class Profile extends React.Component {
   }
 
   render() {
-    
+
     const settings = {
       infinite: true,
       centerMode: true,
@@ -122,6 +127,8 @@ class Profile extends React.Component {
           avatar={this.state.avatarImage} />
         <MailButton email={this.state.email}
           name={this.props.currentUserName} />
+        <StarPhotographer currentUser={this.props.currentUser}
+          artistId={this.state.artistId} />
         <ProfileDesc bio={this.state.bio} />
         <SocialMedia twitter={this.state.twitter}
           facebook={this.state.facebook}
