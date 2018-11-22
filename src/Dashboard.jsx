@@ -37,7 +37,6 @@ class Dashboard extends React.Component {
 
   componentDidMount() {
     axios.get(`/dashboard`).then(response => {
-      console.log("RESPONSE: ", response.data[0]);
       this.setState((prevState) => {
         return {
           name: response.data[0].first_name + " " + response.data[0].last_name,
@@ -50,7 +49,6 @@ class Dashboard extends React.Component {
 
   render() {
     const userType = this.state.type;
-    console.log("THE PROPS: ", this.props.currentUser);
 
     const tabs = (
       <div style={tabStyle}>

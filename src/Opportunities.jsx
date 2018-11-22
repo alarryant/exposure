@@ -3,6 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import axios from 'axios';
 import OppCard from './components/OppCard.jsx'
+import CreateEvent from './CreateEvent';
 
 
 class Opportunities extends React.Component {
@@ -40,6 +41,7 @@ class Opportunities extends React.Component {
       <section className="opportunities">
         <h2>Opportunities</h2>
           { this.displayEvents(this.state.opportunities) }
+          <CreateEvent />
       </section>
     );
   }

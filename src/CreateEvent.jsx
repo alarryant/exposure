@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, ButtonToolbar, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 
 class CreateEvent extends Component {
     constructor(props) {
@@ -68,7 +68,7 @@ class CreateEvent extends Component {
                         <input type="text" name="location" onChange={this.handleChange}></input>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button type="submit" onClick={this.handleClose}>Save</Button>
+                        <Button type="submit" onClick={this.handleClose}>Create</Button>
                     </Modal.Footer>
                 </form>
             </Modal>
