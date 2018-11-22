@@ -1,14 +1,13 @@
-import React, {Component} from 'react';
-
+import React from 'react';
 
 class Portfolio extends React.Component {
 
-  displayPortofio(images) {
+  displayPortfolio(images) {
     if (!images || images.length === 0 ) {
-      return (<p> Sorry! No photos display!</p>)
+      return (<p> Sorry! No photos to display!</p>)
     } else {
       return images.map(function(image) {
-        return <img className="searchResult" src={image.src} />
+        return <img className="searchResult" alt="portfolioimg" src={image.src} />
       })
     }
   }
@@ -18,7 +17,7 @@ class Portfolio extends React.Component {
 
     <div className="profile__portfolio">
       <section className="wrapper">
-        {this.displayPortofio(this.props.artistPhotos)}
+        {this.displayPortfolio(this.props.artistPhotos)}
       </section>
     </div>
     );

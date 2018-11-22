@@ -11,7 +11,7 @@ class Opportunities extends Component {
 
     this.state = {
       opportunities: ''
-    }
+    };
 
     this.displayEvents = this.displayEvents.bind(this);
     this.createEvent = this.createEvent.bind(this);
@@ -19,13 +19,14 @@ class Opportunities extends Component {
 
   displayEvents(events) {
     if (!events || events.length === 0 ) {
-      return (<p> There are currently no postings! Check back later! </p>)
+      return (
+        <p>There are currently no postings! Check back later!</p> )
     } else {
       return events.map(function(event) {
         let date = event.event_date.toString().split('T')[0]
         return (
-          <OppCard event={event} date={date}/>
-          )
+          <OppCard event={ event } date={ date }/>
+        )
       })
     }
   }
