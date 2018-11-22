@@ -11,9 +11,7 @@ import ErrorPath from './Error404.jsx';
 import Profile from './Profile.jsx';
 import { BrowserRouter, Router, Route, Switch, Redirect, withRouter } from "react-router-dom";
 import { createMemoryHistory } from 'history';
-import Availability from './components/Availability.jsx';
 import Opportunities from './Opportunities.jsx';
-// import Availability from './components/Availability.jsx';
 import About from './About.jsx';
 import Contact from './Contact.jsx';
 
@@ -35,7 +33,6 @@ class App extends Component {
       facebookUrl: "",
       twitterUrl: "",
       location: "",
-      // currentUser: null,
       redirect: false,
       availability: {
         start_date: null,
@@ -50,16 +47,7 @@ class App extends Component {
     this.signupInfo = this.signupInfo.bind(this);
     this.searchResult = this.searchResult.bind(this);
     this.renderRedirect = this.renderRedirect.bind(this);
-    // this.saveAvailability = this.saveAvailability.bind(this);
-
   }
-
-  // saveAvailability(dates) {
-  //   this.setState({availability: {start_date: dates.start_date, end_date: dates.end_date}});
-  //   axios.post(`/artists/${this.state.user.id}/availability`, {availability: this.state.availability})
-  //     .then(res => console.log(res.data, 'availability data received from server'));
-  // }
-
 
   //LOGIN FEATURE
   loginInfo(email, password) {
@@ -67,8 +55,11 @@ class App extends Component {
       .then((res) => {
         localStorage.setItem('currentUser', res.data[0].id);
         localStorage.setItem('user_type_id', res.data[0].user_type_id)
+        localStorage.setItem('currentUserFirstName', res.data[0].first_name);
+        localStorage.setItem('currentUserLastName', res.data[0].last_name);
         this.setState({ redirect: true, usertype: res.data[0].user_type_id });
       });
+
   }
 
   //LOGOUT FEATURE
@@ -76,6 +67,8 @@ class App extends Component {
     axios.post("/logout")
       .then((res) => {
         localStorage.removeItem('currentUser');
+        localStorage.removeItem('currentUserFirstName');
+        localStorage.removeItem('currentUserLastName');
         this.setState({ redirect: true });
       });
   }
@@ -140,6 +133,7 @@ class App extends Component {
   render() {
     const currentUser = localStorage.getItem('currentUser');
     const user_type_id = localStorage.getItem('user_type_id');
+    const currentUserName = localStorage.getItem('currentUserFirstName') + ' ' + localStorage.getItem('currentUserLastName');
     return (
       <BrowserRouter>
         <div>
@@ -153,8 +147,13 @@ class App extends Component {
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos}/>} />
             <Route path='/artists/:id' render={props => <Profile
               {...props}
+<<<<<<< HEAD
               currentUser={currentUser} />} />
             <Route path='/opportunities' name='opportunities' render={(props) => <Opportunities {...props} currentUser={currentUser} usertype={user_type_id}/>} />
+=======
+              currentUserName={currentUserName} />} />
+            <Route path='/opportunities' name='opportunities' render={(props) => <Opportunities {...props} />} />
+>>>>>>> c17e79cdd1b75529a1196c108e42ecd3651606ea
             <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={currentUser} />} />
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}

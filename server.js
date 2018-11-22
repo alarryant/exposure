@@ -1,20 +1,17 @@
 require('dotenv').config();
 const env = process.env.ENV || 'development';
-
 const express = require("express");
 const app = express();
 const PORT = 3001;
 const bodyParser = require("body-parser");
 const bcrypt = require('bcryptjs');
 const cookieSession = require('cookie-session');
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
 const knexConfig = require('./knexfile');
 const knex = require('knex')(knexConfig[env]);
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(express.static('public'));
-
 app.use(cookieSession({
   name: 'session',
   keys: ['cookiemonster']
@@ -44,7 +41,7 @@ app.post("/login", (req, res) => {
   knex("users").select("*").where("email", "=", userEmail).where("password", "=", userPassword).then((data) => {
     req.session.user_id = data[0].id
     res.json(data);
-  })
+  });
 });
 
 // LOGOUT
@@ -103,7 +100,6 @@ app.get("/search", (req, res) => {
 app.post("/images/:id", (req, res) => {
   res.send("Images/:id");
 });
-
 
 //ARTIST
 app.get("/artists/:id", (req, res) => {
@@ -170,38 +166,77 @@ app.post("/artists/:id/editavailability", (req, res) => {
       date: req.body.selectedDay
     })
     .then(data => {
-      // console.log('after insert', res);
       knex('availabilities')
         .where("artist_id", artistId)
         .then(moredata => res.json(moredata));
-      // console.log('after knex');
     });
 });
 
 app.get("/artists/:id/availability", (req, res) => {
-  // console.log("this is artist id on testing", req.params);
   let artistId = req.params.id;
   knex('availabilities')
     .select('*')
     .where("artist_id", artistId)
     .then(function(disabledDays) {
-    // console.log("this is disabledDays in get req", disabledDays);
       res.json(disabledDays);
     });
  });
 
+app.post("/artists/:id/like", (req, res) => {
+  let artistId = req.body.artistId;
+  let currentUser = req.body.currentUser;
+  knex('artist_likes')
+    .insert({
+      artist_id: artistId,
+      client_id: currentUser
+    })
+    .then(data => {
+      knex('artist_likes')
+        .where("artist_id", artistId)
+        .countDistinct('client_id')
+        .then(function(likes) {
+          res.json(likes);
+        });
+    });
+ });
 
+app.post("/artists/:id/unlike", (req, res) => {
+  let artistId = req.body.artistId;
+  let currentUser = req.body.currentUser;
+  knex('artist_likes')
+    .where({artist_id: artistId, client_id: currentUser})
+    .del()
+    .then(data => {
+      knex('artist_likes')
+        .where("artist_id", artistId)
+        .countDistinct('client_id')
+        .then(function(likes) {
+          res.json(likes);
+        });
+    });
+ });
 
+app.post("/artists/:id/totallikes", (req, res) => {
+  let artistId = req.body.artistId;
+  let currentUser = req.body.currentUser;
+  knex('artist_likes')
+    .where({artist_id: artistId})
+    .countDistinct('client_id')
+    .then(data => {
+      res.json(likes);
+    });
+ });
 
 //OPPORTUNITIES
 
 app.get("/api/opportunities", (req, res) => {
-  // console.log("Opportunity");
   knex('events')
     .select('*')
     .join('users', 'users.id', '=', 'events.creator_id')
     .then(function(events) {
+
     console.log("Opps", events);
+
       res.json(events);
     });
  });
@@ -217,8 +252,6 @@ app.post("/opportunities/:id/delete", (req, res) => {
 app.post("/opportunities/:id/apply", (req, res) => {
   res.send("Apply for Opportunity");
 });
-
-
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);

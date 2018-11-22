@@ -42,9 +42,9 @@ class EditAvailability extends React.Component {
           disabledDays={this.formatDate(this.state.disabledDays)}
         />
         {this.state.selectedDay ? (
-          <p>You clicked {this.state.selectedDay.toLocaleDateString()}</p>
+          <p>You're unavailable on {this.state.selectedDay.toLocaleDateString()}</p>
         ) : (
-          <p>Please select a day.</p>
+          <p>Click the day(s) you're unavailable.</p>
         )}
       </div>
     );

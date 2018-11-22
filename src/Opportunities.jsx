@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import axios from 'axios';
-import OppCard from './components/OppCard.jsx'
-
+import OppCard from './components/OppCard.jsx';
 
 
 class Opportunities extends React.Component {
@@ -12,7 +11,7 @@ class Opportunities extends React.Component {
 
     this.state = {
       opportunities: ''
-    }
+    };
 
     this.displayEvents = this.displayEvents.bind(this);
   }
@@ -20,7 +19,8 @@ class Opportunities extends React.Component {
   displayEvents(events) {
     console.log(events)
     if (!events || events.length === 0 ) {
-      return (<p> There are currently no postings! Check back later! </p>)
+      return (
+        <p>There are currently no postings! Check back later!</p> )
     } else {
       return events.map((event) => {
         let date = event.event_date.toString().split('T')[0]
@@ -34,9 +34,9 @@ class Opportunities extends React.Component {
   componentDidMount() {
     axios.get("/api/opportunities").then(res => {
       console.log("Didmount Opps", res)
-      this.setState({'opportunities': res.data, 'currentUser': this.props.currentUser})
+      this.setState({ 'opportunities': res.data })
     })
-}
+  }
 
   render() {
     return (
