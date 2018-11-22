@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ApplyEvent from './ApplyEvent.jsx'
 
 function OppCard(props) {
@@ -8,11 +8,11 @@ const user_type_id = parseInt(props.usertype)
   return (
     <div className="eventcard">
       <h3>{event.name}</h3>
-      <p>Event Date: {props.date}</p>
+      <p>Date: {props.date} -  Location: {event.event_location}</p>
       <hr/>
       <p>{event.description}</p>
       <p>Contact: {event.first_name} {event.last_name}</p>
-      {user_type_id === 1 ? <ApplyEvent date={props.date} event={event.name}/>  : ""}
+      {user_type_id === 1 ? <ApplyEvent currentUser={props.currentUser} date={props.date} event={event}/>  : ""}
     </div>
     )
 }
