@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-import React, { Component } from 'react';
-=======
+
 import React from 'react';
->>>>>>> master
 import Portfolio from './components/Portfolio.jsx';
 import Avatar from './components/Avatar.jsx';
 import Slider from "react-slick";
