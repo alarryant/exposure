@@ -9,8 +9,8 @@ import Dashboard from './Dashboard.jsx';
 import SearchResults from './SearchResults.jsx';
 import ErrorPath from './Error404.jsx';
 import Profile from './Profile.jsx';
-import { BrowserRouter, Router, Route, Switch, Redirect, withRouter } from "react-router-dom";
-import { createMemoryHistory } from 'history';
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+// import { createMemoryHistory } from 'history';
 import Opportunities from './Opportunities.jsx';
 import About from './About.jsx';
 import Contact from './Contact.jsx';
@@ -148,7 +148,7 @@ class App extends Component {
             <Route path='/artists/:id' render={props => <Profile
               {...props}
               currentUser={currentUser} />} />
-            <Route path='/opportunities' name='opportunities' render={(props) => <Opportunities {...props} currentUser={currentUser} usertype={user_type_id}/>} />
+            <Route path='/opportunities' name='opportunities' render={(props) => <Opportunities {...props} currentUser={currentUser} usertype={user_type_id}/>} currentUserName={currentUserName}/>
             <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={currentUser} />} />
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
