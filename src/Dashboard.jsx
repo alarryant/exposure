@@ -2,6 +2,8 @@ import React from 'react';
 import Avatar from './components/Avatar.jsx';
 // import EditAvailability from './components/Availability.jsx';
 import Statistics from './components/Statistics.jsx';
+import CreateEvent from './CreateEvent';
+import OppCard from './components/OppCard.jsx'
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
@@ -30,8 +32,37 @@ class Dashboard extends React.Component {
     this.state = {
       name: '',
       avatar: null,
-      type: null
-      // events: []
+      type: null,
+      events: []
+    }
+    this.createEvent = this.createEvent.bind(this);
+  }
+
+  createEvent(title, description, date, price, location) {
+    axios.post("/dashboard/:id/add", { title: title, description: description, date: date, price: price, location: location })
+      .then((res) => {
+        let newEvents = res.data;
+        this.setState({events: newEvents});
+        newEvents.map(function(event) {
+          let date = event.event_date.toString().split('T')[0]
+          return (
+            <OppCard event={event} date={date}/>
+            );
+        });
+      });
+  }
+
+  displayEvents(events) {
+    if (!events || events.length === 0 ) {
+      return (
+        <p>You have no events yet!</p> )
+    } else {
+      return events.map(function(event) {
+        let date = event.event_date.toString().split('T')[0]
+        return (
+          <OppCard event={ event } date={ date }/>
+        )
+      })
     }
   }
 
@@ -39,12 +70,16 @@ class Dashboard extends React.Component {
     axios.get(`/dashboard`).then(response => {
       this.setState((prevState) => {
         return {
-          // name: response.data[0].first_name + " " + response.data[0].last_name,
-          // avatar: response.data[0].profile_image,
-          // type: response.data[0].user_type_id
+          name: response.data[0].first_name + " " + response.data[0].last_name,
+          avatar: response.data[0].profile_image,
+          type: response.data[0].user_type_id
         }
       })
     })
+
+    axios.get("/dashboard/events").then(res => {
+      this.setState({events: res.data})
+    });
   }
 
   render() {
@@ -74,6 +109,8 @@ class Dashboard extends React.Component {
         {/* start left */}
         <div className='left' style={left}>
           <Avatar name={this.state.name} avatar={this.state.avatar} />
+          <CreateEvent createEvent={this.createEvent}/>
+            { this.displayEvents(this.state.events) }
         </div>
 
         {/* start right */}

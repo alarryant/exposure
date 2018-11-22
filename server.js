@@ -135,6 +135,12 @@ app.get("/dashboard", (req, res) => {
   });
 });
 
+app.get("/dashboard/events", (req, res) => {
+  knex("events").where("creator_id", req.session.user_id).orderBy('created_at', 'desc').then((data) => {
+    res.json(data);
+  })
+})
+
 app.post("/artists/:id/edit", (req, res) => {
   res.send("Artist Edit");
 });
@@ -265,6 +271,28 @@ app.post("/opportunities/:id/delete", (req, res) => {
 
 app.post("/opportunities/:id/apply", (req, res) => {
   res.send("Apply for Opportunity");
+});
+
+app.post("/dashboard/:id/add", (req, res) => {
+  let cookie = req.session.user_id;
+  let title = req.body.title;
+  let description = req.body.description;
+  let date = req.body.date;
+  let price = req.body.price;
+  let location = req.body.location;
+
+  knex("events").insert({
+    name: title,
+    description: description,
+    event_date: date,
+    price: price,
+    location: location,
+    creator_id: cookie
+  })
+  .then(data => {
+      knex("events").where('creator_id', cookie).orderBy('created_at', 'desc').then(moredata => 
+        res.json(moredata));
+    });
 });
 
 app.listen(PORT, () => {
