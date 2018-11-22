@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Portfolio from './components/Portfolio.jsx';
 import Avatar from './components/Avatar.jsx';
@@ -142,23 +141,23 @@ class Profile extends React.Component {
           <div className="profile">
             <Avatar name={this.state.fullName}
               avatar={this.state.avatarImage} />
-            {/*<MailButton email={this.state.email}
+            <MailButton email={this.state.email}
               name={this.props.currentUserName} />
             <StarPhotographer currentUser={this.props.currentUser}
               artistId={this.state.artistId} />
             <EditProfileDesc bio={this.state.bio} />
             <EditSocialMedia twitter={this.state.twitter}
                              facebook={this.state.facebook}
-                             instagram={this.state.instagram} />*/}
+                             instagram={this.state.instagram} />
             <div className="featuredPortfolio">
               <div>
                 <h1>Portfolio Photos:</h1>
                 <Portfolio artistPhotos={this.state.collection} />
               </div>
             </div>
-          {/*<AvailabilityCard currentUser={this.propscurrentUser}
+          <AvailabilityCard currentUser={this.propscurrentUser}
             disabledDays={this.state.disabledDays}
-            artistId={this.state.artistId} />*/}
+            artistId={this.state.artistId} />
             <EditPackagesCard packages={this.state.packages} />
           </div>
         </form>

@@ -21,15 +21,15 @@ class EditSocialMedia extends React.Component {
       <div className="socialMediaContainer">
         <p>
           <i className="fab fa-facebook-f"></i>
-          <input type="text" value={this.props.facebook} name="facebook"></input>
+          <input type="text" value={this.props.facebook !== 'null' ? this.props.facebook : ''} name="facebook"></input>
         </p>
         <p>
           <i className="fab fa-twitter"></i>
-          <input type="text" value={this.props.twitter} name="twitter"></input>
+          <input type="text" value={this.props.twitter !== 'null' ? this.props.twitter : ''} name="twitter"></input>
         </p>
         <p>
           <i className="fab fa-instagram"></i>
-          <input type="text" value={this.props.instagram} name="instagram"></input>
+          <input type="text" value={this.props.instagram !== 'null' ? this.props.instagram : ''} name="instagram"></input>
         </p>
       </div>
       )

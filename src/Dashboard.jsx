@@ -3,7 +3,7 @@ import Avatar from './components/Avatar.jsx';
 // import EditAvailability from './components/Availability.jsx';
 import Statistics from './components/Statistics.jsx';
 import CreateEvent from './CreateEvent';
-import OppCard from './components/OppCard.jsx'
+import OppCard from './components/OppCard.jsx';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";

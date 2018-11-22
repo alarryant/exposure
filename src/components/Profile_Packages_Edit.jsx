@@ -6,62 +6,91 @@ class EditPackagesCard extends React.Component {
     super(props);
 
     this.state = {
-      showMenu: true,
+      // showMenu: true,
     };
 
-    this.showMenu = this.showMenu.bind(this);
-    this.closeMenu = this.closeMenu.bind(this);
     this.renderPricePackage = this.renderPricePackage.bind(this);
+    this.newInputPackages = this.newInputPackages.bind(this);
+  }
+
+  newInputPackages() {
+    return (
+        <div>
+          <label>
+            Tier
+          </label>
+          <input type="number"
+                 name="packagetier"
+                 placeholder="Enter a number between 1 and 3.">
+          </input>
+          <label>
+            Price
+          </label>
+          <input type="number"
+            name="packageprice"
+            placeholder="Enter a price here.">
+          </input>
+          <label>
+            Description
+          </label>
+          <textarea name="packagedescription"
+            placeholder="Describe expected services, deliverables, and occasion recommendations."/>
+        </div>
+      )
   }
 
   renderPricePackage(pricePackages=[]) {
-    let tier;
+    let numberOfPackages = pricePackages.length;
+    let newInputFields = 3 - numberOfPackages;
 
-    return pricePackages.map(function(pricePackage) {
-      if (pricePackage.tier === 1) {
-      tier = "Basic";
-    } else if (pricePackage.tier === 2) {
-      tier = "Intermediate";
-    } else if (pricePackage.tier === 3) {
-      tier = "Deluxe";
-    }
+    const currentPackages = pricePackages.map(function(pricePackage) {
       return (
         <div>
-          <h5>{tier}</h5>
-          <p>{pricePackage.price}</p>
+          <label>
+            Tier
+          </label>
+          <input type="number"
+                 name="packagetier"
+                 value={pricePackage.tier}
+                 placeholder="Enter a number between 1 and 3.">
+          </input>
+          <label>
+            Price
+          </label>
+          <input type="number"
+                 name="packageprice"
+                 value={pricePackage.price}
+                 placeholder="Enter a price here.">
+          </input>
+          <label>
+            Description
+          </label>
+          <textarea name="packagedescription"
+                    value={pricePackage.description}
+                    placeholder="Describe expected services, deliverables, and occasion recommendations."/>
         </div>
-        )
+      )
     })
-  }
 
-  showMenu(event) {
-    event.preventDefault();
-    this.setState({ showMenu: true }, () => {
-      document.addEventListener('click', this.closeMenu);
-    });
-  }
-
-  closeMenu(event) {
-    if (!this.dropdownMenu.contains(event.target)) {
-      this.setState({ showMenu: false }, () => {
-        document.removeEventListener('click', this.closeMenu);
-      });
+    for (let i = 0; i < newInputFields; i++) {
+      currentPackages.push(this.newInputPackages());
     }
+
+    return currentPackages;
   }
 
   render() {
+
+
     return (
       <div className="profilebtn" >
-        <button onClick={ this.showMenu }>
+        <button>
           Packages
         </button>
-        {this.state.showMenu ? (
-          <div className="menu"
-            ref={ (element) => { this.dropdownMenu = element } }>
-            {this.renderPricePackage(this.props.packages)}
-          </div>
-          ) : (
-          null )}
+        <div className="menu"
+          ref={ (element) => { this.dropdownMenu = element } }>
+          {this.renderPricePackage(this.props.packages)}
+        </div>
       </div>
     );
   }
