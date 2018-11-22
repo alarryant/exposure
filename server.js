@@ -129,11 +129,20 @@ app.get("/artists/:id", (req, res) => {
 });
 
 app.get("/dashboard", (req, res) => {
-  console.log("Dashboard Page")
   knex('users').select('*').where('id', req.session.user_id).asCallback((err, data) => {
     if (err) throw err;
     res.json(data);
   });
+});
+
+app.get("/dashboard/likes", (req, res) => {
+  knex('artist_likes')
+    .join("users", "users.id", "=", "artist_likes.artist_id")
+    .where('client_id', req.session.user_id)
+    .then((data) => {
+      console.log(data);
+      res.json(data);
+    });
 });
 
 app.post("/artists/:id/edit", (req, res) => {
@@ -165,6 +174,19 @@ app.post("/artists/:id/editavailability", (req, res) => {
       artist_id: artistId,
       date: req.body.selectedDay
     })
+    .then(data => {
+      knex('availabilities')
+        .where("artist_id", artistId)
+        .then(moredata => res.json(moredata));
+    });
+});
+
+app.post("/artists/:id/removeavailability", (req, res) => {
+  let artistId = req.params.id;
+  let selectedDay = req.body.selectedDay;
+  knex('availabilities')
+    .where({artist_id: artistId, date: selectedDay })
+    .del()
     .then(data => {
       knex('availabilities')
         .where("artist_id", artistId)
