@@ -201,7 +201,7 @@ app.get("/api/opportunities", (req, res) => {
     .select('*')
     .join('users', 'users.id', '=', 'events.creator_id')
     .then(function(events) {
-    // console.log("Opps", events);
+    console.log("Opps", events);
       res.json(events);
     });
  });
