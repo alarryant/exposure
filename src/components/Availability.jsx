@@ -8,9 +8,10 @@ class EditAvailability extends React.Component {
   constructor(props) {
     super(props);
     this.handleDayClick = this.handleDayClick.bind(this);
+    this.formatDate = this.formatDate.bind(this);
     this.state = {
-      selectedDay: undefined,
-      disabledDays: undefined
+      selectedDay: null,
+      disabledDays: []
     };
   }
   handleDayClick(day) {
@@ -20,11 +21,16 @@ class EditAvailability extends React.Component {
   }
 
   componentDidMount() {
-    console.log("this is comp will mt avail", this.props.artistId);
     axios.get(`/artists/${this.props.artistId}/availability`)
      .then((res) => {
         this.setState({disabledDays: res.data});
       });
+  }
+
+  formatDate(disabledDays=[]) {
+    return disabledDays.map((day) => {
+      return new Date(day.date);
+    });
   }
 
   render() {
@@ -33,6 +39,7 @@ class EditAvailability extends React.Component {
         <DayPicker
           onDayClick={this.handleDayClick}
           selectedDays={this.state.selectedDay}
+          disabledDays={this.formatDate(this.state.disabledDays)}
         />
         {this.state.selectedDay ? (
           <p>You clicked {this.state.selectedDay.toLocaleDateString()}</p>

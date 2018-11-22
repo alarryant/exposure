@@ -13,7 +13,7 @@ class Opportunities extends React.Component {
       opportunities: ''
     }
 
-    this.displayEvents = this.displayEvents.bind(this)
+    this.displayEvents = this.displayEvents.bind(this);
   }
 
   displayEvents(events) {
