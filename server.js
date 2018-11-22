@@ -126,7 +126,6 @@ app.get("/artists/:id", (req, res) => {
 });
 
 app.get("/dashboard", (req, res) => {
-  console.log("Dashboard Page")
   knex('users').select('*').where('id', req.session.user_id).asCallback((err, data) => {
     if (err) throw err;
     res.json(data);
@@ -134,7 +133,7 @@ app.get("/dashboard", (req, res) => {
 });
 
 app.post("/artists/:id/edit", (req, res) => {
-  res.send("Artist Edit Profile");
+  res.send("Artist Edit");
 });
 
 app.post("/artists/:id/review", (req, res) => {
@@ -142,7 +141,6 @@ app.post("/artists/:id/review", (req, res) => {
 });
 
 app.post("/artists/:id/availability", (req, res) => {
-  console.log("this is server side", req.body.availability);
   res.send("Artist Availability");
 });
 
@@ -150,18 +148,34 @@ app.post("/artists/:id/availability", (req, res) => {
 //OPPORTUNITIES
 
 app.get("/api/opportunities", (req, res) => {
-  console.log("Opportunity");
   knex('events')
     .select('*')
     .join('users', 'users.id', '=', 'events.creator_id')
     .then(function(events) {
-    console.log("Opps", events);
       res.json(events);
     });
  });
 
 app.post("/opportunities/:id/add", (req, res) => {
-  res.send("Add Opportunity");
+  let cookie = req.session.user_id;
+  let title = req.body.title;
+  let description = req.body.description;
+  let date = req.body.date;
+  let price = req.body.price;
+  let location = req.body.location;
+
+  knex("events").insert({
+    name: title,
+    description: description,
+    event_date: date,
+    price: price,
+    location: location,
+    creator_id: cookie
+  })
+  .then(data => {
+      knex("events").orderBy('created_at', 'desc').then(moredata => 
+        res.json(moredata));
+    });
 });
 
 app.post("/opportunities/:id/delete", (req, res) => {

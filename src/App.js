@@ -17,9 +17,7 @@ import Opportunities from './Opportunities.jsx';
 import About from './About.jsx';
 import Contact from './Contact.jsx';
 
-
 class App extends Component {
-
 
   constructor(props) {
     super(props);
@@ -35,7 +33,6 @@ class App extends Component {
       facebookUrl: "",
       twitterUrl: "",
       location: "",
-      // currentUser: null,
       redirect: false,
       availability: {
         start_date: null,
@@ -47,6 +44,7 @@ class App extends Component {
     this.loginInfo = this.loginInfo.bind(this);
     this.logout = this.logout.bind(this);
     this.signupInfo = this.signupInfo.bind(this);
+    this.editProfileInfo = this.editProfileInfo.bind(this);
     this.searchResult = this.searchResult.bind(this);
     this.renderRedirect = this.renderRedirect.bind(this);
     // this.saveAvailability = this.saveAvailability.bind(this);
@@ -90,9 +88,9 @@ class App extends Component {
 
   //EDIT PROFILE FEATURE
   editProfileInfo(firstName, lastName, email, password, website, instagram, facebook, twitter, location) {
-    axios.post("/search", { firstName: firstName, lastName: lastName, email: email, password: password, website: website, instagram: instagram, facebook: facebook, twitter: twitter, location: location })
+    axios.post('/artists/:id/edit', { firstName: firstName, lastName: lastName, email: email, password: password, website: website, instagram: instagram, facebook: facebook, twitter: twitter, location: location })
       .then((res) => {
-        this.setState({ redirect: true, firstName: firstName, lastName: lastName, email: email, password: password, website: website, instagram: instagram, facebook: facebook, twitter: twitter, location: location });
+        this.setState({ redirect: true });
       });
   }
 
@@ -116,7 +114,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-
     //This is how you use axios for get requests! Axios is like an ajax library
 
     axios.get("/homephotos")
@@ -150,9 +147,14 @@ class App extends Component {
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos}/>} />
             <Route path='/artists/:id' render={props => <Profile
               {...props}
+              editProfileInfo={this.editProfileInfo}
               currentUser={currentUser} />} />
-            <Route path='/opportunities' name='opportunities' render={(props) => <Opportunities {...props} />} />
-            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={this.state.currentUser} />} />
+            <Route path='/opportunities' name='opportunities' render={(props) => <Opportunities 
+              {...props} 
+              currentUser={currentUser}/>} />
+            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard 
+            {...props} 
+            currentUser={currentUser} />} />
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
               searchWord={this.state.searchWord}
