@@ -16,6 +16,7 @@ import Opportunities from './Opportunities.jsx';
 // import Availability from './components/Availability.jsx';
 import About from './About.jsx';
 import Contact from './Contact.jsx';
+import Settings from './Settings.jsx'
 
 
 class App extends Component {
@@ -148,6 +149,8 @@ class App extends Component {
           <SearchBar searchResult={this.searchResult}/>
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos}/>} />
+            <Route path='/settings' render={() => <Settings/>} />
+
             <Route path='/artists/:id' render={props => <Profile
               {...props}
               currentUser={currentUser} />} />
