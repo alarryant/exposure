@@ -41,7 +41,8 @@ class App extends Component {
         start_date: null,
         end_date: null
       },
-      artistId: null
+      artistId: null,
+      usertype: null
     };
 
     this.loginInfo = this.loginInfo.bind(this);
@@ -65,7 +66,8 @@ class App extends Component {
     axios.post("/login", { email: email, password: password })
       .then((res) => {
         localStorage.setItem('currentUser', res.data[0].id);
-        this.setState({ redirect: true });
+        localStorage.setItem('user_type_id', res.data[0].user_type_id)
+        this.setState({ redirect: true, usertype: res.data[0].user_type_id });
       });
   }
 
@@ -137,6 +139,7 @@ class App extends Component {
 
   render() {
     const currentUser = localStorage.getItem('currentUser');
+    const user_type_id = localStorage.getItem('user_type_id');
     return (
       <BrowserRouter>
         <div>
@@ -151,7 +154,7 @@ class App extends Component {
             <Route path='/artists/:id' render={props => <Profile
               {...props}
               currentUser={currentUser} />} />
-            <Route path='/opportunities' name='opportunities' render={(props) => <Opportunities {...props} />} />
+            <Route path='/opportunities' name='opportunities' render={(props) => <Opportunities {...props} currentUser={currentUser} usertype={user_type_id}/>} />
             <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={currentUser} />} />
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
