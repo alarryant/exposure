@@ -1,7 +1,7 @@
 
 exports.up = function(knex, Promise) {
     return knex.schema.createTable('events', function (table) {
-        table.increments('id').primary();
+        table.increments('event_id').primary();
         table.text('name').notNull();
         table.text('description').notNull();
         table.date('event_date').notNull();
