@@ -49,7 +49,6 @@ class Dashboard extends React.Component {
 
   render() {
     const userType = this.state.type;
-    console.log("THE PROPS: ", this.props.currentUser);
 
     const tabs = (
       <div style={tabStyle}>

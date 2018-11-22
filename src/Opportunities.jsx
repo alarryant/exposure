@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import axios from 'axios';
-import OppCard from './components/OppCard.jsx';
+import OppCard from './components/OppCard.jsx'
+import CreateEvent from './CreateEvent';
 
-class Opportunities extends React.Component {
+
+class Opportunities extends Component {
   constructor(props) {
     super(props);
 
@@ -13,6 +14,7 @@ class Opportunities extends React.Component {
     };
 
     this.displayEvents = this.displayEvents.bind(this);
+    this.createEvent = this.createEvent.bind(this);
   }
 
   displayEvents(events) {
@@ -29,16 +31,33 @@ class Opportunities extends React.Component {
     }
   }
 
+  createEvent(title, description, date, price, location) {
+    axios.post("/opportunities/:id/add", { title: title, description: description, date: date, price: price, location: location })
+      .then((res) => {
+        let newEvents = res.data;
+        this.setState({opportunities: newEvents});
+        newEvents.map(function(event) {
+          let date = event.event_date.toString().split('T')[0]
+          return (
+            <OppCard event={event} date={date}/>
+            );
+        });
+      });
+  }
+
   componentDidMount() {
     axios.get("/api/opportunities").then(res => {
-      this.setState({ 'opportunities': res.data })
-    })
-  }
+      this.setState({'opportunities': res.data.reverse()})
+    });
+}
 
   render() {
     return (
       <section className="opportunities">
-        <h2>Opportunities</h2>
+        <div className="oppHeader">
+          <h2>Opportunities</h2>
+          <CreateEvent createEvent={this.createEvent}/>
+        </div>
           { this.displayEvents(this.state.opportunities) }
       </section>
     );

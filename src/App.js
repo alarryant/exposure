@@ -15,9 +15,7 @@ import Opportunities from './Opportunities.jsx';
 import About from './About.jsx';
 import Contact from './Contact.jsx';
 
-
 class App extends Component {
-
 
   constructor(props) {
     super(props);
@@ -44,6 +42,7 @@ class App extends Component {
     this.loginInfo = this.loginInfo.bind(this);
     this.logout = this.logout.bind(this);
     this.signupInfo = this.signupInfo.bind(this);
+    this.editProfileInfo = this.editProfileInfo.bind(this);
     this.searchResult = this.searchResult.bind(this);
     this.renderRedirect = this.renderRedirect.bind(this);
   }
@@ -83,9 +82,9 @@ class App extends Component {
 
   //EDIT PROFILE FEATURE
   editProfileInfo(firstName, lastName, email, password, website, instagram, facebook, twitter, location) {
-    axios.post("/search", { firstName: firstName, lastName: lastName, email: email, password: password, website: website, instagram: instagram, facebook: facebook, twitter: twitter, location: location })
+    axios.post('/artists/:id/edit', { firstName: firstName, lastName: lastName, email: email, password: password, website: website, instagram: instagram, facebook: facebook, twitter: twitter, location: location })
       .then((res) => {
-        this.setState({ redirect: true, firstName: firstName, lastName: lastName, email: email, password: password, website: website, instagram: instagram, facebook: facebook, twitter: twitter, location: location });
+        this.setState({ redirect: true });
       });
   }
 
@@ -109,7 +108,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-
     //This is how you use axios for get requests! Axios is like an ajax library
 
     axios.get("/homephotos")

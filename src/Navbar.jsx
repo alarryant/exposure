@@ -35,6 +35,18 @@ class Navbar extends React.Component {
             <Login loginInfo = {this.props.loginInfo}/>
             <Signup signupInfo = { this.props.signupInfo }/>
           </div>
+          <div className="dropdown-container">
+            <div className="dropdown">
+              <NavLink to="/">
+                <button className="dropbtn">Home<i className="fas fa-bars"></i></button>
+              </NavLink>
+              <div className="dropdown-content">
+                <NavLink to="/dashboard">Dashboard</NavLink>
+                <NavLink to="/settings">Settings</NavLink>
+                <NavLink to="/opportunities">Opportunities</NavLink>
+              </div>
+            </div>
+          </div>
         </section>)
         :
         (<section className="loggedIn">

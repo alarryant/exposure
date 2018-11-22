@@ -8,6 +8,7 @@ exports.up = function(knex, Promise) {
         table.integer('price').notNull();
         table.text('location').notNull();
         table.string('artist_accepted');
+        table.timestamps(true, true);
 
         table.integer('creator_id').notNull();
         table.foreign('creator_id').references('id').inTable('users').onDelete('CASCADE');

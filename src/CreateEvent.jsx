@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, ButtonToolbar, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 
 class CreateEvent extends Component {
     constructor(props) {
@@ -40,7 +40,7 @@ class CreateEvent extends Component {
         const date = this.state.date;
         const price = this.state.price;
         const location = this.state.location;
-        this.props.editProfileInfo(title, description, date, price, location);
+        this.props.createEvent(title, description, date, price, location);
     }
 
     render() {
@@ -63,12 +63,12 @@ class CreateEvent extends Component {
                         <h4>Date of Event</h4>
                         <input type="date" name="date" onChange={this.handleChange}></input>
                         <h4>Price Estimate</h4>
-                        <input type="text" name="price" onChange={this.handleChange}></input>
+                        <input type="text" name="price" placeholder="$CAD" onChange={this.handleChange}></input>
                         <h4>Location</h4>
                         <input type="text" name="location" onChange={this.handleChange}></input>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button type="submit" onClick={this.handleClose}>Save</Button>
+                        <Button type="submit" onClick={this.handleClose}>Create</Button>
                     </Modal.Footer>
                 </form>
             </Modal>
