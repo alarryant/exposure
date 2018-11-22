@@ -5,6 +5,7 @@ import axios from 'axios';
 import OppCard from './components/OppCard.jsx'
 
 
+
 class Opportunities extends React.Component {
   constructor(props) {
     super(props);
@@ -17,13 +18,14 @@ class Opportunities extends React.Component {
   }
 
   displayEvents(events) {
+    console.log(events)
     if (!events || events.length === 0 ) {
       return (<p> There are currently no postings! Check back later! </p>)
     } else {
-      return events.map(function(event) {
+      return events.map((event) => {
         let date = event.event_date.toString().split('T')[0]
         return (
-          <OppCard event={event} date={date}/>
+          <OppCard event={event} date={date} usertype={this.props.usertype}/>
           )
       })
     }
@@ -31,7 +33,8 @@ class Opportunities extends React.Component {
 
   componentDidMount() {
     axios.get("/api/opportunities").then(res => {
-      this.setState({'opportunities': res.data})
+      console.log("Didmount Opps", res)
+      this.setState({'opportunities': res.data, 'currentUser': this.props.currentUser})
     })
 }
 
