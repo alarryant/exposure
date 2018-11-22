@@ -135,8 +135,25 @@ app.get("/dashboard", (req, res) => {
   });
 });
 
+
+app.get("/dashboard/events", (req, res) => {
+  knex("events").where("creator_id", req.session.user_id).orderBy('created_at', 'desc').then((data) => {
+    res.json(data);
+  })
+})
+
+app.get("/dashboard/likes", (req, res) => {
+  knex('artist_likes')
+    .join("users", "users.id", "=", "artist_likes.artist_id")
+    .where('client_id', req.session.user_id)
+    .then((data) => {
+      console.log(data);
+      res.json(data);
+    });
+});
+
 app.post("/artists/:id/edit", (req, res) => {
-  res.send("Artist Edit Profile");
+  res.send("Artist Edit");
 });
 
 app.post("/artists/:id/review", (req, res) => {
@@ -164,6 +181,19 @@ app.post("/artists/:id/editavailability", (req, res) => {
       artist_id: artistId,
       date: req.body.selectedDay
     })
+    .then(data => {
+      knex('availabilities')
+        .where("artist_id", artistId)
+        .then(moredata => res.json(moredata));
+    });
+});
+
+app.post("/artists/:id/removeavailability", (req, res) => {
+  let artistId = req.params.id;
+  let selectedDay = req.body.selectedDay;
+  knex('availabilities')
+    .where({artist_id: artistId, date: selectedDay })
+    .del()
     .then(data => {
       knex('availabilities')
         .where("artist_id", artistId)
@@ -238,7 +268,25 @@ app.get("/api/opportunities", (req, res) => {
  });
 
 app.post("/opportunities/:id/add", (req, res) => {
-  res.send("Add Opportunity");
+  let cookie = req.session.user_id;
+  let title = req.body.title;
+  let description = req.body.description;
+  let date = req.body.date;
+  let price = req.body.price;
+  let location = req.body.location;
+
+  knex("events").insert({
+    name: title,
+    description: description,
+    event_date: date,
+    price: price,
+    location: location,
+    creator_id: cookie
+  })
+  .then(data => {
+      knex("events").orderBy('created_at', 'desc').then(moredata =>
+        res.json(moredata));
+    });
 });
 
 app.post("/opportunities/:id/delete", (req, res) => {
@@ -254,6 +302,28 @@ app.post("/opportunities/:id/apply", (req, res) => {
     .then((results) => {
       res.send("Application successfully saved")
     })
+});
+
+app.post("/dashboard/:id/add", (req, res) => {
+  let cookie = req.session.user_id;
+  let title = req.body.title;
+  let description = req.body.description;
+  let date = req.body.date;
+  let price = req.body.price;
+  let location = req.body.location;
+
+  knex("events").insert({
+    name: title,
+    description: description,
+    event_date: date,
+    price: price,
+    location: location,
+    creator_id: cookie
+  })
+  .then(data => {
+      knex("events").where('creator_id', cookie).orderBy('created_at', 'desc').then(moredata =>
+        res.json(moredata));
+    });
 });
 
 app.listen(PORT, () => {
