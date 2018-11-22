@@ -15,6 +15,17 @@ class Opportunities extends Component {
     };
 
     this.displayEvents = this.displayEvents.bind(this);
+    this.saveInterestedApplicates = this.saveInterestedApplicates.bind(this)
+  }
+
+  saveInterestedApplicates(event, artist) {
+    let event_id = event
+    let artist_id = artist
+    console.log(event, artist)
+    axios.post(`/opportunities/${event_id}/apply`, { event_id: event, artist_id: artist})
+      .then((res) => {
+        console.log(res)
+      })
   }
 
   displayEvents(events) {
@@ -25,7 +36,7 @@ class Opportunities extends Component {
       return events.map((event) => {
         let date = event.event_date.toString().split('T')[0]
         return (
-          <OppCard key={event.id} event={event} date={date} usertype={this.props.usertype} currentUser={this.props.currentUser}/>
+          <OppCard saveApplication={this.saveInterestedApplicates} event={event} date={date} usertype={this.props.usertype} currentUser={this.props.currentUser}/>
           )
       })
     }
