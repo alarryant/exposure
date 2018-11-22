@@ -11,9 +11,7 @@ import ErrorPath from './Error404.jsx';
 import Profile from './Profile.jsx';
 import { BrowserRouter, Router, Route, Switch, Redirect, withRouter } from "react-router-dom";
 import { createMemoryHistory } from 'history';
-import Availability from './components/Availability.jsx';
 import Opportunities from './Opportunities.jsx';
-// import Availability from './components/Availability.jsx';
 import About from './About.jsx';
 import Contact from './Contact.jsx';
 
@@ -35,7 +33,6 @@ class App extends Component {
       facebookUrl: "",
       twitterUrl: "",
       location: "",
-      // currentUser: null,
       redirect: false,
       availability: {
         start_date: null,
@@ -49,16 +46,7 @@ class App extends Component {
     this.signupInfo = this.signupInfo.bind(this);
     this.searchResult = this.searchResult.bind(this);
     this.renderRedirect = this.renderRedirect.bind(this);
-    // this.saveAvailability = this.saveAvailability.bind(this);
-
   }
-
-  // saveAvailability(dates) {
-  //   this.setState({availability: {start_date: dates.start_date, end_date: dates.end_date}});
-  //   axios.post(`/artists/${this.state.user.id}/availability`, {availability: this.state.availability})
-  //     .then(res => console.log(res.data, 'availability data received from server'));
-  // }
-
 
   //LOGIN FEATURE
   loginInfo(email, password) {

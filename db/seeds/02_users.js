@@ -24,9 +24,9 @@ exports.seed = function(knex, Promise) {
         bio: 'Floofs puggo you are doin me a concern shooberino, pupperino you are doing me a frighten doge, shibe big ol. Heckin good boys blep extremely cuuuuuute fluffer long doggo adorable doggo, dat tungg tho very taste wow very jealous pupper ur givin me a spook woofer, big ol pupper long bois snoot heck. Long woofer blep the neighborhood pupper blop smol borking doggo with a long snoot for pats shooberino, heckin angery woofer borkf borkdrive. Heckin angery woofer big ol pupper shoober ruff boof very taste wow, most angery pupper I have ever seen very jealous pupper bork woofer.',
         profile_image: '/images/olya-kobruseva-avatar.jpg',
         website_url: 'http://kobruseva.com/',
-        instagram_url: 'null',
+        instagram_url: 'https://www.instagram.com/leeloothefirst/',
         facebook_url: 'https://www.facebook.com/LeelooTheFirst',
-        twitter_url: 'https://twitter.com/RaviVora',
+        twitter_url: 'null',
         location: 'Barcelona',
         user_type_id: 1
       }),

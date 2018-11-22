@@ -2,9 +2,7 @@ import React from 'react';
 import sampleSize from 'lodash.samplesize';
 import Slider from "react-slick";
 import { Link } from 'react-router-dom';
-
 import { Modal, Button } from 'react-bootstrap';
-
 
 class Home extends React.Component {
 
@@ -39,24 +37,35 @@ class Home extends React.Component {
 
   addCarouselPhotos(category, photos=[]) {
     let filteredPhotos = this.categorizePhotos(category, photos);
-    let handleShowFunction = this.handleShow
-    let handleCloseFunction = this.handleClose
+    let handleShowFunction = this.handleShow;
+    let handleCloseFunction = this.handleClose;
 
     return filteredPhotos.map((photo) => {
       return (
         <div className="sliderImg" key={photo.id}>
-          <button className="indivImg" value={photo} onClick={() => handleShowFunction(photo.id)}><img alt="900x500" src={photo.src} /></button>
-          <Modal show={this.state.show === photo.id} onHide={handleCloseFunction}>
+          <button className="indivImg"
+                  value={photo}
+                  onClick={() => handleShowFunction(photo.id)}>
+            <img alt="900x500" src={photo.src} />
+          </button>
+          <Modal show={this.state.show === photo.id}
+                 onHide={handleCloseFunction}>
             <Modal.Header closeButton>
-            <Modal.Title>{photo.title}</Modal.Title>
+            <Modal.Title>
+              {photo.title}
+            </Modal.Title>
             </Modal.Header>
-                <Modal.Body>
-                  <img className="indivImgLrg" alt="900x500" src={photo.src} />
-                  <p>{photo.description}</p>
-                </Modal.Body>
-                <Modal.Footer>
-                <Link to={`/artists/${ photo.image_owner }`}>Photographer's Profile</Link>
-                </Modal.Footer>
+            <Modal.Body>
+              <img className="indivImgLrg"
+                   alt="900x500"
+                   src={photo.src} />
+              <p>{photo.description}</p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Link to={`/artists/${ photo.image_owner }`}>
+                Photographer's Profile
+              </Link>
+            </Modal.Footer>
           </Modal>
         </div>
         )
@@ -80,7 +89,9 @@ class Home extends React.Component {
 
     <div className="homeContainer">
       <div className="splashcontainer">
-        <img className="splashart" alt="splash" src="/images/SplashArt.jpg" />
+        <img className="splashart"
+             alt="splash"
+             src="/images/SplashArt.jpg" />
       </div>
 
       <h1>WEDDING</h1>
