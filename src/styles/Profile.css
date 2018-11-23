@@ -62,3 +62,8 @@
   margin-right: 75px;
   float: right;
 }
+
+
+.addReviewModal textarea{
+  min-height: 150px;
+}

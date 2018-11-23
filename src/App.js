@@ -145,6 +145,7 @@ class App extends Component {
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos}/>} />
             <Route path='/artists/:id' render={props => <Profile
               {...props}
+              currentUserName={currentUserName}
               currentUser={currentUser} />} />
             <Route path='/opportunities' name='opportunities' render={(props) =>
                 <Opportunities {...props}
