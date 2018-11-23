@@ -42,6 +42,11 @@ class Opportunities extends Component {
         let newEvents = res.data;
         this.setState({opportunities: newEvents});
       })
+
+      axios.get(`/api/opportunities/applied/${this.props.currentUser}`).then(res => {
+        this.setState({'appliedopportunities': res.data })
+    });
+
     }
   }
 
