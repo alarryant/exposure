@@ -331,6 +331,7 @@ app.get("/api/opportunities/applied/:id", (req, res) => {
   knex('event_interests')
     .where('artist_id', req.params.id)
     .join('events', 'event_id', '=', 'event_interests.eventref_id')
+    .join('users', 'users.id', '=', 'events.creator_id')
     .then(data => {
       console.log("query for applied data", data)
       res.json(data)
