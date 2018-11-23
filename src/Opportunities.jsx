@@ -10,22 +10,38 @@ class Opportunities extends Component {
     super(props);
 
     this.state = {
-      opportunities: ''
+      opportunities: '',
+      applicationsent: false
     };
 
     this.displayEvents = this.displayEvents.bind(this);
     this.saveInterestedApplicates = this.saveInterestedApplicates.bind(this)
     this.createEvent = this.createEvent.bind(this);
+    this.showSuccessMsg = this.showSuccessMsg.bind(this);
 
   }
 
-  saveInterestedApplicates(event, artist) {
+  showSuccessMsg() {
+      // this.setState({applicationsent: false});
+      console.log("i'm in showSuccessMsg")
+      return (
+      <div className="applicationSent">
+        <h3>Your application has been sent! Thanks for applying!</h3>
+      </div>
+
+      )
+  }
+
+  saveInterestedApplicates(event, artist, desc) {
+    this.setState({applicationsent: true});
+    console.log("savedInter function")
     let event_id = event
     let artist_id = artist
-    console.log(event, artist)
-    axios.post(`/opportunities/${event_id}/apply`, { event_id: event, artist_id: artist})
+    let description = desc
+    let artist_name = this.props.currentUserName
+    axios.post(`/opportunities/${event_id}/apply`, { event_id: event, artist_id: artist, msg_des: description, artist_name: artist_name})
       .then((res) => {
-        console.log(res)
+        console.log("You've successfully applied!")
       })
   }
 
@@ -58,17 +74,22 @@ class Opportunities extends Component {
   }
 
   componentDidMount() {
+
+    this.setState({applicationsent: false})
+
     axios.get("/api/opportunities").then(res => {
       this.setState({'opportunities': res.data.reverse()})
     });
 }
 
   render() {
+
     return (
       <section className="opportunities">
+      {this.state.applicationsent ? this.showSuccessMsg() : ""}
         <div className="oppHeader">
-          <h2>Opportunities</h2>
-          <CreateEvent createEvent={this.createEvent}/>
+          <h2>Opportunities Board</h2>
+          {this.props.usertype === 2 ? <CreateEvent createEvent={this.createEvent}/>  : ""}
         </div>
           { this.displayEvents(this.state.opportunities) }
       </section>
