@@ -300,7 +300,11 @@ app.post("/opportunities/:id/delete", (req, res) => {
   knex('events')
     .del()
     .where('event_id', req.body.event_id)
-    .then(res.send("Cancelled Opportunity"));
+    .then(data => {
+      knex("events").join('users', 'users.id', '=', 'events.creator_id').orderBy('event_date').then(moredata => {
+        res.json(moredata);
+      })
+    });
 });
 
 app.post("/opportunities/:id/apply", (req, res) => {
