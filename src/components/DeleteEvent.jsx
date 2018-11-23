@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, ButtonToolbar, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 
 class DeleteEvent extends Component {
     constructor(props) {

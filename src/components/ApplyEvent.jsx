@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, ButtonToolbar, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 
 class ApplyEvent extends Component {
     constructor(props) {
@@ -35,7 +35,6 @@ class ApplyEvent extends Component {
         const event_id = this.props.eventid;
         const description = this.state.description;
         const currentUser = parseInt(this.props.currentUser)
-        const creatorId = this.props.event.creator_id
         this.props.saveApplication(event_id, currentUser, description);
     }
 
