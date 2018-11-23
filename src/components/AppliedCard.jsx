@@ -10,11 +10,15 @@ class AppliedCard extends Component {
     super(props);
 
     this.state = {
-      appliedopportunities: '',
+      appliedopportunities: [],
     };
+
+    this.displayAppliedEvents = this.displayAppliedEvents.bind(this)
+
   }
 
   displayAppliedEvents(events) {
+    console.log(events)
     if (!events || events.length === 0 ) {
       return (
         <p>You haven't applied to anything! Why not checkout the opportunities board? </p> )
@@ -22,7 +26,7 @@ class AppliedCard extends Component {
       return events.map((event) => {
         let date = event.event_date.toString().split('T')[0]
         return (
-          <OppCard deleteEvent={this.deleteEvent} saveApplication={this.saveInterestedApplicates} event={event} date={date} usertype={this.props.usertype} currentUser={this.props.currentUser}/>
+          <OppCard event={event} date={date} usertype={this.props.usertype} currentUser={this.props.currentUser}/>
           )
       })
     }
@@ -35,14 +39,13 @@ class AppliedCard extends Component {
   }
 
   render () {
+    console.log("Applied", this.props)
     return (
       <section>
         <div className="oppHeader">
           <h2> Events You Applied To: </h2>
         </div>
-        <div className="eventcard">
-            testing
-        </div>
+        {this.displayAppliedEvents(this.state.appliedopportunities)}
       </section>
       )
     }

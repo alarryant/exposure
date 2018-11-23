@@ -3,6 +3,7 @@ import ApplyEvent from './ApplyEvent.jsx'
 import DeleteEvent from './DeleteEvent.jsx'
 
 function OppCard(props) {
+  console.log("OppsCard", props)
   const { event } = props
   const user_type_id = parseInt(props.usertype)
   const creator_id = parseInt(event.creator_id)
