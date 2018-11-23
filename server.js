@@ -295,6 +295,11 @@ app.post("/opportunities/:id/add", (req, res) => {
 });
 
 app.post("/opportunities/:id/delete", (req, res) => {
+  console.log("TESTING! in post delete on server")
+  console.log(req.body)
+  knex('events')
+    .where({ event_id:req.body.event_id })
+    .del()
   res.send("Cancel Opportunity");
 });
 
