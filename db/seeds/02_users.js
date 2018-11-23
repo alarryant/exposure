@@ -1,8 +1,7 @@
 exports.seed = function(knex, Promise) {
   return Promise.all([
     knex('users').insert(
-      { id: 1,
-        first_name: 'Ravi',
+      { first_name: 'Ravi',
         last_name: 'Vora',
         email: 'ravivora@email.com',
         password: '1234',
@@ -16,8 +15,7 @@ exports.seed = function(knex, Promise) {
         user_type_id: 1
       }),
     knex('users').insert(
-      { id: 2,
-        first_name: 'Olya',
+      { first_name: 'Olya',
         last_name: 'Kobruseva',
         email: 'olyakobruseva@email.com',
         password: '1234',
@@ -31,8 +29,7 @@ exports.seed = function(knex, Promise) {
         user_type_id: 1
       }),
     knex('users').insert(
-      { id: 3,
-        first_name: 'Tim',
+      { first_name: 'Tim',
         last_name: 'Flach',
         email: 'timflach@email.com',
         password: '1234',
@@ -46,8 +43,7 @@ exports.seed = function(knex, Promise) {
         user_type_id: 1
       }),
     knex('users').insert(
-      { id: 4,
-        first_name: 'Lucie',
+      { first_name: 'Lucie',
         last_name: 'Urban',
         email: 'lucyurban@email.com',
         password: '1234',
@@ -61,8 +57,7 @@ exports.seed = function(knex, Promise) {
         user_type_id: 1
       }),
     knex('users').insert(
-      { id: 5,
-        first_name: 'Jenn',
+      { first_name: 'Jenn',
         last_name: 'Repp',
         email: 'jennrepp@email.com',
         password: '1234',
@@ -76,8 +71,7 @@ exports.seed = function(knex, Promise) {
         user_type_id: 1
       }),
     knex('users').insert(
-      { id: 6,
-        first_name: 'Michael',
+      { first_name: 'Michael',
         last_name: 'Wilson',
         email: 'mwilson@email.com',
         password: '1234',
@@ -91,8 +85,7 @@ exports.seed = function(knex, Promise) {
         user_type_id: 2
       }),
     knex('users').insert(
-      { id: 7,
-        first_name: 'Carey',
+      { first_name: 'Carey',
         last_name: 'Brown',
         email: 'careybrown@email.com',
         password: '1234',
@@ -106,8 +99,7 @@ exports.seed = function(knex, Promise) {
         user_type_id: 2
       }),
     knex('users').insert(
-      { id: 8,
-        first_name: 'Rondell',
+      { first_name: 'Rondell',
         last_name: 'Staton',
         email: 'rrrondell@email.com',
         password: '1234',
