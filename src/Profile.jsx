@@ -1,7 +1,7 @@
 import React from 'react';
 import Portfolio from './components/Portfolio';
 import EditPortfolio from './components/Profile_Portfolio_Edit';
-import Avatar from './components/Avatar.jsx';
+import Avatar from './components/Profile_Avatar_Edit.jsx';
 import Slider from "react-slick";
 // import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -17,6 +17,7 @@ import EditPackagesCard from './components/Profile_Packages_Edit.jsx';
 import StarPhotographer from './components/Profile_Star.jsx';
 import './styles/Profile.css';
 import './styles/SearchResults.css';
+
 
 
 class MailButton extends React.Component {
@@ -48,6 +49,7 @@ class Profile extends React.Component {
     this.sendSocialMediaForm = this.sendSocialMediaForm.bind(this);
     this.sendBioForm = this.sendBioForm.bind(this);
     this.sendPackageField = this.sendPackageField.bind(this);
+    this.changeFeaturePhotos = this.changeFeaturePhotos.bind(this);
   }
 
   areFeaturedPhotos(photos = []) {
@@ -111,6 +113,12 @@ class Profile extends React.Component {
         }
       }
       return { packages };
+
+  changeFeaturePhotos = (clickedPhotoSrc, clickedPhotoFeature) => {
+    axios.post("/artists/:id/edit", {clickedPhotoSrc: clickedPhotoSrc, clickedPhotoFeature: clickedPhotoFeature})
+    .then(res => {
+      let newCollection = res.data;
+      this.setState({collection: newCollection});
     })
   }
 
@@ -196,6 +204,8 @@ class Profile extends React.Component {
       focusOnSelect: true,
     };
 
+    this.numOfFeatured = this.areFeaturedPhotos(this.state.collection);
+
     return (
       <div>
       <button onClick={this.handleClickEdit}>Edit</button>
@@ -208,6 +218,7 @@ class Profile extends React.Component {
                         name={this.props.currentUserName} />
             <StarPhotographer currentUser={this.props.currentUser}
                               artistId={this.state.artistId} />
+            <h3>Description</h3>
             <EditProfileDesc bio={this.state.bio}
                              sendBioForm={this.sendBioForm} />
             <EditSocialMedia twitter={this.state.twitter}
@@ -217,9 +228,11 @@ class Profile extends React.Component {
             <div className="featuredPortfolio">
               <div>
 
-                <h1>Portfolio Photos:</h1>
+                <h3>Select Feature Photos ({this.numOfFeatured.length}/10):</h3>
                 <div>
-                  <EditPortfolio artistPhotos={this.state.collection} />
+                  <EditPortfolio
+                    changeFeaturePhotos={this.changeFeaturePhotos}
+                    artistPhotos={this.state.collection} />
                 </div>
               </div>
             </div>
@@ -240,6 +253,7 @@ class Profile extends React.Component {
                     name={this.props.currentUserName} />
         <StarPhotographer currentUser={this.props.currentUser}
                           artistId={this.state.artistId} />
+        <h3>Description</h3>
         <ProfileDesc bio={this.state.bio} />
         <SocialMedia twitter={this.state.twitter}
                      facebook={this.state.facebook}
