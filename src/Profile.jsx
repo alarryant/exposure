@@ -28,7 +28,7 @@ class MailButton extends React.Component {
   render() {
     return (
       <div>
-        <a href={`mailto:${this.props.email}?subject=${this.props.name}would like to book you for a photoshoot.`} >Contact Me</a>
+        <a href={`mailto:${this.props.email}?subject=${this.props.name} would like to book you for a photoshoot.`} >Contact Me</a>
       </div>
     )
   }

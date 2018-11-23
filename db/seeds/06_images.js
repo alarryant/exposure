@@ -1,8 +1,7 @@
 exports.seed = function(knex, Promise) {
   return Promise.all([
     knex('images').insert(
-      { id: 1,
-        title: 'Airport Sunset',
+      { title: 'Airport Sunset',
         description: 'A plane on a sunny evening.',
         featured: 'false',
         category: 'commercial, plane',
@@ -10,8 +9,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 1
       }),
     knex('images').insert(
-      { id: 2,
-        title: 'Floating',
+      { title: 'Floating',
         description: 'Portrait of a woman floating in a pond.',
         featured: 'true',
         category: 'nature, portrait',
@@ -19,8 +17,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 1
       }),
     knex('images').insert(
-      { id: 3,
-        title: 'Ford Canada Shoot',
+      { title: 'Ford Canada Shoot',
         description: 'A shoot I did Ford Canada.',
         featured: 'true',
         category: 'commercial, car, nature',
@@ -28,8 +25,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 1
       }),
     knex('images').insert(
-      { id: 4,
-        title: 'Haley Permenter 1',
+      { title: 'Haley Permenter 1',
         description: 'Shoot I did with Haley Permenter in Vegas.',
         featured: 'false',
         category: 'portrait, commercial',
@@ -37,8 +33,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 1
       }),
     knex('images').insert(
-      { id: 5,
-        title: 'Haley Permenter 2',
+      { title: 'Haley Permenter 2',
         description: 'Shoot I did with Haley Permenter in Vegas.',
         featured: 'true',
         category: 'portrait, commercial',
@@ -46,8 +41,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 1
       }),
     knex('images').insert(
-      { id: 6,
-        title: 'Haley Permenter 3',
+      { title: 'Haley Permenter 3',
         description: 'Shoot I did with Haley Permenter in Vegas.',
         featured: 'false',
         category: 'portrait, commercial',
@@ -55,8 +49,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 1
       }),
     knex('images').insert(
-      { id: 7,
-        title: 'Jelena Marija',
+      { title: 'Jelena Marija',
         description: 'Shoot I did with Jelena Marija in 2017.',
         featured: 'false',
         category: 'portrait, commercial',
@@ -64,8 +57,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 1
       }),
     knex('images').insert(
-      { id: 8,
-        title: 'Manny Pacquiao',
+      { title: 'Manny Pacquiao',
         description: 'A shoot I did for NIKE.',
         featured: 'true',
         category: 'portrait, commercial',
@@ -73,8 +65,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 1
       }),
     knex('images').insert(
-      { id: 9,
-        title: 'Training Josh Bridges',
+      { title: 'Training Josh Bridges',
         description: 'A shoot I did with Josh Bridges for NIKE.',
         featured: 'false',
         category: 'commercial',
@@ -82,8 +73,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 1
       }),
     knex('images').insert(
-      { id: 10,
-        title: 'Norway',
+      { title: 'Norway',
         description: 'A NIKE shoot in Norway.',
         featured: 'false',
         category: 'commercial, nature, landscape',
@@ -91,8 +81,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 1
       }),
     knex('images').insert(
-      { id: 11,
-        title: 'Sarah',
+      { title: 'Sarah',
         description: 'I was lucky enough to shoot Sarah Curr in 2018.',
         featured: 'false',
         category: 'portrait, commercial',
@@ -100,8 +89,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 1
       }),
     knex('images').insert(
-      { id: 12,
-        title: 'Untitled',
+      { title: 'Untitled',
         description: 'While shooting for NIKE in the mountains a happy accident happened.',
         featured: 'true',
         category: 'commercial, nature, landscape, outdoors',
@@ -109,8 +97,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 1
       }),
     knex('images').insert(
-      { id: 13,
-        title: 'Visit Jordan',
+      { title: 'Visit Jordan',
         description: 'Raging river has cut through the rock.',
         featured: 'false',
         category: 'commercial, nature, landscape',
@@ -118,8 +105,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 1
       }),
     knex('images').insert(
-      { id: 14,
-        title: 'Elder',
+      { title: 'Elder',
         description: 'A portrait of a mother in a small rural town.',
         featured: 'false',
         category: 'commercial, nature, portrait',
@@ -127,8 +113,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 1
       }),
     knex('images').insert(
-      { id: 15,
-        title: 'In Love',
+      { title: 'In Love',
         description: 'Portrait of couple.',
         featured: 'true',
         category: 'portrait, wedding',
@@ -136,8 +121,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 2
       }),
     knex('images').insert(
-      { id: 16,
-        title: 'Out the door',
+      { title: 'Out the door',
         description: 'A wedding shoot in Black and White.',
         featured: 'false',
         category: 'portrait, wedding',
@@ -145,8 +129,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 2
       }),
     knex('images').insert(
-      { id: 17,
-        title: 'The Kiss',
+      { title: 'The Kiss',
         description: 'An engagement portrait session.',
         featured: 'true',
         category: 'portrait, wedding, commercial',
@@ -154,8 +137,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 2
       }),
     knex('images').insert(
-      { id: 18,
-        title: 'Young Love',
+      { title: 'Young Love',
         description: 'An engagement portrait session.',
         featured: 'true',
         category: 'portrait, wedding, commercial',
@@ -163,8 +145,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 2
       }),
     knex('images').insert(
-      { id: 19,
-        title: 'Love On The Floor',
+      { title: 'Love On The Floor',
         description: 'An engagement portrait session.',
         featured: 'true',
         category: 'portrait, wedding, commercial',
@@ -172,8 +153,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 2
       }),
     knex('images').insert(
-      { id: 20,
-        title: 'I Do',
+      { title: 'I Do',
         description: 'A wedding shoot by the sea.',
         featured: 'false',
         category: 'portrait, wedding, commercial',
@@ -181,8 +161,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 2
       }),
     knex('images').insert(
-      { id: 21,
-        title: 'The Isle',
+      { title: 'The Isle',
         description: 'A Black and White wedding shoot.',
         featured: 'false',
         category: 'portrait, wedding',
@@ -190,8 +169,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 2
       }),
     knex('images').insert(
-      { id: 22,
-        title: 'Ocean Girl',
+      { title: 'Ocean Girl',
         description: 'A wedding shoot by the sea.',
         featured: 'false',
         category: 'portrait, wedding',
@@ -199,8 +177,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 2
       }),
     knex('images').insert(
-      { id: 23,
-        title: 'The View Over Here',
+      { title: 'The View Over Here',
         description: 'A scenic landscape view.',
         featured: 'false',
         category: 'landscape, nature, summer',
@@ -208,8 +185,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 2
       }),
     knex('images').insert(
-      { id: 24,
-        title: 'The Door',
+      { title: 'The Door',
         description: 'A shot of where I was staying in Europe.',
         featured: 'false',
         category: 'landscape, commercial',
@@ -217,8 +193,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 2
       }),
     knex('images').insert(
-      { id: 25,
-        title: 'Aerial Shot Of Tundra',
+      { title: 'Aerial Shot Of Tundra',
         description: 'A shoot up North from a plane.',
         featured: 'false',
         category: 'landscape, nature',
@@ -226,8 +201,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 3
       }),
     knex('images').insert(
-      { id: 26,
-        title: 'Crown Cranes',
+      { title: 'Crown Cranes',
         description: 'A wildlife shot of Cranes in winter.',
         featured: 'true',
         category: 'landscape, nature, birds, animals, winter',
@@ -235,8 +209,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 3
       }),
     knex('images').insert(
-      { id: 27,
-        title: 'Green Winged Macaws',
+      { title: 'Green Winged Macaws',
         description: 'Green Winged Macaws on the side of a cliff.',
         featured: 'true',
         category: 'landscape, nature, birds, animals',
@@ -244,8 +217,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 3
       }),
     knex('images').insert(
-      { id: 28,
-        title: 'Kaisers Newt',
+      { title: 'Kaisers Newt',
         description: 'A newt in water.',
         featured: 'true',
         category: 'nature, newt, animals',
@@ -253,8 +225,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 3
       }),
     knex('images').insert(
-      { id: 29,
-        title: 'Military Macaw 1',
+      { title: 'Military Macaw 1',
         description: 'A portrait of a Military Macaw',
         featured: 'false',
         category: 'nature, bird, animals',
@@ -262,8 +233,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 3
       }),
     knex('images').insert(
-      { id: 30,
-        title: 'Military Macaw 2',
+      { title: 'Military Macaw 2',
         description: 'A portrait of a Military Macaw in flight.',
         featured: 'false',
         category: 'nature, bird, animals',
@@ -271,8 +241,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 3
       }),
     knex('images').insert(
-      { id: 31,
-        title: 'Polar Bear Footprints',
+      { title: 'Polar Bear Footprints',
         description: 'Polar Bear footprints in the snow.',
         featured: 'false',
         category: 'nature, landscape, animals, winter',
@@ -280,8 +249,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 3
       }),
     knex('images').insert(
-      { id: 32,
-        title: 'Polar Bears',
+      { title: 'Polar Bears',
         description: 'Polar Bears on the ice.',
         featured: 'false',
         category: 'nature, landscape, animals, winter, bear',
@@ -289,8 +257,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 3
       }),
     knex('images').insert(
-      { id: 33,
-        title: 'Whiteback Vultures',
+      { title: 'Whiteback Vultures',
         description: 'Whiteback Vultures descending on a meal.',
         featured: 'false',
         category: 'nature, animals, birds',
@@ -298,8 +265,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 3
       }),
     knex('images').insert(
-      { id: 34,
-        title: 'Yellow Eye Tree Frog',
+      { title: 'Yellow Eye Tree Frog',
         description: 'A portrait of a Yellow Eye Tree Frog',
         featured: 'true',
         category: 'nature, animals, frog',
@@ -307,8 +273,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 3
       }),
     knex('images').insert(
-      { id: 35,
-        title: 'Wedding Table',
+      { title: 'Wedding Table',
         description: 'A night Wedding shoot.',
         featured: 'true',
         category: 'wedding, commercial',
@@ -316,8 +281,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 4
       }),
     knex('images').insert(
-      { id: 36,
-        title: 'The Bride',
+      { title: 'The Bride',
         description: 'A portrait of a Bride preparing to walk down the isle.',
         featured: 'false',
         category: 'wedding, commercial, portrait',
@@ -325,8 +289,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 4
       }),
     knex('images').insert(
-      { id: 37,
-        title: 'I Do',
+      { title: 'I Do',
         description: 'A happy couple kissing during their big day.',
         featured: 'false',
         category: 'wedding, portrait',
@@ -334,8 +297,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 4
       }),
     knex('images').insert(
-      { id: 61,
-        title: 'The Moment',
+      { title: 'The Moment',
         description: 'A happy couple after saying their vows and being pronounced man and whife.',
         featured: 'true',
         category: 'wedding, portrait',
@@ -343,8 +305,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 4
       }),
     knex('images').insert(
-      { id: 38,
-        title: 'Bridesmaids',
+      { title: 'Bridesmaids',
         description: 'Bridesmaids getting ready for the ceremony to start.',
         featured: 'true',
         category: 'wedding, portrait',
@@ -352,8 +313,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 4
       }),
     knex('images').insert(
-      { id: 39,
-        title: 'Morning is hard',
+      { title: 'Morning is hard',
         description: 'Portrait of a loved one waking up.',
         featured: 'true',
         category: 'portrait',
@@ -361,8 +321,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 4
       }),
     knex('images').insert(
-      { id: 40,
-        title: 'Closer Inspection',
+      { title: 'Closer Inspection',
         description: 'Portrait of a sibling.',
         featured: 'true',
         category: 'portrait',
@@ -370,8 +329,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 4
       }),
     knex('images').insert(
-      { id: 41,
-        title: 'The Square',
+      { title: 'The Square',
         description: 'A historic building someplace romantic.',
         featured: 'false',
         category: 'landscape',
@@ -379,8 +337,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 4
       }),
     knex('images').insert(
-      { id: 42,
-        title: 'Minis',
+      { title: 'Minis',
         description: 'Woman resting on a mini on a suny day.',
         featured: 'true',
         category: 'portrait, car',
@@ -388,8 +345,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 4
       }),
     knex('images').insert(
-      { id: 43,
-        title: 'Bug',
+      { title: 'Bug',
         description: 'An old VW Bug in all it\'s glory',
         featured: 'false',
         category: 'portrait, car',
@@ -397,8 +353,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 4
       }),
     knex('images').insert(
-      { id: 44,
-        title: 'Dunes',
+      { title: 'Dunes',
         description: 'Sand dunes at the beach.',
         featured: 'false',
         category: 'landscape, beach',
@@ -406,8 +361,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 4
       }),
     knex('images').insert(
-      { id: 45,
-        title: 'Preperation',
+      { title: 'Preperation',
         description: 'A Bride dressing for her wedding.',
         featured: 'false',
         category: 'portrait, wedding',
@@ -415,8 +369,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 4
       }),
     knex('images').insert(
-      { id: 46,
-        title: 'The Ultimate',
+      { title: 'The Ultimate',
         description: 'Gorgeous cupcakes sitting on a table for a wedding.',
         featured: 'false',
         category: 'wedding, food, decor',
@@ -424,8 +377,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 4
       }),
     knex('images').insert(
-      { id: 47,
-        title: 'Happy Family',
+      { title: 'Happy Family',
         description: 'A happy family expecting a new member.',
         featured: 'false',
         category: 'portrait, children, family',
@@ -433,8 +385,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 5
       }),
     knex('images').insert(
-      { id: 48,
-        title: 'Cute',
+      { title: 'Cute',
         description: 'A young girl in the summer.',
         featured: 'true',
         category: 'portrait, children',
@@ -442,8 +393,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 5
       }),
     knex('images').insert(
-      { id: 49,
-        title: 'Sweet',
+      { title: 'Sweet',
         description: 'A young girl among the dasies.',
         featured: 'true',
         category: 'portrait, children',
@@ -451,8 +401,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 5
       }),
     knex('images').insert(
-      { id: 50,
-        title: 'Playtime',
+      { title: 'Playtime',
         description: 'A portrait of a young boy and his toys.',
         featured: 'false',
         category: 'portrait, children',
@@ -460,8 +409,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 5
       }),
     knex('images').insert(
-      { id: 51,
-        title: 'Joy',
+      { title: 'Joy',
         description: 'A baby ni the hands of a loved one.',
         featured: 'true',
         category: 'portrait, baby, family',
@@ -469,8 +417,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 5
       }),
     knex('images').insert(
-      { id: 52,
-        title: 'Young and Youngest',
+      { title: 'Young and Youngest',
         description: 'Sister and new baby getting to know each other.',
         featured: 'true',
         category: 'portrait, baby, family, children',
@@ -478,8 +425,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 5
       }),
     knex('images').insert(
-      { id: 53,
-        title: 'The Center of Attention',
+      { title: 'The Center of Attention',
         description: 'A happy couple and their faithful best friend.',
         featured: 'true',
         category: 'portrait, family, dog, animals',
@@ -487,8 +433,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 5
       }),
     knex('images').insert(
-      { id: 54,
-        title: 'Cat Freaks',
+      { title: 'Cat Freaks',
         description: 'A couple in their home with their furry babies on proud display.',
         featured: 'true',
         category: 'portrait, family, cat, animals',
@@ -496,8 +441,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 5
       }),
     knex('images').insert(
-      { id: 55,
-        title: 'Young Family',
+      { title: 'Young Family',
         description: 'Portrait of a young family.',
         featured: 'false',
         category: 'portrait, family, baby',
@@ -505,8 +449,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 5
       }),
     knex('images').insert(
-      { id: 56,
-        title: 'Hoooo are you?',
+      { title: 'Hoooo are you?',
         description: 'Portrait of a costumed child on the couch.',
         featured: 'true',
         category: 'portrait, family, baby',
@@ -514,8 +457,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 5
       }),
     knex('images').insert(
-      { id: 57,
-        title: 'The Happiest Guy',
+      { title: 'The Happiest Guy',
         description: 'Portrait of a baby boy all dressed up in a chair.',
         featured: 'false',
         category: 'portrait, family, baby',
@@ -523,8 +465,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 5
       }),
     knex('images').insert(
-      { id: 58,
-        title: '2 + 1',
+      { title: '2 + 1',
         description: 'A portrait of young siblings.',
         featured: 'true',
         category: 'portrait, family, children',
@@ -532,8 +473,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 5
       }),
     knex('images').insert(
-      { id: 59,
-        title: 'Summer Vacation',
+      { title: 'Summer Vacation',
         description: 'Visiting the ocean on a beautiful sunny day.',
         featured: 'false',
         category: 'portrait, family, children',
@@ -541,8 +481,7 @@ exports.seed = function(knex, Promise) {
         image_owner: 5
       }),
     knex('images').insert(
-      { id: 60,
-        title: 'Snuggle Bunch',
+      { title: 'Snuggle Bunch',
         description: 'Two siblings together on a bed.',
         featured: 'true',
         category: 'portrait, family, children',
