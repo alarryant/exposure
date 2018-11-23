@@ -12,7 +12,6 @@ class Opportunities extends Component {
     this.state = {
       opportunities: '',
       applicationsent: false,
-      deletedevent: false
     };
 
     this.displayEvents = this.displayEvents.bind(this);
@@ -37,8 +36,8 @@ class Opportunities extends Component {
     if (creator === currentUser) {
       axios.post(`/opportunities/${event}/delete`, { event_id: event, creatorid: creator})
       .then((res) => {
-        this.setState({deletedevent: true});
-        console.log("You've successfully delete!", res)
+        let newEvents = res.data;
+        this.setState({opportunities: newEvents});
       })
     }
   }
@@ -47,10 +46,9 @@ class Opportunities extends Component {
     this.setState({applicationsent: true});
     console.log("savedInter function")
     let event_id = event
-    let artist_id = artist
     let description = desc
     let artist_name = this.props.currentUserName
-    axios.post(`/opportunities/${event_id}/apply`, { event_id: event, artist_id: artist, msg_des: description, artist_name: artist_name})
+    axios.post(`/opportunities/${event_id}/apply`, { event_id: event_id, artist_id: artist, msg_des: description, artist_name: artist_name})
       .then((res) => {
       })
   }
