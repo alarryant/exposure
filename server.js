@@ -1,5 +1,10 @@
 require('dotenv').config();
 const env = process.env.ENV || 'development';
+
+var api_key = process.env.MAILGUN_API;
+var DOMAIN = process.env.MAILGUN_DOMAIN;
+var mailgun = require('mailgun-js')({ apiKey: api_key, domain: DOMAIN });
+
 const express = require("express");
 const app = express();
 const PORT = 3001;
@@ -163,7 +168,7 @@ app.post("/artists/:id/review", (req, res) => {
 app.post("/artists/:id/editavailability", (req, res) => {
   let artistId = req.params.id;
 
-// this is ali's refactored version that doesn't work
+  // this is ali's refactored version that doesn't work
   // const getAllAvails = () => {
   //   return knex('availabilities').where("artist_id", artistId);
   // }
@@ -192,7 +197,7 @@ app.post("/artists/:id/removeavailability", (req, res) => {
   let artistId = req.params.id;
   let selectedDay = req.body.selectedDay;
   knex('availabilities')
-    .where({artist_id: artistId, date: selectedDay })
+    .where({ artist_id: artistId, date: selectedDay })
     .del()
     .then(data => {
       knex('availabilities')
@@ -206,10 +211,10 @@ app.get("/artists/:id/availability", (req, res) => {
   knex('availabilities')
     .select('*')
     .where("artist_id", artistId)
-    .then(function(disabledDays) {
+    .then(function (disabledDays) {
       res.json(disabledDays);
     });
- });
+});
 
 app.post("/artists/:id/like", (req, res) => {
   let artistId = req.body.artistId;
@@ -223,57 +228,58 @@ app.post("/artists/:id/like", (req, res) => {
       knex('artist_likes')
         .where("artist_id", artistId)
         .countDistinct('client_id')
-        .then(function(likes) {
+        .then(function (likes) {
           res.json(likes);
         });
     });
- });
+});
 
 app.post("/artists/:id/unlike", (req, res) => {
   let artistId = req.body.artistId;
   let currentUser = req.body.currentUser;
   knex('artist_likes')
-    .where({artist_id: artistId, client_id: currentUser})
+    .where({ artist_id: artistId, client_id: currentUser })
     .del()
     .then(data => {
       knex('artist_likes')
         .where("artist_id", artistId)
         .countDistinct('client_id')
-        .then(function(likes) {
+        .then(function (likes) {
           res.json(likes);
         });
     });
- });
+});
 
 app.post("/artists/:id/totallikes", (req, res) => {
   let artistId = req.body.artistId;
   let currentUser = req.body.currentUser;
   knex('artist_likes')
-    .where({artist_id: artistId})
+    .where({ artist_id: artistId })
     .countDistinct('client_id')
     .then(data => {
       res.json(likes);
     });
- });
+});
 
- app.post("/artists/:id/newreview", (req, res) => {
+app.post("/artists/:id/newreview", (req, res) => {
   let rating = req.body.rating;
   let description = req.body.description;
   let artist_id = req.body.artist_id;
   let user_id = req.body.user_id;
-  // console.log("this is my console.log from server after axios post: ", rating, description, artist_id, user_id);
   knex("reviews").insert({
     rating: rating,
     description: description,
     artist_id: artist_id,
     user_id: user_id
   }).then(data => {
-    knex("reviews").where('artist_id', artist_id).then(moredata =>
-      console.log("this is my console log from inside the knex insert: ", moredata),
-      res.json(moredata));
+    knex('reviews')
+      .join("users", "reviews.user_id", "=", "users.id")
+      .where("reviews.artist_id", artist_id)
+      .then((reviews) => {
+        res.json(reviews);
+      });
   });
-
- });
+});
 
 //OPPORTUNITIES
 
@@ -281,10 +287,10 @@ app.get("/api/opportunities", (req, res) => {
   knex('events')
     .select('*')
     .join('users', 'users.id', '=', 'events.creator_id')
-    .then(function(events) {
+    .then(function (events) {
       res.json(events);
     });
- });
+});
 
 app.post("/opportunities/:id/add", (req, res) => {
   let cookie = req.session.user_id;
@@ -299,44 +305,50 @@ app.post("/opportunities/:id/add", (req, res) => {
     description: description,
     event_date: date,
     price: price,
-    location: location,
+    event_location: location,
     creator_id: cookie
   })
-  .then(data => {
-      knex("events").orderBy('created_at', 'desc').then(moredata =>
-        res.json(moredata));
+    .then(data => {
+      knex("events").join('users', 'users.id', '=', 'events.creator_id').orderBy('event_date').then(moredata => {
+        res.json(moredata);
+      })
     });
 });
 
 app.post("/opportunities/:id/delete", (req, res) => {
-  res.send("Cancel Opportunity");
+  console.log("TESTING! in post delete on server")
+  knex('events')
+    .del()
+    .where('event_id', req.body.event_id)
+    .then(data => {
+      knex("events").join('users', 'users.id', '=', 'events.creator_id').orderBy('event_date').then(moredata => {
+        res.json(moredata);
+      })
+    });
 });
 
 app.post("/opportunities/:id/apply", (req, res) => {
-  res.send("Apply for Opportunity");
+  let message = req.body.msg_des
+  let artist_name = req.body.artist_name
+  knex('event_interests')
+    .insert({
+      eventref_id: req.body.event_id,
+      artist_id: req.body.artist_id
+    })
+    .then((results) => {
+      var data = {
+        from: 'Exposure <postmaster@sandboxf438a24c83de468897e03f26d640861d.mailgun.org>',
+        to: 'exposure.notifications@gmail.com',
+        subject: 'Exposure - Someone just applied to your posting!',
+        text: `${artist_name} has applied to your posting and left you a message: ${message}`
+      };
+      mailgun.messages().send(data, function (error, body) {
+        console.log(body);
+      })
+      res.send("Application successfully saved")
+    })
 });
 
-app.post("/dashboard/:id/add", (req, res) => {
-  let cookie = req.session.user_id;
-  let title = req.body.title;
-  let description = req.body.description;
-  let date = req.body.date;
-  let price = req.body.price;
-  let location = req.body.location;
-
-  knex("events").insert({
-    name: title,
-    description: description,
-    event_date: date,
-    price: price,
-    location: location,
-    creator_id: cookie
-  })
-  .then(data => {
-      knex("events").where('creator_id', cookie).orderBy('created_at', 'desc').then(moredata =>
-        res.json(moredata));
-    });
-});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);

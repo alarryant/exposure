@@ -9,8 +9,8 @@ import Dashboard from './Dashboard.jsx';
 import SearchResults from './SearchResults.jsx';
 import ErrorPath from './Error404.jsx';
 import Profile from './Profile.jsx';
-import { BrowserRouter, Router, Route, Switch, Redirect, withRouter } from "react-router-dom";
-import { createMemoryHistory } from 'history';
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+// import { createMemoryHistory } from 'history';
 import Opportunities from './Opportunities.jsx';
 import About from './About.jsx';
 import Contact from './Contact.jsx';
@@ -36,7 +36,8 @@ class App extends Component {
         start_date: null,
         end_date: null
       },
-      artistId: null
+      artistId: null,
+      usertype: null
     };
 
     this.loginInfo = this.loginInfo.bind(this);
@@ -52,11 +53,12 @@ class App extends Component {
     axios.post("/login", { email: email, password: password })
       .then((res) => {
         localStorage.setItem('currentUser', res.data[0].id);
+        localStorage.setItem('user_type_id', res.data[0].user_type_id)
         localStorage.setItem('currentUserFirstName', res.data[0].first_name);
         localStorage.setItem('currentUserLastName', res.data[0].last_name);
-        this.setState({ redirect: true });
+        this.setState({ redirect: true, usertype: res.data[0].user_type_id });
       });
-      
+
   }
 
   //LOGOUT FEATURE
@@ -128,8 +130,8 @@ class App extends Component {
 
   render() {
     const currentUser = localStorage.getItem('currentUser');
+    const user_type_id = localStorage.getItem('user_type_id');
     const currentUserName = localStorage.getItem('currentUserFirstName') + ' ' + localStorage.getItem('currentUserLastName');
-    
     return (
       <BrowserRouter>
         <div>
@@ -145,7 +147,13 @@ class App extends Component {
               {...props}
               currentUserName={currentUserName}
               currentUser={currentUser} />} />
-            <Route path='/opportunities' name='opportunities' render={(props) => <Opportunities {...props} />} />
+            <Route path='/opportunities' name='opportunities' render={(props) =>
+                <Opportunities {...props}
+                  currentUser={currentUser}
+                  usertype={user_type_id}
+                  currentUserName={currentUserName}/>
+                }
+            />
             <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={currentUser} />} />
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}

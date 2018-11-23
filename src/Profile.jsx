@@ -42,6 +42,7 @@ class Profile extends React.Component {
     this.areFeaturedPhotos = this.areFeaturedPhotos.bind(this);
     this.showPortfolio = this.showPortfolio.bind(this);
     this.showFeatures = this.showFeatures.bind(this);
+    this.createReview = this.createReview.bind(this);
   }
 
   areFeaturedPhotos(photos = []) {
@@ -69,18 +70,11 @@ class Profile extends React.Component {
   }
 
   createReview(rating, review, artist, user) {
-    console.log("this is my console.log before axios post; ", rating, review, user, artist);
     axios.post("/artists/:id/newreview", { rating: rating, description: review, artist_id: artist, user_id: user})
-      // .then((res) => {
-      //   let newReview = res.data;
-      //   this.setState({reviews: newReview});
-      //   newReview.map(function(event) {
-      //     let review = event.event_date.toString().split('T')[0]
-      //     return (
-      //       <OppCard event={event} date={date}/>
-      //       );
-      //   });
-      // });
+      .then((res) => {
+        let newReviews = res.data.reverse();
+        this.setState({reviews: newReviews});
+      });
   }
 
   componentDidMount() {

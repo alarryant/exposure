@@ -1,0 +1,17 @@
+.applyEventForm {
+  height: 200px;
+  width: 570px;
+  resize: none;
+  margin: auto;
+}
+
+.applicationSent{
+  border: 2px, solid black;
+  width: 60%;
+  margin: auto;
+}
+
+.oppHeader {
+  width: 60%;
+  margin: auto;
+}
