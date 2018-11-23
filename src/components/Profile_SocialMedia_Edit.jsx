@@ -6,7 +6,14 @@ class EditSocialMedia extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      twitter: this.props.twitter,
+      facebook: this.props.facebook,
+      instagram: this.props.instagram
+    };
+
     this.parseUrl = this.parseUrl.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   parseUrl(url) {
@@ -15,21 +22,38 @@ class EditSocialMedia extends React.Component {
       return trimmedUrl;
   }
 
+  handleChange(event) {
+    event.preventDefault();
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
   render () {
 
     return (
       <div className="socialMediaContainer">
         <p>
           <i className="fab fa-facebook-f"></i>
-          <input type="text" value={this.props.facebook !== 'null' ? this.props.facebook : ''} name="facebook"></input>
+          <input type="url"
+                 value={this.state.facebook !== 'null' ? this.state.facebook : ''}
+                 name="facebook"
+                 placeholder="Link your Facebook here."
+                 onChange={this.handleChange}></input>
         </p>
         <p>
           <i className="fab fa-twitter"></i>
-          <input type="text" value={this.props.twitter !== 'null' ? this.props.twitter : ''} name="twitter"></input>
+          <input type="url"
+                 value={this.state.twitter !== 'null' ? this.state.twitter : ''}
+                 name="twitter"
+                 placeholder="Link your Twitter here."
+                 onChange={this.handleChange}></input>
         </p>
         <p>
           <i className="fab fa-instagram"></i>
-          <input type="text" value={this.props.instagram !== 'null' ? this.props.instagram : ''} name="instagram"></input>
+          <input type="url"
+                 value={this.state.instagram !== 'null' ? this.state.instagram : ''}
+                 name="instagram"
+                 placeholder="Link your Instagram here."
+                 onChange={this.handleChange}></input>
         </p>
       </div>
       )

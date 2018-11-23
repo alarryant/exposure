@@ -47,6 +47,10 @@ class Profile extends React.Component {
     this.showPortfolio = this.showPortfolio.bind(this);
     this.showFeatures = this.showFeatures.bind(this);
     this.handleClickEdit = this.handleClickEdit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.sendSocialMediaForm = this.sendSocialMediaForm.bind(this);
+    this.sendBioForm = this.sendBioForm.bind(this);
+    this.sendPackagesForm = this.sendPackagesForm.bind(this);
   }
 
   areFeaturedPhotos(photos = []) {
@@ -71,6 +75,24 @@ class Profile extends React.Component {
 
   showFeatures = () => {
     this.setState({ photoView: "featured" })
+  }
+
+  sendSocialMediaForm = (socialmedia) => {
+    this.setState({
+      twitter: socialmedia.twitter,
+      facebook: socialmedia.facebook,
+      instagram: socialmedia.instagram,
+    });
+  }
+
+  sendBioForm = (bio) => {
+    this.setState({
+      bio: bio
+    })
+  }
+
+  sendPackagesForm = (packages) => {
+    this.setState({packages: packages})
   }
 
   componentDidMount() {
@@ -114,11 +136,17 @@ class Profile extends React.Component {
 
   handleClickEdit() {
     if (this.state.editable === false) {
-      console.log("editable now");
       this.setState({editable: true})
     } else {
       this.setState({editable: false})
     }
+  }
+
+  handleSubmit() {
+    axios.post(`/artists/${this.state.artistId}/edit`, {artistId: this.state.artistId})
+      .then((res) => {
+        console.log(res.data);
+      })
   }
 
   render() {
@@ -137,19 +165,20 @@ class Profile extends React.Component {
       <div>
       <button onClick={this.handleClickEdit}>Edit</button>
       {this.state.editable ? (
-        <form>
-
+        <form onSubmit={this.handleSubmit}>
           <div className="profile">
             <Avatar name={this.state.fullName}
-              avatar={this.state.avatarImage} />
+                    avatar={this.state.avatarImage} />
             <MailButton email={this.state.email}
-              name={this.props.currentUserName} />
+                        name={this.props.currentUserName} />
             <StarPhotographer currentUser={this.props.currentUser}
-              artistId={this.state.artistId} />
-            <EditProfileDesc bio={this.state.bio} />
+                              artistId={this.state.artistId} />
+            <EditProfileDesc bio={this.state.bio}
+                             sendBioForm={this.sendBioForm} />
             <EditSocialMedia twitter={this.state.twitter}
                              facebook={this.state.facebook}
-                             instagram={this.state.instagram} />
+                             instagram={this.state.instagram}
+                             sendSocialMediaForm={this.sendSocialMediaForm} />
             <div className="featuredPortfolio">
               <div>
 
@@ -160,26 +189,25 @@ class Profile extends React.Component {
               </div>
             </div>
           <AvailabilityCard currentUser={this.propscurrentUser}
-            disabledDays={this.state.disabledDays}
-            artistId={this.state.artistId} />
-            <EditPackagesCard packages={this.state.packages} />
+                            disabledDays={this.state.disabledDays}
+                            artistId={this.state.artistId} />
+            <EditPackagesCard packages={this.state.packages}
+                              sendPackagesForm={this.sendPackagesForm} />
           </div>
+          <input type="submit" value="Submit" />
         </form>
-
-
         ) : (
-
         <div className="profile">
         <Avatar name={this.state.fullName}
-          avatar={this.state.avatarImage} />
+                avatar={this.state.avatarImage} />
         <MailButton email={this.state.email}
-          name={this.props.currentUserName} />
+                    name={this.props.currentUserName} />
         <StarPhotographer currentUser={this.props.currentUser}
-          artistId={this.state.artistId} />
+                          artistId={this.state.artistId} />
         <ProfileDesc bio={this.state.bio} />
         <SocialMedia twitter={this.state.twitter}
-          facebook={this.state.facebook}
-          instagram={this.state.instagram} />
+                     facebook={this.state.facebook}
+                     instagram={this.state.instagram} />
         <div className="featuredPortfolio">
           <button onClick={this.showPortfolio}>
             View Portfolio
@@ -202,12 +230,12 @@ class Profile extends React.Component {
             )}
         </div>
         <AvailabilityCard currentUser={this.propscurrentUser}
-          disabledDays={this.state.disabledDays}
-          artistId={this.state.artistId} />
+                          disabledDays={this.state.disabledDays}
+                          artistId={this.state.artistId} />
         <PackagesCard packages={this.state.packages} />
         <ReviewsCard reviews={this.state.reviews} />
       </div>)}
-        </div>
+    </div>
 
     )
   }

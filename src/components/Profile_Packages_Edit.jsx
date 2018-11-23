@@ -11,6 +11,12 @@ class EditPackagesCard extends React.Component {
 
     this.renderPricePackage = this.renderPricePackage.bind(this);
     this.newInputPackages = this.newInputPackages.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    event.preventDefault();
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   newInputPackages() {
@@ -43,7 +49,7 @@ class EditPackagesCard extends React.Component {
     let numberOfPackages = pricePackages.length;
     let newInputFields = 3 - numberOfPackages;
 
-    const currentPackages = pricePackages.map(function(pricePackage) {
+    const currentPackages = pricePackages.map((pricePackage) => {
       return (
         <div>
           <label>
@@ -52,7 +58,8 @@ class EditPackagesCard extends React.Component {
           <input type="number"
                  name="packagetier"
                  value={pricePackage.tier}
-                 placeholder="Enter a number between 1 and 3.">
+                 placeholder="Enter a number between 1 and 3."
+                 onChange={this.handleChange}>
           </input>
           <label>
             Price
@@ -60,14 +67,16 @@ class EditPackagesCard extends React.Component {
           <input type="number"
                  name="packageprice"
                  value={pricePackage.price}
-                 placeholder="Enter a price here.">
+                 placeholder="Enter a price here."
+                 onChange={this.handleChange}>
           </input>
           <label>
             Description
           </label>
           <textarea name="packagedescription"
                     value={pricePackage.description}
-                    placeholder="Describe expected services, deliverables, and occasion recommendations."/>
+                    placeholder="Describe expected services, deliverables, and occasion recommendations."
+                    onChange={this.handleChange}/>
         </div>
       )
     })

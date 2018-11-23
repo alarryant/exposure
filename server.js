@@ -256,6 +256,17 @@ app.post("/artists/:id/totallikes", (req, res) => {
     });
  });
 
+app.post("/artists/:id/edit", (req, res) => {
+  let artistId = req.params.id;
+  console.log("this is server side input", req.body);
+  // knex('users')
+  //   .where("id", artistId)
+  //   .update({twitter_url: req.body.twitter,
+  //     facebook_url: req.body.facebook,
+  //     instagram_url: req.body.instagram})
+
+ });
+
 //OPPORTUNITIES
 
 app.get("/api/opportunities", (req, res) => {
