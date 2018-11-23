@@ -36,7 +36,7 @@ class ApplyEvent extends Component {
         const description = this.state.description;
         const currentUser = parseInt(this.props.currentUser)
         const creatorId = this.props.event.creator_id
-        this.props.saveApplication(event_id, currentUser);
+        this.props.saveApplication(event_id, currentUser, description);
     }
 
     render() {
