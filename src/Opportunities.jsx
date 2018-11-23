@@ -18,11 +18,11 @@ class Opportunities extends Component {
     this.saveInterestedApplicates = this.saveInterestedApplicates.bind(this)
     this.createEvent = this.createEvent.bind(this);
     this.showSuccessMsg = this.showSuccessMsg.bind(this);
+    this.deleteEvent = this.deleteEvent.bind(this);
 
   }
 
   showSuccessMsg() {
-      // this.setState({applicationsent: false});
       console.log("i'm in showSuccessMsg")
       return (
       <div className="applicationSent">
@@ -30,6 +30,16 @@ class Opportunities extends Component {
       </div>
 
       )
+  }
+
+  deleteEvent(event, creator) {
+    if (creator === this.props.currentUser) {
+      axios.post(`/opportunities/${event}/apply`, { event_id: event, creatorid: creator})
+      .then((res) => {
+        console.log("You've successfully delete!")
+      })
+    }
+    console.log(this.props.currentUser)
   }
 
   saveInterestedApplicates(event, artist, desc) {
@@ -53,7 +63,7 @@ class Opportunities extends Component {
       return events.map((event) => {
         let date = event.event_date.toString().split('T')[0]
         return (
-          <OppCard saveApplication={this.saveInterestedApplicates} event={event} date={date} usertype={this.props.usertype} currentUser={this.props.currentUser}/>
+          <OppCard deleteEvent={this.deleteEvent} saveApplication={this.saveInterestedApplicates} event={event} date={date} usertype={this.props.usertype} currentUser={this.props.currentUser}/>
           )
       })
     }
@@ -81,6 +91,7 @@ class Opportunities extends Component {
 }
 
   render() {
+    console.log("this opps", this.props)
     let usertype = parseInt(this.props.usertype)
 
     return (
