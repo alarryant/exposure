@@ -74,22 +74,21 @@ class Opportunities extends Component {
   }
 
   componentDidMount() {
-
     this.setState({applicationsent: false})
-
     axios.get("/api/opportunities").then(res => {
       this.setState({'opportunities': res.data.reverse()})
     });
 }
 
   render() {
+    let usertype = parseInt(this.props.usertype)
 
     return (
       <section className="opportunities">
       {this.state.applicationsent ? this.showSuccessMsg() : ""}
         <div className="oppHeader">
           <h2>Opportunities Board</h2>
-          {this.props.usertype === 2 ? <CreateEvent createEvent={this.createEvent}/>  : ""}
+          {usertype === 2 ? <CreateEvent createEvent={this.createEvent}/>  : ""}
         </div>
           { this.displayEvents(this.state.opportunities) }
       </section>
