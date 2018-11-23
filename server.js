@@ -289,18 +289,18 @@ app.post("/opportunities/:id/add", (req, res) => {
     creator_id: cookie
   })
   .then(data => {
-      knex("events").orderBy('event_date', 'desc').then(moredata =>
-        res.json(moredata));
+      knex("events").join('users', 'users.id', '=', 'events.creator_id').orderBy('event_date').then(moredata => {
+        res.json(moredata);
+      })
     });
 });
 
 app.post("/opportunities/:id/delete", (req, res) => {
   console.log("TESTING! in post delete on server")
-  console.log(req.body)
   knex('events')
-    .where({ event_id:req.body.event_id })
     .del()
-  res.send("Cancel Opportunity");
+    .where('event_id', req.body.event_id)
+    .then(res.send("Cancelled Opportunity"));
 });
 
 app.post("/opportunities/:id/apply", (req, res) => {
