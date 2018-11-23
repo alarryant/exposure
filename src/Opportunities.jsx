@@ -33,14 +33,20 @@ class Opportunities extends Component {
   }
 
   deleteEvent(event, creator) {
-    if (creator === this.props.currentUser) {
-      axios.post(`/opportunities/${event}/apply`, { event_id: event, creatorid: creator})
+    let currentUser = parseInt(this.props.currentUser)
+    if (creator === currentUser) {
+      console.log("inside delete function")
+      axios.post(`/opportunities/${event}/delete`, { event_id: event, creatorid: creator})
       .then((res) => {
         console.log("You've successfully delete!")
       })
     }
-    console.log(this.props.currentUser)
+    // console.log(this.props.currentUser)
   }
+
+
+
+
 
   saveInterestedApplicates(event, artist, desc) {
     this.setState({applicationsent: true});
