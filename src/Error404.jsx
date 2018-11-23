@@ -4,9 +4,9 @@ class ErrorPath extends Component {
 
   render() {
     return(
-      <p>
+      <h3>
       404 ERROR: This path does not exist
-      </p>
+      </h3>
     );
   }
 }

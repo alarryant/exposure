@@ -5,7 +5,6 @@ import Avatar from './components/Profile_Avatar_Edit.jsx';
 import Slider from "react-slick";
 // import { Link } from 'react-router-dom';
 import axios from 'axios';
-// import EditProfile from './EditProfile';
 import SocialMedia from './components/Profile_SocialMedia.jsx';
 import EditSocialMedia from './components/Profile_SocialMedia_Edit';
 import ProfileDesc from './components/Profile_Desc.jsx';
@@ -15,6 +14,7 @@ import AvailabilityCard from './components/Profile_Availability.jsx';
 import PackagesCard from './components/Profile_Packages.jsx';
 import EditPackagesCard from './components/Profile_Packages_Edit.jsx';
 import StarPhotographer from './components/Profile_Star.jsx';
+import AddReview from './components/AddReview.jsx';
 import './styles/Profile.css';
 import './styles/SearchResults.css';
 
@@ -50,6 +50,7 @@ class Profile extends React.Component {
     this.sendBioForm = this.sendBioForm.bind(this);
     this.sendPackageField = this.sendPackageField.bind(this);
     this.changeFeaturePhotos = this.changeFeaturePhotos.bind(this);
+    this.createReview = this.createReview.bind(this);
   }
 
   areFeaturedPhotos(photos = []) {
@@ -113,6 +114,8 @@ class Profile extends React.Component {
         }
       }
       return { packages };
+    });
+  }
 
   changeFeaturePhotos = (clickedPhotoSrc, clickedPhotoFeature) => {
     axios.post("/artists/:id/edit", {clickedPhotoSrc: clickedPhotoSrc, clickedPhotoFeature: clickedPhotoFeature})
@@ -120,6 +123,14 @@ class Profile extends React.Component {
       let newCollection = res.data;
       this.setState({collection: newCollection});
     })
+  }
+
+  createReview(rating, review, artist, user) {
+    axios.post("/artists/:id/newreview", { rating: rating, description: review, artist_id: artist, user_id: user})
+      .then((res) => {
+        let newReviews = res.data.reverse();
+        this.setState({reviews: newReviews});
+      });
   }
 
   componentDidMount() {
@@ -156,7 +167,7 @@ class Profile extends React.Component {
           collection: collection,
           bio: bio,
           reviews: reviews,
-          email: email
+          email: email,
         });
       });
   }
@@ -193,7 +204,6 @@ class Profile extends React.Component {
   }
 
   render() {
-
     const settings = {
       infinite: true,
       centerMode: true,
@@ -284,9 +294,11 @@ class Profile extends React.Component {
                           artistId={this.state.artistId} />
         <PackagesCard packages={this.state.packages} />
         <ReviewsCard reviews={this.state.reviews} />
+        <AddReview currentUser={this.props.currentUser}
+          artistId={this.state.artistId}
+          createReview={this.createReview}/>
       </div>)}
     </div>
-
     )
   }
 }
