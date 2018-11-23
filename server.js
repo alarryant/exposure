@@ -316,7 +316,6 @@ app.post("/opportunities/:id/add", (req, res) => {
 });
 
 app.post("/opportunities/:id/delete", (req, res) => {
-  console.log("TESTING! in post delete on server")
   knex('events')
     .del()
     .where('event_id', req.body.event_id)
@@ -326,6 +325,19 @@ app.post("/opportunities/:id/delete", (req, res) => {
       })
     });
 });
+
+app.get("/api/opportunities/applied/:id", (req, res) => {
+  console.log(req.params)
+  knex('event_interests')
+    .where('artist_id', req.params.id)
+    .join('events', 'event_id', '=', 'event_interests.eventref_id')
+    .then(data => {
+      console.log("query for applied data", data)
+      res.json(data)
+    })
+
+})
+
 
 app.post("/opportunities/:id/apply", (req, res) => {
   let message = req.body.msg_des
