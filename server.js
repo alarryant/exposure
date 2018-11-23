@@ -147,13 +147,27 @@ app.get("/dashboard/likes", (req, res) => {
     .join("users", "users.id", "=", "artist_likes.artist_id")
     .where('client_id', req.session.user_id)
     .then((data) => {
-      console.log(data);
       res.json(data);
     });
 });
 
 app.post("/artists/:id/edit", (req, res) => {
-  res.send("Artist Edit");
+  let photoSrc = req.body.clickedPhotoSrc.slice(21);
+  let photoFeatured = req.body.clickedPhotoFeature;
+  
+  if (photoFeatured === 'true') {
+    knex('images').where('src', photoSrc).update({'featured': 'false'})
+      .then(data => 
+        knex('images').where('image_owner', req.session.user_id).orderBy('id')
+          .then(moredata => res.json(moredata))
+      )
+  } else {
+    knex('images').where('src', photoSrc).update({'featured': 'true'})
+      .then(data => 
+        knex('images').where('image_owner', req.session.user_id).orderBy('id')
+          .then(moredata => res.json(moredata))
+      )
+  }
 });
 
 app.post("/artists/:id/review", (req, res) => {

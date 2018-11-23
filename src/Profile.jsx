@@ -20,6 +20,7 @@ import './styles/Profile.css';
 import './styles/SearchResults.css';
 
 
+
 class MailButton extends React.Component {
   constructor(props) {
     super(props);
@@ -48,6 +49,7 @@ class Profile extends React.Component {
     this.showPortfolio = this.showPortfolio.bind(this);
     this.showFeatures = this.showFeatures.bind(this);
     this.handleClickEdit = this.handleClickEdit.bind(this);
+    this.changeFeaturePhotos = this.changeFeaturePhotos.bind(this);
   }
 
   areFeaturedPhotos(photos = []) {
@@ -72,6 +74,14 @@ class Profile extends React.Component {
 
   showFeatures = () => {
     this.setState({ photoView: "featured" })
+  }
+
+  changeFeaturePhotos = (clickedPhotoSrc, clickedPhotoFeature) => {
+    axios.post("/artists/:id/edit", {clickedPhotoSrc: clickedPhotoSrc, clickedPhotoFeature: clickedPhotoFeature})
+    .then(res => {
+      let newCollection = res.data;
+      this.setState({collection: newCollection});
+    })
   }
 
   componentDidMount() {
@@ -156,7 +166,9 @@ class Profile extends React.Component {
 
                 <h1>Portfolio Photos:</h1>
                 <div>
-                  <EditPortfolio artistPhotos={this.state.collection} />
+                  <EditPortfolio 
+                    changeFeaturePhotos={this.changeFeaturePhotos}
+                    artistPhotos={this.state.collection} />
                 </div>
               </div>
             </div>
