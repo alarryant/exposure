@@ -285,11 +285,11 @@ app.post("/opportunities/:id/add", (req, res) => {
     description: description,
     event_date: date,
     price: price,
-    location: location,
+    event_location: location,
     creator_id: cookie
   })
   .then(data => {
-      knex("events").orderBy('created_at', 'desc').then(moredata =>
+      knex("events").orderBy('event_date', 'desc').then(moredata =>
         res.json(moredata));
     });
 });
