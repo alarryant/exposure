@@ -11,7 +11,8 @@ class Opportunities extends Component {
 
     this.state = {
       opportunities: '',
-      applicationsent: false
+      applicationsent: false,
+      deletedevent: false
     };
 
     this.displayEvents = this.displayEvents.bind(this);
@@ -23,7 +24,6 @@ class Opportunities extends Component {
   }
 
   showSuccessMsg() {
-      console.log("i'm in showSuccessMsg")
       return (
       <div className="applicationSent">
         <h3>Your application has been sent! Thanks for applying!</h3>
@@ -35,18 +35,13 @@ class Opportunities extends Component {
   deleteEvent(event, creator) {
     let currentUser = parseInt(this.props.currentUser)
     if (creator === currentUser) {
-      console.log("inside delete function")
       axios.post(`/opportunities/${event}/delete`, { event_id: event, creatorid: creator})
       .then((res) => {
-        console.log("You've successfully delete!")
+        this.setState({deletedevent: true});
+        console.log("You've successfully delete!", res)
       })
     }
-    // console.log(this.props.currentUser)
   }
-
-
-
-
 
   saveInterestedApplicates(event, artist, desc) {
     this.setState({applicationsent: true});
@@ -57,7 +52,6 @@ class Opportunities extends Component {
     let artist_name = this.props.currentUserName
     axios.post(`/opportunities/${event_id}/apply`, { event_id: event, artist_id: artist, msg_des: description, artist_name: artist_name})
       .then((res) => {
-        console.log("You've successfully applied!")
       })
   }
 
@@ -80,24 +74,18 @@ class Opportunities extends Component {
       .then((res) => {
         let newEvents = res.data;
         this.setState({opportunities: newEvents});
-        newEvents.map(function(event) {
-          let date = event.event_date.toString().split('T')[0]
-          return (
-            <OppCard event={event} date={date}/>
-            );
         });
-      });
   }
 
   componentDidMount() {
     this.setState({applicationsent: false})
+
     axios.get("/api/opportunities").then(res => {
       this.setState({'opportunities': res.data.reverse()})
     });
 }
 
   render() {
-    console.log("this opps", this.props)
     let usertype = parseInt(this.props.usertype)
 
     return (
