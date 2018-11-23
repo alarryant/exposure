@@ -1,6 +1,6 @@
 import React from 'react';
 import ApplyEvent from './ApplyEvent.jsx'
-import DeleteEvent from './DeleteEvent.jsx'
+import DeleteApplication from './DeleteApplication.jsx'
 
 function AppCard(props) {
   const { event } = props
@@ -15,8 +15,7 @@ function AppCard(props) {
       <hr/>
       <p>{event.description}</p>
       <p>Contact: {event.first_name} {event.last_name}</p>
-      {user_type_id === 1 ? <ApplyEvent eventid={event.event_id} saveApplication={props.saveApplication} currentUser={props.currentUser} date={props.date} event={event}/>  : ""}
-      {currentUser === creator_id ? <DeleteEvent eventid={event.event_id} deleteEvent={props.deleteEvent} currentUser={props.currentUser} date={props.date} event={event}/>  : ""}
+      <DeleteApplication deleteApplication={props.deleteApplication} eventid={event.event_id} deleteEvent={props.deleteEvent} currentUser={props.currentUser} date={props.date} event={event}/>
     </div>
     )
 }

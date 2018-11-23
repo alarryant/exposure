@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import ApplyEvent from './ApplyEvent.jsx';
-import DeleteEvent from './DeleteEvent.jsx';
-import OppCard from './OppCard.jsx';
+import DeleteApplication from './DeleteApplication.jsx';
+import AppCard from './AppCard.jsx';
 import axios from 'axios';
 
 class AppliedCard extends Component {
@@ -14,7 +13,21 @@ class AppliedCard extends Component {
     };
 
     this.displayAppliedEvents = this.displayAppliedEvents.bind(this)
+    this.deleteApplication = this.deleteApplication.bind(this)
 
+  }
+
+  deleteApplication(event, creator) {
+    let currentUser = parseInt(this.props.currentUser)
+    // if (creator === currentUser) {
+    //   axios.post(`/opportunities/${event}/delete`, { event_id: event, creatorid: creator})
+    //   .then((res) => {
+    //     let newEvents = res.data;
+    //     this.setState({opportunities: newEvents});
+    //   })
+    // });
+
+    // }
   }
 
   displayAppliedEvents(events) {
@@ -26,7 +39,7 @@ class AppliedCard extends Component {
       return events.map((event) => {
         let date = event.event_date.toString().split('T')[0]
         return (
-          <OppCard event={event} date={date} usertype={this.props.usertype} currentUser={this.props.currentUser}/>
+          <AppCard deleteApplication={this.deleteApplication} event={event} date={date} usertype={this.props.usertype} currentUser={this.props.currentUser}/>
           )
       })
     }
