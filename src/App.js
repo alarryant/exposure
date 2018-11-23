@@ -56,7 +56,12 @@ class App extends Component {
         localStorage.setItem('user_type_id', res.data[0].user_type_id)
         localStorage.setItem('currentUserFirstName', res.data[0].first_name);
         localStorage.setItem('currentUserLastName', res.data[0].last_name);
-        this.setState({ redirect: 'dashboard', usertype: res.data[0].user_type_id });
+
+        if (res.data[0].user_type_id === 1) {
+          this.setState({ redirect: `artists/${res.data[0].user_type_id}`, usertype: res.data[0].user_type_id });
+        } else {
+          this.setState({ redirect: 'dashboard', usertype: res.data[0].user_type_id });
+        }
       });
 
   }
@@ -114,17 +119,6 @@ class App extends Component {
 
     axios.get("/homephotos")
       .then(res => this.setState({ homephotos: res.data }));
-
-    // axios.get("/artist/:id/dashboard")
-    //   .then(res => console.log(res.data));
-
-    // axios.get("/opportunity")
-    //   .then(res => console.log(res.data));
-
-    // axios.get("/client/:id/dashboard")
-    //   .then(res => console.log(res.data));
-
-    // <Availability saveAvailability = {this.saveAvailability }/>
 
   }
 
