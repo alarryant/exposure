@@ -1,5 +1,10 @@
 require('dotenv').config();
 const env = process.env.ENV || 'development';
+
+var api_key = process.env.MAILGUN_API;
+var DOMAIN = process.env.MAILGUN_DOMAIN;
+var mailgun = require('mailgun-js')({ apiKey: api_key, domain: DOMAIN });
+
 const express = require("express");
 const app = express();
 const PORT = 3001;
@@ -294,37 +299,27 @@ app.post("/opportunities/:id/delete", (req, res) => {
 });
 
 app.post("/opportunities/:id/apply", (req, res) => {
+  let message = req.body.msg_des
+  let artist_name = req.body.artist_name
   knex('event_interests')
     .insert({
       eventref_id: req.body.event_id,
       artist_id: req.body.artist_id
     })
     .then((results) => {
+      var data = {
+          from: 'Exposure <postmaster@sandboxf438a24c83de468897e03f26d640861d.mailgun.org>',
+          to: 'exposure.notifications@gmail.com',
+          subject: 'Exposure - Someone just applied to your posting!',
+          text: `${artist_name} has applied to your posting and left you a message: ${message}`
+        };
+      mailgun.messages().send(data, function(error, body) {
+        console.log(body);
+      })
       res.send("Application successfully saved")
     })
 });
 
-app.post("/dashboard/:id/add", (req, res) => {
-  let cookie = req.session.user_id;
-  let title = req.body.title;
-  let description = req.body.description;
-  let date = req.body.date;
-  let price = req.body.price;
-  let location = req.body.location;
-
-  knex("events").insert({
-    name: title,
-    description: description,
-    event_date: date,
-    price: price,
-    location: location,
-    creator_id: cookie
-  })
-  .then(data => {
-      knex("events").where('creator_id', cookie).orderBy('created_at', 'desc').then(moredata =>
-        res.json(moredata));
-    });
-});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
