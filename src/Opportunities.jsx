@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import "react-tabs/style/react-tabs.css";
 import axios from 'axios';
 import OppCard from './components/OppCard.jsx';
+import AppliedCard from './components/AppliedCard.jsx';
 import './styles/Opportunities.css';
 import CreateEvent from './CreateEvent';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+
 
 class Opportunities extends Component {
   constructor(props) {
@@ -81,20 +84,33 @@ class Opportunities extends Component {
     axios.get("/api/opportunities").then(res => {
       this.setState({'opportunities': res.data.reverse()})
     });
-}
+  }
 
   render() {
     let usertype = parseInt(this.props.usertype)
-
     return (
-      <section className="opportunities">
-      {this.state.applicationsent ? this.showSuccessMsg() : ""}
-        <div className="oppHeader">
-          <h2>Opportunities Board</h2>
-          {usertype === 2 ? <CreateEvent createEvent={this.createEvent}/>  : ""}
-        </div>
-          { this.displayEvents(this.state.opportunities) }
-      </section>
+      <Tabs>
+        <TabList>
+          <Tab> Job Board </Tab>
+          {usertype === 2 ? <CreateEvent createEvent={this.createEvent}/> : <Tab> Applied Opportunities </Tab> }
+        </TabList>
+
+        <TabPanel>
+          <section className="opportunities">
+          {this.state.applicationsent ? this.showSuccessMsg() : ""}
+            <div className="oppHeader">
+              <h2>Opportunities Board</h2>
+              {usertype === 2 ? <CreateEvent createEvent={this.createEvent}/>  : ""}
+            </div>
+              { this.displayEvents(this.state.opportunities) }
+          </section>
+        </TabPanel>
+
+        <TabPanel>
+          <AppliedCard currentUser={this.props.currentUser} usertype={this.props.usertype}/>
+        </TabPanel>
+      </Tabs>
+
     );
   }
 }
