@@ -31,7 +31,7 @@ class App extends Component {
       facebookUrl: "",
       twitterUrl: "",
       location: "",
-      redirect: false,
+      redirect: '',
       availability: {
         start_date: null,
         end_date: null
@@ -56,7 +56,7 @@ class App extends Component {
         localStorage.setItem('user_type_id', res.data[0].user_type_id)
         localStorage.setItem('currentUserFirstName', res.data[0].first_name);
         localStorage.setItem('currentUserLastName', res.data[0].last_name);
-        this.setState({ redirect: true, usertype: res.data[0].user_type_id });
+        this.setState({ redirect: 'dashboard', usertype: res.data[0].user_type_id });
       });
 
   }
@@ -68,7 +68,7 @@ class App extends Component {
         localStorage.removeItem('currentUser');
         localStorage.removeItem('currentUserFirstName');
         localStorage.removeItem('currentUserLastName');
-        this.setState({ redirect: true });
+        this.setState({ redirect: 'home' });
       });
   }
 
@@ -78,7 +78,7 @@ class App extends Component {
     axios.post("/register", { firstName: firstName, lastName: lastName, email: email, password: password, userType: userType })
       .then((res) => {
         localStorage.setItem('currentUser', res.data[0].id);
-        this.setState({ redirect: true });
+        this.setState({ redirect: 'home' });
       });
   }
 
@@ -86,7 +86,7 @@ class App extends Component {
   editProfileInfo(firstName, lastName, email, password, website, instagram, facebook, twitter, location) {
     axios.post('/artists/:id/edit', { firstName: firstName, lastName: lastName, email: email, password: password, website: website, instagram: instagram, facebook: facebook, twitter: twitter, location: location })
       .then((res) => {
-        this.setState({ redirect: true });
+        this.setState({ redirect: 'profile' });
       });
   }
 
@@ -98,14 +98,14 @@ class App extends Component {
       }
     })
      .then((res) => {
-        this.setState({redirect: true, searchWord: word, searchimages: res.data});
+        this.setState({redirect: 'search', searchWord: word, searchimages: res.data});
       });
   }
 
   renderRedirect = () => {
     if (this.state.redirect) {
-      this.setState({ redirect: false })
-      return <Redirect to='/search' />
+      this.setState({ redirect: '' })
+      return <Redirect to={`/${this.state.redirect}`} />
     }
   }
 
