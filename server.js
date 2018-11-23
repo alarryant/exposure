@@ -256,6 +256,25 @@ app.post("/artists/:id/totallikes", (req, res) => {
     });
  });
 
+ app.post("/artists/:id/newreview", (req, res) => {
+  let rating = req.body.rating;
+  let description = req.body.description;
+  let artist_id = req.body.artist_id;
+  let user_id = req.body.user_id;
+  // console.log("this is my console.log from server after axios post: ", rating, description, artist_id, user_id);
+  knex("reviews").insert({
+    rating: rating,
+    description: description,
+    artist_id: artist_id,
+    user_id: user_id
+  }).then(data => {
+    knex("reviews").where('artist_id', artist_id).then(moredata =>
+      console.log("this is my console log from inside the knex insert: ", moredata),
+      res.json(moredata));
+  });
+
+ });
+
 //OPPORTUNITIES
 
 app.get("/api/opportunities", (req, res) => {

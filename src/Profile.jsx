@@ -12,6 +12,7 @@ import ReviewsCard from './components/Profile_Reviews.jsx';
 import AvailabilityCard from './components/Profile_Availability.jsx';
 import PackagesCard from './components/Profile_Packages.jsx';
 import StarPhotographer from './components/Profile_Star.jsx';
+import AddReview from './components/AddReview.jsx';
 import './styles/Profile.css';
 
 
@@ -67,6 +68,21 @@ class Profile extends React.Component {
     this.setState({ photoView: "featured" })
   }
 
+  createReview(rating, review, artist, user) {
+    console.log("this is my console.log before axios post; ", rating, review, user, artist);
+    axios.post("/artists/:id/newreview", { rating: rating, description: review, artist_id: artist, user_id: user})
+      // .then((res) => {
+      //   let newReview = res.data;
+      //   this.setState({reviews: newReview});
+      //   newReview.map(function(event) {
+      //     let review = event.event_date.toString().split('T')[0]
+      //     return (
+      //       <OppCard event={event} date={date}/>
+      //       );
+      //   });
+      // });
+  }
+
   componentDidMount() {
 
     const { id } = this.props.match.params;
@@ -101,13 +117,12 @@ class Profile extends React.Component {
           collection: collection,
           bio: bio,
           reviews: reviews,
-          email: email
+          email: email,
         });
       });
   }
 
   render() {
-
     const settings = {
       infinite: true,
       centerMode: true,
@@ -151,11 +166,14 @@ class Profile extends React.Component {
               </div>
             )}
         </div>
-        <AvailabilityCard currentUser={this.propscurrentUser}
+        <AvailabilityCard currentUser={this.props.currentUser}
           disabledDays={this.state.disabledDays}
           artistId={this.state.artistId} />
         <PackagesCard packages={this.state.packages} />
         <ReviewsCard reviews={this.state.reviews} />
+        <AddReview currentUser={this.props.currentUser}
+          artistId={this.state.artistId}
+          createReview={this.createReview}/>
       </div>
     )
   }
