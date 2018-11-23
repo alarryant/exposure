@@ -66,7 +66,7 @@ class Dashboard extends React.Component {
           <OppCard event={ event } date={ date }/>
         )
       })
-    };
+    }
   }
 
   componentDidMount() {
@@ -81,7 +81,7 @@ class Dashboard extends React.Component {
     });
 
     axios.get('/dashboard/likes').then((res) => {
-      console.log("this is app", res.data);
+      // console.log("this is app", res.data);
       this.setState({likedPhotographers: res.data});
     });
   }

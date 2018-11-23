@@ -8,10 +8,10 @@ class EditPortfolio extends React.Component {
     } else {
       return images.map(function(image) {
         return (
-        <div className="editPortfolio">
-          { image.featured === 'true' ? 
-          <img className="searchResult" style={{border: '3px solid lightgrey'}} alt="portfolioimg" src={image.src} /> 
-          : 
+        <div className="editPortfolio" >
+          { image.featured === 'true' ?
+          <img className="searchResult" style={{border: '3px solid lightgrey'}} alt="portfolioimg" src={image.src} />
+          :
           <img className="searchResult" alt="portfolioimg" src={image.src} />
           }
         </div>

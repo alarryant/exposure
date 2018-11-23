@@ -36,7 +36,7 @@ class Opportunities extends Component {
     this.setState({applicationsent: true});
     console.log("savedInter function")
     let event_id = event
-    let artist_id = artist
+    // let artist_id = artist
     let description = desc
     let artist_name = this.props.currentUserName
     axios.post(`/opportunities/${event_id}/apply`, { event_id: event, artist_id: artist, msg_des: description, artist_name: artist_name})

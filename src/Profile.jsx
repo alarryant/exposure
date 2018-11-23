@@ -20,9 +20,6 @@ import './styles/SearchResults.css';
 
 
 class MailButton extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <div>
@@ -50,7 +47,7 @@ class Profile extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.sendSocialMediaForm = this.sendSocialMediaForm.bind(this);
     this.sendBioForm = this.sendBioForm.bind(this);
-    this.sendPackagesForm = this.sendPackagesForm.bind(this);
+    this.sendPackageField = this.sendPackageField.bind(this);
   }
 
   areFeaturedPhotos(photos = []) {
@@ -62,7 +59,7 @@ class Profile extends React.Component {
 
     return filteredPhotos.map(function (photo) {
       return (
-        <div className="sliderImg" >
+        <div className="sliderImg" key={ photo.id }>
           <img alt="900x500" src={photo.src} />
         </div>
       )
@@ -78,6 +75,16 @@ class Profile extends React.Component {
   }
 
   sendSocialMediaForm = (socialmedia) => {
+    if (!socialmedia.twitter) {
+      socialmedia.twitter = 'null'
+    } else if (!socialmedia.facebook) {
+      socialmedia.facebook = 'null'
+    } else if (!socialmedia.instagram) {
+      socialmedia.instagram = 'null'
+    }
+
+    console.log("this is socialmedia", socialmedia);
+
     this.setState({
       twitter: socialmedia.twitter,
       facebook: socialmedia.facebook,
@@ -91,8 +98,20 @@ class Profile extends React.Component {
     })
   }
 
-  sendPackagesForm = (packages) => {
-    this.setState({packages: packages})
+  sendPackageField = (fieldname, value) => {
+    this.setState((prevState) => {
+      let packages = prevState.packages;
+
+      let [realName, packageIndex] = fieldname.split('_');
+      if (packages[packageIndex]) {
+        packages[packageIndex][realName] = value;
+      } else {
+        packages[packageIndex] = {
+          [realName]: value
+        }
+      }
+      return { packages };
+    })
   }
 
   componentDidMount() {
@@ -142,11 +161,27 @@ class Profile extends React.Component {
     }
   }
 
-  handleSubmit() {
-    axios.post(`/artists/${this.state.artistId}/edit`, {artistId: this.state.artistId})
+  handleSubmit(event) {
+    let submitData = {
+      packages: this.state.packages,
+      twitter: this.state.twitter,
+      facebook: this.state.facebook,
+      instagram: this.state.instagram,
+      bio: this.state.bio
+    }
+
+    axios.post(`/artists/${this.state.artistId}/edit`,
+      { artistId: this.state.artistId,
+        submitData: submitData })
       .then((res) => {
-        console.log(res.data);
+        console.log("this is what im getting back from server", res.data);
+        this.setState({ packages: res.data.packages,
+                        twitter: res.data[0].twitter_url,
+                        facebook: res.data[0].facebook_url,
+                        instagram: res.data[0].instagram_url,
+                        bio: res.data[0].bio })
       })
+      .catch((err) => console.log(err))
   }
 
   render() {
@@ -188,11 +223,12 @@ class Profile extends React.Component {
                 </div>
               </div>
             </div>
-          <AvailabilityCard currentUser={this.propscurrentUser}
-                            disabledDays={this.state.disabledDays}
-                            artistId={this.state.artistId} />
+            <AvailabilityCard currentUser={this.propscurrentUser}
+                              disabledDays={this.state.disabledDays}
+                              artistId={this.state.artistId} />
             <EditPackagesCard packages={this.state.packages}
-                              sendPackagesForm={this.sendPackagesForm} />
+                              sendPackageField={this.sendPackageField}
+                              />
           </div>
           <input type="submit" value="Submit" />
         </form>

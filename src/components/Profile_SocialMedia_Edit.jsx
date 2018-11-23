@@ -17,14 +17,28 @@ class EditSocialMedia extends React.Component {
   }
 
   parseUrl(url) {
-      let newUrl = new Url(url);
-      let trimmedUrl = newUrl.pathname.replace(/^\/|\/$/g, '');
-      return trimmedUrl;
+    let newUrl = new Url(url);
+    let trimmedUrl;
+    if (newUrl === "/artists/null") {
+      trimmedUrl = 'null';
+    } else {
+      trimmedUrl = newUrl.pathname.replace(/^\/|\/$/g, '');
+    }
+
+    return trimmedUrl;
   }
 
   handleChange(event) {
     event.preventDefault();
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({
+      [event.target.name]: event.target.value
+    }, () => {
+        this.props.sendSocialMediaForm({
+        twitter: this.state.twitter,
+        facebook: this.state.facebook,
+        instagram: this.state.instagram
+      });
+    });
   }
 
   render () {
@@ -33,7 +47,7 @@ class EditSocialMedia extends React.Component {
       <div className="socialMediaContainer">
         <p>
           <i className="fab fa-facebook-f"></i>
-          <input type="url"
+          <input type="text"
                  value={this.state.facebook !== 'null' ? this.state.facebook : ''}
                  name="facebook"
                  placeholder="Link your Facebook here."
@@ -41,7 +55,7 @@ class EditSocialMedia extends React.Component {
         </p>
         <p>
           <i className="fab fa-twitter"></i>
-          <input type="url"
+          <input type="text"
                  value={this.state.twitter !== 'null' ? this.state.twitter : ''}
                  name="twitter"
                  placeholder="Link your Twitter here."
@@ -49,7 +63,7 @@ class EditSocialMedia extends React.Component {
         </p>
         <p>
           <i className="fab fa-instagram"></i>
-          <input type="url"
+          <input type="text"
                  value={this.state.instagram !== 'null' ? this.state.instagram : ''}
                  name="instagram"
                  placeholder="Link your Instagram here."

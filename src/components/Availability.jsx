@@ -25,13 +25,17 @@ class EditAvailability extends React.Component {
     });
 
     if (alreadyDisabled === true) {
-      return axios.post(`/artists/${this.props.artistId}/removeavailability`, {selectedDay: day}).then((res) => {
+      return axios.post(`/artists/${this.props.artistId}/removeavailability`,
+                        {selectedDay: day})
+        .then((res) => {
         this.setState({ selectedDay: day,
                         disabledDays: res.data,
                         message: `You're now available on ${day.toLocaleDateString()}.`});
       });
     } else {
-      return axios.post(`/artists/${this.props.artistId}/editavailability`, {selectedDay: day}).then((res) => {
+      return axios.post(`/artists/${this.props.artistId}/editavailability`,
+                        {selectedDay: day})
+        .then((res) => {
         this.setState({ selectedDay: day,
                         disabledDays: res.data,
                         message: `You're not available on ${day.toLocaleDateString()}.` });

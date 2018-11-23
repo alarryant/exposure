@@ -13,7 +13,8 @@ class EditProfileDesc extends React.Component {
 
   handleChange(event) {
     event.preventDefault();
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({bio: event.target.value});
+    this.props.sendBioForm(event.target.value);
   }
 
   render() {

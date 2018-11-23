@@ -54,10 +54,16 @@ class ApplyEvent extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <Modal.Body>
                         <h3>What else would you like to share with the client?</h3>
-                        <textarea className="applyEventForm" type="text" name="description" onChange={this.handleChange}></textarea>
+                        <textarea className="applyEventForm"
+                                type="text" name="description"
+                                onChange={this.handleChange}>
+                        </textarea>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button type="submit" onClick={this.handleClose}>Send {this.props.event.first_name} your application!</Button>
+                        <Button type="submit"
+                                onClick={this.handleClose}>
+                            Send {this.props.event.first_name} your application!
+                        </Button>
                     </Modal.Footer>
                 </form>
             </Modal>
