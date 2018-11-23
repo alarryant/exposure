@@ -2,7 +2,7 @@
 import React from 'react';
 import Portfolio from './components/Portfolio';
 import EditPortfolio from './components/Profile_Portfolio_Edit';
-import Avatar from './components/Avatar.jsx';
+import Avatar from './components/Profile_Avatar_Edit.jsx';
 import Slider from "react-slick";
 // import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -125,7 +125,6 @@ class Profile extends React.Component {
 
   handleClickEdit() {
     if (this.state.editable === false) {
-      console.log("editable now");
       this.setState({editable: true})
     } else {
       this.setState({editable: false})
@@ -143,6 +142,8 @@ class Profile extends React.Component {
       autoplay: true,
       focusOnSelect: true,
     };
+    
+    this.numOfFeatured = this.areFeaturedPhotos(this.state.collection);
 
     return (
       <div>
@@ -153,10 +154,7 @@ class Profile extends React.Component {
           <div className="profile">
             <Avatar name={this.state.fullName}
               avatar={this.state.avatarImage} />
-            <MailButton email={this.state.email}
-              name={this.props.currentUserName} />
-            <StarPhotographer currentUser={this.props.currentUser}
-              artistId={this.state.artistId} />
+            <h3>Description</h3>
             <EditProfileDesc bio={this.state.bio} />
             <EditSocialMedia twitter={this.state.twitter}
                              facebook={this.state.facebook}
@@ -164,7 +162,7 @@ class Profile extends React.Component {
             <div className="featuredPortfolio">
               <div>
 
-                <h1>Portfolio Photos:</h1>
+                <h3>Select Feature Photos ({this.numOfFeatured.length}/10):</h3>
                 <div>
                   <EditPortfolio 
                     changeFeaturePhotos={this.changeFeaturePhotos}

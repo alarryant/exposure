@@ -154,21 +154,28 @@ app.get("/dashboard/likes", (req, res) => {
 app.post("/artists/:id/edit", (req, res) => {
   let photoSrc = req.body.clickedPhotoSrc.slice(21);
   let photoFeatured = req.body.clickedPhotoFeature;
-  
-  if (photoFeatured === 'true') {
-    knex('images').where('src', photoSrc).update({'featured': 'false'})
-      .then(data => 
-        knex('images').where('image_owner', req.session.user_id).orderBy('id')
-          .then(moredata => res.json(moredata))
-      )
-  } else {
-    knex('images').where('src', photoSrc).update({'featured': 'true'})
-      .then(data => 
-        knex('images').where('image_owner', req.session.user_id).orderBy('id')
-          .then(moredata => res.json(moredata))
-      )
-  }
-});
+
+  knex('images').where('image_owner', req.session.user_id).where('featured', 'true')
+    .then(numOfFeatures => {
+      if (numOfFeatures.length <= 10){
+        if (photoFeatured === 'true') {
+          knex('images').where('src', photoSrc).update({'featured': 'false'})
+            .then(data => 
+              knex('images').where('image_owner', req.session.user_id).orderBy('id')
+                .then(moredata => res.json(moredata))
+            )
+        } else {
+          knex('images').where('src', photoSrc).update({'featured': 'true'})
+            .then(data => 
+              knex('images').where('image_owner', req.session.user_id).orderBy('id')
+                .then(moredata => res.json(moredata))
+            )
+        }
+      } else {
+        res.status(400).send("Sorry! The maximum number of feature photos is 10.");
+      }
+    });
+  });
 
 app.post("/artists/:id/review", (req, res) => {
   res.send("Artist Review");
