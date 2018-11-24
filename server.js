@@ -456,6 +456,19 @@ app.post('/opportunities/:id/apply', (req, res) => {
     })
 });
 
+app.post("/settings", (req, res) => {
+  let newFirstName = req.body.firstName;
+  let newLastName = req.body.lastName;
+  let newEmail = req.body.email;
+  let newPassword = req.body.password
+
+  knex('users').where('id', req.session.user_id).update({
+    first_name: newFirstName,
+    last_name: newLastName,
+    email: newEmail, 
+    password: bcrypt.hashSync(newPassword, 10)}).returning(['first_name', 'last_name', 'email'])
+      .then(data => res.json(data))
+})
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);

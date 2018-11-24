@@ -1,7 +1,7 @@
 import React from 'react';
 import Portfolio from './components/Portfolio';
 import EditPortfolio from './components/Profile_Portfolio_Edit';
-import Avatar from './components/Profile_Avatar_Edit.jsx';
+import Avatar from './components/Avatar.jsx';
 import Slider from "react-slick";
 // import { Link } from 'react-router-dom';
 import axios from 'axios';

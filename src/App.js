@@ -10,10 +10,10 @@ import SearchResults from './SearchResults.jsx';
 import ErrorPath from './Error404.jsx';
 import Profile from './Profile.jsx';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-// import { createMemoryHistory } from 'history';
 import Opportunities from './Opportunities.jsx';
 import About from './About.jsx';
 import Contact from './Contact.jsx';
+import Settings from './Settings.jsx';
 
 class App extends Component {
 
@@ -46,6 +46,7 @@ class App extends Component {
     this.editProfileInfo = this.editProfileInfo.bind(this);
     this.searchResult = this.searchResult.bind(this);
     this.renderRedirect = this.renderRedirect.bind(this);
+    this.changeAccountInfo = this.changeAccountInfo.bind(this);
   }
 
   //LOGIN FEATURE
@@ -85,6 +86,21 @@ class App extends Component {
         localStorage.setItem('currentUser', res.data[0].id);
         this.setState({ redirect: 'home' });
       });
+  }
+
+  //EDIT ACCOUNT FEATURE
+  changeAccountInfo(firstName, lastName, email, password) {
+    axios.post('/settings', { firstName: firstName, lastName: lastName, email: email, password: password })
+      .then((res) => {
+          let newFirstName = res.data[0].first_name;
+          let newLastName = res.data[0].last_name;
+          let newEmail = res.data[0].email;
+          this.setState({ redirect: true, firstName: newFirstName, lastName: newLastName, email: newEmail })
+          localStorage.removeItem('currentUserFirstName');
+          localStorage.removeItem('currentUserLastName');
+          localStorage.setItem('currentUserFirstName', newFirstName);
+          localStorage.setItem('currentUserLastName', newLastName);
+    });
   }
 
   //EDIT PROFILE FEATURE
@@ -155,6 +171,9 @@ class App extends Component {
               searchimages={this.state.searchimages} />} />
             <Route path ='/about' name='about' render={() => <About />} />
             <Route path ='/contact' name='contact' render={() => <Contact />} />
+            <Route path ='/settings' name='settings' render={(props) => <Settings {...props} 
+              currentUserName={currentUserName}
+              changeAccountInfo={this.changeAccountInfo} />} />
             <Route exact path="/" render={() => (<Redirect to="/home" />)} />
             <Route component={ErrorPath} />
           </Switch>
