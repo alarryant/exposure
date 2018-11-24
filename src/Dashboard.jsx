@@ -68,7 +68,8 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`/dashboard`).then(response => {
+    console.log("this.props.currentUser", this.props.currentUser)
+    axios.get(`/dashboard/${this.props.currentUser}`).then(response => {
       this.setState((prevState) => {
         return {
           name: response.data[0].first_name + " " + response.data[0].last_name,

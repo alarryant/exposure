@@ -86,10 +86,11 @@ class App extends Component {
   signupInfo(firstName, lastName, email, password, userType) {
     axios.post("/register", { firstName: firstName, lastName: lastName, email: email, password: password, userType: userType })
       .then((res) => {
-        localStorage.setItem('currentUser', res.data);
+        localStorage.setItem('currentUser', res.data[0].id);
+        console.log("register", res.data[0])
 
-        if (res.data.user_type_id === 1) {
-          this.setState({ redirect: `artists/${res.data.id}`, usertype: res.data.user_type_id });
+        if (res.data[0].user_type_id === 1) {
+          this.setState({ redirect: `artists/${res.data[0].id}`, usertype: res.data[0].user_type_id });
         } else {
           this.setState({ redirect: 'dashboard', usertype: res.data[0].user_type_id });
         }
@@ -139,11 +140,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    //This is how you use axios for get requests! Axios is like an ajax library
-
     axios.get("/homephotos")
       .then(res => this.setState({ homephotos: res.data }));
-
   }
 
   render() {
@@ -172,7 +170,12 @@ class App extends Component {
                   currentUserName={currentUserName}/>
                 }
             />
-            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={currentUser} />} />
+            <Route path='/dashboard' name='dashboard' render={(props) =>
+                <Dashboard {...props}
+                  currentUserName={currentUser}
+                  currentUser={currentUserName} />
+                }
+            />
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
               searchWord={this.state.searchWord}

@@ -85,10 +85,10 @@ app.post('/register', (req, res) => {
           password: bcrypt.hashSync(password, 10),
           user_type_id: userType
         })
-        .returning('id')
-          .then((user_id) => {
-            req.session.user_id = +user_id;
-            res.json(req.session.user_id);
+        .returning('*')
+          .then((results) => {
+            //req.session.user_id = results[0].id;
+            res.json(results);
           });
     }
   });
@@ -118,7 +118,8 @@ app.post('/images/:id', (req, res) => {
 
 
 //DASHBOARD
-app.get('/dashboard', (req, res) => {
+app.get('/dashboard/:id', (req, res) => {
+  console.log("dashboard", req)
   knex('users')
     .select('*')
     .where('id', req.session.user_id)
