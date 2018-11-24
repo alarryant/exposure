@@ -114,7 +114,28 @@ app.post('/images/:id', (req, res) => {
   res.send('Images/:id');
 });
 
-//ARTIST
+
+//DASHBOARD
+app.get('/dashboard', (req, res) => {
+  knex('users')
+    .select('*')
+    .where('id', req.session.user_id)
+    .asCallback((err, data) => {
+      if (err) throw err;
+      res.json(data);
+    });
+});
+
+app.get('/dashboard/likes', (req, res) => {
+  knex('artist_likes')
+    .join('users', 'users.id', '=', 'artist_likes.artist_id')
+    .where('client_id', req.session.user_id)
+    .then((data) => {
+      res.json(data);
+    });
+});
+
+//ARTIST PROFILE
 app.get('/artists/:id', (req, res) => {
   let artistId = req.params.id;
   let images =
@@ -139,25 +160,6 @@ app.get('/artists/:id', (req, res) => {
               });
           });
       });
-});
-
-app.get('/dashboard', (req, res) => {
-  knex('users')
-    .select('*')
-    .where('id', req.session.user_id)
-    .asCallback((err, data) => {
-      if (err) throw err;
-      res.json(data);
-    });
-});
-
-app.get('/dashboard/likes', (req, res) => {
-  knex('artist_likes')
-    .join('users', 'users.id', '=', 'artist_likes.artist_id')
-    .where('client_id', req.session.user_id)
-    .then((data) => {
-      res.json(data);
-    });
 });
 
 app.post('/artists/:id/review', (req, res) => {
@@ -412,7 +414,33 @@ app.post("/opportunities/:id/delete", (req, res) => {
     });
 });
 
-app.post('/opportunities/:id/apply', (req, res) => {
+app.get("/api/opportunities/applied/:id", (req, res) => {
+  knex('event_interests')
+    .where('artist_id', req.params.id)
+    .join('events', 'event_id', '=', 'event_interests.eventref_id')
+    .join('users', 'users.id', '=', 'events.creator_id')
+    .then(data => {
+      res.json(data)
+    })
+})
+
+app.post("/api/opportunities/applied/:id", (req, res) => {
+  knex('event_interests')
+    .del()
+    .where('application_id', req.body.application_id)
+    .where('artist_id', req.body.currentUser)
+    .then(data => {
+       knex('event_interests')
+        .where('artist_id', req.params.id)
+        .join('events', 'event_id', '=', 'event_interests.eventref_id')
+        .join('users', 'users.id', '=', 'events.creator_id')
+        .then(updatedlist => {
+          res.json(updatedlist);
+        })
+    })
+})
+
+app.post("/opportunities/:id/apply", (req, res) => {
   let message = req.body.msg_des
   let artist_name = req.body.artist_name
   knex('event_interests')
@@ -445,7 +473,7 @@ app.post("/settings", (req, res) => {
   knex('users').where('id', req.session.user_id).update({
     first_name: newFirstName,
     last_name: newLastName,
-    email: newEmail, 
+    email: newEmail,
     password: bcrypt.hashSync(newPassword, 10)}).returning(['first_name', 'last_name', 'email'])
       .then(data => res.json(data))
 })
