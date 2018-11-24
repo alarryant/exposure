@@ -6,6 +6,7 @@ import AppliedCard from './Opportunities_Applied.jsx';
 import './styles/Opportunities.css';
 import CreateEvent from './CreateEvent';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import MyEvent from './components/Opportunity_MyEvents.jsx'
 
 //MAIN OPPORTUNITIES BOARD
 
@@ -72,9 +73,9 @@ class Opportunities extends Component {
   displayEvents(events) {
     if (!events || events.length === 0 ) {
       return (
-        <p>
-          There are currently no postings! Check back later!
-        </p>
+        <h2>
+          There are currently no postings!
+        </h2>
       )
     } else {
       return events.map((event) => {
@@ -126,14 +127,26 @@ class Opportunities extends Component {
           {this.state.applicationsent ? this.showSuccessMsg() : ""}
             <div className="oppHeader">
               <h2>Opportunities Board</h2>
-              {usertype === 2 ? <CreateEvent createEvent={this.createEvent}/>  : ""}
+              {usertype === 2 ?
+                <CreateEvent createEvent={this.createEvent}/>
+                : ""
+              }
             </div>
               { this.displayEvents(this.state.opportunities) }
           </section>
         </TabPanel>
 
         <TabPanel>
-          {usertype === 1 ? <AppliedCard currentUser={this.props.currentUser} usertype={this.props.usertype}/>  : ""}
+          {usertype === 1 ?
+            <AppliedCard
+              currentUser={this.props.currentUser}
+              usertype={this.props.usertype}/>
+            : <MyEvent
+              displayEvents={this.displayEvents}
+              currentUser={this.props.currentUser}
+              usertype={this.props.usertype}
+              />
+          }
         </TabPanel>
       </Tabs>
 
