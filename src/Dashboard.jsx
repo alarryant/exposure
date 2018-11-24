@@ -40,7 +40,7 @@ class Dashboard extends React.Component {
   }
 
   createEvent(title, description, date, price, location) {
-    axios.post("/dashboard/:id/add", { title: title, description: description, date: date, price: price, location: location })
+    axios.post("/opportunities/:id/add", { title: title, description: description, date: date, price: price, location: location })
       .then((res) => {
         let newEvents = res.data;
         this.setState({events: newEvents});
@@ -79,9 +79,12 @@ class Dashboard extends React.Component {
     });
 
     axios.get('/dashboard/likes').then((res) => {
-      // console.log("this is app", res.data);
       this.setState({likedPhotographers: res.data});
     });
+
+    axios.get('/dashboard/events').then((res) => {
+      this.setState({events: res.data})
+    })
   }
 
   renderLikedPhotographer(photographers=[]) {
