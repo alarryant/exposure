@@ -5,63 +5,99 @@ class EditPackagesCard extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      showMenu: true,
-    };
-
-    this.showMenu = this.showMenu.bind(this);
-    this.closeMenu = this.closeMenu.bind(this);
     this.renderPricePackage = this.renderPricePackage.bind(this);
+    this.newInputPackages = this.newInputPackages.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    event.preventDefault();
+    this.props.sendPackageField(event.target.name, event.target.value);
+  }
+
+  newInputPackages(index) {
+    return (
+        <div>
+          <label>
+            Tier
+          </label>
+          <input
+            type="number"
+            name={`tier_${index}`}
+            placeholder="Enter a number between 1 and 3."
+            onChange={this.handleChange}
+          >
+          </input>
+          <label>
+            Price
+          </label>
+          <input
+            type="number"
+            name={`price_${index}`}
+            placeholder="Enter a price here."
+            onChange={this.handleChange}>
+          </input>
+          <label>
+            Description
+          </label>
+          <textarea
+            name={`description_${index}`}
+            placeholder="Describe expected services, deliverables, and occasion recommendations."
+            onChange={this.handleChange}/>
+        </div>
+      )
   }
 
   renderPricePackage(pricePackages=[]) {
-    let tier;
-
-    return pricePackages.map(function(pricePackage) {
-      if (pricePackage.tier === 1) {
-      tier = "Basic";
-    } else if (pricePackage.tier === 2) {
-      tier = "Intermediate";
-    } else if (pricePackage.tier === 3) {
-      tier = "Deluxe";
-    }
+    const currentPackages = pricePackages.map((pricePackage, index) => {
       return (
         <div>
-          <h5>{tier}</h5>
-          <p>{pricePackage.price}</p>
+          <label>
+            Tier
+          </label>
+          <input type="number"
+                 name={`tier_${index}`}
+                 value={pricePackage.tier}
+                 placeholder="Enter a number between 1 and 3."
+                 onChange={this.handleChange}>
+          </input>
+          <label>
+            Price
+          </label>
+          <input type="number"
+                 name={`price_${index}`}
+                 value={pricePackage.price}
+                 placeholder="Enter a price here."
+                 onChange={this.handleChange}>
+          </input>
+          <label>
+            Description
+          </label>
+          <textarea name={`description_${index}`}
+                    value={pricePackage.description}
+                    placeholder="Describe expected services, deliverables, and occasion recommendations."
+                    onChange={this.handleChange}/>
         </div>
-        )
+      )
     })
-  }
 
-  showMenu(event) {
-    event.preventDefault();
-    this.setState({ showMenu: true }, () => {
-      document.addEventListener('click', this.closeMenu);
-    });
-  }
-
-  closeMenu(event) {
-    if (!this.dropdownMenu.contains(event.target)) {
-      this.setState({ showMenu: false }, () => {
-        document.removeEventListener('click', this.closeMenu);
-      });
+    for (let i = pricePackages.length; i < 3; i++) {
+      currentPackages.push(this.newInputPackages(i));
     }
+
+    return currentPackages;
   }
 
   render() {
+
     return (
       <div className="profilebtn" >
-        <button onClick={ this.showMenu }>
+        <button>
           Packages
         </button>
-        {this.state.showMenu ? (
-          <div className="menu"
-            ref={ (element) => { this.dropdownMenu = element } }>
-            {this.renderPricePackage(this.props.packages)}
-          </div>
-          ) : (
-          null )}
+        <div className="menu">
+          {this.renderPricePackage(this.props.packages)}
+        </div>
       </div>
     );
   }

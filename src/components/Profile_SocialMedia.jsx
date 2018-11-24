@@ -10,12 +10,20 @@ class SocialMedia extends React.Component {
   }
 
   parseUrl(url) {
-      let newUrl = new Url(url);
-      let trimmedUrl = newUrl.pathname.replace(/^\/|\/$/g, '');
-      return trimmedUrl;
+    let newUrl = new Url(url);
+    let trimmedUrl;
+
+    if (newUrl.pathname === "/artists/null") {
+      trimmedUrl = 'null';
+    } else {
+      trimmedUrl = newUrl.pathname.replace(/^\/|\/$/g, '');
+    }
+
+    return trimmedUrl;
   }
 
   render () {
+    console.log("socialmedia", this.props);
 
     return (
       <div className="socialMediaContainer">

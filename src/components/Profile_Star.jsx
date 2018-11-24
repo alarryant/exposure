@@ -11,21 +11,29 @@ class StarPhotographer extends React.Component {
   }
 
   handleLikeClick() {
-    axios.post('/artists/:id/like', { currentUser: this.props.currentUser, artistId: this.props.artistId })
+    axios.post('/artists/:id/like',
+              { currentUser: this.props.currentUser,
+                artistId: this.props.artistId })
       .then((res) => {
-        this.setState({liked: true, numberOfLikes: res.data[0].count});
+        this.setState({ liked: true,
+                        numberOfLikes: res.data[0].count});
     });
   }
 
   handleUnlikeClick() {
-    axios.post('/artists/:id/unlike', { currentUser: this.props.currentUser, artistId: this.props.artistId })
+    axios.post('/artists/:id/unlike',
+              { currentUser: this.props.currentUser,
+                artistId: this.props.artistId })
       .then((res) => {
-        this.setState({liked: false, numberOfLikes: res.data[0].count});
+        this.setState({liked: false,
+                       numberOfLikes: res.data[0].count});
     });
   }
 
   componentDidMount() {
-    axios.get('/artists/:id/totallikes', { currentUser: this.props.currentUser, artistId: this.props.artistId })
+    axios.get('/artists/:id/totallikes',
+             { currentUser: this.props.currentUser,
+               artistId: this.props.artistId })
       .then((res) => {
         this.setState({numberOfLikes: res.data[0].count});
     });
@@ -37,11 +45,13 @@ class StarPhotographer extends React.Component {
         <p>{this.state.numberOfLikes}</p>
         {this.state.liked ? (
           <div>
-            <i className="fas fa-star" onClick={this.handleUnlikeClick}></i>
+            <i className="fas fa-star"
+               onClick={this.handleUnlikeClick}></i>
           </div>
           ) : (
           <div>
-            <i className="far fa-star" onClick={this.handleLikeClick}></i>
+            <i className="far fa-star"
+               onClick={this.handleLikeClick}></i>
           </div>)}
       </div>
       )

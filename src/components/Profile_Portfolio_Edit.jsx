@@ -25,9 +25,9 @@ class EditPortfolio extends React.Component {
       return images.map((image) => {
         return (
         <div className="editPortfolio">
-          { image.featured === 'true' ? 
+          { image.featured === 'true' ?
           <img className="searchResult" style={{border: '3px solid lightgrey'}} alt="portfolioimg" src={image.src} onClick={this.onFeatureClick} value={image.featured}/>
-          : 
+          :
          <img className="searchResult" alt="portfolioimg" src={image.src} onClick={this.onFeatureClick} value={image.featured}/>
           }
         </div>

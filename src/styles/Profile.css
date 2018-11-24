@@ -67,3 +67,7 @@
   display: inline;
   margin: 5px;
 }
+
+.addReviewModal textarea{
+  min-height: 150px;
+}

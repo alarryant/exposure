@@ -3,7 +3,7 @@ import Avatar from './components/Avatar.jsx';
 // import EditAvailability from './components/Availability.jsx';
 import Statistics from './components/Statistics.jsx';
 import CreateEvent from './CreateEvent';
-import OppCard from './components/OppCard.jsx'
+import OppCard from './components/OppCard.jsx';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
@@ -66,7 +66,7 @@ class Dashboard extends React.Component {
           <OppCard event={ event } date={ date }/>
         )
       })
-    };
+    }
   }
 
   componentDidMount() {
@@ -81,7 +81,7 @@ class Dashboard extends React.Component {
     });
 
     axios.get('/dashboard/likes').then((res) => {
-      console.log("this is app", res.data);
+      // console.log("this is app", res.data);
       this.setState({likedPhotographers: res.data});
     });
   }

@@ -29,6 +29,7 @@ class PackagesCard extends React.Component {
         <div>
           <h5>{tier}</h5>
           <p>{pricePackage.price}</p>
+          <p>{pricePackage.description}</p>
         </div>
         )
     })
