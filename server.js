@@ -49,13 +49,10 @@ app.post('/login', (req, res) => {
     .then((data) => {
       if( bcrypt.compareSync(req.body.password, data[0].password)) {
         req.session.user_id = data[0].id;
-        console.log("this is server side data query", data);
       } else {
         res.send("Invalid email/password combination");
       }
-      console.log("this is data after if else", data);
       res.json(data);
-      console.log(res);
     });
 });
 

@@ -87,8 +87,13 @@ class App extends Component {
     axios.post("/register", { firstName: firstName, lastName: lastName, email: email, password: password, userType: userType })
       .then((res) => {
         localStorage.setItem('currentUser', res.data);
-        this.setState({ redirect: 'home' });
-      });
+
+        if (res.data.user_type_id === 1) {
+          this.setState({ redirect: `artists/${res.data.id}`, usertype: res.data.user_type_id });
+        } else {
+          this.setState({ redirect: 'dashboard', usertype: res.data[0].user_type_id });
+        }
+        });
   }
 
   //EDIT ACCOUNT FEATURE
