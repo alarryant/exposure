@@ -41,16 +41,21 @@ app.get('/homephotos', (req, res) => {
 
 // LOGIN
 app.post('/login', (req, res) => {
-  let userEmail = req.body.email;
-  let userPassword = req.body.password;
-
   knex('users')
     .select('*')
-    .where('email', '=', userEmail)
-    .where('password', '=', userPassword)
+    .where({
+      email: req.body.email,
+      })
     .then((data) => {
-      req.session.user_id = data[0].id;
+      if( bcrypt.compareSync(req.body.password, data[0].password)) {
+        req.session.user_id = data[0].id;
+        console.log("this is server side data query", data);
+      } else {
+        res.send("Invalid email/password combination");
+      }
+      console.log("this is data after if else", data);
       res.json(data);
+      console.log(res);
     });
 });
 
@@ -71,7 +76,7 @@ app.post('/register', (req, res) => {
 
 
   knex('users').where('email', email).then((data) => {
-    if (data.length !== 0) {
+    if (data.length) {
         res.status(400)
            .send('Invalid email and/or password combination');
     } else {

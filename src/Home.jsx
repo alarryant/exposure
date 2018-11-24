@@ -91,6 +91,7 @@ class Home extends React.Component {
         <img className="splashart"
              alt="splash"
              src="/images/SplashArt.jpg" />
+        <h1 id="tagline">FOCUS ON THE MOMENT</h1>
       </div>
 
       <h1>WEDDING</h1>

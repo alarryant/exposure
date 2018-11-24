@@ -39,7 +39,14 @@ class Profile extends React.Component {
     this.state = {
       artist: {},
       photoView: 'featured',
-      editable: false
+      editable: false,
+      bio: "",
+      twitter: 'null',
+      facebook: 'null',
+      instagram: 'null',
+      avatarImage: 'images/default_avatar.png',
+      packages: [],
+      reviews: []
     }
 
     this.addCarouselPhotos = this.addCarouselPhotos.bind(this);

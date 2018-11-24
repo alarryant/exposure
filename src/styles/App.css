@@ -69,6 +69,7 @@ a {
 
 .splashcontainer {
   width: 100%;
+  height: 840px;
   margin-top: 50px;
   background-color: #070935;
   border: 20px solid white;
@@ -76,7 +77,19 @@ a {
 
 .splashart {
   height: 800px;
-  margin: auto;
+  float: left;
+}
+
+#tagline {
+  font-family: 'Assistant', sans-serif;
+  min-width: 400px;
+  font-weight: 700;
+  font-size: 7em;
+  color: white;
+  float: left;
+  margin-left: 100px;
+  position: relative;
+  text-align: left;
 }
 
 .slider {

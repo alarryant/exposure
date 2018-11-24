@@ -53,13 +53,16 @@ class App extends Component {
   loginInfo(email, password) {
     axios.post("/login", { email: email, password: password })
       .then((res) => {
+        console.log("this is app side login", res.data);
         localStorage.setItem('currentUser', res.data[0].id);
-        localStorage.setItem('user_type_id', res.data[0].user_type_id)
+        localStorage.setItem('user_type_id', res.data[0].user_type_id);
         localStorage.setItem('currentUserFirstName', res.data[0].first_name);
         localStorage.setItem('currentUserLastName', res.data[0].last_name);
 
+        console.log("this is local storage", localStorage);
+
         if (res.data[0].user_type_id === 1) {
-          this.setState({ redirect: `artists/${res.data[0].user_type_id}`, usertype: res.data[0].user_type_id });
+          this.setState({ redirect: `artists/${res.data[0].id}`, usertype: res.data[0].user_type_id });
         } else {
           this.setState({ redirect: 'dashboard', usertype: res.data[0].user_type_id });
         }
@@ -83,7 +86,7 @@ class App extends Component {
   signupInfo(firstName, lastName, email, password, userType) {
     axios.post("/register", { firstName: firstName, lastName: lastName, email: email, password: password, userType: userType })
       .then((res) => {
-        localStorage.setItem('currentUser', res.data[0].id);
+        localStorage.setItem('currentUser', res.data);
         this.setState({ redirect: 'home' });
       });
   }
@@ -171,7 +174,7 @@ class App extends Component {
               searchimages={this.state.searchimages} />} />
             <Route path ='/about' name='about' render={() => <About />} />
             <Route path ='/contact' name='contact' render={() => <Contact />} />
-            <Route path ='/settings' name='settings' render={(props) => <Settings {...props} 
+            <Route path ='/settings' name='settings' render={(props) => <Settings {...props}
               currentUserName={currentUserName}
               changeAccountInfo={this.changeAccountInfo} />} />
             <Route exact path="/" render={() => (<Redirect to="/home" />)} />
