@@ -336,9 +336,23 @@ app.get("/api/opportunities/applied/:id", (req, res) => {
       console.log("query for applied data", data)
       res.json(data)
     })
-
 })
 
+app.post("/api/opportunities/applied/:id", (req, res) => {
+  knex('event_interests')
+    .del()
+    .where('application_id', req.body.application_id)
+    .where('artist_id', req.body.currentUser)
+    .then(data => {
+       knex('event_interests')
+        .where('artist_id', req.params.id)
+        .join('events', 'event_id', '=', 'event_interests.eventref_id')
+        .join('users', 'users.id', '=', 'events.creator_id')
+        .then(updatedlist => {
+          res.json(updatedlist);
+        })
+    })
+})
 
 app.post("/opportunities/:id/apply", (req, res) => {
   let message = req.body.msg_des
