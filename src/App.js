@@ -73,6 +73,7 @@ class App extends Component {
     axios.post("/logout")
       .then((res) => {
         localStorage.removeItem('currentUser');
+        localStorage.removeItem('user_type_id');
         localStorage.removeItem('currentUserFirstName');
         localStorage.removeItem('currentUserLastName');
         this.setState({ redirect: 'home' });
