@@ -127,13 +127,22 @@ app.get('/dashboard', (req, res) => {
         .join('users', 'artist_likes.artist_id', '=', 'users.id')
         .where('client_id', currentUser)
         .then((likes) => {
-          res.json({
+          knex('events')
+          .select('*')
+          .join('users', 'users.id', '=', 'events.creator_id')
+          .where('creator_id', currentUser)
+          .then(function (events) {
+            res.json({
             user: user,
-            likes: likes
+            likes: likes,
+            events: events
           });
         });
     });
+  });
 });
+
+
 
 //ARTIST PROFILE
 app.get('/artists/:id', (req, res) => {
