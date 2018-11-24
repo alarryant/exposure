@@ -1,19 +1,25 @@
 .footer {
-  margin-top: 150px;
-  background-color: #e2ecfc;
+  margin-top: 300px;
   height: 75px;
   text-align: center;
   clear: both;
+  color: #2E3532;
+  background-color: white;
+}
+
+.footer a {
+  color: #2E3532;
+}
+
+a:hover {
+  color: #A0AAB2;
+  text-decoration: none;
 }
 
 .footer i {
-  background-color: #f1f1f1;
   padding: 10px;
   font-size: 1.25em;
-  border-radius: 20px;
-  width: 40px;
   text-align: center;
-  margin: 0px 15px;
   display: inline-block;
 }
 
