@@ -118,12 +118,13 @@ app.post('/images/:id', (req, res) => {
 
 
 //DASHBOARD
-app.get('/dashboard/:id', (req, res) => {
-  console.log("dashboard", req)
+app.get('/dashboard', (req, res) => {
+  console.log("dashboard", req.params.id)
   knex('users')
-    .select('*')
-    .where('id', req.session.user_id)
+    .select('*').first()
+    .where('id', req.params.id)
     .asCallback((err, data) => {
+      console.log(data)
       if (err) throw err;
       res.json(data);
     });

@@ -172,8 +172,8 @@ class App extends Component {
             />
             <Route path='/dashboard' name='dashboard' render={(props) =>
                 <Dashboard {...props}
-                  currentUserName={currentUser}
-                  currentUser={currentUserName} />
+                  currentUser={currentUser}
+                  currentUserName={currentUserName} />
                 }
             />
             <Route path='/search' name='search' render={props => <SearchResults
