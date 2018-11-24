@@ -151,16 +151,6 @@ app.get('/dashboard', (req, res) => {
     });
 });
 
-
-app.get('/dashboard/events', (req, res) => {
-  knex('events')
-    .where('creator_id', req.session.user_id)
-    .orderBy('created_at', 'desc')
-    .then((data) => {
-      res.json(data);
-    });
-});
-
 app.get('/dashboard/likes', (req, res) => {
   knex('artist_likes')
     .join('users', 'users.id', '=', 'artist_likes.artist_id')
