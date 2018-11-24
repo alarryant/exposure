@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import "react-tabs/style/react-tabs.css";
 import axios from 'axios';
-import OppCard from './components/OppCard.jsx';
-import AppliedCard from './components/AppliedCard.jsx';
+import Opportunity_EventCard from './components/Opportunity_EventCard.jsx';
+import AppliedCard from './Opportunities_Applied.jsx';
 import './styles/Opportunities.css';
 import CreateEvent from './CreateEvent';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-
+//MAIN OPPORTUNITIES TABLE
 class Opportunities extends Component {
   constructor(props) {
     super(props);
@@ -52,7 +52,6 @@ class Opportunities extends Component {
 
   saveInterestedApplicates(event, artist, desc) {
     this.setState({applicationsent: true});
-    console.log("savedInter function")
     let event_id = event
     let description = desc
     let artist_name = this.props.currentUserName
@@ -69,7 +68,7 @@ class Opportunities extends Component {
       return events.map((event) => {
         let date = event.event_date.toString().split('T')[0]
         return (
-          <OppCard deleteEvent={this.deleteEvent} saveApplication={this.saveInterestedApplicates} event={event} date={date} usertype={this.props.usertype} currentUser={this.props.currentUser}/>
+          <Opportunity_EventCard deleteEvent={this.deleteEvent} saveApplication={this.saveInterestedApplicates} event={event} date={date} usertype={this.props.usertype} currentUser={this.props.currentUser}/>
           )
       })
     }
@@ -97,7 +96,7 @@ class Opportunities extends Component {
       <Tabs>
         <TabList>
           <Tab> Job Board </Tab>
-          {usertype === 2 ? <CreateEvent createEvent={this.createEvent}/> : <Tab> Applied Opportunities </Tab> }
+          {usertype === 1 ? <Tab> Applied Opportunities </Tab> : <Tab>My Events</Tab>}
         </TabList>
 
         <TabPanel>
@@ -112,7 +111,7 @@ class Opportunities extends Component {
         </TabPanel>
 
         <TabPanel>
-          <AppliedCard currentUser={this.props.currentUser} usertype={this.props.usertype}/>
+          {usertype === 1 ? <AppliedCard currentUser={this.props.currentUser} usertype={this.props.usertype}/>  : ""}
         </TabPanel>
       </Tabs>
 

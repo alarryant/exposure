@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import DeleteApplication from './DeleteApplication.jsx';
-import AppCard from './AppCard.jsx';
+import DeleteApplication from './components/Opportunity_DeleteApplication.jsx';
+import AppCard from './components/Opportunity_AppliedCard.jsx';
 import axios from 'axios';
+
+
+//DISPLAY APPLIED OPPORTUNITIES
 
 class AppliedCard extends Component {
 
@@ -14,24 +17,17 @@ class AppliedCard extends Component {
 
     this.displayAppliedEvents = this.displayAppliedEvents.bind(this)
     this.deleteApplication = this.deleteApplication.bind(this)
-
   }
 
-  deleteApplication(event, creator) {
-    let currentUser = parseInt(this.props.currentUser)
-    // if (creator === currentUser) {
-    //   axios.post(`/opportunities/${event}/delete`, { event_id: event, creatorid: creator})
-    //   .then((res) => {
-    //     let newEvents = res.data;
-    //     this.setState({opportunities: newEvents});
-    //   })
-    // });
-
-    // }
+  deleteApplication(app_id) {
+    axios.post(`/api/opportunities/applied/${this.props.currentUser}`, { application_id: app_id, currentUser: this.props.currentUser})
+    .then((res) => {
+      let updatedAppList = res.data;
+      this.setState({appliedopportunities: updatedAppList});
+    });
   }
 
   displayAppliedEvents(events) {
-    console.log(events)
     if (!events || events.length === 0 ) {
       return (
         <p>You haven't applied to anything! Why not checkout the opportunities board? </p> )
@@ -62,7 +58,7 @@ class AppliedCard extends Component {
       </section>
       )
     }
-}
+  }
 
 
 export default AppliedCard;

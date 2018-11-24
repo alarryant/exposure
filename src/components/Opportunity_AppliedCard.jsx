@@ -1,12 +1,14 @@
 import React from 'react';
-import ApplyEvent from './ApplyEvent.jsx'
-import DeleteApplication from './DeleteApplication.jsx'
+import DeleteApplication from './Opportunity_DeleteApplication.jsx'
+
+//DISPLAY APPLIED EVENTS
 
 function AppCard(props) {
   const { event } = props
   const user_type_id = parseInt(props.usertype)
   const creator_id = parseInt(event.creator_id)
   const currentUser = parseInt(props.currentUser)
+  const application_id = event.application_id
 
   return (
     <div className="eventcard">
@@ -15,10 +17,9 @@ function AppCard(props) {
       <hr/>
       <p>{event.description}</p>
       <p>Contact: {event.first_name} {event.last_name}</p>
-      <DeleteApplication deleteApplication={props.deleteApplication} eventid={event.event_id} deleteEvent={props.deleteEvent} currentUser={props.currentUser} date={props.date} event={event}/>
+      <DeleteApplication application_id={application_id} deleteApplication={props.deleteApplication} eventid={event.event_id} deleteEvent={props.deleteEvent} currentUser={props.currentUser} date={props.date} event={event}/>
     </div>
     )
 }
-
 
 export default AppCard;

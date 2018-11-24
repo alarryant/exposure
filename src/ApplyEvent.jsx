@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 
-class ApplyEvent extends Component {
+class AppliedOpportunities extends Component {
     constructor(props) {
         super(props);
 
@@ -65,4 +65,4 @@ class ApplyEvent extends Component {
         }
 }
 
-export default ApplyEvent;
+export default AppliedOpportunities;
