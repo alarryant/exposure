@@ -404,7 +404,7 @@ app.post('/opportunities/:id/add', (req, res) => {
   })
   .then(data => {
       knex('events')
-        .orderBy('event_date', 'desc')
+        .orderBy('created_at', 'desc')
         .then(moreData => res.json(moreData));
     });
 });
