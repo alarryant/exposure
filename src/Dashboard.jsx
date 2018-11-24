@@ -4,26 +4,26 @@ import Avatar from './components/Avatar.jsx';
 // import Statistics from './components/Statistics.jsx';
 import CreateEvent from './CreateEvent';
 import OpportunityEventCard from './components/Opportunity_EventCard.jsx'
-// import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './styles/Dashboard.css';
 
 const left = {
-  width: '35%',
+  width: '20%',
   float: 'left'
 };
 
 const right = {
-  width: '65%',
+  width: '80%',
   float: 'right'
 };
 
-// const tabStyle = {
-//   width: '50%',
-//   margin: '0 auto'
-// };
+const tabStyle = {
+  width: '50%',
+  margin: '0 auto'
+};
 
 class Dashboard extends React.Component {
 
@@ -67,28 +67,37 @@ class Dashboard extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     let currentUser = this.props.currentUser;
-    // console.log("this is comp did mount current user", this.props.currentUser);
-
     axios.get(`/dashboard`, {
       params: {
         currentUser: currentUser
       }
     }).then(response => {
-      // console.log("this is app side response", response.data)
-      // this.props.getLikedPhotographers(response.data.likes);
+      console.log("Didmount", response)
       this.setState({
           name: response.data.user[0].first_name + " " + response.data.user[0].last_name,
           avatar: response.data.user[0].profile_image,
           type: response.data.user[0].user_type_id,
-          likedPhotographers: response.data.likes
+          likedPhotographers: response.data.likes,
+          userevents: response.data.events
       });
     });
+  }
 
-    axios.get('/dashboard/events').then((res) => {
-      this.setState({events: res.data})
-    })
+  componentDidMount() {
+    let currentUser = this.props.currentUser;
+    axios.get(`/dashboard`, {
+      params: {
+        currentUser: currentUser
+      }
+    }).then(response => {
+      console.log("Didmount", response)
+      this.setState({
+          likedPhotographers: response.data.likes,
+          userevents: response.data.events
+      });
+    });
   }
 
   renderLikedPhotographer(photographers=[]) {
@@ -116,32 +125,32 @@ class Dashboard extends React.Component {
         </div>
       )
     })
-
-    axios.get("/dashboard/events").then(res => {
-      this.setState({events: res.data})
-    });
   }
 
   render() {
     const userType = this.state.type;
 
-    // const tabs = (
-    //   <div style={tabStyle}>
-    //     <Tabs>
-    //       <TabList>
-    //         <Tab>Availability</Tab>
-    //         <Tab>Statistics</Tab>
-    //       </TabList>
+    const tabs = (
+      <div style={tabStyle}>
+        <Tabs>
+          <TabList>
+            <Tab>Favorite Photographers</Tab>
+            <Tab>My Events</Tab>
+          </TabList>
 
-    //       <TabPanel>
-    //         <EditAvailability currentUser={this.props.currentUser}/>
-    //       </TabPanel>
-    //       <TabPanel>
-    //         <Statistics />
-    //       </TabPanel>
-    //     </Tabs>
-    //   </div>
-    // );
+          <TabPanel>
+          <h1>Your Favourite Photographers</h1>
+            <div className="starredContainer">
+            {this.renderLikedPhotographer(this.state.likedPhotographers)}
+            </div>
+          </TabPanel>
+          <TabPanel>
+           <CreateEvent createEvent={this.createEvent}/>
+            { this.displayEvents(this.state.userevents) }
+          </TabPanel>
+        </Tabs>
+      </div>
+    );
 
     return (
       <div className='contentWrapper'>
@@ -149,23 +158,17 @@ class Dashboard extends React.Component {
         {/* start left */}
         <div className='left' style={left}>
           <Avatar name={this.state.name} avatar={this.state.avatar} />
-          <CreateEvent createEvent={this.createEvent}/>
-            { this.displayEvents(this.state.events) }
         </div>
 
         {/* start right */}
-        {userType === 1 ? (
+        {userType === 2 ? (
           <div className='right' style={right}>
-            {/*tabs*/}
+            {tabs}
           </div>
         ) : (
             <div className='right' style={right}>
             </div>
           )}
-        <h1>Your Favourite Photographers</h1>
-        <div className="starredContainer">
-          {this.renderLikedPhotographer(this.state.likedPhotographers)}
-        </div>
       </div>
     );
   }
