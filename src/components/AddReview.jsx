@@ -69,7 +69,7 @@ class AddReview extends Component {
                             <textarea name="review" value={this.state.value} onChange={this.handleChange} />
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button type="submit" onClick={this.handleClose}>Sign Up</Button>
+                            <Button type="submit" onClick={this.handleClose}>Add Review</Button>
                         </Modal.Footer>
                     </form>
                 </Modal>
