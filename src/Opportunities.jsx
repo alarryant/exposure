@@ -19,7 +19,7 @@ class Opportunities extends Component {
     };
 
     this.displayEvents = this.displayEvents.bind(this);
-    this.saveInterestedApplicates = this.saveInterestedApplicates.bind(this)
+    this.saveInterestedApplicants = this.saveInterestedApplicants.bind(this);
     this.createEvent = this.createEvent.bind(this);
     this.showSuccessMsg = this.showSuccessMsg.bind(this);
     this.deleteEvent = this.deleteEvent.bind(this);
@@ -29,7 +29,9 @@ class Opportunities extends Component {
   showSuccessMsg() {
       return (
       <div className="applicationSent">
-        <h3>Your application has been sent! Thanks for applying!</h3>
+        <h3>
+          Your application has been sent! Thanks for applying!
+        </h3>
       </div>
 
       )
@@ -38,10 +40,12 @@ class Opportunities extends Component {
   deleteEvent(event, creator) {
     let currentUser = parseInt(this.props.currentUser)
     if (creator === currentUser) {
-      axios.post(`/opportunities/${event}/delete`, { event_id: event, creatorid: creator})
+      axios.post(`/opportunities/${event}/delete`,
+        { event_id: event,
+          creatorid: creator} )
       .then((res) => {
         let newEvents = res.data;
-        this.setState({opportunities: newEvents});
+        this.setState({ opportunities: newEvents });
       })
 
       axios.get(`/api/opportunities/applied/${this.props.currentUser}`).then(res => {
@@ -51,12 +55,16 @@ class Opportunities extends Component {
     }
   }
 
-  saveInterestedApplicates(event, artist, desc) {
+  saveInterestedApplicants(event, artist, desc) {
     this.setState({applicationsent: true});
     let event_id = event
     let description = desc
     let artist_name = this.props.currentUserName
-    axios.post(`/opportunities/${event_id}/apply`, { event_id: event_id, artist_id: artist, msg_des: description, artist_name: artist_name})
+    axios.post(`/opportunities/${event_id}/apply`,
+      { event_id: event_id,
+        artist_id: artist,
+        msg_des: description,
+        artist_name: artist_name})
       .then((res) => {
       })
   }
@@ -64,30 +72,43 @@ class Opportunities extends Component {
   displayEvents(events) {
     if (!events || events.length === 0 ) {
       return (
-        <p>There are currently no postings! Check back later!</p> )
+        <p>
+          There are currently no postings! Check back later!
+        </p>
+      )
     } else {
       return events.map((event) => {
         let date = event.event_date.toString().split('T')[0]
         return (
-          <Opportunity_EventCard deleteEvent={this.deleteEvent} saveApplication={this.saveInterestedApplicates} event={event} date={date} usertype={this.props.usertype} currentUser={this.props.currentUser}/>
-          )
+          <Opportunity_EventCard deleteEvent={this.deleteEvent}
+                   saveApplication={this.saveInterestedApplicants}
+                   event={event}
+                   date={date}
+                   usertype={this.props.usertype}
+                   currentUser={this.props.currentUser}/>
+        )
       })
     }
   }
 
   createEvent(title, description, date, price, location) {
-    axios.post("/opportunities/:id/add", { title: title, description: description, date: date, price: price, location: location })
+    axios.post("/opportunities/:id/add",
+      { title: title,
+        description: description,
+        date: date,
+        price: price,
+        location: location })
       .then((res) => {
         let newEvents = res.data;
-        this.setState({opportunities: newEvents});
-        });
+        this.setState({ opportunities: newEvents });
+      });
   }
 
   componentDidMount() {
     this.setState({applicationsent: false})
-
-    axios.get("/api/opportunities").then(res => {
-      this.setState({'opportunities': res.data.reverse()})
+    axios.get("/api/opportunities")
+      .then(res => {
+        this.setState({ opportunities: res.data.reverse() })
     });
   }
 

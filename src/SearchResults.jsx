@@ -16,7 +16,9 @@ class SearchResults extends Component {
       return images.map(function(image) {
         return (
           <Link to={`/artists/${ image.image_owner }`}>
-            <img className="searchResult" alt={image.description} src={image.src} />
+            <img className="searchResult"
+                 alt={image.description}
+                 src={image.src} />
           </Link>
         )
       })
@@ -28,7 +30,7 @@ class SearchResults extends Component {
       <div>
         <section className="wrapper">
         <h2>
-        Here's what we found on "{this.props.searchWord}"
+          Here's what we found on "{this.props.searchWord}"
         </h2>
         {this.displaySearchedImages(this.props.searchimages)}
         </section>

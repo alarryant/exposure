@@ -4,10 +4,8 @@ import Avatar from './components/Avatar.jsx';
 import Statistics from './components/Statistics.jsx';
 import CreateEvent from './CreateEvent';
 import Opportunity_EventCard from './components/Opportunity_EventCard.jsx'
-
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
-
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './styles/Dashboard.css';
@@ -66,7 +64,7 @@ class Dashboard extends React.Component {
           <Opportunity_EventCard event={ event } date={ date }/>
         )
       })
-    };
+    }
   }
 
   componentDidMount() {
@@ -81,7 +79,7 @@ class Dashboard extends React.Component {
     });
 
     axios.get('/dashboard/likes').then((res) => {
-      console.log("this is app", res.data);
+      // console.log("this is app", res.data);
       this.setState({likedPhotographers: res.data});
     });
   }
