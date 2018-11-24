@@ -87,7 +87,8 @@ class App extends Component {
       lastName: lastName,
       email: email,
       password: password,
-      userType: userType })
+      userType: userType
+    })
       .then((res) => {
         localStorage.setItem('currentUser', res.data.currentUser);
 
@@ -96,7 +97,7 @@ class App extends Component {
         } else {
           this.setState({ redirect: 'dashboard', usertype: res.data.userType });
         }
-        });
+      });
   }
 
   //EDIT ACCOUNT FEATURE
@@ -105,21 +106,23 @@ class App extends Component {
       firstName: firstName,
       lastName: lastName,
       email: email,
-      password: password })
+      password: password
+    })
       .then((res) => {
-          let newFirstName = res.data[0].first_name;
-          let newLastName = res.data[0].last_name;
-          let newEmail = res.data[0].email;
-          this.setState({
-            redirect: true,
-            firstName: newFirstName,
-            lastName: newLastName,
-            email: newEmail });
-          localStorage.removeItem('currentUserFirstName');
-          localStorage.removeItem('currentUserLastName');
-          localStorage.setItem('currentUserFirstName', newFirstName);
-          localStorage.setItem('currentUserLastName', newLastName);
-    });
+        let newFirstName = res.data[0].first_name;
+        let newLastName = res.data[0].last_name;
+        let newEmail = res.data[0].email;
+        this.setState({
+          redirect: true,
+          firstName: newFirstName,
+          lastName: newLastName,
+          email: newEmail
+        });
+        localStorage.removeItem('currentUserFirstName');
+        localStorage.removeItem('currentUserLastName');
+        localStorage.setItem('currentUserFirstName', newFirstName);
+        localStorage.setItem('currentUserLastName', newLastName);
+      });
   }
 
   //EDIT PROFILE FEATURE
@@ -133,7 +136,8 @@ class App extends Component {
       instagram: instagram,
       facebook: facebook,
       twitter: twitter,
-      location: location })
+      location: location
+    })
       .then((res) => {
         this.setState({ redirect: 'profile' });
       });
@@ -146,8 +150,8 @@ class App extends Component {
         searchWord: word
       }
     })
-     .then((res) => {
-        this.setState({redirect: 'search', searchWord: word, searchimages: res.data});
+      .then((res) => {
+        this.setState({ redirect: 'search', searchWord: word, searchimages: res.data });
       });
   }
 
@@ -179,29 +183,29 @@ class App extends Component {
         <div>
           {this.renderRedirect()}
           <Navbar loginInfo={this.loginInfo}
-                  signupInfo={this.signupInfo}
-                  currentUser={currentUser}
-                  logout={this.logout} />
-          <SearchBar searchResult={this.searchResult}/>
+            signupInfo={this.signupInfo}
+            currentUser={currentUser}
+            logout={this.logout} />
+          <SearchBar searchResult={this.searchResult} />
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos}
-                                                    currentUser={currentUser}/>} />
+              currentUser={currentUser} />} />
             <Route path='/artists/:id' render={props => <Profile {...props} currentUserName={currentUserName}
-                                                                            currentUser={currentUser}
-                                                                            usertype={user_type_id}/>} />
+              currentUser={currentUser}
+              usertype={user_type_id} />} />
             <Route path='/opportunities' name='opportunities' render={(props) =>
-                <Opportunities {...props} currentUser={currentUser}
-                                          usertype={user_type_id}
-                                          currentUserName={currentUserName}/>}/>
+              <Opportunities {...props} currentUser={currentUser}
+                usertype={user_type_id}
+                currentUserName={currentUserName} />} />
             <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={currentUser}
-                                                                                               getLikedPhotographers={this.getLikedPhotographers}/>} />
+              getLikedPhotographers={this.getLikedPhotographers} />} />
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
               searchWord={this.state.searchWord}
               searchimages={this.state.searchimages} />} />
-            <Route path ='/about' name='about' render={() => <About />} />
-            <Route path ='/contact' name='contact' render={() => <Contact />} />
-            <Route path ='/settings' name='settings' render={(props) => <Settings {...props}
+            <Route path='/about' name='about' render={() => <About />} />
+            <Route path='/contact' name='contact' render={() => <Contact />} />
+            <Route path='/settings' name='settings' render={(props) => <Settings {...props}
               currentUserName={currentUserName}
               changeAccountInfo={this.changeAccountInfo} />} />
             <Route exact path="/" render={() => (<Redirect to="/home" />)} />
