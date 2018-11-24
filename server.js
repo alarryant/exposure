@@ -31,7 +31,8 @@ app.use((req, res, next) => {
 });
 
 app.get('/homephotos', (req, res) => {
-  knex('images').select('id', 'title', 'description', 'src', 'category', 'image_owner')
+  knex('images')
+    .select('id', 'title', 'description', 'src', 'category', 'image_owner')
     .asCallback((err, data) => {
       if (err) throw err;
       res.json(data);
@@ -43,10 +44,14 @@ app.post('/login', (req, res) => {
   let userEmail = req.body.email;
   let userPassword = req.body.password;
 
-  knex('users').select('*').where('email', '=', userEmail).where('password', '=', userPassword).then((data) => {
-    req.session.user_id = data[0].id
-    res.json(data);
-  });
+  knex('users')
+    .select('*')
+    .where('email', '=', userEmail)
+    .where('password', '=', userPassword)
+    .then((data) => {
+      req.session.user_id = data[0].id;
+      res.json(data);
+    });
 });
 
 // LOGOUT
@@ -67,19 +72,22 @@ app.post('/register', (req, res) => {
 
   knex('users').where('email', email).then((data) => {
     if (data.length !== 0) {
-      res.status(400).send('Invalid email and/or password combination');
+        res.status(400)
+           .send('Invalid email and/or password combination');
     } else {
-      knex('users').insert({
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        password: bcrypt.hashSync(password, 10),
-        user_type_id: userType
-      }).returning('id')
-        .then((user_id) => {
-          req.session.user_id = +user_id;
-          res.json(req.session.user_id);
-        });
+      knex('users')
+        .insert({
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          password: bcrypt.hashSync(password, 10),
+          user_type_id: userType
+        })
+        .returning('id')
+          .then((user_id) => {
+            req.session.user_id = +user_id;
+            res.json(req.session.user_id);
+          });
     }
   });
 });
@@ -134,18 +142,24 @@ app.get('/artists/:id', (req, res) => {
 });
 
 app.get('/dashboard', (req, res) => {
-  knex('users').select('*').where('id', req.session.user_id).asCallback((err, data) => {
-    if (err) throw err;
-    res.json(data);
-  });
+  knex('users')
+    .select('*')
+    .where('id', req.session.user_id)
+    .asCallback((err, data) => {
+      if (err) throw err;
+      res.json(data);
+    });
 });
 
 
 app.get('/dashboard/events', (req, res) => {
-  knex('events').where('creator_id', req.session.user_id).orderBy('created_at', 'desc').then((data) => {
-    res.json(data);
-  })
-})
+  knex('events')
+    .where('creator_id', req.session.user_id)
+    .orderBy('created_at', 'desc')
+    .then((data) => {
+      res.json(data);
+    });
+});
 
 app.get('/dashboard/likes', (req, res) => {
   knex('artist_likes')
@@ -166,22 +180,29 @@ app.post("/artists/:id/edit", (req, res) => {
 
   knex('images').where('image_owner', req.session.user_id).where('featured', 'true')
     .then(numOfFeatures => {
-      if (numOfFeatures.length <= 10){
+      if (numOfFeatures.length <= 10) {
         if (photoFeatured === 'true') {
-          knex('images').where('src', photoSrc).update({'featured': 'false'})
+          knex('images')
+            .where('src', photoSrc)
+            .update({'featured': 'false'})
             .then(data =>
-              knex('images').where('image_owner', req.session.user_id).orderBy('id')
-                .then(moredata => res.json(moredata))
-            )
+              knex('images')
+                .where('image_owner', req.session.user_id)
+                .orderBy('id')
+                .then(moredata => res.json(moredata)))
         } else {
-          knex('images').where('src', photoSrc).update({'featured': 'true'})
+          knex('images')
+            .where('src', photoSrc)
+            .update({'featured': 'true'})
             .then(data =>
-              knex('images').where('image_owner', req.session.user_id).orderBy('id')
-                .then(moredata => res.json(moredata))
-            )
+              knex('images')
+                .where('image_owner', req.session.user_id)
+                .orderBy('id')
+                .then(moredata => res.json(moredata)))
         }
       } else {
-        res.status(400).send("Sorry! The maximum number of feature photos is 10.");
+        res.status(400)
+           .send("Sorry! The maximum number of feature photos is 10.");
       }
     });
   });
@@ -312,8 +333,6 @@ app.post('/artists/:id/edit', (req, res) => {
   let instagram = req.body.submitData.instagram;
   let bio = req.body.submitData.bio;
 
-  // console.log("this is server req packages", package1);
-
   knex('users')
     .where('users.id', artistId)
     .update({
@@ -384,29 +403,32 @@ app.post('/opportunities/:id/add', (req, res) => {
     creator_id: cookie
   })
   .then(data => {
-      knex('events').orderBy('event_date', 'desc').then(moredata =>
-        res.json(moredata));
+      knex('events')
+        .orderBy('event_date', 'desc')
+        .then(moreData => res.json(moreData));
     });
 });
 
 app.post('/opportunities/:id/delete', (req, res) => {
   res.send('Cancel Opportunity');
     .then(data => {
-      knex("events").join('users', 'users.id', '=', 'events.creator_id').orderBy('event_date').then(moredata => {
-        res.json(moredata);
-      })
+      knex("events")
+        .join('users', 'users.id', '=', 'events.creator_id')
+        .orderBy('event_date')
+        .then(moreData => res.json(moreData));
     });
 });
 
 app.post("/opportunities/:id/delete", (req, res) => {
-  console.log("TESTING! in post delete on server")
   knex('events')
     .del()
     .where('event_id', req.body.event_id)
     .then(data => {
-      knex("events").join('users', 'users.id', '=', 'events.creator_id').orderBy('event_date').then(moredata => {
-        res.json(moredata);
-      })
+      knex("events")
+        .join('users', 'users.id', '=', 'events.creator_id')
+        .orderBy('event_date')
+        .then(moredata =>
+        res.json(moredata));
     });
 });
 
@@ -425,9 +447,11 @@ app.post('/opportunities/:id/apply', (req, res) => {
         subject: 'Exposure - Someone just applied to your posting!',
         text: `${artist_name} has applied to your posting and left you a message: ${message}`
       };
+
       mailgun.messages().send(data, function (error, body) {
         console.log(body);
       })
+
       res.send("Application successfully saved")
     })
 });
