@@ -31,7 +31,6 @@ class Home extends React.Component {
     }
 
   handleShow(id) {
-    // event.preventDefault();
     this.setState({ show: id });
   }
 
