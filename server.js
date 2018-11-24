@@ -409,16 +409,6 @@ app.post('/opportunities/:id/add', (req, res) => {
     });
 });
 
-app.post('/opportunities/:id/delete', (req, res) => {
-  res.send('Cancel Opportunity');
-    .then(data => {
-      knex("events")
-        .join('users', 'users.id', '=', 'events.creator_id')
-        .orderBy('event_date')
-        .then(moreData => res.json(moreData));
-    });
-});
-
 app.post("/opportunities/:id/delete", (req, res) => {
   knex('events')
     .del()
