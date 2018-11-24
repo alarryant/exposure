@@ -302,20 +302,35 @@ app.post("/artists/:id/newreview", (req, res) => {
   let description = req.body.description;
   let artist_id = req.body.artist_id;
   let user_id = req.body.user_id;
-  knex("reviews").insert({
+  knex('reviews').insert({
     rating: rating,
     description: description,
     artist_id: artist_id,
     user_id: user_id
   }).then(data => {
     knex('reviews')
-      .join("users", "reviews.user_id", "=", "users.id")
-      .where("reviews.artist_id", artist_id)
+      .join('users', 'reviews.user_id', '=', 'users.id')
+      .where('reviews.artist_id', artist_id)
       .then((reviews) => {
         res.json(reviews);
       });
   });
 });
+
+app.post("/artists/:id/reviews/:reviewid", (req, res) => {
+  knex('reviews')
+    .del()
+    .where('review_id', req.params.reviewid)
+    .then(data => {
+      knex('reviews')
+      .join('users', 'reviews.user_id', '=', 'users.id')
+      .where('reviews.artist_id', req.params.id)
+      .then((reviews) => {
+        res.json(reviews);
+      });
+    });
+});
+
 
 app.post('/artists/:id/edit', (req, res) => {
   let artistId = req.body.artistId;

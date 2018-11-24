@@ -60,6 +60,7 @@ class Profile extends React.Component {
     this.sendPackageField = this.sendPackageField.bind(this);
     this.changeFeaturePhotos = this.changeFeaturePhotos.bind(this);
     this.createReview = this.createReview.bind(this);
+    this.deleteReview = this.deleteReview.bind(this);
   }
 
   areFeaturedPhotos(photos = []) {
@@ -144,6 +145,17 @@ class Profile extends React.Component {
         let newReviews = res.data.reverse();
         this.setState({reviews: newReviews});
       });
+  }
+
+  deleteReview(review) {
+    let artist_id = review.artist_id;
+    let review_id = review.review_id;
+    
+    axios.post(`/artists/${artist_id}/reviews/${review_id}`, { review_id, artist_id})
+    .then((res) => {
+      let newReviews = res.data.reverse();
+      this.setState({reviews: newReviews});
+    })
   }
 
   componentDidMount() {
@@ -306,7 +318,10 @@ class Profile extends React.Component {
                           disabledDays={this.state.disabledDays}
                           artistId={this.state.artistId} />
         <PackagesCard packages={this.state.packages} />
-        <ReviewsCard reviews={this.state.reviews} />
+        <ReviewsCard reviews={this.state.reviews}
+          currentUser={this.props.currentUser}
+          artistId={this.state.artistId}
+          deleteReview={this.deleteReview} />
         <AddReview currentUser={this.props.currentUser}
                    artistId={this.state.artistId}
                    createReview={this.createReview}/>

@@ -1,7 +1,7 @@
 
 exports.up = function(knex, Promise) {
     return knex.schema.createTable('reviews', function (table) {
-        table.increments('id').primary();
+        table.increments('review_id').primary();
         table.integer('rating').notNull();
         table.text('description').notNull();
         table.integer('artist_id').notNull();
