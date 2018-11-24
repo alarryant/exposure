@@ -145,23 +145,28 @@ app.get('/artists/:id', (req, res) => {
   let artistId = req.params.id;
   let images =
     knex('images')
-      .join('users', 'image_owner', '=', 'users.id')
+      // .join('users', 'image_owner', '=', 'users.id')
       .where('image_owner', artistId)
       .then((images) => {
-        knex('price_packages')
-          .join('users', 'price_packages.user_id', '=', 'users.id')
-          .where('price_packages.user_id', artistId).orderBy('tier')
-          .then((packages) => {
-            knex('reviews')
-              .join('users', 'reviews.user_id', '=', 'users.id')
-              .where('reviews.artist_id', artistId)
-              .then((reviews) => {
-                let artistData = {
-                  images: images,
-                  packages: packages,
-                  reviews: reviews
-                };
-                res.json(artistData);
+        knex('users')
+          .where("id", artistId)
+          .then((user) => {
+            knex('price_packages')
+              .join('users', 'price_packages.user_id', '=', 'users.id')
+              .where('price_packages.user_id', artistId).orderBy('tier')
+              .then((packages) => {
+                knex('reviews')
+                  .join('users', 'reviews.user_id', '=', 'users.id')
+                  .where('reviews.artist_id', artistId)
+                  .then((reviews) => {
+                    let artistData = {
+                      user: user,
+                      images: images,
+                      packages: packages,
+                      reviews: reviews
+                    };
+                    res.json(artistData);
+                  });
               });
           });
       });
@@ -289,14 +294,14 @@ app.post('/artists/:id/unlike', (req, res) => {
     });
 });
 
-app.post('/artists/:id/totallikes', (req, res) => {
-  let artistId = req.body.artistId;
+app.get('/artists/:id/totallikes', (req, res) => {
+  let artistId = req.params.id;
   let currentUser = req.body.currentUser;
   knex('artist_likes')
     .where({ artist_id: artistId })
     .countDistinct('client_id')
     .then(data => {
-      res.json(likes);
+      res.json(data);
     });
 });
 

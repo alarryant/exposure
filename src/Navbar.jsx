@@ -99,7 +99,7 @@ class Navbar extends React.Component {
           </div>
           <div className="userauth">
             <Button bsStyle="default"
-                    sSize="large"
+                    bsSize="large"
                     type="submit"
                     onClick={this.handleSignout}>
               Logout

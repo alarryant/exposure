@@ -10,9 +10,9 @@ class Footer extends React.Component {
   return (
   <div className="footer">
     <p>
-      <a href="https://www.facebook.com/ExposurePhotography"><i className="fab fa-facebook-f"></i></a>
-      <a href="https://twitter.com/ExposurePhotography"><i className="fab fa-twitter"></i></a>
-      <a href="https://www.instagram.com/ExposurePhotography"><i className="fab fa-instagram"></i></a>
+      <a href="/"><i className="fab fa-facebook-f"></i></a>
+      <a href="/"><i className="fab fa-twitter"></i></a>
+      <a href="/"><i className="fab fa-instagram"></i></a>
     </p>
     <NavLink to="/about">About</NavLink>
     <NavLink to="/contact">Contact us</NavLink>

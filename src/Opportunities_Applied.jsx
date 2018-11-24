@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DeleteApplication from './components/Opportunity_DeleteApplication.jsx';
+// import DeleteApplication from './components/Opportunity_DeleteApplication.jsx';
 import AppCard from './components/Opportunity_AppliedCard.jsx';
 import axios from 'axios';
 

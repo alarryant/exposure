@@ -43,7 +43,7 @@ class SearchBar extends Component {
                  value="Search" />
           <div className="catSearch dropdown-container">
             <div className="dropdown">
-              <a href="#">Search By Category</a>
+              <button>Search By Category</button>
               <CatDropDown searchResult={this.props.searchResult} />
             </div>
           </div>

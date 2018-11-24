@@ -155,7 +155,7 @@ class App extends Component {
             logout={this.logout} />
           <SearchBar searchResult={this.searchResult}/>
           <Switch>
-            <Route path='/home' render={() => <Home homephotos={this.state.homephotos}/>} />
+            <Route path='/home' render={() => <Home homephotos={this.state.homephotos} currentUser={currentUser}/>} />
             <Route path='/artists/:id' render={props => <Profile
               {...props}
               currentUserName={currentUserName}

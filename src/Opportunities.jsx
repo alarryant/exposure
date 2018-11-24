@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "react-tabs/style/react-tabs.css";
 import axios from 'axios';
-import Opportunity_EventCard from './components/Opportunity_EventCard.jsx';
+import OpportunityEventCard from './components/Opportunity_EventCard.jsx';
 import AppliedCard from './Opportunities_Applied.jsx';
 import './styles/Opportunities.css';
 import CreateEvent from './CreateEvent';
@@ -80,7 +80,7 @@ class Opportunities extends Component {
       return events.map((event) => {
         let date = event.event_date.toString().split('T')[0]
         return (
-          <Opportunity_EventCard deleteEvent={this.deleteEvent}
+          <OpportunityEventCard deleteEvent={this.deleteEvent}
                    saveApplication={this.saveInterestedApplicants}
                    event={event}
                    date={date}

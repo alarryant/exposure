@@ -2,7 +2,7 @@ import React from 'react';
 import sampleSize from 'lodash.samplesize';
 import Slider from "react-slick";
 import { Link } from 'react-router-dom';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal/*, Button*/ } from 'react-bootstrap';
 
 class Home extends React.Component {
 
@@ -12,7 +12,7 @@ class Home extends React.Component {
     this.state = {
       show: false,
       imageOwner: null
-    }
+    };
 
     this.categorizePhotos = this.categorizePhotos.bind(this);
     this.handleShow = this.handleShow.bind(this);
@@ -61,9 +61,15 @@ class Home extends React.Component {
               <p>{photo.description}</p>
             </Modal.Body>
             <Modal.Footer>
-              <Link to={`/artists/${ photo.image_owner }`}>
-                Photographer's Profile
-              </Link>
+              { this.props.currentUser ? (
+                <Link to={`/artists/${ photo.image_owner }`}>
+                  Photographer's Profile
+                </Link>
+              ) : (
+              <p>
+                Please login to view the artist's profile.
+              </p>
+              )}
             </Modal.Footer>
           </Modal>
         </div>

@@ -16,15 +16,15 @@ class CatDropDown extends Component {
     render() {
         return (
             <div className='dropdown-content'>
-                <a href='#' onClick={this.handleClick}>Commercial</a>
-                <a href='#' onClick={this.handleClick}>Nature</a>
-                <a href='#' onClick={this.handleClick}>Portrait</a>
-                <a href='#' onClick={this.handleClick}>Landscape</a>
-                <a href='#' onClick={this.handleClick}>Wedding</a>
-                <a href='#' onClick={this.handleClick}>Animals</a>
-                <a href='#' onClick={this.handleClick}>Family</a>
-                <a href='#' onClick={this.handleClick}>Children</a>
-                <a href='#' onClick={this.handleClick}>Baby</a>
+                <button onClick={this.handleClick}>Commercial</button>
+                <button onClick={this.handleClick}>Nature</button>
+                <button onClick={this.handleClick}>Portrait</button>
+                <button onClick={this.handleClick}>Landscape</button>
+                <button onClick={this.handleClick}>Wedding</button>
+                <button onClick={this.handleClick}>Animals</button>
+                <button onClick={this.handleClick}>Family</button>
+                <button onClick={this.handleClick}>Children</button>
+                <button onClick={this.handleClick}>Baby</button>
             </div>
         );
     }

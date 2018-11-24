@@ -39,14 +39,14 @@ class Profile extends React.Component {
     this.state = {
       artist: {},
       photoView: 'featured',
-      editable: false,
-      bio: "",
-      twitter: 'null',
-      facebook: 'null',
-      instagram: 'null',
-      avatarImage: 'images/default_avatar.png',
-      packages: [],
-      reviews: []
+      editable: false
+      // bio: "",
+      // twitter: 'null',
+      // facebook: 'null',
+      // instagram: 'null',
+      // avatarImage: 'images/default_avatar.png',
+      // packages: [],
+      // reviews: []
     }
 
     this.addCarouselPhotos = this.addCarouselPhotos.bind(this);
@@ -158,30 +158,37 @@ class Profile extends React.Component {
       }
     })
       .then((res) => {
-        let collection = res.data.images;
-        let packages = res.data.packages;
-        let bio = res.data.images[0].bio;
-        let fullName = res.data.images[0].first_name + ' ' + res.data.images[0].last_name;
-        let avatarImage = res.data.images[0].profile_image;
-        let twitter = res.data.images[0].twitter_url;
-        let facebook = res.data.images[0].facebook_url;
-        let instagram = res.data.images[0].instagram_url;
-        let reviews = res.data.reviews;
-        let email = res.data.images[0].email;
+        console.log("this is everything", res.data);
+        const profileData = {
+          collection: res.data.images,
+          packages: res.data.packages,
+          bio: res.data.user[0].bio,
+          fullName: res.data.user[0].first_name + ' ' + res.data.user[0].last_name,
+          avatarImage: res.data.user[0].profile_image,
+          twitter: res.data.user[0].twitter_url,
+          facebook: res.data.user[0].facebook_url,
+          instagram: res.data.user[0].instagram_url,
+          reviews: res.data.reviews,
+          email: res.data.user[0].email,
+          redirect: true
+        };
 
-        this.setState({
-          redirect: true,
-          twitter: twitter,
-          facebook: facebook,
-          instagram: instagram,
-          fullName: fullName,
-          avatarImage: avatarImage,
-          packages: packages,
-          collection: collection,
-          bio: bio,
-          reviews: reviews,
-          email: email,
-        });
+        console.log(profileData);
+
+        this.setState(profileData);
+        // {
+        //   redirect: true,
+        //   twitter: twitter,
+        //   facebook: facebook,
+        //   instagram: instagram,
+        //   fullName: fullName,
+        //   avatarImage: avatarImage,
+        //   packages: res.data.packages,
+        //   collection: res.data.images,
+        //   bio: bio,
+        //   reviews: reviews,
+        //   email: email,
+        // });
       });
   }
 
@@ -217,6 +224,8 @@ class Profile extends React.Component {
   }
 
   render() {
+    const { id } = this.props.match.params;
+
     const settings = {
       infinite: true,
       centerMode: true,
@@ -240,7 +249,7 @@ class Profile extends React.Component {
             <MailButton email={this.state.email}
                         name={this.props.currentUserName} />
             <StarPhotographer currentUser={this.props.currentUser}
-                              artistId={this.state.artistId} />
+                              artistId={id} />
             <h3>Description</h3>
             <EditProfileDesc bio={this.state.bio}
                              sendBioForm={this.sendBioForm} />
@@ -275,7 +284,7 @@ class Profile extends React.Component {
         <MailButton email={this.state.email}
                     name={this.props.currentUserName} />
         <StarPhotographer currentUser={this.props.currentUser}
-                          artistId={this.state.artistId} />
+                          artistId={id} />
         <h3>Description</h3>
         <ProfileDesc bio={this.state.bio} />
         <SocialMedia twitter={this.state.twitter}

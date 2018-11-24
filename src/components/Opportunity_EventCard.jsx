@@ -1,14 +1,14 @@
 import React from 'react';
-import OpportunityApply from './Opportunity_Apply.jsx'
-import DeleteEvent from './Opportunity_Delete.jsx'
+import OpportunityApply from './Opportunity_Apply.jsx';
+import DeleteEvent from './Opportunity_Delete.jsx';
 
 //DISPLAY FOR AN EVENT
 
-function Opportunity_EventCard(props) {
+function OpportunityEventCard(props) {
   const { event } = props
-  const user_type_id = parseInt(props.usertype)
-  const creator_id = parseInt(event.creator_id)
-  const currentUser = parseInt(props.currentUser)
+  const user_type_id = parseInt(props.usertype);
+  const creator_id = parseInt(event.creator_id);
+  const currentUser = parseInt(props.currentUser);
 
   return (
     <div className="eventcard">
@@ -24,4 +24,4 @@ function Opportunity_EventCard(props) {
 }
 
 
-export default Opportunity_EventCard;
+export default OpportunityEventCard;

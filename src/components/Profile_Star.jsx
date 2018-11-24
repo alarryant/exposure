@@ -31,7 +31,8 @@ class StarPhotographer extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/artists/:id/totallikes',
+    console.log("this is artist id", this.props.artistId);
+    axios.get(`/artists/${this.props.artistId}/totallikes`,
              { currentUser: this.props.currentUser,
                artistId: this.props.artistId })
       .then((res) => {
@@ -42,7 +43,7 @@ class StarPhotographer extends React.Component {
   render() {
     return(
       <div>
-        <p>{this.state.numberOfLikes}</p>
+        <p>{this.state.numberOfLikes || 0}</p>
         {this.state.liked ? (
           <div>
             <i className="fas fa-star"
