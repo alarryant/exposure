@@ -206,7 +206,6 @@ class Profile extends React.Component {
       { artistId: this.state.artistId,
         submitData: submitData })
       .then((res) => {
-        console.log("this is what im getting back from server", res.data);
         this.setState({ packages: res.data.packages,
                         twitter: res.data[0].twitter_url,
                         facebook: res.data[0].facebook_url,

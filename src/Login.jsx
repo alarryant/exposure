@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Modal } from 'react-bootstrap';
+import SignUp from './Signup'
 
 
 class Login extends Component {
@@ -46,7 +47,7 @@ class Login extends Component {
                 Login
             </Button>
 
-            <Modal show={this.state.show} onHide={this.handleClose}>
+            <Modal show={this.state.show} onHide={this.handleClose} unMount={this.unmountOnExit}>
                 <Modal.Header closeButton>
                     <Modal.Title>Login to Your Account</Modal.Title>
                 </Modal.Header>
@@ -58,6 +59,7 @@ class Login extends Component {
                         <input type="password" placeholder="Password" name='password' onChange={this.handleChange}></input>
                     </Modal.Body>
                     <Modal.Footer>
+                        <SignUp />
                         <Button type="submit" onClick={this.handleClose}>Login</Button>
                     </Modal.Footer>
                 </form>
