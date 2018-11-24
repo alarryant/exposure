@@ -17,7 +17,15 @@ function AppCard(props) {
       <hr/>
       <p>{event.description}</p>
       <p>Contact: {event.first_name} {event.last_name}</p>
-      <DeleteApplication application_id={application_id} deleteApplication={props.deleteApplication} eventid={event.event_id} deleteEvent={props.deleteEvent} currentUser={props.currentUser} date={props.date} event={event}/>
+      <DeleteApplication
+        application_id={application_id}
+        deleteApplication={props.deleteApplication}
+        eventid={event.event_id}
+        deleteEvent={props.deleteEvent}
+        currentUser={props.currentUser}
+        date={props.date}
+        event={event}
+        />
     </div>
     )
 }
