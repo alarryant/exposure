@@ -105,7 +105,7 @@ class Dashboard extends React.Component {
     };
     return photographers.map((photographer) => {
       return (
-        <div className="photographerContainer">
+        <div className="photographerContainer" key={photographer.artist_id}>
         <div style={starredPhotographer}>
           <Link to={`/artists/${ photographer.artist_id }`}>
             <img style={starredPhotographer__img} alt="profileimg" src={photographer.profile_image} /><br/>
