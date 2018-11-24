@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import "react-tabs/style/react-tabs.css";
 import axios from 'axios';
-import OppCard from './components/OppCard.jsx';
+import Opportunity_EventCard from './components/Opportunity_EventCard.jsx';
+import AppliedCard from './Opportunities_Applied.jsx';
 import './styles/Opportunities.css';
 import CreateEvent from './CreateEvent';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+
+//MAIN OPPORTUNITIES BOARD
 
 class Opportunities extends Component {
   constructor(props) {
@@ -43,6 +47,11 @@ class Opportunities extends Component {
         let newEvents = res.data;
         this.setState({ opportunities: newEvents });
       })
+
+      axios.get(`/api/opportunities/applied/${this.props.currentUser}`).then(res => {
+        this.setState({'appliedopportunities': res.data })
+    });
+
     }
   }
 
@@ -71,7 +80,7 @@ class Opportunities extends Component {
       return events.map((event) => {
         let date = event.event_date.toString().split('T')[0]
         return (
-          <OppCard deleteEvent={this.deleteEvent}
+          <Opportunity_EventCard deleteEvent={this.deleteEvent}
                    saveApplication={this.saveInterestedApplicants}
                    event={event}
                    date={date}
@@ -105,16 +114,29 @@ class Opportunities extends Component {
 
   render() {
     let usertype = parseInt(this.props.usertype)
-
     return (
-      <section className="opportunities">
-      {this.state.applicationsent ? this.showSuccessMsg() : ""}
-        <div className="oppHeader">
-          <h2>Opportunities Board</h2>
-          {usertype === 2 ? <CreateEvent createEvent={this.createEvent}/>  : ""}
-        </div>
-          { this.displayEvents(this.state.opportunities) }
-      </section>
+      <Tabs>
+        <TabList>
+          <Tab> Job Board </Tab>
+          {usertype === 1 ? <Tab> Applied Opportunities </Tab> : <Tab>My Events</Tab>}
+        </TabList>
+
+        <TabPanel>
+          <section className="opportunities">
+          {this.state.applicationsent ? this.showSuccessMsg() : ""}
+            <div className="oppHeader">
+              <h2>Opportunities Board</h2>
+              {usertype === 2 ? <CreateEvent createEvent={this.createEvent}/>  : ""}
+            </div>
+              { this.displayEvents(this.state.opportunities) }
+          </section>
+        </TabPanel>
+
+        <TabPanel>
+          {usertype === 1 ? <AppliedCard currentUser={this.props.currentUser} usertype={this.props.usertype}/>  : ""}
+        </TabPanel>
+      </Tabs>
+
     );
   }
 }

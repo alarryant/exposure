@@ -3,11 +3,9 @@ import Avatar from './components/Avatar.jsx';
 // import EditAvailability from './components/Availability.jsx';
 import Statistics from './components/Statistics.jsx';
 import CreateEvent from './CreateEvent';
-import OppCard from './components/OppCard.jsx';
-
+import Opportunity_EventCard from './components/Opportunity_EventCard.jsx'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
-
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './styles/Dashboard.css';
@@ -49,7 +47,7 @@ class Dashboard extends React.Component {
         newEvents.map(function(event) {
           let date = event.event_date.toString().split('T')[0]
           return (
-            <OppCard event={event} date={date}/>
+            <Opportunity_EventCard event={event} date={date}/>
             );
         });
       });
@@ -63,7 +61,7 @@ class Dashboard extends React.Component {
       return events.map(function(event) {
         let date = event.event_date.toString().split('T')[0]
         return (
-          <OppCard event={ event } date={ date }/>
+          <Opportunity_EventCard event={ event } date={ date }/>
         )
       })
     }
