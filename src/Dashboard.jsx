@@ -7,7 +7,7 @@ import OpportunityEventCard from './components/Opportunity_EventCard.jsx'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import './styles/Dashboard.css';
 
 const left = {
@@ -82,7 +82,7 @@ class Dashboard extends React.Component {
   displayEvents(events) {
     if (!events || events.length === 0 ) {
       return (
-        <p>You have no events yet!</p> )
+        <p>You have no events yet! Why not create one?</p> )
     } else {
       return events.map((event) => {
         let date = event.event_date.toString().split('T')[0]
@@ -98,14 +98,13 @@ class Dashboard extends React.Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidMount() {
     let currentUser = this.props.currentUser;
     axios.get(`/dashboard`, {
       params: {
         currentUser: currentUser
       }
     }).then(response => {
-      console.log("Didmount", response)
       this.setState({
           name: response.data.user[0].first_name + " " + response.data.user[0].last_name,
           avatar: response.data.user[0].profile_image,
@@ -116,14 +115,13 @@ class Dashboard extends React.Component {
     });
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     let currentUser = this.props.currentUser;
     axios.get(`/dashboard`, {
       params: {
         currentUser: currentUser
       }
     }).then(response => {
-      console.log("Didmount", response)
       this.setState({
           likedPhotographers: response.data.likes,
           userevents: response.data.events
@@ -176,6 +174,7 @@ class Dashboard extends React.Component {
             </div>
           </TabPanel>
           <TabPanel>
+          <p>Checkout other postings on the<NavLink to="/opportunities">Job Board</NavLink></p>
            <CreateEvent createEvent={this.createEvent}/>
             { this.displayEvents(this.state.userevents) }
           </TabPanel>
@@ -185,12 +184,10 @@ class Dashboard extends React.Component {
 
     return (
       <div className='contentWrapper'>
-
         {/* start left */}
         <div className='left' style={left}>
           <Avatar name={this.state.name} avatar={this.state.avatar} />
         </div>
-
         {/* start right */}
         {userType === 2 ? (
           <div className='right' style={right}>
