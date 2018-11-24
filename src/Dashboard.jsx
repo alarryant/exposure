@@ -3,11 +3,9 @@ import Avatar from './components/Avatar.jsx';
 // import EditAvailability from './components/Availability.jsx';
 import Statistics from './components/Statistics.jsx';
 import CreateEvent from './CreateEvent';
-import OppCard from './components/OppCard.jsx'
-
+import Opportunity_EventCard from './components/Opportunity_EventCard.jsx'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
-
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './styles/Dashboard.css';
@@ -42,14 +40,14 @@ class Dashboard extends React.Component {
   }
 
   createEvent(title, description, date, price, location) {
-    axios.post("/dashboard/:id/add", { title: title, description: description, date: date, price: price, location: location })
+    axios.post("/opportunities/:id/add", { title: title, description: description, date: date, price: price, location: location })
       .then((res) => {
         let newEvents = res.data;
         this.setState({events: newEvents});
         newEvents.map(function(event) {
           let date = event.event_date.toString().split('T')[0]
           return (
-            <OppCard event={event} date={date}/>
+            <Opportunity_EventCard event={event} date={date}/>
             );
         });
       });
@@ -63,10 +61,10 @@ class Dashboard extends React.Component {
       return events.map(function(event) {
         let date = event.event_date.toString().split('T')[0]
         return (
-          <OppCard event={ event } date={ date }/>
+          <Opportunity_EventCard event={ event } date={ date }/>
         )
       })
-    };
+    }
   }
 
   componentDidMount() {
@@ -81,9 +79,12 @@ class Dashboard extends React.Component {
     });
 
     axios.get('/dashboard/likes').then((res) => {
-      console.log("this is app", res.data);
       this.setState({likedPhotographers: res.data});
     });
+
+    axios.get('/dashboard/events').then((res) => {
+      this.setState({events: res.data})
+    })
   }
 
   renderLikedPhotographer(photographers=[]) {

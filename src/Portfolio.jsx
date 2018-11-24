@@ -5,10 +5,16 @@ class Portfolio extends React.Component {
 
   displayPortfolio(images) {
     if (!images || images.length === 0 ) {
-      return (<p> Sorry! No photos to display!</p>)
+      return (
+        <p>
+          Sorry! No photos to display!
+        </p>
+      )
     } else {
       return images.map(function(image) {
-        return <img className="searchResult" alt={image.description} src={image.src} />
+        return <img className="searchResult"
+                    alt={image.description}
+                    src={image.src} />
       })
     }
   }

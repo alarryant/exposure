@@ -7,7 +7,11 @@ class Portfolio extends React.Component {
       return (<p> Sorry! No photos to display!</p>)
     } else {
       return images.map(function(image) {
-        return <img className="searchResult" alt="portfolioimg" src={image.src} />
+        return (
+        <div className="editPortfolio">
+          <img className="searchResult" alt="portfolioimg" src={image.src} />
+        </div>
+        )
       })
     }
   }

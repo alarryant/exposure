@@ -5,10 +5,10 @@ var api_key = process.env.MAILGUN_API;
 var DOMAIN = process.env.MAILGUN_DOMAIN;
 var mailgun = require('mailgun-js')({ apiKey: api_key, domain: DOMAIN });
 
-const express = require("express");
+const express = require('express');
 const app = express();
 const PORT = 3001;
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const cookieSession = require('cookie-session');
 const knexConfig = require('./knexfile');
@@ -30,8 +30,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/homephotos", (req, res) => {
-  knex('images').select('id', 'title', 'description', 'src', 'category', 'image_owner')
+app.get('/homephotos', (req, res) => {
+  knex('images')
+    .select('id', 'title', 'description', 'src', 'category', 'image_owner')
     .asCallback((err, data) => {
       if (err) throw err;
       res.json(data);
@@ -39,25 +40,31 @@ app.get("/homephotos", (req, res) => {
 });
 
 // LOGIN
-app.post("/login", (req, res) => {
-  let userEmail = req.body.email;
-  let userPassword = req.body.password;
-
-  knex("users").select("*").where("email", "=", userEmail).where("password", "=", userPassword).then((data) => {
-    req.session.user_id = data[0].id
-    res.json(data);
-  });
+app.post('/login', (req, res) => {
+  knex('users')
+    .select('*')
+    .where({
+      email: req.body.email,
+      })
+    .then((data) => {
+      if( bcrypt.compareSync(req.body.password, data[0].password)) {
+        req.session.user_id = data[0].id;
+      } else {
+        res.send("Invalid email/password combination");
+      }
+      res.json(data);
+    });
 });
 
 // LOGOUT
-app.post("/logout", (req, res) => {
+app.post('/logout', (req, res) => {
   req.session.user_id = null;
   res.json(req.session.user_id);
 });
 
 
 // REGISTER
-app.post("/register", (req, res) => {
+app.post('/register', (req, res) => {
   let firstName = req.body.firstName;
   let lastName = req.body.lastName;
   let email = req.body.email;
@@ -66,27 +73,30 @@ app.post("/register", (req, res) => {
 
 
   knex('users').where('email', email).then((data) => {
-    if (data.length !== 0) {
-      res.status(400).send("Invalid email and/or password combination");
+    if (data.length) {
+        res.status(400)
+           .send('Invalid email and/or password combination');
     } else {
-      knex("users").insert({
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        password: bcrypt.hashSync(password, 10),
-        user_type_id: userType
-      }).returning("id")
-        .then((user_id) => {
-          req.session.user_id = +user_id;
-          res.json(req.session.user_id);
-        });
+      knex('users')
+        .insert({
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          password: bcrypt.hashSync(password, 10),
+          user_type_id: userType
+        })
+        .returning('id')
+          .then((user_id) => {
+            req.session.user_id = +user_id;
+            res.json(req.session.user_id);
+          });
     }
   });
 });
 
 
 // SEARCH
-app.get("/search", (req, res) => {
+app.get('/search', (req, res) => {
   let queryWord = (req.query.searchWord).toLowerCase();
   knex('images')
     .where(
@@ -97,30 +107,51 @@ app.get("/search", (req, res) => {
       knex.raw('LOWER("category") like ?', `%${queryWord}%`))
     .select('*')
     .then(function (images) {
-      res.json(images)
+      res.json(images);
     });
 });
 
 //IMAGE
-app.post("/images/:id", (req, res) => {
-  res.send("Images/:id");
+app.post('/images/:id', (req, res) => {
+  res.send('Images/:id');
 });
 
-//ARTIST
-app.get("/artists/:id", (req, res) => {
+
+//DASHBOARD
+app.get('/dashboard', (req, res) => {
+  knex('users')
+    .select('*')
+    .where('id', req.session.user_id)
+    .asCallback((err, data) => {
+      if (err) throw err;
+      res.json(data);
+    });
+});
+
+app.get('/dashboard/likes', (req, res) => {
+  knex('artist_likes')
+    .join('users', 'users.id', '=', 'artist_likes.artist_id')
+    .where('client_id', req.session.user_id)
+    .then((data) => {
+      res.json(data);
+    });
+});
+
+//ARTIST PROFILE
+app.get('/artists/:id', (req, res) => {
   let artistId = req.params.id;
   let images =
     knex('images')
-      .join("users", "image_owner", "=", "users.id")
-      .where("image_owner", artistId)
+      .join('users', 'image_owner', '=', 'users.id')
+      .where('image_owner', artistId)
       .then((images) => {
         knex('price_packages')
-          .join("users", "price_packages.user_id", "=", "users.id")
-          .where("price_packages.user_id", artistId).orderBy("tier")
+          .join('users', 'price_packages.user_id', '=', 'users.id')
+          .where('price_packages.user_id', artistId).orderBy('tier')
           .then((packages) => {
             knex('reviews')
-              .join("users", "reviews.user_id", "=", "users.id")
-              .where("reviews.artist_id", artistId)
+              .join('users', 'reviews.user_id', '=', 'users.id')
+              .where('reviews.artist_id', artistId)
               .then((reviews) => {
                 let artistData = {
                   images: images,
@@ -133,44 +164,49 @@ app.get("/artists/:id", (req, res) => {
       });
 });
 
-app.get("/dashboard", (req, res) => {
-  knex('users').select('*').where('id', req.session.user_id).asCallback((err, data) => {
-    if (err) throw err;
-    res.json(data);
-  });
-});
-
-
-app.get("/dashboard/events", (req, res) => {
-  knex("events").where("creator_id", req.session.user_id).orderBy('created_at', 'desc').then((data) => {
-    res.json(data);
-  })
-})
-
-app.get("/dashboard/likes", (req, res) => {
-  knex('artist_likes')
-    .join("users", "users.id", "=", "artist_likes.artist_id")
-    .where('client_id', req.session.user_id)
-    .then((data) => {
-      console.log(data);
-      res.json(data);
-    });
+app.post('/artists/:id/review', (req, res) => {
+  res.send('Artist Review');
 });
 
 app.post("/artists/:id/edit", (req, res) => {
-  res.send("Artist Edit");
-});
+  let photoSrc = req.body.clickedPhotoSrc.slice(21);
+  let photoFeatured = req.body.clickedPhotoFeature;
 
-app.post("/artists/:id/review", (req, res) => {
-  res.send("Artist Review");
-});
+  knex('images').where('image_owner', req.session.user_id).where('featured', 'true')
+    .then(numOfFeatures => {
+      if (numOfFeatures.length <= 10) {
+        if (photoFeatured === 'true') {
+          knex('images')
+            .where('src', photoSrc)
+            .update({'featured': 'false'})
+            .then(data =>
+              knex('images')
+                .where('image_owner', req.session.user_id)
+                .orderBy('id')
+                .then(moredata => res.json(moredata)))
+        } else {
+          knex('images')
+            .where('src', photoSrc)
+            .update({'featured': 'true'})
+            .then(data =>
+              knex('images')
+                .where('image_owner', req.session.user_id)
+                .orderBy('id')
+                .then(moredata => res.json(moredata)))
+        }
+      } else {
+        res.status(400)
+           .send("Sorry! The maximum number of feature photos is 10.");
+      }
+    });
+  });
 
-app.post("/artists/:id/editavailability", (req, res) => {
+app.post('/artists/:id/editavailability', (req, res) => {
   let artistId = req.params.id;
 
   // this is ali's refactored version that doesn't work
   // const getAllAvails = () => {
-  //   return knex('availabilities').where("artist_id", artistId);
+  //   return knex('availabilities').where('artist_id', artistId);
   // }
 
   // knex('availabilities')
@@ -188,12 +224,12 @@ app.post("/artists/:id/editavailability", (req, res) => {
     })
     .then(data => {
       knex('availabilities')
-        .where("artist_id", artistId)
+        .where('artist_id', artistId)
         .then(moredata => res.json(moredata));
     });
 });
 
-app.post("/artists/:id/removeavailability", (req, res) => {
+app.post('/artists/:id/removeavailability', (req, res) => {
   let artistId = req.params.id;
   let selectedDay = req.body.selectedDay;
   knex('availabilities')
@@ -201,22 +237,22 @@ app.post("/artists/:id/removeavailability", (req, res) => {
     .del()
     .then(data => {
       knex('availabilities')
-        .where("artist_id", artistId)
+        .where('artist_id', artistId)
         .then(moredata => res.json(moredata));
     });
 });
 
-app.get("/artists/:id/availability", (req, res) => {
+app.get('/artists/:id/availability', (req, res) => {
   let artistId = req.params.id;
   knex('availabilities')
     .select('*')
-    .where("artist_id", artistId)
-    .then(function (disabledDays) {
+    .where('artist_id', artistId)
+    .then(function(disabledDays) {
       res.json(disabledDays);
     });
 });
 
-app.post("/artists/:id/like", (req, res) => {
+app.post('/artists/:id/like', (req, res) => {
   let artistId = req.body.artistId;
   let currentUser = req.body.currentUser;
   knex('artist_likes')
@@ -226,7 +262,7 @@ app.post("/artists/:id/like", (req, res) => {
     })
     .then(data => {
       knex('artist_likes')
-        .where("artist_id", artistId)
+        .where('artist_id', artistId)
         .countDistinct('client_id')
         .then(function (likes) {
           res.json(likes);
@@ -234,7 +270,7 @@ app.post("/artists/:id/like", (req, res) => {
     });
 });
 
-app.post("/artists/:id/unlike", (req, res) => {
+app.post('/artists/:id/unlike', (req, res) => {
   let artistId = req.body.artistId;
   let currentUser = req.body.currentUser;
   knex('artist_likes')
@@ -242,7 +278,7 @@ app.post("/artists/:id/unlike", (req, res) => {
     .del()
     .then(data => {
       knex('artist_likes')
-        .where("artist_id", artistId)
+        .where('artist_id', artistId)
         .countDistinct('client_id')
         .then(function (likes) {
           res.json(likes);
@@ -250,7 +286,7 @@ app.post("/artists/:id/unlike", (req, res) => {
     });
 });
 
-app.post("/artists/:id/totallikes", (req, res) => {
+app.post('/artists/:id/totallikes', (req, res) => {
   let artistId = req.body.artistId;
   let currentUser = req.body.currentUser;
   knex('artist_likes')
@@ -295,9 +331,62 @@ app.post("/artists/:id/reviews/:reviewid", (req, res) => {
     });
 });
 
+
+app.post('/artists/:id/edit', (req, res) => {
+  let artistId = req.body.artistId;
+  let package1 = req.body.submitData.packages[0];
+  let package2 = req.body.submitData.packages[1];
+  let package3 = req.body.submitData.packages[2];
+  let twitter = req.body.submitData.twitter;
+  let facebook = req.body.submitData.facebook;
+  let instagram = req.body.submitData.instagram;
+  let bio = req.body.submitData.bio;
+
+  knex('users')
+    .where('users.id', artistId)
+    .update({
+      bio: bio,
+      twitter_url: twitter,
+      instagram_url: instagram,
+      facebook_url: facebook
+    })
+    .returning('*')
+    .then(() => {
+      knex('price_packages')
+        .where({user_id: artistId})
+        .del()
+        .then(() => {
+          knex('price_packages')
+            .insert([{
+              user_id: artistId,
+              tier: Number(package1.tier),
+              price: Number(package1.price),
+              description: package1.description},
+              {user_id: artistId,
+              tier: Number(package2.tier),
+              price: Number(package2.price),
+              description: package2.description},
+              {user_id: artistId,
+              tier: Number(package3.tier),
+              price: Number(package3.price),
+              description: package3.description
+            }])
+            .then((data) => {
+              knex('price_packages')
+                .join('users', 'price_packages.user_id', '=', 'users.id')
+                .where('price_packages.user_id', artistId).orderBy('tier')
+                .then((userData) => {
+                  console.log(userData);
+                  res.json(userData);
+                });
+            });
+        });
+    });
+ });
+
 //OPPORTUNITIES
 
-app.get("/api/opportunities", (req, res) => {
+app.get('/api/opportunities', (req, res) => {
   knex('events')
     .select('*')
     .join('users', 'users.id', '=', 'events.creator_id')
@@ -306,7 +395,7 @@ app.get("/api/opportunities", (req, res) => {
     });
 });
 
-app.post("/opportunities/:id/add", (req, res) => {
+app.post('/opportunities/:id/add', (req, res) => {
   let cookie = req.session.user_id;
   let title = req.body.title;
   let description = req.body.description;
@@ -314,7 +403,7 @@ app.post("/opportunities/:id/add", (req, res) => {
   let price = req.body.price;
   let location = req.body.location;
 
-  knex("events").insert({
+  knex('events').insert({
     name: title,
     description: description,
     event_date: date,
@@ -322,10 +411,10 @@ app.post("/opportunities/:id/add", (req, res) => {
     event_location: location,
     creator_id: cookie
   })
-    .then(data => {
-      knex("events").join('users', 'users.id', '=', 'events.creator_id').orderBy('event_date').then(moredata => {
-        res.json(moredata);
-      })
+  .then(data => {
+      knex('events')
+        .orderBy('created_at', 'desc')
+        .then(moreData => res.json(moreData));
     });
 });
 
@@ -334,11 +423,39 @@ app.post("/opportunities/:id/delete", (req, res) => {
     .del()
     .where('event_id', req.body.event_id)
     .then(data => {
-      knex("events").join('users', 'users.id', '=', 'events.creator_id').orderBy('event_date').then(moredata => {
-        res.json(moredata);
-      })
+      knex("events")
+        .join('users', 'users.id', '=', 'events.creator_id')
+        .orderBy('event_date')
+        .then(moredata =>
+        res.json(moredata));
     });
 });
+
+app.get("/api/opportunities/applied/:id", (req, res) => {
+  knex('event_interests')
+    .where('artist_id', req.params.id)
+    .join('events', 'event_id', '=', 'event_interests.eventref_id')
+    .join('users', 'users.id', '=', 'events.creator_id')
+    .then(data => {
+      res.json(data)
+    })
+})
+
+app.post("/api/opportunities/applied/:id", (req, res) => {
+  knex('event_interests')
+    .del()
+    .where('application_id', req.body.application_id)
+    .where('artist_id', req.body.currentUser)
+    .then(data => {
+       knex('event_interests')
+        .where('artist_id', req.params.id)
+        .join('events', 'event_id', '=', 'event_interests.eventref_id')
+        .join('users', 'users.id', '=', 'events.creator_id')
+        .then(updatedlist => {
+          res.json(updatedlist);
+        })
+    })
+})
 
 app.post("/opportunities/:id/apply", (req, res) => {
   let message = req.body.msg_des
@@ -355,13 +472,28 @@ app.post("/opportunities/:id/apply", (req, res) => {
         subject: 'Exposure - Someone just applied to your posting!',
         text: `${artist_name} has applied to your posting and left you a message: ${message}`
       };
+
       mailgun.messages().send(data, function (error, body) {
         console.log(body);
       })
+
       res.send("Application successfully saved")
     })
 });
 
+app.post("/settings", (req, res) => {
+  let newFirstName = req.body.firstName;
+  let newLastName = req.body.lastName;
+  let newEmail = req.body.email;
+  let newPassword = req.body.password
+
+  knex('users').where('id', req.session.user_id).update({
+    first_name: newFirstName,
+    last_name: newLastName,
+    email: newEmail,
+    password: bcrypt.hashSync(newPassword, 10)}).returning(['first_name', 'last_name', 'email'])
+      .then(data => res.json(data))
+})
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);

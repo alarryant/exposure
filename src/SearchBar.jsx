@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import CatDropDown from './components/CatDropDown.jsx'
+import CatDropDown from './components/CatDropDown.jsx';
 import './styles/SearchBar.css';
 
 class SearchBar extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       value: ''
     };
@@ -19,7 +19,7 @@ class SearchBar extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    let search_item = this.state.value
+    let search_item = this.state.value;
     this.props.searchResult(search_item);
     this.setState({ value: "" });
   }
@@ -27,23 +27,26 @@ class SearchBar extends Component {
   render() {
     return (
       <div className="searchBar">
-        <form className="searchForm" onSubmit={this.handleSubmit}>
+        <form className="searchForm"
+              onSubmit={this.handleSubmit}>
           <label>
             <input className="searchInput"
-              type="text"
-              name="search"
-              placeholder="What are you searching for?"
-              value={this.state.value}
-              onChange={this.handleChange}
-            />
+                   type="text"
+                   name="search"
+                   placeholder="What are you searching for?"
+                   value={this.state.value}
+                   onChange={this.handleChange}>
+            </input>
           </label>
-          <input className="searchButton" type="submit" value="Search" />
+          <input className="searchButton"
+                 type="submit"
+                 value="Search" />
           <div className="catSearch dropdown-container">
-          <div className="dropdown">
-            <a href="#">Search By Category</a>
-            <CatDropDown searchResult={this.props.searchResult} />
+            <div className="dropdown">
+              <a href="#">Search By Category</a>
+              <CatDropDown searchResult={this.props.searchResult} />
+            </div>
           </div>
-        </div>
         </form>
       </div>
     );
