@@ -24,7 +24,9 @@ class MailButton extends React.Component {
   render() {
     return (
       <div>
-        <a href={`mailto:${this.props.email}?subject=${this.props.name} would like to book you for a photoshoot.`} >Contact Me</a>
+        <a href={`mailto:${this.props.email}?subject=${this.props.name} would like to book you for a photoshoot.`}>
+          Contact Me
+        </a>
       </div>
     )
   }
@@ -86,8 +88,6 @@ class Profile extends React.Component {
       socialmedia.instagram = 'null'
     }
 
-    console.log("this is socialmedia", socialmedia);
-
     this.setState({
       twitter: socialmedia.twitter,
       facebook: socialmedia.facebook,
@@ -118,15 +118,21 @@ class Profile extends React.Component {
   }
 
   changeFeaturePhotos = (clickedPhotoSrc, clickedPhotoFeature) => {
-    axios.post("/artists/:id/edit", {clickedPhotoSrc: clickedPhotoSrc, clickedPhotoFeature: clickedPhotoFeature})
+    axios.post("/artists/:id/edit",
+      { clickedPhotoSrc: clickedPhotoSrc,
+        clickedPhotoFeature: clickedPhotoFeature })
     .then(res => {
       let newCollection = res.data;
-      this.setState({collection: newCollection});
+      this.setState({ collection: newCollection });
     })
   }
 
   createReview(rating, review, artist, user) {
-    axios.post("/artists/:id/newreview", { rating: rating, description: review, artist_id: artist, user_id: user})
+    axios.post("/artists/:id/newreview",
+      { rating: rating,
+        description: review,
+        artist_id: artist,
+        user_id: user })
       .then((res) => {
         let newReviews = res.data.reverse();
         this.setState({reviews: newReviews});
@@ -283,11 +289,11 @@ class Profile extends React.Component {
               <br />
             </div>
           ) : (
-              <div>
-                <h1>Portfolio Photos:</h1>
-                <Portfolio artistPhotos={this.state.collection} />
-              </div>
-            )}
+            <div>
+              <h1>Portfolio Photos:</h1>
+              <Portfolio artistPhotos={this.state.collection} />
+            </div>
+          )}
         </div>
         <AvailabilityCard currentUser={this.propscurrentUser}
                           disabledDays={this.state.disabledDays}
@@ -295,8 +301,8 @@ class Profile extends React.Component {
         <PackagesCard packages={this.state.packages} />
         <ReviewsCard reviews={this.state.reviews} />
         <AddReview currentUser={this.props.currentUser}
-          artistId={this.state.artistId}
-          createReview={this.createReview}/>
+                   artistId={this.state.artistId}
+                   createReview={this.createReview}/>
       </div>)}
     </div>
     )

@@ -98,14 +98,14 @@ app.get('/search', (req, res) => {
   let queryWord = (req.query.searchWord).toLowerCase();
   knex('images')
     .where(
-      knex.raw("LOWER('title') like ?", `%${queryWord}%`))
+      knex.raw('LOWER("title") like ?', `%${queryWord}%`))
     .orWhere(
-      knex.raw("LOWER('description') like ?", `%${queryWord}%`))
+      knex.raw('LOWER("description") like ?', `%${queryWord}%`))
     .orWhere(
-      knex.raw("LOWER('category') like ?", `%${queryWord}%`))
+      knex.raw('LOWER("category") like ?', `%${queryWord}%`))
     .select('*')
     .then(function (images) {
-      res.json(images)
+      res.json(images);
     });
 });
 
@@ -405,16 +405,6 @@ app.post('/opportunities/:id/add', (req, res) => {
   .then(data => {
       knex('events')
         .orderBy('event_date', 'desc')
-        .then(moreData => res.json(moreData));
-    });
-});
-
-app.post('/opportunities/:id/delete', (req, res) => {
-  res.send('Cancel Opportunity');
-    .then(data => {
-      knex("events")
-        .join('users', 'users.id', '=', 'events.creator_id')
-        .orderBy('event_date')
         .then(moreData => res.json(moreData));
     });
 });
