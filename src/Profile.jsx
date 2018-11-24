@@ -60,7 +60,7 @@ class Profile extends React.Component {
     this.sendPackageField = this.sendPackageField.bind(this);
     this.changeFeaturePhotos = this.changeFeaturePhotos.bind(this);
     this.createReview = this.createReview.bind(this);
-    // this.isPhotographerLiked = this.isPhotographerLiked.bind(this);
+    this.deleteReview = this.deleteReview.bind(this);
   }
 
   areFeaturedPhotos(photos = []) {
@@ -147,22 +147,22 @@ class Profile extends React.Component {
       });
   }
 
-  // isPhotographerLiked(likes, artistId) {
-  //   let artistsLiked = likes.map((like) => {
-  //     return like.artist_id
-  //   })
+  deleteReview(review) {
+    let artist_id = review.artist_id;
+    let review_id = review.review_id;
 
-  //   this.setState({artistLiked: artistsLiked.includes(artistId)});
-  // }
+    axios.post(`/artists/${artist_id}/reviews/${review_id}`, { review_id, artist_id})
+    .then((res) => {
+      let newReviews = res.data.reverse();
+      this.setState({reviews: newReviews});
+    })
+  }
 
   componentDidMount() {
 
-    // console.log("this is props in profile", this.props)
     const { id } = this.props.match.params;
 
     this.setState({ artistId: id });
-
-    // this.isPhotographerLiked(this.props.likes, id);
 
     axios.get(`/artists/${id}`, {
       params: {
@@ -171,7 +171,6 @@ class Profile extends React.Component {
       }
     })
       .then((res) => {
-        // console.log("this is everything", res.data);
         const profileData = {
           collection: res.data.images,
           packages: res.data.packages,
@@ -183,26 +182,11 @@ class Profile extends React.Component {
           instagram: res.data.user[0].instagram_url,
           reviews: res.data.reviews,
           email: res.data.user[0].email,
-          // likes: res.data.likes,
           redirect: true
         };
 
-        // this.isPhotographerLiked(res.data.likes, id);
 
         this.setState(profileData);
-        // {
-        //   redirect: true,
-        //   twitter: twitter,
-        //   facebook: facebook,
-        //   instagram: instagram,
-        //   fullName: fullName,
-        //   avatarImage: avatarImage,
-        //   packages: res.data.packages,
-        //   collection: res.data.images,
-        //   bio: bio,
-        //   reviews: reviews,
-        //   email: email,
-        // });
       });
   }
 
@@ -238,7 +222,6 @@ class Profile extends React.Component {
   }
 
   render() {
-    // console.log("this is in profile", this.props.currentUser);
     const { id } = this.props.match.params;
 
     const settings = {
@@ -338,12 +321,13 @@ class Profile extends React.Component {
                           disabledDays={this.state.disabledDays}
                           artistId={this.state.artistId} />
         <PackagesCard packages={this.state.packages} />
-        <ReviewsCard reviews={this.state.reviews} />
-        {this.props.usertype === 2 ? (
-          <AddReview currentUser={this.props.currentUser}
-                     artistId={this.state.artistId}
-                     createReview={this.createReview}/>
-          ) : ''}
+        <ReviewsCard reviews={this.state.reviews}
+          currentUser={this.props.currentUser}
+          artistId={this.state.artistId}
+          deleteReview={this.deleteReview} />
+        <AddReview currentUser={this.props.currentUser}
+                   artistId={this.state.artistId}
+                   createReview={this.createReview}/>
       </div>)}
     </div>
     )
