@@ -8,7 +8,7 @@ class ReviewsCard extends React.Component {
     super(props);
     this.state = {
       showMenu: false,
-      user: this.props.currentUser
+      user: Number(this.props.currentUser)
     };
 
     this.showMenu = this.showMenu.bind(this);
@@ -18,8 +18,8 @@ class ReviewsCard extends React.Component {
   }
 
   renderReviews(reviews = []) {
-    let currentUser = this.state.user
-    const deleteReview = this.props.deleteReview
+    let currentUser = this.state.user;
+    const deleteReview = this.props.deleteReview;
     return reviews.map(function (review) {
         return (
           <div>

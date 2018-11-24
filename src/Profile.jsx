@@ -160,7 +160,7 @@ class Profile extends React.Component {
 
   componentDidMount() {
 
-    if (this.props.location.pathname.includes("/edit")) {
+    if (this.props.location.pathname.includes("/edit") && this.props.currentUser === this.props.match.params) {
       this.setState({editable: true});
     }
 
@@ -199,10 +199,10 @@ class Profile extends React.Component {
   handleClickEdit() {
     if (this.state.editable === false) {
       this.setState({editable: true})
-      this.props.handleProfileEditPath(`artists/${this.state.artistId}/edit`)
+      this.props.handleProfileEditPath(`artists/${this.props.currentUser}/edit`)
     } else {
       this.setState({editable: false})
-      this.props.handleProfileEditPath(`artists/${this.state.artistId}`)
+      this.props.handleProfileEditPath(`artists/${this.props.currentUser}`)
     }
   }
 
