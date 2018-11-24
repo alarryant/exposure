@@ -12,25 +12,37 @@ class EditPortfolio extends React.Component {
   onFeatureClick(event) {
     event.preventDefault();
     let clickedPhoto = event.currentTarget;
-    let clickedPhotoSrc = clickedPhoto.src
-    let clickedPhotoFeature = clickedPhoto.getAttribute("value")
-    this.props.changeFeaturePhotos(clickedPhotoSrc, clickedPhotoFeature)
+    let clickedPhotoSrc = clickedPhoto.src;
+    let clickedPhotoFeature = clickedPhoto.getAttribute("value");
+    this.props.changeFeaturePhotos(clickedPhotoSrc, clickedPhotoFeature);
 }
 
 
   displayPortfolio(images) {
     if (!images || images.length === 0 ) {
-      return (<p> Sorry! No photos to display!</p>)
+      return (
+        <p>
+          Sorry! No photos to display!
+        </p>
+      )
     } else {
       return images.map((image) => {
         return (
-        <div className="editPortfolio">
+          <div className="editPortfolio">
           { image.featured === 'true' ?
-          <img className="searchResult" style={{border: '3px solid lightgrey'}} alt="portfolioimg" src={image.src} onClick={this.onFeatureClick} value={image.featured}/>
+            <img className="searchResult"
+               style={{border: '3px solid lightgrey'}}
+               alt="portfolioimg"
+               src={image.src}
+               onClick={this.onFeatureClick}
+               value={image.featured}/>
           :
-         <img className="searchResult" alt="portfolioimg" src={image.src} onClick={this.onFeatureClick} value={image.featured}/>
-          }
-        </div>
+            <img className="searchResult"
+                 alt="portfolioimg"
+                 src={image.src}
+                 onClick={this.onFeatureClick}
+                 value={image.featured}/> }
+          </div>
         )
       })
     }

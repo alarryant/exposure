@@ -98,14 +98,14 @@ app.get('/search', (req, res) => {
   let queryWord = (req.query.searchWord).toLowerCase();
   knex('images')
     .where(
-      knex.raw("LOWER('title') like ?", `%${queryWord}%`))
+      knex.raw('LOWER("title") like ?', `%${queryWord}%`))
     .orWhere(
-      knex.raw("LOWER('description') like ?", `%${queryWord}%`))
+      knex.raw('LOWER("description") like ?', `%${queryWord}%`))
     .orWhere(
-      knex.raw("LOWER('category') like ?", `%${queryWord}%`))
+      knex.raw('LOWER("category") like ?', `%${queryWord}%`))
     .select('*')
     .then(function (images) {
-      res.json(images)
+      res.json(images);
     });
 });
 

@@ -15,7 +15,7 @@ class Opportunities extends Component {
     };
 
     this.displayEvents = this.displayEvents.bind(this);
-    this.saveInterestedApplicants = this.saveInterestedApplicants.bind(this)
+    this.saveInterestedApplicants = this.saveInterestedApplicants.bind(this);
     this.createEvent = this.createEvent.bind(this);
     this.showSuccessMsg = this.showSuccessMsg.bind(this);
     this.deleteEvent = this.deleteEvent.bind(this);
@@ -25,7 +25,9 @@ class Opportunities extends Component {
   showSuccessMsg() {
       return (
       <div className="applicationSent">
-        <h3>Your application has been sent! Thanks for applying!</h3>
+        <h3>
+          Your application has been sent! Thanks for applying!
+        </h3>
       </div>
 
       )
@@ -61,7 +63,10 @@ class Opportunities extends Component {
   displayEvents(events) {
     if (!events || events.length === 0 ) {
       return (
-        <p>There are currently no postings! Check back later!</p> )
+        <p>
+          There are currently no postings! Check back later!
+        </p>
+      )
     } else {
       return events.map((event) => {
         let date = event.event_date.toString().split('T')[0]
@@ -72,7 +77,7 @@ class Opportunities extends Component {
                    date={date}
                    usertype={this.props.usertype}
                    currentUser={this.props.currentUser}/>
-          )
+        )
       })
     }
   }
@@ -87,7 +92,7 @@ class Opportunities extends Component {
       .then((res) => {
         let newEvents = res.data;
         this.setState({ opportunities: newEvents });
-        });
+      });
   }
 
   componentDidMount() {
