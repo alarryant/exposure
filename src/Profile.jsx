@@ -164,7 +164,13 @@ class Profile extends React.Component {
 
   componentDidMount() {
 
+    if (this.props.location.pathname.includes("/edit") && this.props.currentUser === this.props.match.params) {
+      this.setState({editable: true});
+    }
+
     const { id } = this.props.match.params;
+
+    // console.log("what is in params", this.props.location);
 
     this.setState({ artistId: id });
 
@@ -196,9 +202,11 @@ class Profile extends React.Component {
 
   handleClickEdit() {
     if (this.state.editable === false) {
-      this.setState({ editable: true })
+      this.setState({editable: true})
+      this.props.handleProfileEditPath(`artists/${this.props.currentUser}/edit`)
     } else {
-      this.setState({ editable: false })
+      this.setState({editable: false})
+      this.props.handleProfileEditPath(`artists/${this.props.currentUser}`)
     }
   }
 
@@ -246,34 +254,29 @@ class Profile extends React.Component {
 
     return (
       <div>
-        {this.props.currentUser === id ? (
-          <button onClick={this.handleClickEdit}>
-            Edit
+      {this.props.currentUser === id ? (
+        <button onClick={this.handleClickEdit}>
+          {this.state.editable ? "Clear Changes" : "Edit"}
         </button>
-        ) : (
-            ''
-          )}
-        {this.state.editable ? (
-          <form onSubmit={this.handleSubmit}>
-            <div className="profile">
-              <Avatar name={this.state.fullName}
-                avatar={this.state.avatarImage} />
-              <MailButton email={this.state.email}
-                name={this.props.currentUserName} />
-              <StarPhotographer currentUser={this.props.currentUser}
-                artistId={id}
-                artistLiked={this.state.artistLiked} />
-              <h3>Description</h3>
-              <EditProfileDesc bio={this.state.bio}
-                sendBioForm={this.sendBioForm} />
-              <EditSocialMedia twitter={this.state.twitter}
-                facebook={this.state.facebook}
-                instagram={this.state.instagram}
-                sendSocialMediaForm={this.sendSocialMediaForm} />
-              <div className="featuredPortfolio">
-                <div>
+      ) : (
+        ''
+      )}
+      {this.state.editable ? (
+        <form onSubmit={this.handleSubmit}>
+          <div className="profile">
+            <Avatar name={this.state.fullName}
+                    avatar={this.state.avatarImage} />
+            <h3>Description</h3>
+            <EditProfileDesc bio={this.state.bio}
+                             sendBioForm={this.sendBioForm} />
+            <EditSocialMedia twitter={this.state.twitter}
+                             facebook={this.state.facebook}
+                             instagram={this.state.instagram}
+                             sendSocialMediaForm={this.sendSocialMediaForm} />
+            <div className="featuredPortfolio">
+              <div>
 
-                  <h3>Select Feature Photos ({this.numOfFeatured.length}/10):</h3>
+                <h3>Select Feature Photos ({this.numOfFeatured.length}/10):</h3>
                   <div>
                     <EditPortfolio
                       changeFeaturePhotos={this.changeFeaturePhotos}

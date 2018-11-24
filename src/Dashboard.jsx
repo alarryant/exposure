@@ -4,27 +4,27 @@ import Avatar from './components/Avatar.jsx';
 // import Statistics from './components/Statistics.jsx';
 import CreateEvent from './CreateEvent';
 import OpportunityEventCard from './components/Opportunity_EventCard.jsx'
-// import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import './styles/Dashboard.css';
 import SearchBar from './SearchBar.jsx';
 
 const left = {
-  width: '35%',
+  width: '20%',
   float: 'left'
 };
 
 const right = {
-  width: '65%',
+  width: '80%',
   float: 'right'
 };
 
-// const tabStyle = {
-//   width: '50%',
-//   margin: '0 auto'
-// };
+const tabStyle = {
+  width: '50%',
+  margin: '0 auto'
+};
 
 class Dashboard extends React.Component {
 
@@ -38,31 +38,62 @@ class Dashboard extends React.Component {
     }
     this.createEvent = this.createEvent.bind(this);
     this.renderLikedPhotographer = this.renderLikedPhotographer.bind(this);
+    this.deleteEvent = this.deleteEvent.bind(this)
   }
 
-  createEvent(title, description, date, price, location) {
+
+  deleteEvent(event, creator) {
+    let currentUser = parseInt(this.props.currentUser)
+    if (creator === currentUser) {
+      axios.post(`/opportunities/${event}/delete`,
+        { event_id: event,
+          creatorid: creator} )
+      .then((res) => {
+        let newEvents = res.data;
+        this.setState({ opportunities: newEvents });
+      })
+
+      axios.get(`/api/opportunities/applied/${this.props.currentUser}`).then(res => {
+        this.setState({'appliedopportunities': res.data })
+    });
+
+    }
+  }
+
+   createEvent(title, description, date, price, location) {
     axios.post("/opportunities/:id/add", { title: title, description: description, date: date, price: price, location: location })
       .then((res) => {
         let newEvents = res.data;
         this.setState({events: newEvents});
-        newEvents.map(function(event) {
+        newEvents.map((event) => {
           let date = event.event_date.toString().split('T')[0]
           return (
-            <OpportunityEventCard event={event} date={date}/>
+            <OpportunityEventCard
+              deleteEvent={this.deleteEvent}
+              event={event}
+              date={date}
+              currentUser={this.props.currentUser}
+              />
             );
         });
       });
   }
 
+
   displayEvents(events) {
     if (!events || events.length === 0 ) {
       return (
-        <p>You have no events yet!</p> )
+        <p>You have no events yet! Why not create one?</p> )
     } else {
-      return events.map(function(event) {
+      return events.map((event) => {
         let date = event.event_date.toString().split('T')[0]
         return (
-          <OpportunityEventCard event={ event } date={ date }/>
+          <OpportunityEventCard
+              deleteEvent={this.deleteEvent}
+              event={event}
+              date={date}
+              currentUser={this.props.currentUser}
+              />
         )
       })
     }
@@ -70,26 +101,33 @@ class Dashboard extends React.Component {
 
   componentDidMount() {
     let currentUser = this.props.currentUser;
-    // console.log("this is comp did mount current user", this.props.currentUser);
-
     axios.get(`/dashboard`, {
       params: {
         currentUser: currentUser
       }
     }).then(response => {
-      // console.log("this is app side response", response.data)
-      // this.props.getLikedPhotographers(response.data.likes);
       this.setState({
           name: response.data.user[0].first_name + " " + response.data.user[0].last_name,
           avatar: response.data.user[0].profile_image,
           type: response.data.user[0].user_type_id,
-          likedPhotographers: response.data.likes
+          likedPhotographers: response.data.likes,
+          userevents: response.data.events
       });
     });
+  }
 
-    axios.get('/dashboard/events').then((res) => {
-      this.setState({events: res.data})
-    })
+  componentDidUpdate() {
+    let currentUser = this.props.currentUser;
+    axios.get(`/dashboard`, {
+      params: {
+        currentUser: currentUser
+      }
+    }).then(response => {
+      this.setState({
+          likedPhotographers: response.data.likes,
+          userevents: response.data.events
+      });
+    });
   }
 
   renderLikedPhotographer(photographers=[]) {
@@ -106,7 +144,7 @@ class Dashboard extends React.Component {
     };
     return photographers.map((photographer) => {
       return (
-        <div className="photographerContainer">
+        <div className="photographerContainer" key={photographer.artist_id}>
         <div style={starredPhotographer}>
           <Link to={`/artists/${ photographer.artist_id }`}>
             <img style={starredPhotographer__img} alt="profileimg" src={photographer.profile_image} /><br/>
@@ -117,32 +155,33 @@ class Dashboard extends React.Component {
         </div>
       )
     })
-
-    axios.get("/dashboard/events").then(res => {
-      this.setState({events: res.data})
-    });
   }
 
   render() {
     const userType = this.state.type;
 
-    // const tabs = (
-    //   <div style={tabStyle}>
-    //     <Tabs>
-    //       <TabList>
-    //         <Tab>Availability</Tab>
-    //         <Tab>Statistics</Tab>
-    //       </TabList>
+    const tabs = (
+      <div style={tabStyle}>
+        <Tabs>
+          <TabList>
+            <Tab>Favorite Photographers</Tab>
+            <Tab>My Events</Tab>
+          </TabList>
 
-    //       <TabPanel>
-    //         <EditAvailability currentUser={this.props.currentUser}/>
-    //       </TabPanel>
-    //       <TabPanel>
-    //         <Statistics />
-    //       </TabPanel>
-    //     </Tabs>
-    //   </div>
-    // );
+          <TabPanel>
+          <h1>Your Favourite Photographers</h1>
+            <div className="starredContainer">
+            {this.renderLikedPhotographer(this.state.likedPhotographers)}
+            </div>
+          </TabPanel>
+          <TabPanel>
+          <p>Checkout other postings on the<NavLink to="/opportunities">Job Board</NavLink></p>
+           <CreateEvent createEvent={this.createEvent}/>
+            { this.displayEvents(this.state.userevents) }
+          </TabPanel>
+        </Tabs>
+      </div>
+    );
 
     let search;
     if(this.props.search){
@@ -151,29 +190,20 @@ class Dashboard extends React.Component {
 
     return (
       <div className='contentWrapper'>
-
         {search}
-
         {/* start left */}
         <div className='left' style={left}>
           <Avatar name={this.state.name} avatar={this.state.avatar} />
-          <CreateEvent createEvent={this.createEvent}/>
-            { this.displayEvents(this.state.events) }
         </div>
-
         {/* start right */}
-        {userType === 1 ? (
+        {userType === 2 ? (
           <div className='right' style={right}>
-            {/*tabs*/}
+            {tabs}
           </div>
         ) : (
             <div className='right' style={right}>
             </div>
           )}
-        <h1>Your Favourite Photographers</h1>
-        <div className="starredContainer">
-          {this.renderLikedPhotographer(this.state.likedPhotographers)}
-        </div>
       </div>
     );
   }

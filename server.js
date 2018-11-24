@@ -127,13 +127,21 @@ app.get('/dashboard', (req, res) => {
         .join('users', 'artist_likes.artist_id', '=', 'users.id')
         .where('client_id', currentUser)
         .then((likes) => {
-          res.json({
+          knex('events')
+          .select('*')
+          .join('users', 'users.id', '=', 'events.creator_id')
+          .where('creator_id', currentUser)
+          .then(function (events) {
+            res.json({
             user: user,
-            likes: likes
+            likes: likes,
+            events: events
           });
         });
     });
+  });
 });
+
 
 //ARTIST PROFILE
 app.get('/artists/:id', (req, res) => {
@@ -402,6 +410,16 @@ app.get('/api/opportunities', (req, res) => {
     });
 });
 
+app.get('/api/opportunities/:id', (req, res) => {
+  knex('events')
+    .select('*')
+    .join('users', 'users.id', '=', 'events.creator_id')
+    .where('creator_id', req.params.id)
+    .then(function (events) {
+      res.json(events);
+    });
+});
+
 app.post('/opportunities/:id/add', (req, res) => {
   let cookie = req.session.user_id;
   let title = req.body.title;
@@ -409,6 +427,7 @@ app.post('/opportunities/:id/add', (req, res) => {
   let date = req.body.date;
   let price = req.body.price;
   let location = req.body.location;
+  console.log(cookie)
 
   knex('events').insert({
     name: title,

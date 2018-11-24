@@ -20,7 +20,7 @@ class DeleteReview extends Component {
     handleClose(e) {
         e.preventDefault();
         // const reviewId = this.props.review.review_id;
-        const review = this.props.review
+        const review = this.props.review;
         this.props.deleteReview(review);
         this.setState({ show: false });
     }

@@ -46,7 +46,7 @@ class App extends Component {
     this.searchResult = this.searchResult.bind(this);
     this.renderRedirect = this.renderRedirect.bind(this);
     this.changeAccountInfo = this.changeAccountInfo.bind(this);
-    // this.getLikedPhotographers = this.getLikedPhotographers.bind(this);
+    this.handleProfileEditPath = this.handleProfileEditPath.bind(this);
   }
 
   //LOGIN FEATURE
@@ -72,6 +72,7 @@ class App extends Component {
     axios.post("/logout")
       .then((res) => {
         localStorage.removeItem('currentUser');
+        localStorage.removeItem('user_type_id');
         localStorage.removeItem('currentUserFirstName');
         localStorage.removeItem('currentUserLastName');
         this.setState({ redirect: 'home' });
@@ -92,7 +93,7 @@ class App extends Component {
         localStorage.setItem('currentUser', res.data.currentUser);
 
         if (res.data.userType === 1) {
-          this.setState({ redirect: `artists/${res.data.currentUser}`, usertype: res.data.userType });
+          this.setState({ redirect: `artists/${res.data.currentUser}/edit`, usertype: res.data.userType });
         } else {
           this.setState({ redirect: 'dashboard', usertype: res.data.userType });
         }
@@ -161,6 +162,10 @@ class App extends Component {
     }
   }
 
+  handleProfileEditPath(path) {
+    this.setState({redirect: path});
+  }
+
   // getLikedPhotographers(likes) {
   //   this.setState({likes: likes});
   //   console.log("liked photographers set");
@@ -189,8 +194,9 @@ class App extends Component {
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos}
               currentUser={currentUser} search="true" searchResult = {this.searchResult} />}  />
             <Route path='/artists/:id' render={props => <Profile {...props} currentUserName={currentUserName}
-              currentUser={currentUser}
-              usertype={user_type_id} />} />
+                                                                            currentUser={currentUser}
+                                                                            usertype={user_type_id}
+                                                                            handleProfileEditPath={this.handleProfileEditPath}/>} />
             <Route path='/opportunities' name='opportunities' render={(props) =>
               <Opportunities {...props} currentUser={currentUser}
                 usertype={user_type_id}

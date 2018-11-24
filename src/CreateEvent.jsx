@@ -4,13 +4,13 @@ import { Button, Modal } from 'react-bootstrap';
 class CreateEvent extends Component {
     constructor(props) {
         super(props);
-    
+
         this.handleShow = this.handleShow.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-    
-        this.state = { 
+
+        this.state = {
             show: false,
             title: '',
             description: '',
@@ -19,7 +19,7 @@ class CreateEvent extends Component {
             location: ''
         };
     }
-    
+
     handleClose() {
     this.setState({ show: false });
     }
@@ -46,7 +46,7 @@ class CreateEvent extends Component {
     render() {
         return (
             <div>
-            <Button bsStyle="default" bsSize="medium" onClick={this.handleShow}>
+            <Button bsStyle="default" bsSize="small" onClick={this.handleShow}>
                 Create Event
             </Button>
 
