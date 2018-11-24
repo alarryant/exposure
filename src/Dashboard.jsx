@@ -37,31 +37,62 @@ class Dashboard extends React.Component {
     }
     this.createEvent = this.createEvent.bind(this);
     this.renderLikedPhotographer = this.renderLikedPhotographer.bind(this);
+    this.deleteEvent = this.deleteEvent.bind(this)
   }
 
-  createEvent(title, description, date, price, location) {
+
+  deleteEvent(event, creator) {
+    let currentUser = parseInt(this.props.currentUser)
+    if (creator === currentUser) {
+      axios.post(`/opportunities/${event}/delete`,
+        { event_id: event,
+          creatorid: creator} )
+      .then((res) => {
+        let newEvents = res.data;
+        this.setState({ opportunities: newEvents });
+      })
+
+      axios.get(`/api/opportunities/applied/${this.props.currentUser}`).then(res => {
+        this.setState({'appliedopportunities': res.data })
+    });
+
+    }
+  }
+
+   createEvent(title, description, date, price, location) {
     axios.post("/opportunities/:id/add", { title: title, description: description, date: date, price: price, location: location })
       .then((res) => {
         let newEvents = res.data;
         this.setState({events: newEvents});
-        newEvents.map(function(event) {
+        newEvents.map((event) => {
           let date = event.event_date.toString().split('T')[0]
           return (
-            <OpportunityEventCard event={event} date={date}/>
+            <OpportunityEventCard
+              deleteEvent={this.deleteEvent}
+              event={event}
+              date={date}
+              currentUser={this.props.currentUser}
+              />
             );
         });
       });
   }
+
 
   displayEvents(events) {
     if (!events || events.length === 0 ) {
       return (
         <p>You have no events yet!</p> )
     } else {
-      return events.map(function(event) {
+      return events.map((event) => {
         let date = event.event_date.toString().split('T')[0]
         return (
-          <OpportunityEventCard event={ event } date={ date }/>
+          <OpportunityEventCard
+              deleteEvent={this.deleteEvent}
+              event={event}
+              date={date}
+              currentUser={this.props.currentUser}
+              />
         )
       })
     }
