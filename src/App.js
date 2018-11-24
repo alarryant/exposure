@@ -47,19 +47,17 @@ class App extends Component {
     this.searchResult = this.searchResult.bind(this);
     this.renderRedirect = this.renderRedirect.bind(this);
     this.changeAccountInfo = this.changeAccountInfo.bind(this);
+    // this.getLikedPhotographers = this.getLikedPhotographers.bind(this);
   }
 
   //LOGIN FEATURE
   loginInfo(email, password) {
     axios.post("/login", { email: email, password: password })
       .then((res) => {
-        console.log("this is app side login", res.data);
         localStorage.setItem('currentUser', res.data[0].id);
         localStorage.setItem('user_type_id', res.data[0].user_type_id);
         localStorage.setItem('currentUserFirstName', res.data[0].first_name);
         localStorage.setItem('currentUserLastName', res.data[0].last_name);
-
-        console.log("this is local storage", localStorage);
 
         if (res.data[0].user_type_id === 1) {
           this.setState({ redirect: `artists/${res.data[0].id}`, usertype: res.data[0].user_type_id });
@@ -84,7 +82,12 @@ class App extends Component {
 
   //REGISTER FEATURE
   signupInfo(firstName, lastName, email, password, userType) {
-    axios.post("/register", { firstName: firstName, lastName: lastName, email: email, password: password, userType: userType })
+    axios.post("/register", {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      userType: userType })
       .then((res) => {
         localStorage.setItem('currentUser', res.data);
         this.setState({ redirect: 'home' });
@@ -93,12 +96,20 @@ class App extends Component {
 
   //EDIT ACCOUNT FEATURE
   changeAccountInfo(firstName, lastName, email, password) {
-    axios.post('/settings', { firstName: firstName, lastName: lastName, email: email, password: password })
+    axios.post('/settings', {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password })
       .then((res) => {
           let newFirstName = res.data[0].first_name;
           let newLastName = res.data[0].last_name;
           let newEmail = res.data[0].email;
-          this.setState({ redirect: true, firstName: newFirstName, lastName: newLastName, email: newEmail })
+          this.setState({
+            redirect: true,
+            firstName: newFirstName,
+            lastName: newLastName,
+            email: newEmail });
           localStorage.removeItem('currentUserFirstName');
           localStorage.removeItem('currentUserLastName');
           localStorage.setItem('currentUserFirstName', newFirstName);
@@ -108,7 +119,16 @@ class App extends Component {
 
   //EDIT PROFILE FEATURE
   editProfileInfo(firstName, lastName, email, password, website, instagram, facebook, twitter, location) {
-    axios.post('/artists/:id/edit', { firstName: firstName, lastName: lastName, email: email, password: password, website: website, instagram: instagram, facebook: facebook, twitter: twitter, location: location })
+    axios.post('/artists/:id/edit', {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      website: website,
+      instagram: instagram,
+      facebook: facebook,
+      twitter: twitter,
+      location: location })
       .then((res) => {
         this.setState({ redirect: 'profile' });
       });
@@ -133,12 +153,16 @@ class App extends Component {
     }
   }
 
+  // getLikedPhotographers(likes) {
+  //   this.setState({likes: likes});
+  //   console.log("liked photographers set");
+  // }
+
   componentDidMount() {
     //This is how you use axios for get requests! Axios is like an ajax library
 
     axios.get("/homephotos")
       .then(res => this.setState({ homephotos: res.data }));
-
   }
 
   render() {
@@ -150,24 +174,22 @@ class App extends Component {
         <div>
           {this.renderRedirect()}
           <Navbar loginInfo={this.loginInfo}
-            signupInfo={this.signupInfo}
-            currentUser={currentUser}
-            logout={this.logout} />
+                  signupInfo={this.signupInfo}
+                  currentUser={currentUser}
+                  logout={this.logout} />
           <SearchBar searchResult={this.searchResult}/>
           <Switch>
-            <Route path='/home' render={() => <Home homephotos={this.state.homephotos} currentUser={currentUser}/>} />
-            <Route path='/artists/:id' render={props => <Profile
-              {...props}
-              currentUserName={currentUserName}
-              currentUser={currentUser} />} />
+            <Route path='/home' render={() => <Home homephotos={this.state.homephotos}
+                                                    currentUser={currentUser}/>} />
+            <Route path='/artists/:id' render={props => <Profile {...props} currentUserName={currentUserName}
+                                                                            currentUser={currentUser}
+                                                                            usertype={user_type_id}/>} />
             <Route path='/opportunities' name='opportunities' render={(props) =>
-                <Opportunities {...props}
-                  currentUser={currentUser}
-                  usertype={user_type_id}
-                  currentUserName={currentUserName}/>
-                }
-            />
-            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={currentUser} />} />
+                <Opportunities {...props} currentUser={currentUser}
+                                          usertype={user_type_id}
+                                          currentUserName={currentUserName}/>}/>
+            <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={currentUser}
+                                                                                               getLikedPhotographers={this.getLikedPhotographers}/>} />
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
               searchWord={this.state.searchWord}

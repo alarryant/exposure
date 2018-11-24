@@ -68,18 +68,22 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`/dashboard`).then(response => {
-      this.setState((prevState) => {
-        return {
-          name: response.data[0].first_name + " " + response.data[0].last_name,
-          avatar: response.data[0].profile_image,
-          type: response.data[0].user_type_id
-        };
-      });
-    });
+    let currentUser = this.props.currentUser;
+    // console.log("this is comp did mount current user", this.props.currentUser);
 
-    axios.get('/dashboard/likes').then((res) => {
-      this.setState({likedPhotographers: res.data});
+    axios.get(`/dashboard`, {
+      params: {
+        currentUser: currentUser
+      }
+    }).then(response => {
+      // console.log("this is app side response", response.data)
+      // this.props.getLikedPhotographers(response.data.likes);
+      this.setState({
+          name: response.data.user[0].first_name + " " + response.data.user[0].last_name,
+          avatar: response.data.user[0].profile_image,
+          type: response.data.user[0].user_type_id,
+          likedPhotographers: response.data.likes
+      });
     });
 
     axios.get('/dashboard/events').then((res) => {

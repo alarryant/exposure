@@ -34,6 +34,7 @@ class AvailabilityCard extends React.Component {
   }
 
   render() {
+    // console.log("this is props in profile avail", this.props.currentUser);
     return (
       <div className="profilebtn">
         <button onClick={this.showMenu}>
@@ -43,7 +44,8 @@ class AvailabilityCard extends React.Component {
           <div className="menu"
             ref={ (element) => { this.dropdownMenu = element } }>
             <EditAvailability artistId={this.props.artistId}
-                              disabledDays={this.props.disabledDays}/>
+                              disabledDays={this.props.disabledDays}
+                              currentUser = {this.props.currentUser}/>
           </div>
           ) : (
           null )

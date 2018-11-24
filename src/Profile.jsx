@@ -60,6 +60,7 @@ class Profile extends React.Component {
     this.sendPackageField = this.sendPackageField.bind(this);
     this.changeFeaturePhotos = this.changeFeaturePhotos.bind(this);
     this.createReview = this.createReview.bind(this);
+    // this.isPhotographerLiked = this.isPhotographerLiked.bind(this);
   }
 
   areFeaturedPhotos(photos = []) {
@@ -146,19 +147,31 @@ class Profile extends React.Component {
       });
   }
 
+  // isPhotographerLiked(likes, artistId) {
+  //   let artistsLiked = likes.map((like) => {
+  //     return like.artist_id
+  //   })
+
+  //   this.setState({artistLiked: artistsLiked.includes(artistId)});
+  // }
+
   componentDidMount() {
 
+    // console.log("this is props in profile", this.props)
     const { id } = this.props.match.params;
 
     this.setState({ artistId: id });
 
+    // this.isPhotographerLiked(this.props.likes, id);
+
     axios.get(`/artists/${id}`, {
       params: {
-        artistId: id
+        artistId: id,
+        currentUser: this.props.currentUser
       }
     })
       .then((res) => {
-        console.log("this is everything", res.data);
+        // console.log("this is everything", res.data);
         const profileData = {
           collection: res.data.images,
           packages: res.data.packages,
@@ -170,10 +183,11 @@ class Profile extends React.Component {
           instagram: res.data.user[0].instagram_url,
           reviews: res.data.reviews,
           email: res.data.user[0].email,
+          // likes: res.data.likes,
           redirect: true
         };
 
-        console.log(profileData);
+        // this.isPhotographerLiked(res.data.likes, id);
 
         this.setState(profileData);
         // {
@@ -224,6 +238,7 @@ class Profile extends React.Component {
   }
 
   render() {
+    // console.log("this is in profile", this.props.currentUser);
     const { id } = this.props.match.params;
 
     const settings = {
@@ -240,7 +255,13 @@ class Profile extends React.Component {
 
     return (
       <div>
-      <button onClick={this.handleClickEdit}>Edit</button>
+      {this.props.currentUser === id ? (
+        <button onClick={this.handleClickEdit}>
+          Edit
+        </button>
+      ) : (
+        ''
+      )}
       {this.state.editable ? (
         <form onSubmit={this.handleSubmit}>
           <div className="profile">
@@ -249,7 +270,8 @@ class Profile extends React.Component {
             <MailButton email={this.state.email}
                         name={this.props.currentUserName} />
             <StarPhotographer currentUser={this.props.currentUser}
-                              artistId={id} />
+                              artistId={id}
+                              artistLiked={this.state.artistLiked} />
             <h3>Description</h3>
             <EditProfileDesc bio={this.state.bio}
                              sendBioForm={this.sendBioForm} />
@@ -268,9 +290,9 @@ class Profile extends React.Component {
                 </div>
               </div>
             </div>
-            <AvailabilityCard currentUser={this.propscurrentUser}
+            <AvailabilityCard currentUser={this.props.currentUser}
                               disabledDays={this.state.disabledDays}
-                              artistId={this.state.artistId} />
+                              artistId={this.state.artistId}/>
             <EditPackagesCard packages={this.state.packages}
                               sendPackageField={this.sendPackageField}
                               />
@@ -284,7 +306,8 @@ class Profile extends React.Component {
         <MailButton email={this.state.email}
                     name={this.props.currentUserName} />
         <StarPhotographer currentUser={this.props.currentUser}
-                          artistId={id} />
+                          artistId={id}
+                          artistLiked={this.state.artistLiked} />
         <h3>Description</h3>
         <ProfileDesc bio={this.state.bio} />
         <SocialMedia twitter={this.state.twitter}
@@ -311,14 +334,16 @@ class Profile extends React.Component {
             </div>
           )}
         </div>
-        <AvailabilityCard currentUser={this.propscurrentUser}
+        <AvailabilityCard currentUser={this.props.currentUser}
                           disabledDays={this.state.disabledDays}
                           artistId={this.state.artistId} />
         <PackagesCard packages={this.state.packages} />
         <ReviewsCard reviews={this.state.reviews} />
-        <AddReview currentUser={this.props.currentUser}
-                   artistId={this.state.artistId}
-                   createReview={this.createReview}/>
+        {this.props.usertype === 2 ? (
+          <AddReview currentUser={this.props.currentUser}
+                     artistId={this.state.artistId}
+                     createReview={this.createReview}/>
+          ) : ''}
       </div>)}
     </div>
     )

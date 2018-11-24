@@ -23,7 +23,7 @@ class SocialMedia extends React.Component {
   }
 
   render () {
-    console.log("socialmedia", this.props);
+    // console.log("socialmedia", this.props);
 
     return (
       <div className="socialMediaContainer">

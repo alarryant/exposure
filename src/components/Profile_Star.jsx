@@ -31,13 +31,26 @@ class StarPhotographer extends React.Component {
   }
 
   componentDidMount() {
-    console.log("this is artist id", this.props.artistId);
     axios.get(`/artists/${this.props.artistId}/totallikes`,
-             { currentUser: this.props.currentUser,
-               artistId: this.props.artistId })
+             { params: {
+                currentUser: this.props.currentUser,
+                artistId: this.props.artistId }
+              })
       .then((res) => {
-        this.setState({numberOfLikes: res.data[0].count});
-    });
+
+        let artistLiked = res.data.likedArtists.map((artist) => {
+          return Number(artist.artist_id);
+        });
+
+        console.log("this is artistliked in profile star", artistLiked);
+        console.log("this is whether artist is liked or not", artistLiked.includes(Number(this.props.artistId)));
+
+        this.setState({
+          numberOfLikes: res.data.likeCount[0].count,
+          liked: artistLiked.includes(Number(this.props.artistId))
+        });
+      });
+
   }
 
   render() {

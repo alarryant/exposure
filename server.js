@@ -42,20 +42,27 @@ app.get('/homephotos', (req, res) => {
 // LOGIN
 app.post('/login', (req, res) => {
   knex('users')
-    .select('*')
+    .select('id',
+            'email',
+            'first_name',
+            'last_name',
+            'twitter_url',
+            'facebook_url',
+            'instagram_url',
+            'website_url',
+            'user_type_id',
+            'profile_image',
+            'bio')
     .where({
       email: req.body.email,
       })
     .then((data) => {
       if( bcrypt.compareSync(req.body.password, data[0].password)) {
         req.session.user_id = data[0].id;
-        console.log("this is server side data query", data);
       } else {
-        res.send("Invalid email/password combination");
+        console.log("invalid email pw");
       }
-      console.log("this is data after if else", data);
       res.json(data);
-      console.log(res);
     });
 });
 
@@ -122,28 +129,26 @@ app.post('/images/:id', (req, res) => {
 
 //DASHBOARD
 app.get('/dashboard', (req, res) => {
+  let currentUser = req.query.currentUser;
   knex('users')
-    .select('*')
-    .where('id', req.session.user_id)
-    .asCallback((err, data) => {
-      if (err) throw err;
-      res.json(data);
-    });
-});
-
-app.get('/dashboard/likes', (req, res) => {
-  knex('artist_likes')
-    .join('users', 'users.id', '=', 'artist_likes.artist_id')
-    .where('client_id', req.session.user_id)
-    .then((data) => {
-      res.json(data);
+    .where('users.id', currentUser)
+    .then((user) => {
+      knex('artist_likes')
+        .join('users', 'artist_likes.artist_id', '=', 'users.id')
+        .where('client_id', currentUser)
+        .then((likes) => {
+          res.json({
+            user: user,
+            likes: likes
+          });
+        });
     });
 });
 
 //ARTIST PROFILE
 app.get('/artists/:id', (req, res) => {
   let artistId = req.params.id;
-  let images =
+  let currentUser = req.query.currentUser;
     knex('images')
       // .join('users', 'image_owner', '=', 'users.id')
       .where('image_owner', artistId)
@@ -296,12 +301,17 @@ app.post('/artists/:id/unlike', (req, res) => {
 
 app.get('/artists/:id/totallikes', (req, res) => {
   let artistId = req.params.id;
-  let currentUser = req.body.currentUser;
+  let currentUser = req.query.currentUser;
   knex('artist_likes')
     .where({ artist_id: artistId })
     .countDistinct('client_id')
-    .then(data => {
-      res.json(data);
+    .then((likeCount) => {
+      knex('artist_likes')
+        .select('artist_id')
+        .where('client_id', currentUser)
+        .then((likedArtists) => {
+          res.json({likedArtists: likedArtists, likeCount: likeCount})
+        })
     });
 });
 
@@ -369,7 +379,6 @@ app.post('/artists/:id/edit', (req, res) => {
                 .join('users', 'price_packages.user_id', '=', 'users.id')
                 .where('price_packages.user_id', artistId).orderBy('tier')
                 .then((userData) => {
-                  console.log(userData);
                   res.json(userData);
                 });
             });
