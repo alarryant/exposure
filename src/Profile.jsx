@@ -72,7 +72,7 @@ class Profile extends React.Component {
 
     return filteredPhotos.map(function (photo) {
       return (
-        <div className="sliderImg" key={ photo.id }>
+        <div className="sliderImg" key={photo.id}>
           <img alt="900x500" src={photo.src} />
         </div>
       )
@@ -127,23 +127,27 @@ class Profile extends React.Component {
 
   changeFeaturePhotos = (clickedPhotoSrc, clickedPhotoFeature) => {
     axios.post("/artists/:id/edit",
-      { clickedPhotoSrc: clickedPhotoSrc,
-        clickedPhotoFeature: clickedPhotoFeature })
-    .then(res => {
-      let newCollection = res.data;
-      this.setState({ collection: newCollection });
-    })
+      {
+        clickedPhotoSrc: clickedPhotoSrc,
+        clickedPhotoFeature: clickedPhotoFeature
+      })
+      .then(res => {
+        let newCollection = res.data;
+        this.setState({ collection: newCollection });
+      })
   }
 
   createReview(rating, review, artist, user) {
     axios.post("/artists/:id/newreview",
-      { rating: rating,
+      {
+        rating: rating,
         description: review,
         artist_id: artist,
-        user_id: user })
+        user_id: user
+      })
       .then((res) => {
         let newReviews = res.data.reverse();
-        this.setState({reviews: newReviews});
+        this.setState({ reviews: newReviews });
       });
   }
 
@@ -151,11 +155,11 @@ class Profile extends React.Component {
     let artist_id = review.artist_id;
     let review_id = review.review_id;
 
-    axios.post(`/artists/${artist_id}/reviews/${review_id}`, { review_id, artist_id})
-    .then((res) => {
-      let newReviews = res.data.reverse();
-      this.setState({reviews: newReviews});
-    })
+    axios.post(`/artists/${artist_id}/reviews/${review_id}`, { review_id, artist_id })
+      .then((res) => {
+        let newReviews = res.data.reverse();
+        this.setState({ reviews: newReviews });
+      })
   }
 
   componentDidMount() {
@@ -216,15 +220,19 @@ class Profile extends React.Component {
     }
 
     axios.post(`/artists/${this.state.artistId}/edit`,
-      { artistId: this.state.artistId,
-        submitData: submitData })
+      {
+        artistId: this.state.artistId,
+        submitData: submitData
+      })
       .then((res) => {
         console.log("this is what im getting back from server", res.data);
-        this.setState({ packages: res.data.packages,
-                        twitter: res.data[0].twitter_url,
-                        facebook: res.data[0].facebook_url,
-                        instagram: res.data[0].instagram_url,
-                        bio: res.data[0].bio })
+        this.setState({
+          packages: res.data.packages,
+          twitter: res.data[0].twitter_url,
+          facebook: res.data[0].facebook_url,
+          instagram: res.data[0].instagram_url,
+          bio: res.data[0].bio
+        })
       })
       .catch((err) => console.log(err))
   }
@@ -269,70 +277,70 @@ class Profile extends React.Component {
               <div>
 
                 <h3>Select Feature Photos ({this.numOfFeatured.length}/10):</h3>
-                <div>
-                  <EditPortfolio
-                    changeFeaturePhotos={this.changeFeaturePhotos}
-                    artistPhotos={this.state.collection} />
+                  <div>
+                    <EditPortfolio
+                      changeFeaturePhotos={this.changeFeaturePhotos}
+                      artistPhotos={this.state.collection} />
+                  </div>
                 </div>
               </div>
+              <AvailabilityCard currentUser={this.props.currentUser}
+                disabledDays={this.state.disabledDays}
+                artistId={this.state.artistId} />
+              <EditPackagesCard packages={this.state.packages}
+                sendPackageField={this.sendPackageField}
+              />
             </div>
-            <AvailabilityCard currentUser={this.props.currentUser}
-                              disabledDays={this.state.disabledDays}
-                              artistId={this.state.artistId}/>
-            <EditPackagesCard packages={this.state.packages}
-                              sendPackageField={this.sendPackageField}
-                              />
-          </div>
-          <input type="submit" value="Submit" />
-        </form>
+            <input type="submit" value="Submit" />
+          </form>
         ) : (
-        <div className="profile">
-        <Avatar name={this.state.fullName}
+            <div className="profile">
+              <Avatar name={this.state.fullName}
                 avatar={this.state.avatarImage} />
-        <MailButton email={this.state.email}
-                    name={this.props.currentUserName} />
-        <StarPhotographer currentUser={this.props.currentUser}
-                          artistId={id}
-                          artistLiked={this.state.artistLiked} />
-        <h3>Description</h3>
-        <ProfileDesc bio={this.state.bio} />
-        <SocialMedia twitter={this.state.twitter}
-                     facebook={this.state.facebook}
-                     instagram={this.state.instagram} />
-        <div className="featuredPortfolio">
-          <button onClick={this.showPortfolio}>
-            View Portfolio
+              <MailButton email={this.state.email}
+                name={this.props.currentUserName} />
+              <StarPhotographer currentUser={this.props.currentUser}
+                artistId={id}
+                artistLiked={this.state.artistLiked} />
+              <h3>Description</h3>
+              <ProfileDesc bio={this.state.bio} />
+              <SocialMedia twitter={this.state.twitter}
+                facebook={this.state.facebook}
+                instagram={this.state.instagram} />
+              <div className="featuredPortfolio">
+                <button onClick={this.showPortfolio}>
+                  View Portfolio
           </button>
-          <button onClick={this.showFeatures}>
-            Featured Photos
+                <button onClick={this.showFeatures}>
+                  Featured Photos
           </button>
-          {this.state.photoView === 'featured' ? (
-            <div>
-              <Slider {...settings} >
-                {this.addCarouselPhotos(this.state.collection)}
-              </Slider>
-              <br />
-            </div>
-          ) : (
-            <div>
-              <h1>Portfolio Photos:</h1>
-              <Portfolio artistPhotos={this.state.collection} />
-            </div>
-          )}
-        </div>
-        <AvailabilityCard currentUser={this.props.currentUser}
-                          disabledDays={this.state.disabledDays}
-                          artistId={this.state.artistId} />
-        <PackagesCard packages={this.state.packages} />
-        <ReviewsCard reviews={this.state.reviews}
-          currentUser={this.props.currentUser}
-          artistId={this.state.artistId}
-          deleteReview={this.deleteReview} />
-        <AddReview currentUser={this.props.currentUser}
-                   artistId={this.state.artistId}
-                   createReview={this.createReview}/>
-      </div>)}
-    </div>
+                {this.state.photoView === 'featured' ? (
+                  <div>
+                    <Slider {...settings} >
+                      {this.addCarouselPhotos(this.state.collection)}
+                    </Slider>
+                    <br />
+                  </div>
+                ) : (
+                    <div>
+                      <h1>Portfolio Photos:</h1>
+                      <Portfolio artistPhotos={this.state.collection} />
+                    </div>
+                  )}
+              </div>
+              <AvailabilityCard currentUser={this.props.currentUser}
+                disabledDays={this.state.disabledDays}
+                artistId={this.state.artistId} />
+              <PackagesCard packages={this.state.packages} />
+              <ReviewsCard reviews={this.state.reviews}
+                currentUser={this.props.currentUser}
+                artistId={this.state.artistId}
+                deleteReview={this.deleteReview} />
+              <AddReview currentUser={this.props.currentUser}
+                artistId={this.state.artistId}
+                createReview={this.createReview} />
+            </div>)}
+      </div>
     )
   }
 }

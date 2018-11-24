@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import './styles/SearchResults.css';
 import { Modal/*, Button*/ } from 'react-bootstrap';
+import SearchBar from './SearchBar.jsx';
 
 class SearchResults extends Component {
   constructor(props) {
@@ -76,8 +77,15 @@ class SearchResults extends Component {
   }
 
   render() {
+
+    let search;
+    if(this.props.search){
+      search = <SearchBar searchResult={this.props.searchResult} />
+    }
+
     return(
       <div>
+        {search}
         <section className="wrapper">
         <h2>
           Here's what we found on "{this.props.searchWord}"
