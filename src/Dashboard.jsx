@@ -9,6 +9,7 @@ import "react-tabs/style/react-tabs.css";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './styles/Dashboard.css';
+import SearchBar from './SearchBar.jsx';
 
 const left = {
   width: '35%',
@@ -143,8 +144,15 @@ class Dashboard extends React.Component {
     //   </div>
     // );
 
+    let search;
+    if(this.props.search){
+      search = <SearchBar searchResult={this.props.searchResult} />
+    }
+
     return (
       <div className='contentWrapper'>
+
+        {search}
 
         {/* start left */}
         <div className='left' style={left}>

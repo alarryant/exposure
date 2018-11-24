@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './styles/App.css';
 import axios from 'axios';
 import Navbar from './Navbar.jsx';
-import SearchBar from './SearchBar.jsx';
 import Footer from './Footer.jsx';
 import Home from './Home.jsx';
 import Dashboard from './Dashboard.jsx';
@@ -120,7 +119,7 @@ class App extends Component {
         });
         localStorage.removeItem('currentUserFirstName');
         localStorage.removeItem('currentUserLastName');
-        localStorage.setItem('currentUserFirstName', newFirstName);
+        localStorage.setItem('currentUserFirstName', newFirstName)
         localStorage.setItem('currentUserLastName', newLastName);
       });
   }
@@ -186,10 +185,9 @@ class App extends Component {
             signupInfo={this.signupInfo}
             currentUser={currentUser}
             logout={this.logout} />
-          <SearchBar searchResult={this.searchResult} />
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos}
-              currentUser={currentUser} />} />
+              currentUser={currentUser} search="true" searchResult = {this.searchResult} />}  />
             <Route path='/artists/:id' render={props => <Profile {...props} currentUserName={currentUserName}
               currentUser={currentUser}
               usertype={user_type_id} />} />
@@ -198,11 +196,12 @@ class App extends Component {
                 usertype={user_type_id}
                 currentUserName={currentUserName} />} />
             <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={currentUser}
-              getLikedPhotographers={this.getLikedPhotographers} />} />
+              getLikedPhotographers={this.getLikedPhotographers} search="true" searchResult = {this.searchResult} />} />
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
               searchWord={this.state.searchWord}
-              searchimages={this.state.searchimages} />} />
+              searchimages={this.state.searchimages} 
+              search="true" searchResult = {this.searchResult} />} />
             <Route path='/about' name='about' render={() => <About />} />
             <Route path='/contact' name='contact' render={() => <Contact />} />
             <Route path='/settings' name='settings' render={(props) => <Settings {...props}
