@@ -61,22 +61,21 @@ class EditAvailability extends React.Component {
     // console.log("this is props", this.props);
 
     return(
-      <h2> hi </h2>
 
-        // {this.props.currentUser === this.props.artistId ? (
-        //   <div>
-        //     <DayPicker
-        //       onDayClick={this.handleDayClick}
-        //       selectedDays={this.state.selectedDay}
-        //       disabledDays={this.formatDate(this.state.disabledDays)}
-        //     />
-        //   <p>{this.state.message}</p>
-        //   </div>
-        // ) : (
-        //   <div>
-        //     <DayPicker disabledDays={this.formatDate(this.state.disabledDays)}/>
-        //   </div>
-        // )}
+        this.props.currentUser === this.props.artistId ? (
+          <div>
+            <DayPicker
+              onDayClick={this.handleDayClick}
+              selectedDays={this.state.selectedDay}
+              disabledDays={this.formatDate(this.state.disabledDays)}
+            />
+          <p>{this.state.message}</p>
+          </div>
+        ) : (
+          <div>
+            <DayPicker disabledDays={this.formatDate(this.state.disabledDays)}/>
+          </div>
+        )
     )
   }
 }

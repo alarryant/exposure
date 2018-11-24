@@ -1,6 +1,6 @@
 import React from 'react';
 import DeleteReview from './DeleteReview.jsx';
-import axios from 'axios';
+// import axios from 'axios';
 
 // https://blog.campvanilla.com/reactjs-dropdown-menus-b6e06ae3a8fe
 class ReviewsCard extends React.Component {
@@ -14,7 +14,7 @@ class ReviewsCard extends React.Component {
     this.showMenu = this.showMenu.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
     this.renderReviews = this.renderReviews.bind(this);
-    
+
   }
 
   renderReviews(reviews = []) {
@@ -26,7 +26,7 @@ class ReviewsCard extends React.Component {
             <h4>{review.first_name} said:</h4>
             <h5>{review.rating}/5</h5>
             <p>{review.description}</p>
-            {currentUser == review.user_id ? <DeleteReview review={review}
+            {currentUser === review.user_id ? <DeleteReview review={review}
               currentUser={currentUser}
               deleteReview={deleteReview} />  : ""}
           </div>

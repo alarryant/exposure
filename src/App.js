@@ -89,12 +89,12 @@ class App extends Component {
       password: password,
       userType: userType })
       .then((res) => {
-        localStorage.setItem('currentUser', res.data);
+        localStorage.setItem('currentUser', res.data.currentUser);
 
-        if (res.data.user_type_id === 1) {
-          this.setState({ redirect: `artists/${res.data.id}`, usertype: res.data.user_type_id });
+        if (res.data.userType === 1) {
+          this.setState({ redirect: `artists/${res.data.currentUser}`, usertype: res.data.userType });
         } else {
-          this.setState({ redirect: 'dashboard', usertype: res.data[0].user_type_id });
+          this.setState({ redirect: 'dashboard', usertype: res.data.userType });
         }
         });
   }

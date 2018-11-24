@@ -42,17 +42,7 @@ app.get('/homephotos', (req, res) => {
 // LOGIN
 app.post('/login', (req, res) => {
   knex('users')
-    .select('id',
-            'email',
-            'first_name',
-            'last_name',
-            'twitter_url',
-            'facebook_url',
-            'instagram_url',
-            'website_url',
-            'user_type_id',
-            'profile_image',
-            'bio')
+    .select('*')
     .where({
       email: req.body.email,
       })
@@ -98,7 +88,7 @@ app.post('/register', (req, res) => {
         .returning('id')
           .then((user_id) => {
             req.session.user_id = +user_id;
-            res.json(req.session.user_id);
+            res.json({currentUser: req.session.user_id, userType: userType});
           });
     }
   });

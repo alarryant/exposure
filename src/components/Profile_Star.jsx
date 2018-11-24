@@ -42,9 +42,6 @@ class StarPhotographer extends React.Component {
           return Number(artist.artist_id);
         });
 
-        console.log("this is artistliked in profile star", artistLiked);
-        console.log("this is whether artist is liked or not", artistLiked.includes(Number(this.props.artistId)));
-
         this.setState({
           numberOfLikes: res.data.likeCount[0].count,
           liked: artistLiked.includes(Number(this.props.artistId))
