@@ -48,7 +48,6 @@ class AppliedCard extends Component {
   }
 
   render () {
-    console.log("Applied", this.props)
     return (
       <section>
         <div className="oppHeader">

@@ -7,7 +7,8 @@ import './styles/Opportunities.css';
 import CreateEvent from './CreateEvent';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-//MAIN OPPORTUNITIES TABLE
+//MAIN OPPORTUNITIES BOARD
+
 class Opportunities extends Component {
   constructor(props) {
     super(props);
