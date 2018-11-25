@@ -35,12 +35,16 @@ class Dashboard extends React.Component {
       name: '',
       avatar: null,
       type: null,
-      events: []
+      events: [],
+      userevents: [],
+      // totalapplicants: null
     }
+
     this.createEvent = this.createEvent.bind(this);
     this.renderLikedPhotographer = this.renderLikedPhotographer.bind(this);
     this.deleteEvent = this.deleteEvent.bind(this)
     this.refresh = this.refresh.bind(this)
+    // this.updateTotalApplicants = this.updateTotalApplicants.bind(this)
   }
 
   refresh() {
@@ -56,6 +60,11 @@ class Dashboard extends React.Component {
       });
     });
   }
+
+  // updateTotalApplicants(array) {
+  //   console.log("TOTAL APPS", array)
+  //   this.setState({totalapplicants: array.length})
+  // }
 
 
   deleteEvent(event, creator) {
@@ -91,6 +100,7 @@ class Dashboard extends React.Component {
           let date = event.event_date.toString().split('T')[0]
           return (
             <OpportunityEventCard
+              key={event.event_id}
               deleteEvent={this.deleteEvent}
               event={event}
               date={date}
@@ -112,6 +122,7 @@ class Dashboard extends React.Component {
         let date = event.event_date.toString().split('T')[0]
         return (
           <OpportunityEventCard
+              key={event.event_id}
               deleteEvent={this.deleteEvent}
               event={event}
               date={date}
@@ -174,18 +185,19 @@ class Dashboard extends React.Component {
         <Tabs>
           <TabList>
             <Tab>Favorite Photographers</Tab>
-            <Tab>My Events</Tab>
+            <Tab>My Events ({this.state.userevents.length}) </Tab>
             <Tab>Applicants</Tab>
           </TabList>
 
           <TabPanel>
-          <h1>Your Favourite Photographers</h1>
+          <h2>Your Favourite Photographers</h2>
             <div className="starredContainer">
-            {this.renderLikedPhotographer(this.state.likedPhotographers)}
+            { (this.state.likedphotographers) ? this.renderLikedPhotographer(this.state.likedPhotographers) : "You haven't saved any photographers!" }
             </div>
           </TabPanel>
 
           <TabPanel>
+            <h2> Your Events </h2>
             <p>Checkout other postings on the<NavLink to="/opportunities">Job Board</NavLink></p>
             <CreateEvent createEvent={this.createEvent}/>
             { this.displayEvents(this.state.userevents) }
@@ -194,6 +206,7 @@ class Dashboard extends React.Component {
           <TabPanel>
             <Applicants
               currentUser={this.props.currentUser}
+              // updateTotalApplicants={this.updateTotalApplicants}
               />
           </TabPanel>
         </Tabs>

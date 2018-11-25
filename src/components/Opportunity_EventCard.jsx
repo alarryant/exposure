@@ -32,7 +32,6 @@ class OpportunityEventCard extends Component {
     const creator_id = parseInt(event.creator_id);
     const currentUser = parseInt(this.props.currentUser);
     const eventid = event.event_id
-    const appliedevent = this.props.appliedEvents
 
     return (
       <div className="eventcard">

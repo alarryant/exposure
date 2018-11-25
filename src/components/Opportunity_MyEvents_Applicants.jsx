@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import OpportunityApply from './Opportunity_Apply.jsx';
-import DeleteEvent from './Opportunity_Delete.jsx';
-import OpportunityEventCard from './Opportunity_EventCard.jsx';
 import MyApplicantCard from './Opportunity_MyEventApplicantCard.jsx';
 import axios from 'axios'
 
@@ -25,7 +22,6 @@ class Applicants extends Component {
         <p>No one has applied to your events yet!</p> )
     } else {
       return applicants.map((applicant) => {
-        console.log("applicant", applicant)
         let date = applicant.event_date.toString().split('T')[0]
         return (
           <MyApplicantCard
@@ -42,7 +38,6 @@ class Applicants extends Component {
   componentDidMount() {
     axios.get(`/api/opportunities/${this.props.currentUser}/applicants`)
       .then(res => {
-        console.log(res)
         this.setState({ applicants: res.data })
       })
   }
@@ -50,7 +45,10 @@ class Applicants extends Component {
 render() {
   return (
     <div>
+      <h2> List of Applicants </h2>
+      <p> Total number of applications to review: {this.state.applicants.length} </p>
      <table>
+     <tbody>
       <tr>
         <th scope="col">Your Event</th>
         <th scope="col">Event Date</th>
@@ -60,6 +58,7 @@ render() {
         <th scope="col">Applicant's Profile</th>
       </tr>
       {this.displayApplicants(this.state.applicants) }
+      </tbody>
       </table>
     </div>
     )
