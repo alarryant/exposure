@@ -185,6 +185,7 @@ class App extends Component {
           <Navbar loginInfo={this.loginInfo}
             signupInfo={this.signupInfo}
             currentUser={currentUser}
+            currentUserName={currentUserName}
             logout={this.logout} />
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos}

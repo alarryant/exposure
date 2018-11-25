@@ -1,9 +1,30 @@
 nav {
   height: 175px;
-  padding-right: 20px;
   background-color: white;
 }
 
 .userauth {
   float: right;
+}
+
+.logoWrap {
+  display: inline-block;
+  float: left;
+  padding: 0;
+}
+
+.loggedInAs {
+  display: inline-block;
+  float: left;
+  padding: 10px;
+  color: #888;
+  clear: both;
+  margin-top: 10px;
+  letter-spacing: 0.3px;
+  width: 100%;
+  text-align: center;
+}
+
+.loggedInAs span {
+  color: #333;
 }
