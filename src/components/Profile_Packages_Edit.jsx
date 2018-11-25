@@ -12,6 +12,7 @@ class EditPackagesCard extends React.Component {
 
   handleChange(event) {
     event.preventDefault();
+    console.log(event.target.name, event.target.value);
     this.props.sendPackageField(event.target.name, event.target.value);
   }
 
