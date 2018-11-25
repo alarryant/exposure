@@ -17,6 +17,7 @@ class Opportunities extends Component {
     this.state = {
       opportunities: '',
       applicationsent: false,
+      appliedopportunities: []
     };
 
     this.displayEvents = this.displayEvents.bind(this);
@@ -24,18 +25,16 @@ class Opportunities extends Component {
     this.createEvent = this.createEvent.bind(this);
     this.showSuccessMsg = this.showSuccessMsg.bind(this);
     this.deleteEvent = this.deleteEvent.bind(this);
-
   }
 
   showSuccessMsg() {
-      return (
+    return (
       <div className="applicationSent">
         <h3>
           Your application has been sent! Thanks for applying!
         </h3>
       </div>
-
-      )
+    )
   }
 
   deleteEvent(event, creator) {
@@ -66,8 +65,20 @@ class Opportunities extends Component {
         artist_id: artist,
         msg_des: description,
         artist_name: artist_name})
-      .then((res) => {
+      .then((data) => {
+        axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
+        .then(res => {
+          console.log("res inside Opportunities", res.data)
+          let appliedevent = res.data
+          let applied_eventid = []
+
+          appliedevent.forEach((i) => {
+            applied_eventid.push(i.eventref_id)
+          })
+
+        this.setState({'appliedopportunities': applied_eventid })
       })
+    })
   }
 
   displayEvents(events) {
@@ -81,12 +92,14 @@ class Opportunities extends Component {
       return events.map((event) => {
         let date = event.event_date.toString().split('T')[0]
         return (
-          <OpportunityEventCard deleteEvent={this.deleteEvent}
-                   saveApplication={this.saveInterestedApplicants}
-                   event={event}
-                   date={date}
-                   usertype={this.props.usertype}
-                   currentUser={this.props.currentUser}/>
+          <OpportunityEventCard
+                  appliedEvents={this.state.appliedopportunities}
+                  deleteEvent={this.deleteEvent}
+                  saveApplication={this.saveInterestedApplicants}
+                  event={event}
+                  date={date}
+                  usertype={this.props.usertype}
+                  currentUser={this.props.currentUser}/>
         )
       })
     }
@@ -111,9 +124,22 @@ class Opportunities extends Component {
       .then(res => {
         this.setState({ opportunities: res.data.reverse() })
     });
+
+    axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
+      .then(res => {
+        console.log("res inside Opportunities", res.data)
+        let appliedevent = res.data
+        let applied_eventid = []
+        appliedevent.forEach((i) => {
+          applied_eventid.push(i.eventref_id)
+        })
+      this.setState({'appliedopportunities': applied_eventid })
+    })
+
   }
 
   render() {
+    console.log("Opportunities", this.state)
     let usertype = parseInt(this.props.usertype)
     return (
       <Tabs>
