@@ -2,7 +2,7 @@
   height: 350px;
   width: 275px;
   padding: 5px;
-  margin-right: 20px;
+  margin-right: 30px;
   /*border: 3px solid #2f3532;*/
   float: left;
   clear: left;
@@ -13,19 +13,22 @@
   height: 200px;
   overflow: hidden;
   margin: auto;
+  border-radius: 50%;
 }
 
 .avatarWidget__name {
   margin: auto;
-  margin-top: 40px;
+  margin-top: 25px;
   font-size: 2.5em;
   height: 50px;
   text-align: center;
   font-weight: 700;
+  text-transform: uppercase;
+  font-family: 'Assistant', sans-serif;
+  letter-spacing: 2px;
 }
 
 .avatarWidget__img {
-  border-radius: 50%;
-  width: 200px
+  width: 200px;
 }
 

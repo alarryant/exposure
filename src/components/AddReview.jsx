@@ -45,7 +45,7 @@ class AddReview extends Component {
     render() {
         return (
             <div>
-                <Button bsStyle="default" bsSize="large" onClick={this.handleShow}>
+                <Button bsStyle="default" bsSize="small" onClick={this.handleShow}>
                     Add Review
             </Button>
 

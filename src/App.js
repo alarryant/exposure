@@ -177,6 +177,7 @@ class App extends Component {
   render() {
     const currentUser = localStorage.getItem('currentUser');
     const user_type_id = localStorage.getItem('user_type_id');
+    console.log("this is in app", this.state.usertype);
     const currentUserName = localStorage.getItem('currentUserFirstName') + ' ' + localStorage.getItem('currentUserLastName');
     return (
       <BrowserRouter>
@@ -203,7 +204,8 @@ class App extends Component {
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
               searchWord={this.state.searchWord}
-              searchimages={this.state.searchimages} 
+              searchimages={this.state.searchimages}
+              currentUser={currentUser}
               search="true" searchResult = {this.searchResult} />} />
             <Route path='/about' name='about' render={() => <About />} />
             <Route path='/contact' name='contact' render={() => <Contact />} />

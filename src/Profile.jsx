@@ -40,6 +40,7 @@ class Profile extends React.Component {
       artist: {},
       photoView: 'featured',
       editable: false,
+      portfolioToggle: false
       // bio: "",
       // twitter: 'null',
       // facebook: 'null',
@@ -80,11 +81,11 @@ class Profile extends React.Component {
   }
 
   showPortfolio = () => {
-    this.setState({ photoView: "portfolio" })
+    this.setState({ photoView: "portfolio", portfolioToggle: true })
   }
 
   showFeatures = () => {
-    this.setState({ photoView: "featured" })
+    this.setState({ photoView: "featured", portfolioToggle: false })
   }
 
   sendSocialMediaForm = (socialmedia) => {
@@ -258,7 +259,7 @@ class Profile extends React.Component {
       slidesToScroll: 1,
       rows: 1,
       autoplay: true,
-      focusOnSelect: true,
+      focusOnSelect: true
     };
 
     this.numOfFeatured = this.areFeaturedPhotos(this.state.collection);
@@ -303,12 +304,14 @@ class Profile extends React.Component {
                   </div>
                 </div>
               </div>
-              <AvailabilityCard currentUser={this.props.currentUser}
-                disabledDays={this.state.disabledDays}
-                artistId={this.state.artistId} />
-              <EditPackagesCard packages={this.state.packages}
-                sendPackageField={this.sendPackageField}
-              />
+              <div className="dropDownMenu">
+                <AvailabilityCard currentUser={this.props.currentUser}
+                  disabledDays={this.state.disabledDays}
+                  artistId={this.state.artistId} />
+                <EditPackagesCard packages={this.state.packages}
+                  sendPackageField={this.sendPackageField}
+                />
+              </div>
             </div>
             <input type="submit" value="Submit" />
           </form>
@@ -323,8 +326,10 @@ class Profile extends React.Component {
                        instagram={this.state.instagram}
                        website={this.state.website} />
               <span className="likeContact">
-                {this.props.currentUser ? (<MailButton email={this.state.email}
-                                    name={this.props.currentUserName} />) : ''}
+                {this.props.currentUser ? (
+                  <MailButton email={this.state.email}
+                              name={this.props.currentUserName} />
+                  ) : ''}
                 <StarPhotographer currentUser={this.props.currentUser}
                         artistId={id}
                         artistLiked={this.state.artistLiked} />
@@ -336,37 +341,57 @@ class Profile extends React.Component {
           <ProfileDesc bio={this.state.bio} />
         </div>
         <div className="featuredPortfolio">
-          <button onClick={this.showPortfolio}>
-            View Portfolio
-          </button>
-                <button onClick={this.showFeatures}>
-                  Featured Photos
-          </button>
+        { this.state.portfolioToggle ? (
+          <span>
+            <button className="featuredButton" onClick={this.showFeatures}>
+              Featured Photos
+            </button>
+            <button onClick={this.showPortfolio}>
+              View Portfolio
+            </button>
+          </span>
+          ) : (
+          <span>
+            <button onClick={this.showFeatures}>
+              Featured Photos
+            </button>
+            <button className="portfolioButton" onClick={this.showPortfolio}>
+              View Portfolio
+            </button>
+          </span>
+          )}
                 {this.state.photoView === 'featured' ? (
-                  <div>
+                  <div className="sliderContainer">
+                  <h1>FEATURED</h1>
+                      <hr/>
                     <Slider {...settings} >
                       {this.addCarouselPhotos(this.state.collection)}
                     </Slider>
                     <br />
                   </div>
                 ) : (
-                    <div>
-                      <h1>Portfolio Photos:</h1>
+                    <div className="portfolioContainer">
+                      <h1>PORTFOLIO</h1>
+                      <hr/>
                       <Portfolio artistPhotos={this.state.collection} />
                     </div>
                   )}
               </div>
-              <AvailabilityCard currentUser={this.props.currentUser}
-                disabledDays={this.state.disabledDays}
-                artistId={this.state.artistId} />
-              <PackagesCard packages={this.state.packages} />
-              <ReviewsCard reviews={this.state.reviews}
-                currentUser={this.props.currentUser}
+              <div className="dropDownMenu">
+                <AvailabilityCard currentUser={this.props.currentUser}
+                  disabledDays={this.state.disabledDays}
+                  artistId={this.state.artistId} />
+                <PackagesCard packages={this.state.packages} />
+                <ReviewsCard reviews={this.state.reviews}
+                  currentUser={this.props.currentUser}
+                  artistId={this.state.artistId}
+                  deleteReview={this.deleteReview} />
+                  <div className="addReview">
+                  {this.props.currentUser !== this.state.artistId ? <AddReview currentUser={this.props.currentUser}
                 artistId={this.state.artistId}
-                deleteReview={this.deleteReview} />
-              <AddReview currentUser={this.props.currentUser}
-                artistId={this.state.artistId}
-                createReview={this.createReview} />
+                createReview={this.createReview} /> : ''}
+                </div>
+              </div>
             </div>)}
       </div>
     )

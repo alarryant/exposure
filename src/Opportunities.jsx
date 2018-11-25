@@ -169,7 +169,8 @@ class Opportunities extends Component {
   }
 
   render() {
-    let usertype = parseInt(this.props.usertype)
+    let usertype = parseInt(this.props.usertype);
+    console.log("this is my user type", usertype);
 
     return (
       <Tabs>

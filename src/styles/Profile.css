@@ -1,18 +1,29 @@
+.profile {
+  position: relative;
+}
+
+.dropDownMenu {
+  margin: 0px 100px;
+  position: absolute;
+  top: 425px;
+}
+
 .avatarSocMed {
   position: relative;
   height: 350px;
   width: 550px;
   float: left;
   display: block;
-  border: 2px solid #2f3532;
+  /*border: 2px solid #2f3532;*/
   padding: 25px 15px;
-  margin: 0px 25px 25px 25px;
+  margin: 0px 0px 25px 122px;
 }
 
 .avatarSocMed h5 {
   font-family: 'Assistant', sans-serif;
   font-size: 2em;
   font-weight: 700;
+  letter-spacing: 3px;
 }
 
 .avatarSocMed a {
@@ -31,6 +42,7 @@
 
 .fa-star:hover {
   color: #A0AAB2;
+  cursor: pointer;
 }
 .socialMediaContainer {
   margin: 20px 0px 40px 10px;
@@ -45,8 +57,8 @@
 }
 
 .contactMe {
-  border: 1px solid black;
-  border-radius: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
   padding: 5px;
   float: right;
   display: inline;
@@ -55,22 +67,27 @@
 .likeContact {
   display: inline-block;
   position: absolute;
-  bottom: 15px;
+  bottom: 18px;
 }
 
-.contactMe:hover {
+/*.likeContact a:hover {
+  color: #A0AAB2;
+  text-decoration: none;
+}
+
+.contactMe a:hover {
   color: #A0AAB2;
   text-decoration: none;
 }
 
 .contactMe a {
   text-decoration: none;
-}
+}*/
 
 .personalDetContainer {
-  padding: 5px 20px 5px 20px;
+  padding: 5px 10px 5px 40px;
   max-height: 350px;
-  max-width: 500px;
+  max-width: 700px;
   float: left;
   clear: right;
 }
@@ -79,6 +96,7 @@
   font-family: 'Assistant', sans-serif;
   font-weight: 700;
   font-size: 3em;
+  letter-spacing: 5px;
 }
 
 .personalDetContainer hr {
@@ -95,26 +113,112 @@
 .likesContainer i {
   float: right;
   margin: 0px 5px;
+  display: inline-block;
 }
 
 .likesContainer p {
+  display: inline-block;
   float: left;
 }
 
-/*.profiledesc {
-  display: inline-block;
-  width: 500px;
-}*/
-
 .profilebtn {
-  width: 200px;
+  width: 300px;
   margin-right: 0px;
 }
 
+.profilebtn button {
+  width: 300px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  margin: 10px 10px 10px 25px;
+  font-size: 1.75em;
+}
+
+.profilebtn button:hover {
+  color: #A0AAB2;
+}
+
+.DayPicker {
+  font-size: 1.75rem;
+}
+
+.menu {
+  margin: 0px 10px 0px 15px;
+  width: 300px;
+  padding: 10px;
+}
+
+.featuredButton {
+  color: #A0AAB2;
+}
+
+.portfolioButton {
+  color: #A0AAB2;
+}
+
 .featuredPortfolio {
+  margin-top: 25px;
+  margin-right: 100px;
   width: 750px;
   display: inline-block;
-  margin-left: 75px;
+}
+
+.portfolioContainer {
+  margin-right: 100px;
+}
+
+.portfolioContainer h1 {
+  font-family: 'Assistant', sans-serif;
+  width: 250px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 3em;
+  letter-spacing: 5px;
+  margin-top: 0px;
+}
+
+.portfolioContainer hr {
+  background-color: black;
+  border: 1px solid black;
+}
+
+.sliderContainer h1 {
+  font-family: 'Assistant', sans-serif;
+  width: 250px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 3em;
+  letter-spacing: 5px;
+  margin-top: 0px;
+}
+
+.sliderContainer hr {
+  background-color: black;
+  border: 1px solid black;
+}
+
+.wrapper {
+  width: 100%;
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  line-height: 20px;
+  -webkit-column-count: 3;
+  -webkit-column-gap:   0;
+  -moz-column-count:    3;
+  -moz-column-gap:      0;
+  column-count:         3;
+  column-gap:           0;
+}
+
+.searchResult {
+  padding: 5px;
+  width: 100%;
+}
+
+.sliderContainer {
+  margin-right: 100px;
+  margin-bottom: 250px;
 }
 
 .dropdown-container-profile {
@@ -173,3 +277,20 @@
 .addReviewModal textarea{
   min-height: 150px;
 }
+
+.addReview {
+  float: right;
+}
+
+.addReview button {
+  border: 1px solid #cccccc;
+}
+
+.addReview button:hover {
+  background-color: white;
+  color: #cccccc;
+}
+/*
+.slick-slide {
+  width: 200px;
+}*/

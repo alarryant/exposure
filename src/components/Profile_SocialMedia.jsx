@@ -28,7 +28,6 @@ class SocialMedia extends React.Component {
   }
 
   render () {
-    console.log("tgisi s props website", this.props.website);
     let facebookUrl = `https://www.facebook.com/${this.parseUrl(this.props.facebook)}`;
     let twitterUrl = `https://www.twitter.com/${this.parseUrl(this.props.twitter)}`;
     let instagramUrl = `https://www.instagram.com/${this.parseUrl(this.props.instagram)}`;
