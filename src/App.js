@@ -90,7 +90,7 @@ class App extends Component {
       userType: userType
     })
       .then((res) => {
-        console.log("This is my console log: ", res.data);
+        // console.log("This is my console log: ", res.data);
         localStorage.setItem('currentUser', res.data.currentUser);
         localStorage.setItem('user_type_id', res.data.userType);
         localStorage.setItem('currentUserFirstName', res.data.firstName);
@@ -196,7 +196,7 @@ class App extends Component {
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos}
               currentUser={currentUser} search="true" searchResult = {this.searchResult} />}  />
-            <Route path='/artists/:id' render={props => 
+            <Route path='/artists/:id' render={props =>
               <Profile {...props} currentUserName={currentUserName}
                                   currentUser={currentUser}
                                   usertype={user_type_id}

@@ -35,7 +35,7 @@ class Navbar extends React.Component {
       )
     }
   }
-  
+
   render() {
   return (
       <nav>
@@ -60,7 +60,7 @@ class Navbar extends React.Component {
         </section>
         ) : (
         <section className="loggedIn">
-          <NavLink to="/">
+          <NavLink className="logoWrap" to="/">
             <div className="logo">
               <div className="lens"></div>
               <span href="#" className="logo">
@@ -71,6 +71,7 @@ class Navbar extends React.Component {
                 sure
               </span>
             </div>
+            <p className="loggedInAs">You are logged in as: <span>{this.props.currentUserName}</span></p>
           </NavLink>
           <div className="dropdown-container">
             <div className="dropdown">

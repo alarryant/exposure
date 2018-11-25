@@ -3,20 +3,20 @@
 }
 
 .dropDownMenu {
-  margin: 0px 100px;
+  margin: 0px 110px;
   position: absolute;
-  top: 425px;
+  top: 325px;
 }
 
 .avatarSocMed {
   position: relative;
-  height: 350px;
+  height: 318px;
   width: 550px;
   float: left;
   display: block;
   /*border: 2px solid #2f3532;*/
-  padding: 25px 15px;
-  margin: 0px 0px 25px 122px;
+  padding: 25px 15px 0px 15px;
+  margin: 0px 0px 0px 122px;
 }
 
 .avatarSocMed h5 {
@@ -60,6 +60,7 @@
   border: 1px solid #cccccc;
   border-radius: 5px;
   padding: 5px;
+  margin-left: 50px;
   float: right;
   display: inline;
 }
@@ -67,22 +68,9 @@
 .likeContact {
   display: inline-block;
   position: absolute;
-  bottom: 18px;
+  bottom: 0px;
+  left: 260px;
 }
-
-/*.likeContact a:hover {
-  color: #A0AAB2;
-  text-decoration: none;
-}
-
-.contactMe a:hover {
-  color: #A0AAB2;
-  text-decoration: none;
-}
-
-.contactMe a {
-  text-decoration: none;
-}*/
 
 .personalDetContainer {
   padding: 5px 10px 5px 40px;
@@ -148,19 +136,15 @@
   padding: 10px;
 }
 
-.featuredButton {
-  color: #A0AAB2;
-}
-
-.portfolioButton {
+.toggleOn{
   color: #A0AAB2;
 }
 
 .featuredPortfolio {
-  margin-top: 25px;
-  margin-right: 100px;
-  width: 750px;
-  display: inline-block;
+  margin-left: 0px;
+  margin-right: 175px;
+  float: right;
+  width: 800px;
 }
 
 .portfolioContainer {
@@ -261,12 +245,6 @@
     border: none;
     cursor: pointer;
     font-size: 1em;
-}
-
-.featuredPortfolio {
-  margin-left: 0px;
-  margin-right: 75px;
-  float: right;
 }
 
 .editPortfolio {
