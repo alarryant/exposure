@@ -50,7 +50,17 @@ class Applicants extends Component {
 render() {
   return (
     <div>
+     <table>
+      <tr>
+        <th scope="col">Your Event</th>
+        <th scope="col">Event Date</th>
+        <th scope="col">Filled?</th>
+        <th scope="col">Applicant </th>
+        <th scope="col">Applicant's Email </th>
+        <th scope="col">Applicant's Profile</th>
+      </tr>
       {this.displayApplicants(this.state.applicants) }
+      </table>
     </div>
     )
   }

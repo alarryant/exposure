@@ -13,7 +13,7 @@ import SearchBar from './SearchBar.jsx';
 import Applicants from './components/Opportunity_MyEvents_Applicants.jsx'
 
 const left = {
-  width: '20%',
+  width: '10%',
   float: 'left'
 };
 
@@ -23,7 +23,7 @@ const right = {
 };
 
 const tabStyle = {
-  width: '50%',
+  width: '80%',
   margin: '0 auto'
 };
 
@@ -138,20 +138,6 @@ class Dashboard extends React.Component {
       });
     });
   }
-
-  // componentDidUpdate() {
-  //   let currentUser = this.props.currentUser;
-  //   axios.get(`/dashboard`, {
-  //     params: {
-  //       currentUser: currentUser
-  //     }
-  //   }).then(response => {
-  //     this.setState({
-  //         likedPhotographers: response.data.likes,
-  //         userevents: response.data.events
-  //     });
-  //   });
-  // }
 
   renderLikedPhotographer(photographers=[]) {
     const starredPhotographer = {

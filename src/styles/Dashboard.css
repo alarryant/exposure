@@ -6,3 +6,15 @@
   width: 150px;
   text-align: center;
 }
+
+.applicantcard {
+}
+
+th {
+  font-weight: bold;
+  width: 5%;
+}
+
+td {
+  width: 5%;
+}

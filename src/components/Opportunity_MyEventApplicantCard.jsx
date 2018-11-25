@@ -15,21 +15,21 @@ function MyApplicantCard(props) {
     // const appliedevent = this.props.appliedEvents
 
     return (
-      <div className="eventcard">
-        <h4> Your Event: { applicant.name } </h4>
-        <p>Date: { props.date } -  Location: { applicant.event_location }</p>
-         { applicant.artist_accepted === null
-          ? <p>You have not hired anyone yet</p>
-          : <p> You have selected a photographer </p>
-        }
-        <hr/>
-        <p> Applicant Name: { applicant.first_name } { applicant.last_name } </p>
-        <p> Applicant Contact: { applicant.email } </p>
-        <NavLink to={`/artists/${applicant.artist_id}`}> {applicant.first_name}'s Profile </NavLink>
-      </div>
+
+      <tr>
+        <td scope="col">{ applicant.name }</td>
+        <td scope="col">{ props.date } </td>
+        <td scope="col">{ applicant.artist_accepted === null
+          ? <p> No</p>
+          : <p> Yes </p>
+        }</td>
+        <td scope="col">{ applicant.first_name } { applicant.last_name }</td>
+        <td scope="col">{ applicant.email }</td>
+        <td scope="col"><NavLink to={`/artists/${applicant.artist_id}`}> {applicant.first_name}'s Profile </NavLink></td>
+      </tr>
+
   )
 }
 
 
 export default MyApplicantCard;
-
