@@ -1,12 +1,13 @@
 import React from 'react';
-import { Sparklines, SparklinesLine } from 'react-sparklines';
+import { Sparklines, SparklinesLine, SparklinesBars } from 'react-sparklines';
 
-function Statistics(props) {
+function Statistics() {
     return (
         <div>
-            <Sparklines data={[5, 10, 5, 20, 5, 10, 5, 20]}>
-                <SparklinesLine color="blue" />
-            </Sparklines>
+        <Sparklines data={[18, 9, 8, 14, 1, 3, 7, 2, 9]}>
+            <SparklinesBars style={{ stroke: "white", fill: "#41c3f9", fillOpacity: ".25" }} />
+            <SparklinesLine style={{ stroke: "#41c3f9", fill: "none" }} />
+        </Sparklines>
         </div>
     );
 }
