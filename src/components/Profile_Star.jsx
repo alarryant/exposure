@@ -52,19 +52,19 @@ class StarPhotographer extends React.Component {
 
   render() {
     return(
-      <div>
+      <span className="likesContainer">
         <p>{this.state.numberOfLikes || 0}</p>
         {this.state.liked ? (
-          <div>
+          <span>
             <i className="fas fa-star"
                onClick={this.handleUnlikeClick}></i>
-          </div>
+          </span>
           ) : (
-          <div>
+          <span>
             <i className="far fa-star"
                onClick={this.handleLikeClick}></i>
-          </div>)}
-      </div>
+          </span>)}
+      </span>
       )
     }
 }

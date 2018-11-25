@@ -23,11 +23,11 @@ import './styles/SearchResults.css';
 class MailButton extends React.Component {
   render() {
     return (
-      <div>
+      <button className="contactMe">
         <a href={`mailto:${this.props.email}?subject=${this.props.name} would like to book you for a photoshoot.`}>
           Contact Me
         </a>
-      </div>
+      </button>
     )
   }
 }
@@ -94,12 +94,15 @@ class Profile extends React.Component {
       socialmedia.facebook = 'null'
     } else if (!socialmedia.instagram) {
       socialmedia.instagram = 'null'
+    } else if (!socialmedia.website) {
+      socialmedia.website = 'null'
     }
 
     this.setState({
       twitter: socialmedia.twitter,
       facebook: socialmedia.facebook,
       instagram: socialmedia.instagram,
+      website: socialmedia.website
     });
   }
 
@@ -192,6 +195,7 @@ class Profile extends React.Component {
           twitter: res.data.user[0].twitter_url,
           facebook: res.data.user[0].facebook_url,
           instagram: res.data.user[0].instagram_url,
+          website: res.data.user[0].website_url,
           reviews: res.data.reviews,
           email: res.data.user[0].email,
           redirect: true
@@ -221,6 +225,7 @@ class Profile extends React.Component {
       twitter: this.state.twitter,
       facebook: this.state.facebook,
       instagram: this.state.instagram,
+      website: this.state.website,
       bio: this.state.bio
     }
 
@@ -236,6 +241,7 @@ class Profile extends React.Component {
           twitter: res.data[0].twitter_url,
           facebook: res.data[0].facebook_url,
           instagram: res.data[0].instagram_url,
+          website: res.data[0].website_url,
           bio: res.data[0].bio
         })
       })
@@ -269,15 +275,23 @@ class Profile extends React.Component {
       {this.state.editable ? (
         <form onSubmit={this.handleSubmit}>
           <div className="profile">
-            <Avatar name={this.state.fullName}
+            <div className="avatarSocMed">
+              <Avatar name={this.state.fullName}
                     avatar={this.state.avatarImage} />
-            <h3>Description</h3>
-            <EditProfileDesc bio={this.state.bio}
-                             sendBioForm={this.sendBioForm} />
-            <EditSocialMedia twitter={this.state.twitter}
-                             facebook={this.state.facebook}
-                             instagram={this.state.instagram}
-                             sendSocialMediaForm={this.sendSocialMediaForm} />
+              <h5>FIND ME</h5>
+              <EditSocialMedia twitter={this.state.twitter}
+                               facebook={this.state.facebook}
+                               instagram={this.state.instagram}
+                               website={this.state.website}
+                               sendSocialMediaForm={this.sendSocialMediaForm} />
+            </div>
+            <div className="personalDetContainer">
+              <h3>ABOUT</h3>
+              <hr/>
+              <EditProfileDesc bio={this.state.bio}
+                               sendBioForm={this.sendBioForm} />
+
+              </div>
             <div className="featuredPortfolio">
               <div>
 
@@ -299,19 +313,28 @@ class Profile extends React.Component {
             <input type="submit" value="Submit" />
           </form>
         ) : (
-            <div className="profile">
+          <div className="profile">
+            <div className="avatarSocMed">
               <Avatar name={this.state.fullName}
                 avatar={this.state.avatarImage} />
-        {this.props.currentUser ? (<MailButton email={this.state.email}
-                    name={this.props.currentUserName} />) : ''}
-        <StarPhotographer currentUser={this.props.currentUser}
-                          artistId={id}
-                          artistLiked={this.state.artistLiked} />
-        <h3>Description</h3>
-        <ProfileDesc bio={this.state.bio} />
-        <SocialMedia twitter={this.state.twitter}
-                     facebook={this.state.facebook}
-                     instagram={this.state.instagram} />
+              <h5>FIND ME</h5>
+              <SocialMedia twitter={this.state.twitter}
+                       facebook={this.state.facebook}
+                       instagram={this.state.instagram}
+                       website={this.state.website} />
+              <span className="likeContact">
+                {this.props.currentUser ? (<MailButton email={this.state.email}
+                                    name={this.props.currentUserName} />) : ''}
+                <StarPhotographer currentUser={this.props.currentUser}
+                        artistId={id}
+                        artistLiked={this.state.artistLiked} />
+              </span>
+            </div>
+        <div className="personalDetContainer">
+          <h3>ABOUT</h3>
+          <hr/>
+          <ProfileDesc bio={this.state.bio} />
+        </div>
         <div className="featuredPortfolio">
           <button onClick={this.showPortfolio}>
             View Portfolio
