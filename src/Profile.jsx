@@ -40,8 +40,19 @@ class Profile extends React.Component {
     this.state = {
       artist: {},
       photoView: 'featured',
+<<<<<<< HEAD
       editable: false,
       portfolioToggle: false
+      // bio: "",
+      // twitter: 'null',
+      // facebook: 'null',
+      // instagram: 'null',
+      // avatarImage:
+      // packages: [],
+      // reviews: []
+=======
+      editable: false
+>>>>>>> 825cc69a04e6cc6faec1dc10c49215b3f91bd490
     }
 
     this.addCarouselPhotos = this.addCarouselPhotos.bind(this);
@@ -74,14 +85,14 @@ class Profile extends React.Component {
     });
   }
 
-
+<<<<<<< HEAD
   showPortfolio = () => {
     this.setState({ photoView: "portfolio", portfolioToggle: true })
   }
 
   showFeatures = () => {
     this.setState({ photoView: "featured", portfolioToggle: false })
-
+=======
 // MANAGES SETTING STATE OF TAB TITLES:  PORTFOLIO, FEATURED PHOTOS, APPLIED EVENTS, STATISTICS
   changeShowState(event){
     if (event.target.innerHTML === 'Featured Photos') {
@@ -132,6 +143,7 @@ class Profile extends React.Component {
         <Statistics />
       )
     }
+>>>>>>> 825cc69a04e6cc6faec1dc10c49215b3f91bd490
   }
 
 
@@ -294,6 +306,19 @@ class Profile extends React.Component {
   render() {
     const { id } = this.props.match.params;
 
+<<<<<<< HEAD
+    const settings = {
+      infinite: true,
+      centerMode: true,
+      slidesToShow: 2,
+      slidesToScroll: 1,
+      rows: 1,
+      autoplay: true,
+      focusOnSelect: true
+    };
+
+=======
+>>>>>>> 825cc69a04e6cc6faec1dc10c49215b3f91bd490
     this.numOfFeatured = this.areFeaturedPhotos(this.state.collection);
 
     return (
@@ -357,6 +382,17 @@ class Profile extends React.Component {
                        facebook={this.state.facebook}
                        instagram={this.state.instagram}
                        website={this.state.website} />
+<<<<<<< HEAD
+              <span className="likeContact">
+                {this.props.currentUser ? (
+                  <MailButton email={this.state.email}
+                              name={this.props.currentUserName} />
+                  ) : ''}
+                <StarPhotographer currentUser={this.props.currentUser}
+                        artistId={id}
+                        artistLiked={this.state.artistLiked} />
+              </span>
+=======
                 {this.props.currentUser === id ?
                   null
                   :
@@ -368,6 +404,7 @@ class Profile extends React.Component {
                           artistLiked={this.state.artistLiked} />
                   </span>
                 }
+>>>>>>> 825cc69a04e6cc6faec1dc10c49215b3f91bd490
             </div>
         <div className="personalDetContainer">
           <h3>ABOUT</h3>
@@ -375,7 +412,8 @@ class Profile extends React.Component {
           <ProfileDesc bio={this.state.bio} />
         </div>
         <div className="featuredPortfolio">
-        {/*{ this.state.portfolioToggle ? (
+<<<<<<< HEAD
+        { this.state.portfolioToggle ? (
           <span>
             <button className="featuredButton" onClick={this.showFeatures}>
               Featured Photos
@@ -421,7 +459,8 @@ class Profile extends React.Component {
                   artistId={this.state.artistId}
                   deleteReview={this.deleteReview} />
                   <div className="addReview">
-                  {this.props.currentUser !== this.state.artistId ? <AddReview currentUser={this.props.currentUser}*/}
+                  {this.props.currentUser !== this.state.artistId ? <AddReview currentUser={this.props.currentUser}
+=======
           <button onClick={this.changeShowState}>
             Featured Photos
           </button>
@@ -436,7 +475,6 @@ class Profile extends React.Component {
           </button>
           {this.renderTabsContent(this.state.photoView)}
         </div>
-            <div className="dropDownMenu">
               <AvailabilityCard currentUser={this.props.currentUser}
                 disabledDays={this.state.disabledDays}
                 artistId={this.state.artistId} />
@@ -446,10 +484,12 @@ class Profile extends React.Component {
                 artistId={this.state.artistId}
                 deleteReview={this.deleteReview} />
               <AddReview currentUser={this.props.currentUser}
+>>>>>>> 825cc69a04e6cc6faec1dc10c49215b3f91bd490
                 artistId={this.state.artistId}
                 createReview={this.createReview} /> : ''}
-            </div>
-          </div>
+                </div>
+              </div>
+            </div>)}
       </div>
     )
   }
