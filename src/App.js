@@ -167,7 +167,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    //This is how you use axios for get requests! Axios is like an ajax library
+    // sets the document title
+    document.title = "Welcome to Exposureca.com"
 
     axios.get("/homephotos")
       .then(res => this.setState({ homephotos: res.data }));
