@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import './styles/SearchResults.css';
-import { Modal/*, Button*/ } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import SearchBar from './SearchBar.jsx';
 
 class SearchResults extends Component {
@@ -34,7 +34,7 @@ class SearchResults extends Component {
     } else {
       return images.map((image) => {
         return (
-          <div key={image.id}>
+          <div key={image.id} className="imgWrapper">
           <button className="indivImg"
                   value={image}
                   onClick={() => handleShowFunction(image.id)}>
@@ -66,11 +66,6 @@ class SearchResults extends Component {
             </Modal.Footer>
           </Modal>
         </div>
-          /*<Link to={`/artists/${ image.image_owner }`}>
-            <img className="searchResult"
-                 alt={image.description}
-                 src={image.src} />
-          </Link>*/
         )
       })
     }
@@ -86,10 +81,10 @@ class SearchResults extends Component {
     return(
       <div>
         {search}
-        <section className="wrapper">
-        <h2>
+        <h2 className="results">
           Here's what we found on "{this.props.searchWord}"
         </h2>
+        <section className="wrapper">
         {this.displaySearchedImages(this.props.searchimages)}
         </section>
       </div>

@@ -17,6 +17,7 @@ class Opportunities extends Component {
     this.state = {
       opportunities: '',
       applicationsent: false,
+      appliedopportunities: []
     };
 
     this.displayEvents = this.displayEvents.bind(this);
@@ -24,38 +25,41 @@ class Opportunities extends Component {
     this.createEvent = this.createEvent.bind(this);
     this.showSuccessMsg = this.showSuccessMsg.bind(this);
     this.deleteEvent = this.deleteEvent.bind(this);
-
+    this.refreshApplybutton = this.refreshApplybutton.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   showSuccessMsg() {
-      return (
+    return (
       <div className="applicationSent">
         <h3>
           Your application has been sent! Thanks for applying!
         </h3>
       </div>
-
-      )
+    )
   }
 
+//CLIENT: DELETE EVENT IF YOU ARE THE CREATOR OF THE EVENT
   deleteEvent(event, creator) {
     let currentUser = parseInt(this.props.currentUser)
+
     if (creator === currentUser) {
-      axios.post(`/opportunities/${event}/delete`,
-        { event_id: event,
-          creatorid: creator} )
+      axios.post(`/opportunities/${event}/delete`, {
+          event_id: event,
+          creatorid: creator
+        })
       .then((res) => {
         let newEvents = res.data;
         this.setState({ opportunities: newEvents });
       })
-
-      axios.get(`/api/opportunities/applied/${this.props.currentUser}`).then(res => {
-        this.setState({'appliedopportunities': res.data })
-    });
-
+      axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
+        .then(res => {
+          this.setState({'appliedopportunities': res.data })
+        });
     }
   }
 
+//PHOTOGRAPHER: SAVES THEIR APPLICATION
   saveInterestedApplicants(event, artist, desc) {
     this.setState({applicationsent: true});
     let event_id = event
@@ -66,10 +70,41 @@ class Opportunities extends Component {
         artist_id: artist,
         msg_des: description,
         artist_name: artist_name})
-      .then((res) => {
+      .then((data) => {
+        axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
+        .then(res => {
+          console.log("res inside Opportunities", res.data)
+          let appliedevent = res.data
+          let applied_eventid = []
+
+          appliedevent.forEach((i) => {
+            applied_eventid.push(i.eventref_id)
+          })
+
+        this.setState({'appliedopportunities': applied_eventid })
       })
+    })
   }
 
+//PHOTOGRAPHER: IF DELETE APPLICATION, BUTTON REAPPEARS ON JOB BOARD
+  refreshApplybutton() {
+    axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
+        .then(res => {
+          console.log("res inside Opportunities", res.data)
+          let appliedevent = res.data
+          let applied_eventid = []
+
+          appliedevent.forEach((i) => {
+            applied_eventid.push(i.eventref_id)
+          })
+        this.setState({
+          appliedopportunities: applied_eventid,
+          applicationsent: false
+        })
+    })
+  }
+
+//DISPLAYS OPPORTUNITIES
   displayEvents(events) {
     if (!events || events.length === 0 ) {
       return (
@@ -81,17 +116,20 @@ class Opportunities extends Component {
       return events.map((event) => {
         let date = event.event_date.toString().split('T')[0]
         return (
-          <OpportunityEventCard deleteEvent={this.deleteEvent}
-                   saveApplication={this.saveInterestedApplicants}
-                   event={event}
-                   date={date}
-                   usertype={this.props.usertype}
-                   currentUser={this.props.currentUser}/>
+          <OpportunityEventCard
+              appliedEvents={this.state.appliedopportunities}
+              deleteEvent={this.deleteEvent}
+              saveApplication={this.saveInterestedApplicants}
+              event={event}
+              date={date}
+              usertype={this.props.usertype}
+              currentUser={this.props.currentUser}/>
         )
       })
     }
   }
 
+//CLIENT: CAN CREATE EVENTS
   createEvent(title, description, date, price, location) {
     axios.post("/opportunities/:id/add",
       { title: title,
@@ -105,21 +143,39 @@ class Opportunities extends Component {
       });
   }
 
+//REMOVES APPLICATION SUCCESS SIGN
+  handleClick() {
+    this.setState({applicationsent: false})
+  }
+
+//ON MOUNT FIND
   componentDidMount() {
     this.setState({applicationsent: false})
     axios.get("/api/opportunities")
       .then(res => {
         this.setState({ opportunities: res.data.reverse() })
     });
+
+    axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
+      .then(res => {
+        console.log("res inside Opportunities", res.data)
+        let appliedevent = res.data
+        let applied_eventid = []
+        appliedevent.forEach((i) => {
+          applied_eventid.push(i.eventref_id)
+        })
+      this.setState({'appliedopportunities': applied_eventid })
+    })
   }
 
   render() {
     let usertype = parseInt(this.props.usertype)
+
     return (
       <Tabs>
         <TabList>
-          <Tab> Job Board </Tab>
-          {usertype === 1 ? <Tab> Applied Opportunities </Tab> : <Tab>My Events</Tab>}
+          <Tab onClick={this.handleClick}> Job Board </Tab>
+          {usertype === 1 ? <Tab onClick={this.handleClick}> Applied Opportunities </Tab> : <Tab>My Events</Tab>}
         </TabList>
 
         <TabPanel>
@@ -140,8 +196,10 @@ class Opportunities extends Component {
           {usertype === 1 ?
             <AppliedCard
               currentUser={this.props.currentUser}
-              usertype={this.props.usertype}/>
-            : <MyEvent
+              usertype={this.props.usertype}
+              refreshApplybutton={this.refreshApplybutton}
+              />
+          : <MyEvent
               displayEvents={this.displayEvents}
               currentUser={this.props.currentUser}
               usertype={this.props.usertype}
@@ -149,7 +207,6 @@ class Opportunities extends Component {
           }
         </TabPanel>
       </Tabs>
-
     );
   }
 }
