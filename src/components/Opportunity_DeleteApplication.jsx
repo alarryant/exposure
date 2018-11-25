@@ -41,7 +41,7 @@ class DeleteApplication extends Component {
   render() {
     return (
       <div>
-        <Button bsStyle="default" bsSize="medium" onClick={this.handleShow}>
+        <Button bsStyle="default" bsSize="small" onClick={this.handleShow}>
           Delete Application
         </Button>
 

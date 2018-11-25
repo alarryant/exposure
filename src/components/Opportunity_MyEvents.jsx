@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import OpportunityApply from './Opportunity_Apply.jsx';
-import DeleteEvent from './Opportunity_Delete.jsx';
-import OpportunityEventCard from './Opportunity_EventCard.jsx';
 import axios from 'axios'
 
 //DISPLAY FOR USER'S CREATED EVENT
