@@ -9,7 +9,8 @@ class EditSocialMedia extends React.Component {
     this.state = {
       twitter: this.props.twitter,
       facebook: this.props.facebook,
-      instagram: this.props.instagram
+      instagram: this.props.instagram,
+      website: this.props.website
     };
 
     this.parseUrl = this.parseUrl.bind(this);
@@ -36,7 +37,8 @@ class EditSocialMedia extends React.Component {
         this.props.sendSocialMediaForm({
         twitter: this.state.twitter,
         facebook: this.state.facebook,
-        instagram: this.state.instagram
+        instagram: this.state.instagram,
+        website: this.state.website
       });
     });
   }
@@ -67,6 +69,14 @@ class EditSocialMedia extends React.Component {
                  value={this.state.instagram !== 'null' ? this.state.instagram : ''}
                  name="instagram"
                  placeholder="Link your Instagram here."
+                 onChange={this.handleChange}></input>
+        </p>
+        <p>
+          <i className="fas fa-laptop"></i>
+          <input type="text"
+                 value={this.state.website !== 'null' ? this.state.website : ''}
+                 name="website"
+                 placeholder="Link your Website here."
                  onChange={this.handleChange}></input>
         </p>
       </div>

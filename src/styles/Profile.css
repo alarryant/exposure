@@ -1,8 +1,110 @@
-.profiledesc {
+.avatarSocMed {
+  position: relative;
+  height: 350px;
+  width: 550px;
+  float: left;
+  display: block;
+  border: 2px solid #2f3532;
+  padding: 25px 15px;
+  margin: 0px 25px 25px 25px;
+}
+
+.avatarSocMed h5 {
+  font-family: 'Assistant', sans-serif;
+  font-size: 2em;
+  font-weight: 700;
+}
+
+.avatarSocMed a {
+  color: #2E3532;
+  font-size: 1.25em;
+}
+
+.avatarSocMed a:hover {
+  color: #A0AAB2;
+  text-decoration: none;
+}
+
+.fa-star {
+  color: #2E3532;
+}
+
+.fa-star:hover {
+  color: #A0AAB2;
+}
+.socialMediaContainer {
+  margin: 20px 0px 40px 10px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.socialMediaContainer i {
+  font-size: 1.25em;
+  width: 25px;
+  text-align: center;
+}
+
+.contactMe {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 5px;
+  float: right;
+  display: inline;
+}
+
+.likeContact {
+  display: inline-block;
+  position: absolute;
+  bottom: 15px;
+}
+
+.contactMe:hover {
+  color: #A0AAB2;
+  text-decoration: none;
+}
+
+.contactMe a {
+  text-decoration: none;
+}
+
+.personalDetContainer {
+  padding: 5px 20px 5px 20px;
+  max-height: 350px;
+  max-width: 500px;
+  float: left;
+  clear: right;
+}
+
+.personalDetContainer h3 {
+  font-family: 'Assistant', sans-serif;
+  font-weight: 700;
+  font-size: 3em;
+}
+
+.personalDetContainer hr {
+  background-color: black;
+  border: 1px solid black;
+}
+
+.likesContainer {
+  display: inline-block;
+  font-size: 1.5em;
+  margin-top: 33px;
+}
+
+.likesContainer i {
+  float: right;
+  margin: 0px 5px;
+}
+
+.likesContainer p {
+  float: left;
+}
+
+/*.profiledesc {
   display: inline-block;
   width: 500px;
-  margin: 50px;
-}
+}*/
 
 .profilebtn {
   width: 200px;

@@ -28,10 +28,11 @@ class SocialMedia extends React.Component {
   }
 
   render () {
-    console.log("socialmedia", this.props);
+    console.log("tgisi s props website", this.props.website);
     let facebookUrl = `https://www.facebook.com/${this.parseUrl(this.props.facebook)}`;
     let twitterUrl = `https://www.twitter.com/${this.parseUrl(this.props.twitter)}`;
     let instagramUrl = `https://www.instagram.com/${this.parseUrl(this.props.instagram)}`;
+    let websiteUrl = this.props.website;
 
     return (
       <div className="socialMediaContainer">
@@ -39,18 +40,23 @@ class SocialMedia extends React.Component {
           (
           <p>
             <i className="fab fa-facebook-f"></i>
-            <a href={facebookUrl} target="_blank" rel="noopener noreferrer"> {this.parseUrl(this.props.facebook)}</a>
+            <a href={facebookUrl} target="_blank" rel="noopener noreferrer">{this.parseUrl(this.props.facebook)}</a>
           </p>) : ''}
         {this.props.twitter !== "null" ?
         (
         <p>
           <i className="fab fa-twitter"></i>
-          <a href={twitterUrl} target="_blank" rel="noopener noreferrer"> {this.parseUrl(this.props.twitter)}</a>
+          <a href={twitterUrl} target="_blank" rel="noopener noreferrer">{this.parseUrl(this.props.twitter)}</a>
         </p>) : ''}
         {this.props.instagram !== "null" ?
           (
           <p><i className="fab fa-instagram"></i>
             <a href={instagramUrl} target="_blank" rel="noopener noreferrer">{this.parseUrl(this.props.instagram)}</a>
+          </p>) : ''}
+        {this.props.website !== "null" ?
+          (
+          <p><i className="fas fa-laptop"></i>
+            <a href={websiteUrl} target="_blank" rel="noopener noreferrer">{(new Url(this.props.website)).host}</a>
           </p>) : ''}
       </div>
       )
