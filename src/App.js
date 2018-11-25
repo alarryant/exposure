@@ -90,7 +90,11 @@ class App extends Component {
       userType: userType
     })
       .then((res) => {
+        console.log("This is my console log: ", res.data);
         localStorage.setItem('currentUser', res.data.currentUser);
+        localStorage.setItem('user_type_id', res.data.userType);
+        localStorage.setItem('currentUserFirstName', res.data.firstName);
+        localStorage.setItem('currentUserLastName', res.data.lastName);
 
         if (res.data.userType === 1) {
           this.setState({ redirect: `artists/${res.data.currentUser}/editprofile`, usertype: res.data.userType });
