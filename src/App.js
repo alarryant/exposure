@@ -93,7 +93,7 @@ class App extends Component {
         localStorage.setItem('currentUser', res.data.currentUser);
 
         if (res.data.userType === 1) {
-          this.setState({ redirect: `artists/${res.data.currentUser}/edit`, usertype: res.data.userType });
+          this.setState({ redirect: `artists/${res.data.currentUser}/editprofile`, usertype: res.data.userType });
         } else {
           this.setState({ redirect: 'dashboard', usertype: res.data.userType });
         }
@@ -166,13 +166,9 @@ class App extends Component {
     this.setState({redirect: path});
   }
 
-  // getLikedPhotographers(likes) {
-  //   this.setState({likes: likes});
-  //   console.log("liked photographers set");
-  // }
-
   componentDidMount() {
-    //This is how you use axios for get requests! Axios is like an ajax library
+    // sets the document title
+    document.title = "Welcome to Exposureca.com"
 
     axios.get("/homephotos")
       .then(res => this.setState({ homephotos: res.data }));
@@ -189,6 +185,7 @@ class App extends Component {
           <Navbar loginInfo={this.loginInfo}
             signupInfo={this.signupInfo}
             currentUser={currentUser}
+            currentUserName={currentUserName}
             logout={this.logout} />
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos}
