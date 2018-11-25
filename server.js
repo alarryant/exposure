@@ -180,36 +180,92 @@ app.post('/artists/:id/review', (req, res) => {
 });
 
 app.post("/artists/:id/edit", (req, res) => {
-  let photoSrc = req.body.clickedPhotoSrc.slice(21);
-  let photoFeatured = req.body.clickedPhotoFeature;
+  // let photoSrc;
+  // if (req.body.clickedPhotoSrc) {
+  //   photoSrc = req.body.clickedPhotoSrc.slice(21);
+  // }
+  // let photoFeatured = req.body.clickedPhotoFeature;
 
-  knex('images').where('image_owner', req.session.user_id).where('featured', 'true')
-    .then(numOfFeatures => {
-      if (numOfFeatures.length <= 10) {
-        if (photoFeatured === 'true') {
-          knex('images')
-            .where('src', photoSrc)
-            .update({'featured': 'false'})
-            .then(data =>
-              knex('images')
-                .where('image_owner', req.session.user_id)
-                .orderBy('id')
-                .then(moredata => res.json(moredata)))
-        } else {
-          knex('images')
-            .where('src', photoSrc)
-            .update({'featured': 'true'})
-            .then(data =>
-              knex('images')
-                .where('image_owner', req.session.user_id)
-                .orderBy('id')
-                .then(moredata => res.json(moredata)))
-        }
-      } else {
-        res.status(400)
-           .send("Sorry! The maximum number of feature photos is 10.");
-      }
+  let artistId = req.body.artistId;
+  let package1 = req.body.submitData.packages[0];
+  let package2 = req.body.submitData.packages[1];
+  let package3 = req.body.submitData.packages[2];
+  let twitter = req.body.submitData.twitter;
+  let facebook = req.body.submitData.facebook;
+  let instagram = req.body.submitData.instagram;
+  let bio = req.body.submitData.bio;
+
+  knex('users')
+    .where('users.id', artistId)
+    .update({
+      bio: bio,
+      twitter_url: twitter,
+      instagram_url: instagram,
+      facebook_url: facebook
+    })
+    .returning('*')
+    .then(() => {
+      knex('price_packages')
+        .where({user_id: artistId})
+        .del()
+        .then(() => {
+          knex('price_packages')
+            .insert([{
+              user_id: artistId,
+              tier: Number(package1.tier),
+              price: Number(package1.price),
+              description: package1.description},
+              {user_id: artistId,
+              tier: Number(package2.tier),
+              price: Number(package2.price),
+              description: package2.description},
+              {user_id: artistId,
+              tier: Number(package3.tier),
+              price: Number(package3.price),
+              description: package3.description
+            }])
+            .then((data) => {
+              knex('price_packages')
+                .join('users', 'price_packages.user_id', '=', 'users.id')
+                .where('price_packages.user_id', artistId).orderBy('tier')
+                .then((userData) => {
+                  // knex('images')
+                  //   .where('image_owner', req.session.user_id)
+                  //   .where('featured', 'true')
+                  //   .then(numOfFeatures => {
+                  //     if (numOfFeatures.length <= 10) {
+                  //       if (photoFeatured === 'true') {
+                  //         knex('images')
+                  //           .where('src', photoSrc)
+                  //           .update({'featured': 'false'})
+                  //           .then(data =>
+                  //             knex('images')
+                  //               .where('image_owner', req.session.user_id)
+                  //               .orderBy('id')
+                  //               .then(moredata => res.json(moredata)))
+                  //       } else {
+                  //         knex('images')
+                  //           .where('src', photoSrc)
+                  //           .update({'featured': 'true'})
+                  //           .then(data =>
+                  //             knex('images')
+                  //               .where('image_owner', req.session.user_id)
+                  //               .orderBy('id')
+                  //               .then(moredata => res.json(moredata)))
+                  //       }
+                  //     } else {
+                  //       res.status(400)
+                  //          .send("Sorry! The maximum number of feature photos is 10.");
+                  //     }
+                  //   });
+                  console.log(userData);
+                  res.json(userData);
+                });
+            });
+        });
     });
+
+
   });
 
 app.post('/artists/:id/editavailability', (req, res) => {

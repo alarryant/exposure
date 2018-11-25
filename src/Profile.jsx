@@ -39,12 +39,12 @@ class Profile extends React.Component {
     this.state = {
       artist: {},
       photoView: 'featured',
-      editable: false
+      editable: false,
       // bio: "",
       // twitter: 'null',
       // facebook: 'null',
       // instagram: 'null',
-      // avatarImage: 'images/default_avatar.png',
+      // avatarImage:
       // packages: [],
       // reviews: []
     }
@@ -164,13 +164,11 @@ class Profile extends React.Component {
 
   componentDidMount() {
 
-    if (this.props.location.pathname.includes("/edit") && this.props.currentUser === this.props.match.params) {
+    if (this.props.location.pathname.includes("/editprofile") && Number(this.props.currentUser) === Number(this.props.match.params.id)) {
       this.setState({editable: true});
     }
 
     const { id } = this.props.match.params;
-
-    // console.log("what is in params", this.props.location);
 
     this.setState({ artistId: id });
 
@@ -181,12 +179,16 @@ class Profile extends React.Component {
       }
     })
       .then((res) => {
+        let avatarImage = res.data.user[0].profile_image;
+        if (avatarImage === null) {
+          avatarImage = '/images/default_avatar.png'
+        }
         const profileData = {
           collection: res.data.images,
           packages: res.data.packages,
           bio: res.data.user[0].bio,
           fullName: res.data.user[0].first_name + ' ' + res.data.user[0].last_name,
-          avatarImage: res.data.user[0].profile_image,
+          avatarImage: avatarImage,
           twitter: res.data.user[0].twitter_url,
           facebook: res.data.user[0].facebook_url,
           instagram: res.data.user[0].instagram_url,
@@ -194,6 +196,8 @@ class Profile extends React.Component {
           email: res.data.user[0].email,
           redirect: true
         };
+
+         console.log("thisi s profile data", profileData);
 
 
         this.setState(profileData);
@@ -203,7 +207,7 @@ class Profile extends React.Component {
   handleClickEdit() {
     if (this.state.editable === false) {
       this.setState({editable: true})
-      this.props.handleProfileEditPath(`artists/${this.props.currentUser}/edit`)
+      this.props.handleProfileEditPath(`artists/${this.props.currentUser}/editprofile`)
     } else {
       this.setState({editable: false})
       this.props.handleProfileEditPath(`artists/${this.props.currentUser}`)
@@ -211,6 +215,7 @@ class Profile extends React.Component {
   }
 
   handleSubmit(event) {
+    this.props.handleProfileEditPath(`artists/${this.props.currentUser}`);
     let submitData = {
       packages: this.state.packages,
       twitter: this.state.twitter,
@@ -297,19 +302,19 @@ class Profile extends React.Component {
             <div className="profile">
               <Avatar name={this.state.fullName}
                 avatar={this.state.avatarImage} />
-              <MailButton email={this.state.email}
-                name={this.props.currentUserName} />
-              <StarPhotographer currentUser={this.props.currentUser}
-                artistId={id}
-                artistLiked={this.state.artistLiked} />
-              <h3>Description</h3>
-              <ProfileDesc bio={this.state.bio} />
-              <SocialMedia twitter={this.state.twitter}
-                facebook={this.state.facebook}
-                instagram={this.state.instagram} />
-              <div className="featuredPortfolio">
-                <button onClick={this.showPortfolio}>
-                  View Portfolio
+        {this.props.currentUser ? (<MailButton email={this.state.email}
+                    name={this.props.currentUserName} />) : ''}
+        <StarPhotographer currentUser={this.props.currentUser}
+                          artistId={id}
+                          artistLiked={this.state.artistLiked} />
+        <h3>Description</h3>
+        <ProfileDesc bio={this.state.bio} />
+        <SocialMedia twitter={this.state.twitter}
+                     facebook={this.state.facebook}
+                     instagram={this.state.instagram} />
+        <div className="featuredPortfolio">
+          <button onClick={this.showPortfolio}>
+            View Portfolio
           </button>
                 <button onClick={this.showFeatures}>
                   Featured Photos
