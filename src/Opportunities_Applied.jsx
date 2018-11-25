@@ -25,6 +25,7 @@ class AppliedCard extends Component {
       let updatedAppList = res.data;
       this.setState({appliedopportunities: updatedAppList});
     });
+      this.props.refreshApplybutton()
   }
 
   displayAppliedEvents(events) {

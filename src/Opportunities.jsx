@@ -25,6 +25,7 @@ class Opportunities extends Component {
     this.createEvent = this.createEvent.bind(this);
     this.showSuccessMsg = this.showSuccessMsg.bind(this);
     this.deleteEvent = this.deleteEvent.bind(this);
+    this.refreshApplybutton = this.refreshApplybutton.bind(this);
   }
 
   showSuccessMsg() {
@@ -81,6 +82,20 @@ class Opportunities extends Component {
     })
   }
 
+  refreshApplybutton() {
+    axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
+        .then(res => {
+          console.log("res inside Opportunities", res.data)
+          let appliedevent = res.data
+          let applied_eventid = []
+
+          appliedevent.forEach((i) => {
+            applied_eventid.push(i.eventref_id)
+          })
+        this.setState({'appliedopportunities': applied_eventid })
+    })
+  }
+
   displayEvents(events) {
     if (!events || events.length === 0 ) {
       return (
@@ -93,13 +108,13 @@ class Opportunities extends Component {
         let date = event.event_date.toString().split('T')[0]
         return (
           <OpportunityEventCard
-                  appliedEvents={this.state.appliedopportunities}
-                  deleteEvent={this.deleteEvent}
-                  saveApplication={this.saveInterestedApplicants}
-                  event={event}
-                  date={date}
-                  usertype={this.props.usertype}
-                  currentUser={this.props.currentUser}/>
+              appliedEvents={this.state.appliedopportunities}
+              deleteEvent={this.deleteEvent}
+              saveApplication={this.saveInterestedApplicants}
+              event={event}
+              date={date}
+              usertype={this.props.usertype}
+              currentUser={this.props.currentUser}/>
         )
       })
     }
@@ -166,8 +181,10 @@ class Opportunities extends Component {
           {usertype === 1 ?
             <AppliedCard
               currentUser={this.props.currentUser}
-              usertype={this.props.usertype}/>
-            : <MyEvent
+              usertype={this.props.usertype}
+              refreshApplybutton={this.refreshApplybutton}
+              />
+          : <MyEvent
               displayEvents={this.displayEvents}
               currentUser={this.props.currentUser}
               usertype={this.props.usertype}
