@@ -1,6 +1,7 @@
 import React from 'react';
 import sampleSize from 'lodash.samplesize';
 import Slider from "react-slick";
+import SearchBar from './SearchBar.jsx';
 import { Link } from 'react-router-dom';
 import { Modal/*, Button*/ } from 'react-bootstrap';
 
@@ -90,9 +91,14 @@ class Home extends React.Component {
       focusOnSelect: true,
     };
 
-  return (
+    let search;
+    if(this.props.search){
+      search = <SearchBar searchResult={this.props.searchResult} />
+    }
 
+  return (
     <div className="homeContainer">
+      {search}
       <div className="splashcontainer">
         <img className="splashart"
              alt="splash"
