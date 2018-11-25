@@ -10,9 +10,10 @@ import axios from 'axios';
 import { Link, NavLink } from 'react-router-dom';
 import './styles/Dashboard.css';
 import SearchBar from './SearchBar.jsx';
+import Applicants from './components/Opportunity_MyEvents_Applicants.jsx'
 
 const left = {
-  width: '20%',
+  width: '10%',
   float: 'left'
 };
 
@@ -22,7 +23,7 @@ const right = {
 };
 
 const tabStyle = {
-  width: '50%',
+  width: '80%',
   margin: '0 auto'
 };
 
@@ -39,6 +40,21 @@ class Dashboard extends React.Component {
     this.createEvent = this.createEvent.bind(this);
     this.renderLikedPhotographer = this.renderLikedPhotographer.bind(this);
     this.deleteEvent = this.deleteEvent.bind(this)
+    this.refresh = this.refresh.bind(this)
+  }
+
+  refresh() {
+    let currentUser = this.props.currentUser;
+    axios.get(`/dashboard`, {
+      params: {
+        currentUser: currentUser
+      }
+    }).then(response => {
+      this.setState({
+          likedPhotographers: response.data.likes,
+          userevents: response.data.events.reverse()
+      });
+    });
   }
 
 
@@ -55,15 +71,21 @@ class Dashboard extends React.Component {
 
       axios.get(`/api/opportunities/applied/${this.props.currentUser}`).then(res => {
         this.setState({'appliedopportunities': res.data })
-    });
-
-    }
+      });
+    } this.refresh()
   }
 
    createEvent(title, description, date, price, location) {
-    axios.post("/opportunities/:id/add", { title: title, description: description, date: date, price: price, location: location })
+    axios.post(`/opportunities/${this.props.currentUser}/add`, {
+        title: title,
+        description: description,
+        date: date,
+        price: price,
+        location: location,
+        creator_id: this.props.currentUser
+      })
       .then((res) => {
-        let newEvents = res.data;
+        let newEvents = res.data.reverse();
         this.setState({events: newEvents});
         newEvents.map((event) => {
           let date = event.event_date.toString().split('T')[0]
@@ -76,7 +98,8 @@ class Dashboard extends React.Component {
               />
             );
         });
-      });
+      })
+      this.refresh()
   }
 
 
@@ -110,20 +133,6 @@ class Dashboard extends React.Component {
           name: response.data.user[0].first_name + " " + response.data.user[0].last_name,
           avatar: response.data.user[0].profile_image,
           type: response.data.user[0].user_type_id,
-          likedPhotographers: response.data.likes,
-          userevents: response.data.events
-      });
-    });
-  }
-
-  componentDidUpdate() {
-    let currentUser = this.props.currentUser;
-    axios.get(`/dashboard`, {
-      params: {
-        currentUser: currentUser
-      }
-    }).then(response => {
-      this.setState({
           likedPhotographers: response.data.likes,
           userevents: response.data.events
       });
@@ -166,6 +175,7 @@ class Dashboard extends React.Component {
           <TabList>
             <Tab>Favorite Photographers</Tab>
             <Tab>My Events</Tab>
+            <Tab>Applicants</Tab>
           </TabList>
 
           <TabPanel>
@@ -174,10 +184,17 @@ class Dashboard extends React.Component {
             {this.renderLikedPhotographer(this.state.likedPhotographers)}
             </div>
           </TabPanel>
+
           <TabPanel>
-          <p>Checkout other postings on the<NavLink to="/opportunities">Job Board</NavLink></p>
-           <CreateEvent createEvent={this.createEvent}/>
+            <p>Checkout other postings on the<NavLink to="/opportunities">Job Board</NavLink></p>
+            <CreateEvent createEvent={this.createEvent}/>
             { this.displayEvents(this.state.userevents) }
+          </TabPanel>
+
+          <TabPanel>
+            <Applicants
+              currentUser={this.props.currentUser}
+              />
           </TabPanel>
         </Tabs>
       </div>
