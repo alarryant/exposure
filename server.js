@@ -88,7 +88,7 @@ app.post('/register', (req, res) => {
         .returning('id')
           .then((user_id) => {
             req.session.user_id = +user_id;
-            res.json({currentUser: req.session.user_id, userType: userType});
+            res.json({currentUser: req.session.user_id, userType: userType, firstName, lastName});
           });
     }
   });
