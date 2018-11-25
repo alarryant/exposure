@@ -26,6 +26,7 @@ class Opportunities extends Component {
     this.showSuccessMsg = this.showSuccessMsg.bind(this);
     this.deleteEvent = this.deleteEvent.bind(this);
     this.refreshApplybutton = this.refreshApplybutton.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   showSuccessMsg() {
@@ -38,24 +39,27 @@ class Opportunities extends Component {
     )
   }
 
+//CLIENT: DELETE EVENT IF YOU ARE THE CREATOR OF THE EVENT
   deleteEvent(event, creator) {
     let currentUser = parseInt(this.props.currentUser)
+
     if (creator === currentUser) {
-      axios.post(`/opportunities/${event}/delete`,
-        { event_id: event,
-          creatorid: creator} )
+      axios.post(`/opportunities/${event}/delete`, {
+          event_id: event,
+          creatorid: creator
+        })
       .then((res) => {
         let newEvents = res.data;
         this.setState({ opportunities: newEvents });
       })
-
-      axios.get(`/api/opportunities/applied/${this.props.currentUser}`).then(res => {
-        this.setState({'appliedopportunities': res.data })
-    });
-
+      axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
+        .then(res => {
+          this.setState({'appliedopportunities': res.data })
+        });
     }
   }
 
+//PHOTOGRAPHER: SAVES THEIR APPLICATION
   saveInterestedApplicants(event, artist, desc) {
     this.setState({applicationsent: true});
     let event_id = event
@@ -82,6 +86,7 @@ class Opportunities extends Component {
     })
   }
 
+//PHOTOGRAPHER: IF DELETE APPLICATION, BUTTON REAPPEARS ON JOB BOARD
   refreshApplybutton() {
     axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
         .then(res => {
@@ -92,10 +97,14 @@ class Opportunities extends Component {
           appliedevent.forEach((i) => {
             applied_eventid.push(i.eventref_id)
           })
-        this.setState({'appliedopportunities': applied_eventid })
+        this.setState({
+          appliedopportunities: applied_eventid,
+          applicationsent: false
+        })
     })
   }
 
+//DISPLAYS OPPORTUNITIES
   displayEvents(events) {
     if (!events || events.length === 0 ) {
       return (
@@ -120,6 +129,7 @@ class Opportunities extends Component {
     }
   }
 
+//CLIENT: CAN CREATE EVENTS
   createEvent(title, description, date, price, location) {
     axios.post("/opportunities/:id/add",
       { title: title,
@@ -133,6 +143,12 @@ class Opportunities extends Component {
       });
   }
 
+//REMOVES APPLICATION SUCCESS SIGN
+  handleClick() {
+    this.setState({applicationsent: false})
+  }
+
+//ON MOUNT FIND
   componentDidMount() {
     this.setState({applicationsent: false})
     axios.get("/api/opportunities")
@@ -150,17 +166,16 @@ class Opportunities extends Component {
         })
       this.setState({'appliedopportunities': applied_eventid })
     })
-
   }
 
   render() {
-    console.log("Opportunities", this.state)
     let usertype = parseInt(this.props.usertype)
+
     return (
       <Tabs>
         <TabList>
-          <Tab> Job Board </Tab>
-          {usertype === 1 ? <Tab> Applied Opportunities </Tab> : <Tab>My Events</Tab>}
+          <Tab onClick={this.handleClick}> Job Board </Tab>
+          {usertype === 1 ? <Tab onClick={this.handleClick}> Applied Opportunities </Tab> : <Tab>My Events</Tab>}
         </TabList>
 
         <TabPanel>
@@ -192,7 +207,6 @@ class Opportunities extends Component {
           }
         </TabPanel>
       </Tabs>
-
     );
   }
 }

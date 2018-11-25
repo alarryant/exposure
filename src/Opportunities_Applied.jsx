@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import DeleteApplication from './components/Opportunity_DeleteApplication.jsx';
 import AppCard from './components/Opportunity_AppliedCard.jsx';
 import axios from 'axios';
 
@@ -20,7 +19,10 @@ class AppliedCard extends Component {
   }
 
   deleteApplication(app_id) {
-    axios.post(`/api/opportunities/applied/${this.props.currentUser}`, { application_id: app_id, currentUser: this.props.currentUser})
+    axios.post(`/api/opportunities/applied/${this.props.currentUser}`, {
+      application_id: app_id,
+      currentUser: this.props.currentUser
+    })
     .then((res) => {
       let updatedAppList = res.data;
       this.setState({appliedopportunities: updatedAppList});
@@ -43,8 +45,9 @@ class AppliedCard extends Component {
   }
 
   componentDidMount() {
-    axios.get(`/api/opportunities/applied/${this.props.currentUser}`).then(res => {
-      this.setState({'appliedopportunities': res.data })
+    axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
+      .then(res => {
+        this.setState({'appliedopportunities': res.data })
     });
   }
 
@@ -57,8 +60,7 @@ class AppliedCard extends Component {
         {this.displayAppliedEvents(this.state.appliedopportunities)}
       </section>
       )
-    }
   }
-
+}
 
 export default AppliedCard;

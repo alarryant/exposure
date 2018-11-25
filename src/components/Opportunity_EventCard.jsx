@@ -5,19 +5,13 @@ import DeleteEvent from './Opportunity_Delete.jsx';
 //DISPLAY FOR AN EVENT
 
 class OpportunityEventCard extends Component {
-
-
     constructor(props) {
     super(props);
-
 
     this.haveApplied = this.haveApplied.bind(this)
   }
 
-
   haveApplied(id) {
-    console.log("inside haveApplied", id)
-    console.log("this.props.appliedEvents inside have applied", this.props.appliedEvents)
     if ((this.props.appliedEvents).includes(id)) {
       return ""
     } else {
@@ -39,21 +33,17 @@ class OpportunityEventCard extends Component {
     const currentUser = parseInt(this.props.currentUser);
     const eventid = event.event_id
     const appliedevent = this.props.appliedEvents
-    console.log("appliedevents in event card", appliedevent)
 
-  return (
-
+    return (
       <div className="eventcard">
-        <h3>{event.name}</h3>
-        <p>Date: {this.props.date} -  Location: {event.event_location}</p>
+        <h3>{ event.name }</h3>
+        <p>Date: { this.props.date } -  Location: { event.event_location }</p>
         <hr/>
-        <p>{event.description}</p>
-        <p>Contact: {event.first_name} {event.last_name}</p>
-        {user_type_id === 1 ?
-          this.haveApplied(eventid)
-        : ""
-        }
-        {currentUser === creator_id ?
+        <p>{ event.description }</p>
+        <p>Contact: { event.first_name } { event.last_name }</p>
+
+        { user_type_id === 1 ? this.haveApplied(eventid) : "" }
+        { currentUser === creator_id ?
           <DeleteEvent
             eventid={event.event_id}
             deleteEvent={this.props.deleteEvent}
@@ -64,8 +54,7 @@ class OpportunityEventCard extends Component {
           : ""
           }
       </div>
-      )
-  }
+  )}
 }
 
 
