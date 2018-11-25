@@ -90,7 +90,11 @@ class App extends Component {
       userType: userType
     })
       .then((res) => {
+        console.log("This is my console log: ", res.data);
         localStorage.setItem('currentUser', res.data.currentUser);
+        localStorage.setItem('user_type_id', res.data.userType);
+        localStorage.setItem('currentUserFirstName', res.data.firstName);
+        localStorage.setItem('currentUserLastName', res.data.lastName);
 
         if (res.data.userType === 1) {
           this.setState({ redirect: `artists/${res.data.currentUser}/editprofile`, usertype: res.data.userType });
@@ -187,20 +191,26 @@ class App extends Component {
             signupInfo={this.signupInfo}
             currentUser={currentUser}
             currentUserName={currentUserName}
+            currentUserType={user_type_id}
             logout={this.logout} />
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos}
               currentUser={currentUser} search="true" searchResult = {this.searchResult} />}  />
-            <Route path='/artists/:id' render={props => <Profile {...props} currentUserName={currentUserName}
-                                                                            currentUser={currentUser}
-                                                                            usertype={user_type_id}
-                                                                            handleProfileEditPath={this.handleProfileEditPath}/>} />
+            <Route path='/artists/:id' render={props => 
+              <Profile {...props} currentUserName={currentUserName}
+                                  currentUser={currentUser}
+                                  usertype={user_type_id}
+                                  handleProfileEditPath={this.handleProfileEditPath}/>} />
             <Route path='/opportunities' name='opportunities' render={(props) =>
               <Opportunities {...props} currentUser={currentUser}
                 usertype={user_type_id}
                 currentUserName={currentUserName} />} />
+            { user_type_id === '2' ?
             <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={currentUser}
               getLikedPhotographers={this.getLikedPhotographers} search="true" searchResult = {this.searchResult} />} />
+            :
+            <ErrorPath />
+            }
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
               searchWord={this.state.searchWord}

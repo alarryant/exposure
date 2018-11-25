@@ -12,6 +12,7 @@ class Navbar extends React.Component {
     super(props);
 
     this.handleSignout = this.handleSignout.bind(this);
+    this.renderDropdownContent = this.renderDropdownContent.bind(this);
   }
 
   handleSignout(event){
@@ -19,74 +20,88 @@ class Navbar extends React.Component {
     this.props.logout(event);
   }
 
+  renderDropdownContent(currentUserType){
+    if(currentUserType === '1'){
+      return (
+        <NavLink to={'/artists/' + `${this.props.currentUser}`}>
+          Profile
+        </NavLink>
+      )
+    } else {
+      return (
+        <NavLink to="/dashboard">
+          Dashboard
+        </NavLink>
+      )
+    }
+  }
+  
   render() {
   return (
       <nav>
-       { this.props.currentUser === null ?
-       (<section className="notLoggedIn">
-         <NavLink to="/">
-         <div className="logo">
-           <div className="lens"></div>
-           <span href="#" className="logo">
-             Exp
-             <span className="lighter">
-               o
-             </span>
-             sure
-           </span>
-         </div>
-         </NavLink>
-         <div className="userauth">
-           <Login loginInfo = { this.props.loginInfo }/>
-           <Signup signupInfo = { this.props.signupInfo }/>
-         </div>
-       </section>
-       ) : (
-       <section className="loggedIn">
-         <NavLink to="/">
-           <div className="logo">
-             <div className="lens"></div>
-             <span href="#" className="logo">
-               Exp
-               <span className="lighter">
-                 o
-               </span>
-               sure
-             </span>
-           </div>
-         </NavLink>
-         <div className="dropdown-container">
-           <div className="dropdown">
-             <NavLink to="/">
-               <button className="dropbtn">
-                 Home
-                 <i className="fas fa-bars"></i>
-               </button>
-             </NavLink>
-             <div className="dropdown-content">
-               <NavLink to="/dashboard">
-                 Dashboard
-               </NavLink>
-               <NavLink to="/settings">
-                 Settings
-               </NavLink>
-               <NavLink to="/opportunities">
-                 Opportunities
-               </NavLink>
-             </div>
-           </div>
-         </div>
-         <div className="userauth">
-           <Button bsStyle="default"
-                   bsSize="large"
-                   type="submit"
-                   onClick={this.handleSignout}>
-             Logout
-           </Button>
-         </div>
-       </section>
-       )}
-     </nav>
+        { this.props.currentUser === null ?
+        (<section className="notLoggedIn">
+          <NavLink to="/">
+          <div className="logo">
+            <div className="lens"></div>
+            <span href="#" className="logo">
+              Exp
+              <span className="lighter">
+                o
+              </span>
+              sure
+            </span>
+          </div>
+          </NavLink>
+          <div className="userauth">
+            <Login loginInfo = { this.props.loginInfo }/>
+            <Signup signupInfo = { this.props.signupInfo }/>
+          </div>
+        </section>
+        ) : (
+        <section className="loggedIn">
+          <NavLink to="/">
+            <div className="logo">
+              <div className="lens"></div>
+              <span href="#" className="logo">
+                Exp
+                <span className="lighter">
+                  o
+                </span>
+                sure
+              </span>
+            </div>
+          </NavLink>
+          <div className="dropdown-container">
+            <div className="dropdown">
+              <NavLink to="/">
+                <button className="dropbtn">
+                  Home
+                  <i className="fas fa-bars"></i>
+                </button>
+              </NavLink>
+              <div className="dropdown-content">
+                {this.renderDropdownContent(this.props.currentUserType)}
+                <NavLink to="/settings">
+                  Settings
+                </NavLink>
+                <NavLink to="/opportunities">
+                  Opportunities
+                </NavLink>
+              </div>
+            </div>
+          </div>
+          <div className="userauth">
+            <Button bsStyle="default"
+                    bsSize="large"
+                    type="submit"
+                    onClick={this.handleSignout}>
+              Logout
+            </Button>
+          </div>
+        </section>
+        )}
+      </nav>
     )
   }
 }

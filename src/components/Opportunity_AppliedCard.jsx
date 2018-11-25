@@ -4,7 +4,6 @@ import DeleteApplication from './Opportunity_DeleteApplication.jsx';
 //DISPLAY APPLIED EVENTS
 
 function AppCard(props) {
-  console.log("AppCard", props)
   const { event } = props;
   const application_id = event.application_id;
 

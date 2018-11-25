@@ -7,7 +7,7 @@ class ReviewsCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showMenu: false,
+      showMenu: true,
       user: Number(this.props.currentUser)
     };
 

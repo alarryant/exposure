@@ -3,7 +3,6 @@ import Portfolio from './components/Portfolio';
 import EditPortfolio from './components/Profile_Portfolio_Edit';
 import Avatar from './components/Avatar.jsx';
 import Slider from "react-slick";
-// import { Link } from 'react-router-dom';
 import axios from 'axios';
 import SocialMedia from './components/Profile_SocialMedia.jsx';
 import EditSocialMedia from './components/Profile_SocialMedia_Edit';
@@ -15,6 +14,8 @@ import PackagesCard from './components/Profile_Packages.jsx';
 import EditPackagesCard from './components/Profile_Packages_Edit.jsx';
 import StarPhotographer from './components/Profile_Star.jsx';
 import AddReview from './components/AddReview.jsx';
+import OpportunitiesApplied from './Opportunities_Applied';
+import Statistics from './components/Statistics'
 import './styles/Profile.css';
 import './styles/SearchResults.css';
 
@@ -41,19 +42,12 @@ class Profile extends React.Component {
       photoView: 'featured',
       editable: false,
       portfolioToggle: false
-      // bio: "",
-      // twitter: 'null',
-      // facebook: 'null',
-      // instagram: 'null',
-      // avatarImage:
-      // packages: [],
-      // reviews: []
     }
 
     this.addCarouselPhotos = this.addCarouselPhotos.bind(this);
     this.areFeaturedPhotos = this.areFeaturedPhotos.bind(this);
-    this.showPortfolio = this.showPortfolio.bind(this);
-    this.showFeatures = this.showFeatures.bind(this);
+    this.changeShowState = this.changeShowState.bind(this);
+    this.renderTabsContent = this.renderTabsContent.bind(this);
     this.handleClickEdit = this.handleClickEdit.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.sendSocialMediaForm = this.sendSocialMediaForm.bind(this);
@@ -80,13 +74,66 @@ class Profile extends React.Component {
     });
   }
 
+
   showPortfolio = () => {
     this.setState({ photoView: "portfolio", portfolioToggle: true })
   }
 
   showFeatures = () => {
     this.setState({ photoView: "featured", portfolioToggle: false })
+
+// MANAGES SETTING STATE OF TAB TITLES:  PORTFOLIO, FEATURED PHOTOS, APPLIED EVENTS, STATISTICS
+  changeShowState(event){
+    if (event.target.innerHTML === 'Featured Photos') {
+      this.setState({ photoView: "featured" })
+    } else if (event.target.innerHTML === 'Portfolio') {
+      this.setState({ photoView: "portfolio" })
+    } else if (event.target.innerHTML === 'Applied Events') {
+      this.setState({ photoView: "events" })
+    } else {
+      this.setState({ photoView: "statistics" })
+    }
   }
+
+// MANAGES RENDER OF TABBED CONTENTS: PORTFOLIO, FEATURED PHOTOS, APPLIED EVENTS, STATISTICS
+  renderTabsContent(state) {
+    const settings = {
+      infinite: true,
+      centerMode: true,
+      slidesToShow: 2,
+      slidesToScroll: 1,
+      rows: 1,
+      autoplay: true,
+      focusOnSelect: true,
+    };
+
+    if (state === "portfolio") {
+      return(
+        <div>
+          <h1>Portfolio Photos:</h1>
+          <Portfolio artistPhotos={this.state.collection} />
+        </div>
+      )
+    } else if (state === "featured") {
+      return(
+        <div>
+          <Slider {...settings}>
+            {this.addCarouselPhotos(this.state.collection)}
+          </Slider>
+          <br />
+        </div>
+      )
+    } else if (state === 'events') {
+      return (
+        <OpportunitiesApplied />
+      )
+    } else {
+      return (
+        <Statistics />
+      )
+    }
+  }
+
 
   sendSocialMediaForm = (socialmedia) => {
     if (!socialmedia.twitter) {
@@ -201,10 +248,6 @@ class Profile extends React.Component {
           email: res.data.user[0].email,
           redirect: true
         };
-
-         console.log("thisi s profile data", profileData);
-
-
         this.setState(profileData);
       });
   }
@@ -236,7 +279,6 @@ class Profile extends React.Component {
         submitData: submitData
       })
       .then((res) => {
-        console.log("this is what im getting back from server", res.data);
         this.setState({
           packages: res.data.packages,
           twitter: res.data[0].twitter_url,
@@ -251,16 +293,6 @@ class Profile extends React.Component {
 
   render() {
     const { id } = this.props.match.params;
-
-    const settings = {
-      infinite: true,
-      centerMode: true,
-      slidesToShow: 2,
-      slidesToScroll: 1,
-      rows: 1,
-      autoplay: true,
-      focusOnSelect: true
-    };
 
     this.numOfFeatured = this.areFeaturedPhotos(this.state.collection);
 
@@ -325,15 +357,17 @@ class Profile extends React.Component {
                        facebook={this.state.facebook}
                        instagram={this.state.instagram}
                        website={this.state.website} />
-              <span className="likeContact">
-                {this.props.currentUser ? (
+                {this.props.currentUser === id ?
+                  null
+                  :
+                  <span className="likeContact">
                   <MailButton email={this.state.email}
-                              name={this.props.currentUserName} />
-                  ) : ''}
-                <StarPhotographer currentUser={this.props.currentUser}
-                        artistId={id}
-                        artistLiked={this.state.artistLiked} />
-              </span>
+                  name={this.props.currentUserName} />
+                  <StarPhotographer currentUser={this.props.currentUser}
+                          artistId={id}
+                          artistLiked={this.state.artistLiked} />
+                  </span>
+                }
             </div>
         <div className="personalDetContainer">
           <h3>ABOUT</h3>
@@ -341,7 +375,7 @@ class Profile extends React.Component {
           <ProfileDesc bio={this.state.bio} />
         </div>
         <div className="featuredPortfolio">
-        { this.state.portfolioToggle ? (
+        {/*{ this.state.portfolioToggle ? (
           <span>
             <button className="featuredButton" onClick={this.showFeatures}>
               Featured Photos
@@ -387,12 +421,35 @@ class Profile extends React.Component {
                   artistId={this.state.artistId}
                   deleteReview={this.deleteReview} />
                   <div className="addReview">
-                  {this.props.currentUser !== this.state.artistId ? <AddReview currentUser={this.props.currentUser}
+                  {this.props.currentUser !== this.state.artistId ? <AddReview currentUser={this.props.currentUser}*/}
+          <button onClick={this.changeShowState}>
+            Featured Photos
+          </button>
+          <button onClick={this.changeShowState}>
+            Portfolio
+          </button>
+          <button onClick={this.changeShowState}>
+            Applied Events
+          </button>
+          <button onClick={this.changeShowState}>
+            Statistics
+          </button>
+          {this.renderTabsContent(this.state.photoView)}
+        </div>
+            <div className="dropDownMenu">
+              <AvailabilityCard currentUser={this.props.currentUser}
+                disabledDays={this.state.disabledDays}
+                artistId={this.state.artistId} />
+              <PackagesCard packages={this.state.packages} />
+              <ReviewsCard reviews={this.state.reviews}
+                currentUser={this.props.currentUser}
+                artistId={this.state.artistId}
+                deleteReview={this.deleteReview} />
+              <AddReview currentUser={this.props.currentUser}
                 artistId={this.state.artistId}
                 createReview={this.createReview} /> : ''}
-                </div>
-              </div>
-            </div>)}
+            </div>
+          </div>
       </div>
     )
   }

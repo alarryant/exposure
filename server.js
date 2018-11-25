@@ -88,7 +88,7 @@ app.post('/register', (req, res) => {
         .returning('id')
           .then((user_id) => {
             req.session.user_id = +user_id;
-            res.json({currentUser: req.session.user_id, userType: userType});
+            res.json({currentUser: req.session.user_id, userType: userType, firstName, lastName});
           });
     }
   });
@@ -476,8 +476,18 @@ app.get('/api/opportunities/:id', (req, res) => {
     });
 });
 
+app.get('/api/opportunities/:id/applicants', (req, res) => {
+  knex('event_interests')
+    .join('events', 'eventref_id', '=', 'event_id')
+    .join('users', 'users.id', '=', 'artist_id')
+    .where('creator_id', req.params.id)
+    .then(function (events) {
+      res.json(events);
+    });
+});
+
 app.post('/opportunities/:id/add', (req, res) => {
-  let cookie = req.session.user_id;
+  let cookie = req.body.creator_id;
   let title = req.body.title;
   let description = req.body.description;
   let date = req.body.date;
