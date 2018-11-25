@@ -190,6 +190,7 @@ class App extends Component {
             signupInfo={this.signupInfo}
             currentUser={currentUser}
             currentUserName={currentUserName}
+            currentUserType={user_type_id}
             logout={this.logout} />
           <Switch>
             <Route path='/home' render={() => <Home homephotos={this.state.homephotos}
