@@ -22,10 +22,10 @@ class ReviewsCard extends React.Component {
     const deleteReview = this.props.deleteReview;
     return reviews.map(function (review) {
         return (
-          <div>
+          <div className="reviewCard">
             <h4>{review.first_name} said:</h4>
-            <h5>{review.rating}/5</h5>
             <p>{review.description}</p>
+            <h5>{review.rating}/5</h5>
             {currentUser === review.user_id ? <DeleteReview review={review}
               currentUser={currentUser}
               deleteReview={deleteReview} />  : ""}

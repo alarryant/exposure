@@ -15,7 +15,8 @@ import EditPackagesCard from './components/Profile_Packages_Edit.jsx';
 import StarPhotographer from './components/Profile_Star.jsx';
 import AddReview from './components/AddReview.jsx';
 import OpportunitiesApplied from './Opportunities_Applied';
-import Statistics from './components/Statistics'
+import Statistics from './components/Statistics';
+// import { BrowserHistory } from 'react-router';
 import './styles/Profile.css';
 import './styles/SearchResults.css';
 
@@ -40,9 +41,11 @@ class Profile extends React.Component {
     this.state = {
       artist: {},
       photoView: 'featured',
-      editable: false
+      editable: false,
+      uploadStatus: false
     }
 
+    this.handleUploadImage = this.handleUploadImage.bind(this);
     this.addCarouselPhotos = this.addCarouselPhotos.bind(this);
     this.areFeaturedPhotos = this.areFeaturedPhotos.bind(this);
     this.changeShowState = this.changeShowState.bind(this);
@@ -55,6 +58,7 @@ class Profile extends React.Component {
     this.changeFeaturePhotos = this.changeFeaturePhotos.bind(this);
     this.createReview = this.createReview.bind(this);
     this.deleteReview = this.deleteReview.bind(this);
+    this.handleFileSelect = this.handleFileSelect.bind(this);
   }
 
   areFeaturedPhotos(photos = []) {
@@ -100,27 +104,37 @@ class Profile extends React.Component {
     
     if (state === "portfolio") {
       return(
-        <div>
-          <h1>Portfolio Photos:</h1>
+        <div className="portfolioContainer">
+          <h1>PORTFOLIO</h1>
+          <hr/>
           <Portfolio artistPhotos={this.state.collection} />
         </div>
       )
     } else if (state === "featured") {
       return(
-        <div>
+        <div className="featuredContainer">
+          <h1>FEATURED</h1>
+          <hr/>
           <Slider {...settings}>
             {this.addCarouselPhotos(this.state.collection)}
           </Slider>
-          <br />
         </div>
       )
     } else if (state === 'events') {
       return (
-        <OpportunitiesApplied usertype={this.props.usertype} currentUser={this.props.currentUser}/>
+        <div className="eventsContainer">
+          <h1>APPLIED EVENTS</h1>
+          <hr/>
+          <OpportunitiesApplied usertype={this.props.usertype} currentUser={this.props.currentUser}/>
+        </div>
       )
     } else {
       return (
-        <Statistics />
+        <div className="statisticsContainer">
+          <h1>STATISTICS</h1>
+          <hr/>
+          <Statistics />
+        </div>
       )
     }
   }
@@ -282,6 +296,38 @@ class Profile extends React.Component {
       .catch((err) => console.log(err))
   }
 
+  handleUploadImage = (event) => {
+     event.preventDefault();
+      const { selectedFile } = this.state;
+      let formData = new FormData();
+
+      formData.append('image_owner', this.state.artistId);
+      formData.append('selectedFile', selectedFile);
+
+      axios.post('/upload', formData)
+        .then((result) => {
+          // this.context.history.push(`/artists/${this.state.artistId}`);
+          // BrowserHistory.push(`/artists/${this.state.artistId}`);
+          // console.log("this is results in profile", JSON.parse(result.data));
+          // this.handleProfileEditPath(`/artists/${this.state.artistId}/editportfolio`)
+          // access results...
+        })
+        .catch(function (response) {
+        //handle error
+        console.log(response);
+    });
+  }
+
+  handleFileSelect = (event) => {
+   switch (event.target.name) {
+      case 'selectedFile':
+        this.setState({ selectedFile: event.target.files[0] });
+        break;
+      default:
+        this.setState({ [event.target.name]: event.target.value });
+  }
+}
+
   render() {
     const { id } = this.props.match.params;
 
@@ -290,8 +336,8 @@ class Profile extends React.Component {
     return (
       <div>
       {this.props.currentUser === id ? (
-        <button onClick={this.handleClickEdit}>
-          {this.state.editable ? "Clear Changes" : "Edit"}
+        <button className="editButton" onClick={this.handleClickEdit}>
+          {this.state.editable ? "Return" : "Edit"}
         </button>
       ) : (
         ''
@@ -318,7 +364,17 @@ class Profile extends React.Component {
               </div>
             <div className="featuredPortfolio">
               <div>
-
+              <form method="post" enctype="multipart/form-data" action="/upload" onSubmit={this.handleUpload}>
+                <input type="number" name="image_owner" value={this.state.artistId}/>
+                <label>Title</label>
+                <input type="text" name="title" placeholder="Add a title for your image"/>
+                <label>Description</label>
+                <input type="text" name="description" placeholder="Add a description for your image"/>
+                <label>Category</label>
+                <input type="text" name="category" placeholder="Add applicable categories for your image"/>
+                <input type="file" accept="image/*" name="selectedFile" onChange={this.handleFileSelect}/>
+                <input type="submit" value="Submit"/>
+            </form>
                 <h3>Select Feature Photos ({this.numOfFeatured.length}/10):</h3>
                   <div>
                     <EditPortfolio
@@ -334,7 +390,7 @@ class Profile extends React.Component {
                 sendPackageField={this.sendPackageField}
               />
             </div>
-            <input type="submit" value="Submit" />
+            <input className="submitButton" type="submit" value="Submit" />
           </form>
         ) : (
           <div className="profile">
@@ -378,6 +434,7 @@ class Profile extends React.Component {
           </button>
           {this.renderTabsContent(this.state.photoView)}
         </div>
+        <div className="dropDownMenu">
               <AvailabilityCard currentUser={this.props.currentUser}
                 disabledDays={this.state.disabledDays}
                 artistId={this.state.artistId} />
@@ -386,10 +443,12 @@ class Profile extends React.Component {
                 currentUser={this.props.currentUser}
                 artistId={this.state.artistId}
                 deleteReview={this.deleteReview} />
-              <AddReview currentUser={this.props.currentUser}
+              {this.props.currentUser !== this.state.artistId ? (
+                <AddReview currentUser={this.props.currentUser}
                 artistId={this.state.artistId}
-                createReview={this.createReview} />
-            </div>)}
+                createReview={this.createReview} />) : ''}
+                </div>
+        </div>)}
       </div>
     )
   }
