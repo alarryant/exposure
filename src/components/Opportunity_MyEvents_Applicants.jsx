@@ -19,7 +19,7 @@ class Applicants extends Component {
   displayApplicants(applicants) {
     if (!applicants || applicants.length === 0 ) {
       return (
-        <p>No one has applied to your events yet!</p> )
+         <td colspan="4"> No one has applied to your events yet!</td> )
     } else {
       return applicants.map((applicant) => {
         let date = applicant.event_date.toString().split('T')[0]
