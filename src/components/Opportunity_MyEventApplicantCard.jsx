@@ -23,9 +23,7 @@ function MyApplicantCard(props) {
         <td>
           { applicant.artist_accepted != null ? "" : <OpportunityAccept applicant={ applicant } eventdate={ props.date } acceptApplicant={ props.acceptApplicant }/> }
           { applicant.artist_accepted === applicant.artist_id ? "Hired" : " " }
-
-
-         </td>
+        </td>
       </tr>
 
   )

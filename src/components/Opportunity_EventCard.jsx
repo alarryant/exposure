@@ -12,7 +12,7 @@ class OpportunityEventCard extends Component {
   }
 
   haveApplied(id) {
-    if ((this.props.appliedEvents).includes(id)) {
+    if ((this.props.appliedEvents).includes(id) || this.props.event.artist_accepted) {
       return ""
     } else {
       return (

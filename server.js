@@ -535,6 +535,7 @@ app.get('/api/opportunities/:id/applicants', (req, res) => {
     .join('events', 'eventref_id', '=', 'event_id')
     .join('users', 'users.id', '=', 'artist_id')
     .where('creator_id', req.params.id)
+    .orderBy('event_id')
     .then(function (events) {
       res.json(events);
     });
@@ -573,6 +574,7 @@ app.post('/opportunities/:id/accept', (req, res) => {
         .join('events', 'event_id', '=', 'event_interests.eventref_id')
         .join('users', 'users.id', '=', 'artist_id')
         .where('creator_id', req.body.currentUser)
+        .orderBy('event_id')
         .then(updatedlist => {
           console.log(updatedlist)
           res.json(updatedlist);
