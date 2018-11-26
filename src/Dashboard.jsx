@@ -1,7 +1,5 @@
 import React from 'react';
 import Avatar from './components/Avatar.jsx';
-// import EditAvailability from './components/Availability.jsx';
-// import Statistics from './components/Statistics.jsx';
 import CreateEvent from './CreateEvent';
 import OpportunityEventCard from './components/Opportunity_EventCard.jsx'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -36,15 +34,13 @@ class Dashboard extends React.Component {
       avatar: null,
       type: null,
       events: [],
-      userevents: [],
-      // totalapplicants: null
+      userevents: []
     }
 
     this.createEvent = this.createEvent.bind(this);
     this.renderLikedPhotographer = this.renderLikedPhotographer.bind(this);
     this.deleteEvent = this.deleteEvent.bind(this)
     this.refresh = this.refresh.bind(this)
-    // this.updateTotalApplicants = this.updateTotalApplicants.bind(this)
   }
 
   refresh() {
@@ -60,12 +56,6 @@ class Dashboard extends React.Component {
       });
     });
   }
-
-  // updateTotalApplicants(array) {
-  //   console.log("TOTAL APPS", array)
-  //   this.setState({totalapplicants: array.length})
-  // }
-
 
   deleteEvent(event, creator) {
     let currentUser = parseInt(this.props.currentUser)
@@ -158,7 +148,7 @@ class Dashboard extends React.Component {
     };
 
     const starredPhotographer__img = {
-      width: '100%',
+      width: '90%',
       float: 'left',
       margin: '10px'
     };
@@ -206,7 +196,6 @@ class Dashboard extends React.Component {
           <TabPanel>
             <Applicants
               currentUser={this.props.currentUser}
-              // updateTotalApplicants={this.updateTotalApplicants}
               />
           </TabPanel>
         </Tabs>
