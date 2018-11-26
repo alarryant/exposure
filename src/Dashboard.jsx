@@ -61,12 +61,6 @@ class Dashboard extends React.Component {
     });
   }
 
-  // updateTotalApplicants(array) {
-  //   console.log("TOTAL APPS", array)
-  //   this.setState({totalapplicants: array.length})
-  // }
-
-
   deleteEvent(event, creator) {
     let currentUser = parseInt(this.props.currentUser)
     if (creator === currentUser) {
@@ -198,8 +192,9 @@ class Dashboard extends React.Component {
 
           <TabPanel>
             <h2> Your Events </h2>
-            <p>Checkout other postings on the<NavLink to="/opportunities">Job Board</NavLink></p>
+            <p>Check out other postings on the<NavLink to="/opportunities">Job Board</NavLink></p>
             <CreateEvent createEvent={this.createEvent}/>
+
             { this.displayEvents(this.state.userevents) }
           </TabPanel>
 
