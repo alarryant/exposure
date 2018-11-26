@@ -114,7 +114,6 @@ class Opportunities extends Component {
       )
     } else {
       return events.map((event) => {
-        console.log("DISPLAY EVENTS", event)
         let date = event.event_date.toString().split('T')[0]
         if (!event.artist_accepted)
         return (
@@ -160,7 +159,6 @@ class Opportunities extends Component {
 
     axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
       .then(res => {
-        console.log("res inside Opportunities", res.data)
         let appliedevent = res.data
         let applied_eventid = []
         appliedevent.forEach((i) => {
@@ -172,8 +170,6 @@ class Opportunities extends Component {
 
   render() {
     let usertype = parseInt(this.props.usertype);
-    console.log("OPPORTUITIES", this.state)
-
     return (
 
       <Tabs>
