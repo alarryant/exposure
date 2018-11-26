@@ -3,7 +3,7 @@ import sampleSize from 'lodash.samplesize';
 import Slider from "react-slick";
 import SearchBar from './SearchBar.jsx';
 import { Link } from 'react-router-dom';
-import { Modal/*, Button*/ } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
 class Home extends React.Component {
 

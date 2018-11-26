@@ -97,7 +97,7 @@ class Profile extends React.Component {
       autoplay: true,
       focusOnSelect: true,
     };
-
+    
     if (state === "portfolio") {
       return(
         <div>
@@ -116,7 +116,7 @@ class Profile extends React.Component {
       )
     } else if (state === 'events') {
       return (
-        <OpportunitiesApplied />
+        <OpportunitiesApplied usertype={this.props.usertype} currentUser={this.props.currentUser}/>
       )
     } else {
       return (
@@ -327,14 +327,12 @@ class Profile extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="dropDownMenu">
-                <AvailabilityCard currentUser={this.props.currentUser}
-                  disabledDays={this.state.disabledDays}
-                  artistId={this.state.artistId} />
-                <EditPackagesCard packages={this.state.packages}
-                  sendPackageField={this.sendPackageField}
-                />
-              </div>
+              <AvailabilityCard currentUser={this.props.currentUser}
+                disabledDays={this.state.disabledDays}
+                artistId={this.state.artistId} />
+              <EditPackagesCard packages={this.state.packages}
+                sendPackageField={this.sendPackageField}
+              />
             </div>
             <input type="submit" value="Submit" />
           </form>
@@ -348,12 +346,12 @@ class Profile extends React.Component {
                        facebook={this.state.facebook}
                        instagram={this.state.instagram}
                        website={this.state.website} />
-                {this.props.currentUser === id ?
+                {this.props.currentUser === id ? 
                   null
                   :
                   <span className="likeContact">
                   <MailButton email={this.state.email}
-                  name={this.props.currentUserName} />
+                  name={this.props.currentUserName} /> 
                   <StarPhotographer currentUser={this.props.currentUser}
                           artistId={id}
                           artistLiked={this.state.artistLiked} />
@@ -366,45 +364,20 @@ class Profile extends React.Component {
           <ProfileDesc bio={this.state.bio} />
         </div>
         <div className="featuredPortfolio">
-        {this.state.photoView === 'featured' ?
-          (<button className="toggleOn" onClick={this.changeShowState}>
+          <button className="toggleOn" onClick={this.changeShowState}>
             Featured Photos
           </button>
-          ) : (
-          <button onClick={this.changeShowState}>
-            Featured Photos
-          </button>
-          )}
-        {this.state.photoView === 'portfolio' ?
-          (<button className="toggleOn" onClick={this.changeShowState}>
+          <button className="toggleOn" onClick={this.changeShowState}>
             Portfolio
           </button>
-          ) : (
-          <button onClick={this.changeShowState}>
-            Portfolio
-          </button>
-          )}
-        {this.state.photoView === 'events' ?
-          (<button className="toggleOn" onClick={this.changeShowState}>
+          <button className="toggleOn" onClick={this.changeShowState}>
             Applied Events
           </button>
-          ) : (
-          <button onClick={this.changeShowState}>
-            Applied Events
-          </button>
-          )}
-        {this.state.photoView === 'statistics' ?
-          (<button className="toggleOn" onClick={this.changeShowState}>
+          <button className="toggleOn" onClick={this.changeShowState}>
             Statistics
           </button>
-          ) : (
-          <button onClick={this.changeShowState}>
-            Statistics
-          </button>
-          )}
           {this.renderTabsContent(this.state.photoView)}
         </div>
-        <div className="dropDownMenu">
               <AvailabilityCard currentUser={this.props.currentUser}
                 disabledDays={this.state.disabledDays}
                 artistId={this.state.artistId} />
@@ -416,8 +389,7 @@ class Profile extends React.Component {
               <AddReview currentUser={this.props.currentUser}
                 artistId={this.state.artistId}
                 createReview={this.createReview} />
-                </div>
-        </div>)}
+            </div>)}
       </div>
     )
   }

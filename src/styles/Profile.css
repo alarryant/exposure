@@ -136,7 +136,7 @@
   padding: 10px;
 }
 
-.toggleOn{
+.toggleOn:hover, .toggleOn:focus{
   color: #A0AAB2;
 }
 
