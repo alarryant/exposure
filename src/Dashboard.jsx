@@ -22,7 +22,7 @@ const right = {
 
 const tabStyle = {
   width: '80%',
-  margin: '0 auto'
+  margin: '50px auto'
 };
 
 class Dashboard extends React.Component {
