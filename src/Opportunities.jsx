@@ -108,9 +108,11 @@ class Opportunities extends Component {
   displayEvents(events) {
     if (!events || events.length === 0 ) {
       return (
-        <h2>
+        <div className="emptyevent">
+        <h4>
           There are currently no postings!
-        </h2>
+        </h4>
+        </div>
       )
     } else {
       return events.map((event) => {
@@ -170,7 +172,6 @@ class Opportunities extends Component {
 
   render() {
     let usertype = parseInt(this.props.usertype);
-    console.log("this is my user type", usertype);
 
     return (
       <Tabs>
@@ -201,6 +202,7 @@ class Opportunities extends Component {
               refreshApplybutton={this.refreshApplybutton}
               />
           : <MyEvent
+              createEvent={this.createEvent}
               displayEvents={this.displayEvents}
               currentUser={this.props.currentUser}
               usertype={this.props.usertype}

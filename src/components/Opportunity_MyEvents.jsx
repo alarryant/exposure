@@ -10,7 +10,6 @@ class MyEvent extends Component {
     this.state = {
       myevents: []
     }
-
   }
 
   componentDidMount() {
@@ -30,10 +29,14 @@ class MyEvent extends Component {
 render() {
   return (
     <div>
-      {this.props.displayEvents(this.state.myevents) }
+      <section className="opportunities">
+        <div className="oppHeader">
+          <h2>My Events </h2>
+        </div>
+        {this.props.displayEvents(this.state.myevents) }
+      </section>
     </div>
-    )
-  }
+    )}
 }
 
 

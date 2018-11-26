@@ -2,6 +2,7 @@
 .searchBar {
   width: 100%;
   display: flex;
+  margin-top: 0px;
 }
 
 .searchForm{
@@ -29,7 +30,6 @@
   height: 30%;
 
 }
-
 
 .catSearch {
   height: 40px;

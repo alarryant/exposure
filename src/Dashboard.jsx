@@ -188,8 +188,9 @@ class Dashboard extends React.Component {
 
           <TabPanel>
             <h2> Your Events </h2>
-            <p>Checkout other postings on the<NavLink to="/opportunities">Job Board</NavLink></p>
+            <p>Check out other postings on the<NavLink to="/opportunities">Job Board</NavLink></p>
             <CreateEvent createEvent={this.createEvent}/>
+
             { this.displayEvents(this.state.userevents) }
           </TabPanel>
 
