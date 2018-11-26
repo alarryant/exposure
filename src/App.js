@@ -205,12 +205,8 @@ class App extends Component {
               <Opportunities {...props} currentUser={currentUser}
                 usertype={user_type_id}
                 currentUserName={currentUserName} />} />
-            { user_type_id === '2' ?
             <Route path='/dashboard' name='dashboard' render={(props) => <Dashboard {...props} currentUser={currentUser}
               getLikedPhotographers={this.getLikedPhotographers} search="true" searchResult = {this.searchResult} />} />
-            :
-            <ErrorPath />
-            }
             <Route path='/search' name='search' render={props => <SearchResults
               {...props}
               searchWord={this.state.searchWord}
