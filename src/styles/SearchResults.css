@@ -1,7 +1,7 @@
 /*SEARCH PAGE*/
 .wrapper {
   width: 80%;
-  margin: auto;
+  margin: 0 auto;
   padding: 0;
   overflow: hidden;
   line-height: 20px;
@@ -17,11 +17,20 @@
   display: block;
   width: 80%;
   margin: 20px auto;
+  text-align: center;
 }
 
 .searchResult {
   padding: 0;
   width: 100%;
+}
+
+.error {
+  width: 300px;
+  position: absolute;
+  left: 50%;
+  margin-top: 10px;
+  transform: translate(-50%);
 }
 
 .indivImg {
@@ -35,6 +44,17 @@
 
 .indivImg:focus {
   outline: #fff;
+}
+
+.searchResultsWrapper {
+  width: 80%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.searchResultsWrapper p {
+  width: 100%;
+  text-align: center;
 }
 
 @media (max-width: 1200px) {
