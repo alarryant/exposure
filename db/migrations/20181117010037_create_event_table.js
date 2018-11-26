@@ -7,11 +7,13 @@ exports.up = function(knex, Promise) {
         table.date('event_date').notNull();
         table.integer('price').notNull();
         table.text('event_location').notNull();
-        table.string('artist_accepted');
+        table.integer('artist_accepted');
         table.timestamps(true, true);
 
         table.integer('creator_id').notNull();
         table.foreign('creator_id').references('id').inTable('users').onDelete('CASCADE');
+        table.foreign('artist_accepted').references('id').inTable('users').onDelete('CASCADE');
+
     });
 };
 

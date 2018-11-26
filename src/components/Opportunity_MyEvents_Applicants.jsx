@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MyApplicantCard from './Opportunity_MyEventApplicantCard.jsx';
 import axios from 'axios'
 
+
 //DISPLAY FOR USER'S CREATED EVENT
 
 class Applicants extends Component {
@@ -13,6 +14,18 @@ class Applicants extends Component {
     }
 
     this.displayApplicants = this.displayApplicants.bind(this)
+    this.acceptApplicant = this.acceptApplicant.bind(this)
+  }
+
+  acceptApplicant(artistid, eventid){
+   axios.post(`/opportunities/${eventid}/accept`,
+        { event_id: eventid,
+          artistid: artistid,
+          currentUser: this.props.currentUser })
+      .then((res) => {
+        console.log("AFTER POST REQUEsT", res)
+        this.setState({ applicants: res.data })
+      })
 
   }
 
@@ -29,6 +42,7 @@ class Applicants extends Component {
               applicant={applicant}
               date={date}
               currentUser={this.props.currentUser}
+              acceptApplicant={this.acceptApplicant}
               />
         )
       })
@@ -56,6 +70,7 @@ render() {
         <th scope="col">Applicant </th>
         <th scope="col">Applicant's Email </th>
         <th scope="col">Applicant's Profile</th>
+        <th scope="col">Accept</th>
       </tr>
       {this.displayApplicants(this.state.applicants) }
       </tbody>

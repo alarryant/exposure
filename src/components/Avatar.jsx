@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/Avatar.css';
 
 function Avatar(props) {
+  console.log("Avatar", props)
   return (
     <div className='avatarContainer'>
       <div className='avatarWidget'>

@@ -564,6 +564,24 @@ app.post('/opportunities/:id/add', (req, res) => {
     });
 });
 
+app.post('/opportunities/:id/accept', (req, res) => {
+  knex('events')
+    .where('event_id', req.body.event_id)
+    .update('artist_accepted', req.body.artistid)
+    .then(data => {
+      knex('event_interests')
+        .join('events', 'event_id', '=', 'event_interests.eventref_id')
+        .join('users', 'users.id', '=', 'artist_id')
+        .where('creator_id', req.body.currentUser)
+        .then(updatedlist => {
+          console.log(updatedlist)
+          res.json(updatedlist);
+        })
+    })
+})
+
+
+
 app.post("/opportunities/:id/delete", (req, res) => {
   knex('events')
     .del()
