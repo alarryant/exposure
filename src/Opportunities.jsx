@@ -176,8 +176,8 @@ class Opportunities extends Component {
     return (
       <Tabs>
         <TabList>
-          <Tab onClick={this.handleClick}> Job Board </Tab>
-          {usertype === 1 ? <Tab onClick={this.handleClick}> Applied Opportunities </Tab> : <Tab>My Events</Tab>}
+          <Tab style={{fontSize: '16px'}} onClick={this.handleClick}> Job Board </Tab>
+          {usertype === 1 ? <Tab style={{fontSize: '16px'}} onClick={this.handleClick}> Applied Opportunities </Tab> : <Tab style={{fontSize: '16px'}}>My Events</Tab>}
         </TabList>
 
         <TabPanel>

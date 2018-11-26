@@ -150,7 +150,8 @@ class Dashboard extends React.Component {
     const starredPhotographer__img = {
       width: '90%',
       float: 'left',
-      margin: '10px'
+      margin: '10px',
+      borderRadius: '50%'
     };
     return photographers.map((photographer) => {
       return (
