@@ -78,11 +78,10 @@ class Navbar extends React.Component {
             <div className="dropdown">
               <NavLink to="/">
                 <button className="dropbtn">
-                  Home
                   <i className="fas fa-bars"></i>
                 </button>
               </NavLink>
-              <div className="dropdown-content">
+              <div className="dropdown-content burger">
                 {this.renderDropdownContent(this.props.currentUserType)}
                 <NavLink to="/settings">
                   Settings

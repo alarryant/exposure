@@ -28,7 +28,7 @@ class Settings extends Component{
 
     render() {
         return (
-            <div className="wrapper">
+            <div className="settingsWrapper">
                 <form onSubmit={this.handleSubmit}>
                     <h3>First Name</h3>
                     <input type='text' name='firstName' onChange={this.handleChange}/>
