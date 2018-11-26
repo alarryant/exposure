@@ -37,6 +37,7 @@ class OpportunityEventCard extends Component {
       <div className="eventcard">
         <h3>{ event.name }</h3>
         <p>Date: { this.props.date } -  Location: { event.event_location }</p>
+        <p>Budget: { event.price }</p>
         <hr/>
         <p>{ event.description }</p>
         <p>Contact: { event.first_name } { event.last_name }</p>
