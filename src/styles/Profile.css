@@ -2,21 +2,119 @@
   position: relative;
 }
 
+.statisticsContainer {
+  margin-bottom: 400px;
+}
+
+.reviewCard h4 {
+  font-weight: 700;
+  font-size: 1.5em;
+}
+
+.reviewCard h5 {
+  font-size: 1.5em;
+  float: right;
+}
+
+.reviewCard p {
+  font-style: italic;
+}
+
+.statisticsContainer h1 {
+  font-family: 'Assistant', sans-serif;
+  letter-spacing: 3px;
+  font-size: 3em;
+  font-weight: 700;
+}
+
+.eventsContainer {
+  margin-bottom: 400px;
+}
+
+.eventsContainer h1 {
+  font-family: 'Assistant', sans-serif;
+  letter-spacing: 3px;
+  font-size: 3em;
+  font-weight: 700;
+}
+
+.portfolioContainer {
+  width: 600px;
+  margin-top: 15px;
+  margin-bottom: 150px;
+}
+
+.eventsContainer .oppHeader {
+  width: 100%;
+}
+
+.eventsContainer h2 {
+  display: none;
+}
+
+.featuredContainer h1 {
+  font-family: 'Assistant', sans-serif;
+  font-size: 3em;
+  letter-spacing: 3px;
+  font-weight: 700;
+}
+
+.featuredContainer hr {
+  background-color: black;
+  border: 1px solid black;
+}
+
+/*.featuredContainer {
+
+}*/
+
+.statisticsContainer hr {
+  background-color: black;
+  border: 1px solid black;
+}
+
+.portfolioContainer hr {
+  background-color: black;
+  border: 1px solid black;
+}
+
+.eventsContainer hr {
+  background-color: black;
+  border: 1px solid black;
+}
+
+.editButton {
+  position: absolute;
+  top: 405px;
+  left: 375px;
+  font-size: 1.25em;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  padding: 5px;
+  width: 75px;
+  z-index: 5;
+}
+
+.editButton:hover {
+  color: #cccccc;
+  z-index: 5;
+}
+
 .dropDownMenu {
-  margin: 0px 110px;
+  margin: 0px 40px;
   position: absolute;
   top: 325px;
 }
 
 .avatarSocMed {
   position: relative;
-  height: 318px;
+  height: 300px;
   width: 550px;
   float: left;
   display: block;
-  /*border: 2px solid #2f3532;*/
-  padding: 25px 15px 0px 15px;
-  margin: 0px 0px 0px 122px;
+  padding: 25px 0px 0px 15px;
+  margin: 0px 0px 0px 25px;
+  z-index: 3;
 }
 
 .avatarSocMed h5 {
@@ -73,10 +171,10 @@
 }
 
 .personalDetContainer {
-  padding: 5px 10px 5px 40px;
+  padding: 5px 60px 5px 10px;
   max-height: 350px;
-  max-width: 700px;
-  float: left;
+  max-width: 550px;
+  float: right;
   clear: right;
 }
 
@@ -131,24 +229,23 @@
 }
 
 .menu {
-  margin: 0px 10px 0px 15px;
   width: 300px;
-  padding: 10px;
+  padding-left: 30px;
 }
 
-.toggleOn{
+.toggleOn:hover, .toggleOn:focus{
   color: #A0AAB2;
 }
 
 .featuredPortfolio {
   margin-left: 0px;
-  margin-right: 175px;
+  margin-right: 50px;
+  width: 600px;
   float: right;
-  width: 800px;
 }
 
 .portfolioContainer {
-  margin-right: 100px;
+  margin-right: 50px;
 }
 
 .portfolioContainer h1 {
@@ -256,18 +353,17 @@
   min-height: 150px;
 }
 
-.addReview {
-  float: right;
-}
-
-.addReview button {
+.btn-sm {
   border: 1px solid #cccccc;
+  margin-left: 225px;
 }
 
-.addReview button:hover {
+.btn-sm:hover {
   background-color: white;
+  border: 1px solid #cccccc;
   color: #cccccc;
 }
+
 /*
 .slick-slide {
   width: 200px;

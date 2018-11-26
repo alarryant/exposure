@@ -192,7 +192,7 @@ class Dashboard extends React.Component {
           <TabPanel>
           <h2>Your Favourite Photographers</h2>
             <div className="starredContainer">
-            { (this.state.likedphotographers) ? this.renderLikedPhotographer(this.state.likedPhotographers) : "You haven't saved any photographers!" }
+            { (this.state.likedPhotographers) ? this.renderLikedPhotographer(this.state.likedPhotographers) : "You haven't saved any photographers!" }
             </div>
           </TabPanel>
 
