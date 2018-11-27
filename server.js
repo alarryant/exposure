@@ -191,6 +191,7 @@ app.post("/artists/:id/edit", (req, res) => {
   let photoFeatured = req.body.clickedPhotoFeature;
 
   let artistId = req.body.artistId;
+  let package1 = req.body.submitData.packages[0];
   let package2 = req.body.submitData.packages[1];
   let package3 = req.body.submitData.packages[2];
   let twitter = req.body.submitData.twitter;

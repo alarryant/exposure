@@ -371,8 +371,7 @@ class Profile extends React.Component {
               <h3>ABOUT</h3>
               <hr/>
               <EditProfileDesc bio={this.state.bio}
-                               sendBioForm={this.sendBioForm}
-                               style={{margin: 'none'}} />
+                               sendBioForm={this.sendBioForm} />
 
               </div>
 
@@ -404,12 +403,14 @@ class Profile extends React.Component {
                       artistPhotos={this.state.collection} />
                   </div>
               </div>
+              <div className="dropDownMenu">
               <AvailabilityCard currentUser={this.props.currentUser}
                 disabledDays={this.state.disabledDays}
                 artistId={this.state.artistId} />
               <EditPackagesCard packages={this.state.packages}
                 sendPackageField={this.sendPackageField}
               />
+              </div>
             </div>
             <input className="submitButton" type="submit" value="Submit" />
             {this.state.errorMsg ? <p className="packageError">Sorry, please enter details for 3 packages!</p> : ''}
@@ -441,7 +442,7 @@ class Profile extends React.Component {
           <hr/>
           <ProfileDesc bio={this.state.bio} />
         </div>
-        <div className="featuredPortfolio" style={{border: '3px solid red'}}>
+        <div className="featuredPortfolio">
           <button className="toggleOn" onClick={this.changeShowState}>
             Featured Photos
           </button>
