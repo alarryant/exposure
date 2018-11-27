@@ -3,13 +3,13 @@ exports.seed = function(knex, Promise) {
     knex('reviews').insert(
       { rating: 3,
         description: 'Ravi is extremely personable, good humoured and most importantly he understood what we were looking for.',
-        artist_id: 1,
+        artist_id: 2,
         user_id: 6
       }),
     knex('reviews').insert(
       { rating: 4,
         description: 'Olya is extremely personable, good humoured and most importantly she understood what we were looking for.',
-        artist_id: 2,
+        artist_id: 1,
         user_id: 7
       }),
     knex('reviews').insert(
