@@ -448,12 +448,12 @@ class Profile extends React.Component {
           <button className="toggleOn" onClick={this.changeShowState}>
             Portfolio
           </button>
-          <button className="toggleOn" onClick={this.changeShowState}>
+          {this.state.artistId === this.props.currentUser ? <span><button className="toggleOn" onClick={this.changeShowState}>
             Applied Events
           </button>
           <button className="toggleOn" onClick={this.changeShowState}>
             Statistics
-          </button>
+          </button></span> : ''}
           {this.renderTabsContent(this.state.photoView)}
         </div>
         <div className="dropDownMenu">
