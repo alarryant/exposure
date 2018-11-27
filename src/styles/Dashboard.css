@@ -4,6 +4,7 @@
 
 .photographerContainer {
   width: 150px;
+  border-radius: 50%;
   text-align: center;
 }
 
