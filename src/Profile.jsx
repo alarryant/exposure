@@ -61,6 +61,7 @@ class Profile extends React.Component {
     this.handleFileSelect = this.handleFileSelect.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
     this.handleFormInput = this.handleFormInput.bind(this);
+    this.refreshApplybutton = this.refreshApplybutton.bind(this);
   }
 
   areFeaturedPhotos(photos = []) {
@@ -90,6 +91,24 @@ class Profile extends React.Component {
     } else {
       this.setState({ photoView: "statistics" })
     }
+  }
+
+
+// MANAGES DELETED APPLICATIONS TO EVENTS
+  refreshApplybutton() {
+    axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
+        .then(res => {
+          let appliedevent = res.data
+          let applied_eventid = []
+
+          appliedevent.forEach((i) => {
+            applied_eventid.push(i.eventref_id)
+          })
+        this.setState({
+          appliedopportunities: applied_eventid,
+          applicationsent: false
+        })
+    })
   }
 
 // MANAGES RENDER OF TABBED CONTENTS: PORTFOLIO, FEATURED PHOTOS, APPLIED EVENTS, STATISTICS
@@ -128,7 +147,7 @@ class Profile extends React.Component {
         <div className="eventsContainer">
           <h1>APPLIED EVENTS</h1>
           <hr/>
-          <OpportunitiesApplied usertype={this.props.usertype} currentUser={this.props.currentUser} refreshApplybutton={this.props.refreshApplybutton}/>
+          <OpportunitiesApplied refreshApplybutton={this.refreshApplybutton}usertype={this.props.usertype} currentUser={this.props.currentUser}/>
         </div>
       )
     } else {
