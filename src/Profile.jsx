@@ -128,7 +128,7 @@ class Profile extends React.Component {
         <div className="eventsContainer">
           <h1>APPLIED EVENTS</h1>
           <hr/>
-          <OpportunitiesApplied usertype={this.props.usertype} currentUser={this.props.currentUser}/>
+          <OpportunitiesApplied usertype={this.props.usertype} currentUser={this.props.currentUser} refreshApplybutton={this.props.refreshApplybutton}/>
         </div>
       )
     } else {
@@ -316,6 +316,12 @@ class Profile extends React.Component {
       formData.append('title', this.state.title);
       formData.append('selectedFile', selectedFile);
 
+      this.setState({
+        image_owner: '',
+        title: '',
+        description: '',
+        category: ''});
+
       axios.post('/upload', formData)
         .then((result) => {
           this.setState({collection: result.data.images});
@@ -386,11 +392,19 @@ class Profile extends React.Component {
                   <input type="text"
                          name="title"
                          placeholder="Add a title for your image"
+                         value={this.state.title}
                          onChange={this.handleFormInput}/><br/>
                   <label>Description</label>
-                  <textarea name="description" placeholder="Add a description for your image" onChange={this.handleFormInput}/><br/>
+                  <textarea name="description"
+                            placeholder="Add a description for your image"
+                            onChange={this.handleFormInput}
+                            value={this.state.description}/><br/>
                   <label>Category</label>
-                  <input type="text" name="category" placeholder="Add applicable categories for your image" onChange={this.handleFormInput}/><br/>
+                  <input type="text"
+                         name="category"
+                         placeholder="Add applicable categories for your image"
+                         onChange={this.handleFormInput}
+                         value={this.state.category}/><br/>
                   <input id="file" type="file" accept="image/*" name="selectedFile" onChange={this.handleFileSelect}/>
                   <input id="upload" type="submit" value="Upload"/>
                 </form>
@@ -406,7 +420,8 @@ class Profile extends React.Component {
               <div className="dropDownMenu">
               <AvailabilityCard currentUser={this.props.currentUser}
                 disabledDays={this.state.disabledDays}
-                artistId={this.state.artistId} />
+                artistId={this.state.artistId}
+                editable={this.state.editable} />
               <EditPackagesCard packages={this.state.packages}
                 sendPackageField={this.sendPackageField}
               /></div>
@@ -441,6 +456,7 @@ class Profile extends React.Component {
           <hr/>
           <ProfileDesc bio={this.state.bio} />
         </div>
+      {/* need to add highlighted button when on that photoview*/}
         <div className="featuredPortfolio">
           <button className="toggleOn" onClick={this.changeShowState}>
             Featured Photos
