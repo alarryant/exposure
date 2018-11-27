@@ -5,6 +5,11 @@ nav {
 
 .userauth {
   float: right;
+  margin: 23px 20px 0 0;
+}
+
+.loggedIn .userauth {
+  margin-right: 0;
 }
 
 .logoWrap {
