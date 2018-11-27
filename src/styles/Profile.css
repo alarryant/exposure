@@ -2,6 +2,160 @@
   position: relative;
 }
 
+.packageError {
+  position: absolute;
+  top: 480px;
+  left: 300px;
+  color: red;
+}
+
+.tierError {
+  color: red;
+  margin-left: 15px;
+}
+
+.profiledesc textarea {
+  resize: none;
+  font-size: 1.25em;
+  width: 500px;
+  height: 225px;
+  padding: 15px;
+  border-color: #cccccc;
+}
+
+.socialMediaContainerEdit i {
+  width: 20px;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.socialMediaContainerEdit input {
+  width: 170px;
+}
+
+.avatarSocMedEdit {
+  position: relative;
+  height: 300px;
+  width: 500px;
+  float: left;
+  display: block;
+  padding: 25px 0px 0px 15px;
+  margin: 0px 0px 0px 25px;
+  z-index: 3;
+}
+
+.avatarSocMedEdit h5 {
+  font-family: 'Assistant', sans-serif;
+  font-size: 2em;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.avatarSocMedEdit a {
+  color: #2E3532;
+  font-size: 1.25em;
+}
+
+.avatarSocMedEdit a:hover {
+  color: #A0AAB2;
+  text-decoration: none;
+}
+
+#upload {
+  float: right;
+  width: 80px;
+  height: 35px;
+  border-radius: 5px;
+  font-size: 1.25em;
+  padding: 5px;
+}
+
+#file {
+  font-family: 'Josefin Sans', sans-serif;
+  margin-top: 20px;
+}
+
+.submitButton {
+  position: absolute;
+  left: 445px;
+  top: 430px;
+  padding: 5px 10px;
+  font-size: 1.25em;
+  border-radius: 5px;
+  z-index: 6;
+}
+
+.submitButton:hover {
+  color: #cccccc;
+}
+
+#upload:hover {
+  color: #cccccc;
+}
+
+.uploadContainer {
+  width: 600px;
+  border: 1px solid black;
+  float: right;
+  padding: 20px 40px;
+  overflow: hidden;
+  margin: 20px 60px 20px 0px;
+}
+
+.uploadContainer h1 {
+  font-family: 'Assistant', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 2em;
+  font-weight: 700;
+}
+
+.uploadContainer label {
+  width: 100px;
+}
+
+.uploadContainer input {
+  width: 350px;
+  height: 30px;
+  margin: 2px 0px;
+}
+
+.uploadContainer textarea {
+  resize: none;
+  width: 350px;
+  height: 70px;
+  margin: 2px 0px;
+  border-color: #cccccc;
+}
+
+.packageForm {
+  margin: 10px 0px;
+}
+
+.packageForm label {
+  margin-left: 20px;
+  width: 100px;
+}
+
+.tierinput {
+  width: 50px;
+}
+
+.priceinput {
+  width: 100px;
+}
+
+.descriptioninput {
+  resize: none;
+  width: 250px;
+  height: 80px;
+  margin-left: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
 .statisticsContainer {
   margin-bottom: 400px;
 }
@@ -86,7 +240,7 @@
 .editButton {
   position: absolute;
   top: 405px;
-  left: 375px;
+  left: 325px;
   font-size: 1.25em;
   border: 1px solid #cccccc;
   border-radius: 5px;
@@ -101,9 +255,9 @@
 }
 
 .dropDownMenu {
-  margin: 0px 40px;
+  margin: 0px 40px 150px 40px;
   position: absolute;
-  top: 325px;
+  top: 375px;
 }
 
 .avatarSocMed {
@@ -171,11 +325,12 @@
 }
 
 .personalDetContainer {
-  padding: 5px 60px 5px 10px;
+  padding: 5px 25px 5px 10px;
   max-height: 350px;
-  max-width: 550px;
+  width: 45%;
   float: right;
   clear: right;
+  margin-right: 50px;
 }
 
 .personalDetContainer h3 {
@@ -188,6 +343,10 @@
 .personalDetContainer hr {
   background-color: black;
   border: 1px solid black;
+}
+
+.personalDetContainer p {
+  font-size: 1.5em;
 }
 
 .likesContainer {
@@ -240,6 +399,7 @@
 .featuredPortfolio {
   margin-left: 0px;
   margin-right: 50px;
+  margin-bottom: 250px;
   width: 600px;
   float: right;
 }
