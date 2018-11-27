@@ -176,7 +176,7 @@ class Opportunities extends Component {
 
       <Tabs>
         <TabList>
-          <Tab style={{fontSize: '16px'}} onClick={this.handleClick}> Job Board </Tab>
+          <Tab style={{fontSize: '18px'}} onClick={this.handleClick}> Job Board </Tab>
           {usertype === 1 ? <Tab style={{fontSize: '16px'}} onClick={this.handleClick}> Applied Opportunities </Tab> : <Tab style={{fontSize: '16px'}}>My Events</Tab>}
         </TabList>
 
