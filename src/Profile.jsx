@@ -103,7 +103,7 @@ class Profile extends React.Component {
       autoplay: true,
       focusOnSelect: true,
     };
-    
+
     if (state === "portfolio") {
       return(
         <div className="portfolioContainer">
@@ -409,8 +409,7 @@ class Profile extends React.Component {
                 artistId={this.state.artistId} />
               <EditPackagesCard packages={this.state.packages}
                 sendPackageField={this.sendPackageField}
-              />
-              </div>
+              /></div>
             </div>
             <input className="submitButton" type="submit" value="Submit" />
             {this.state.errorMsg ? <p className="packageError">Sorry, please enter details for 3 packages!</p> : ''}
@@ -425,12 +424,12 @@ class Profile extends React.Component {
                        facebook={this.state.facebook}
                        instagram={this.state.instagram}
                        website={this.state.website} />
-                {this.props.currentUser === id ? 
+                {this.props.currentUser === id ?
                   null
                   :
                   <span className="likeContact">
                   <MailButton email={this.state.email}
-                  name={this.props.currentUserName} /> 
+                  name={this.props.currentUserName} />
                   <StarPhotographer currentUser={this.props.currentUser}
                           artistId={id}
                           artistLiked={this.state.artistLiked} />
