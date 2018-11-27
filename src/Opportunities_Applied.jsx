@@ -33,7 +33,7 @@ class AppliedCard extends Component {
   displayAppliedEvents(events) {
     if (!events || events.length === 0 ) {
       return (
-        <p>You haven't applied to anything! Why not checkout the opportunities board? </p> )
+        <p style={{marginLeft:'10%'}}>You haven't applied to anything! Why not checkout the opportunities board? </p> )
     } else {
       return events.map((event) => {
         let date = event.event_date.toString().split('T')[0]
@@ -57,7 +57,7 @@ class AppliedCard extends Component {
         <div className="oppHeader">
           <h2> Events You Applied To: </h2>
         </div>
-        {this.displayAppliedEvents(this.state.appliedopportunities)}
+        {this.displayAppliedEvents(this.state.appliedopportunities.reverse())}
       </section>
       )
   }
