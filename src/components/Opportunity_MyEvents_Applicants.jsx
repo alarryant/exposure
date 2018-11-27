@@ -26,6 +26,7 @@ class Applicants extends Component {
         console.log("AFTER POST REQUEsT", res)
         this.setState({ applicants: res.data })
       })
+      this.props.refresh()
 
   }
 

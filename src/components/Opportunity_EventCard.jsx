@@ -37,7 +37,8 @@ class OpportunityEventCard extends Component {
     return (
       <div className="eventcard">
         <h3>{ event.name }</h3>
-        { currentUser === creator_id && event.artist_accepted ? <h4> You've selected a photographer for this event! </h4> : <h4> You haven't selected anyone for this event yet </h4>}
+        { currentUser === creator_id && event.artist_accepted ? <h4 className="notification"> You've selected a photographer for this event! </h4> : "" }
+        { currentUser === creator_id && !event.artist_accepted ? <h4 className="notification"> You haven't selected anyone for this event yet </h4> : ""}
         <p>Date: { this.props.date } -  Location: { event.event_location }</p>
         <p>Budget: ${ event.price }</p>
         <hr/>
