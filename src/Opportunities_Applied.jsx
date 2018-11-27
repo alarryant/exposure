@@ -53,7 +53,7 @@ class AppliedCard extends Component {
 
   render () {
     return (
-      <section>
+      <section className="opportunities">
         <div className="oppHeader">
           <h2> Events You Applied To: </h2>
         </div>
