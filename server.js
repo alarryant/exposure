@@ -518,7 +518,6 @@ app.post('/opportunities/:id/add', (req, res) => {
   let date = req.body.date;
   let price = req.body.price;
   let location = req.body.location;
-  console.log(cookie)
 
   knex('events').insert({
     name: title,
