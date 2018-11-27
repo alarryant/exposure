@@ -65,6 +65,7 @@ class Profile extends React.Component {
   }
 
   areFeaturedPhotos(photos = []) {
+    // TypeError: photos.filter is not a function
     return photos.filter(photo => photo.featured.includes("true"));
   }
 
@@ -204,13 +205,14 @@ class Profile extends React.Component {
   }
 
   changeFeaturePhotos = (clickedPhotoSrc, clickedPhotoFeature) => {
-    axios.post("/artists/:id/edit",
+    axios.post("/artists/:id/editfeatured",
       {
+        currentUser: this.props.currentUser,
         clickedPhotoSrc: clickedPhotoSrc,
         clickedPhotoFeature: clickedPhotoFeature
       })
       .then(res => {
-        let newCollection = res.data;
+        let newCollection = res.data.images;
         this.setState({ collection: newCollection });
       })
   }

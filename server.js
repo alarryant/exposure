@@ -184,15 +184,17 @@ app.get('/artists/:id', (req, res) => {
 // });
 
 app.post("/artists/:id/editfeatured", (req, res) => {
+
   let photoSrc;
+  let photoFeatured = req.body.clickedPhotoFeature;
+  let currentUser = req.body.currentUser;
 
   if (req.body.clickedPhotoSrc) {
     photoSrc = req.body.clickedPhotoSrc.slice(21);
   }
-  let photoFeatured = req.body.clickedPhotoFeature;
 
   knex('images')
-    .where('image_owner', req.session.user_id)
+    .where('image_owner', currentUser)
     .where('featured', 'true')
     .then(numOfFeatures => {
       if (numOfFeatures.length <= 10) {
@@ -202,18 +204,20 @@ app.post("/artists/:id/editfeatured", (req, res) => {
             .update({'featured': 'false'})
             .then(data =>
               knex('images')
-                .where('image_owner', req.session.user_id)
+                .where('image_owner', currentUser)
                 .orderBy('id')
-                .then(moredata => res.json({images: moredata})))
+                .then(moredata => 
+                  res.json({images: moredata})))
         } else {
           knex('images')
             .where('src', photoSrc)
             .update({'featured': 'true'})
             .then(data =>
               knex('images')
-                .where('image_owner', req.session.user_id)
+                .where('image_owner', currentUser)
                 .orderBy('id')
-                .then(moredata => res.json({images: moredata})))
+                .then(moredata => 
+                  res.json({images: moredata})))
         }
       } else {
         res.status(400)
