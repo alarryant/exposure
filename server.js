@@ -20,6 +20,7 @@ const path = require('path');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
+// app.use(express.static('build'));
 app.use(cookieSession({
   name: 'session',
   keys: ['cookiemonster']
@@ -191,6 +192,7 @@ app.post("/artists/:id/edit", (req, res) => {
   let photoFeatured = req.body.clickedPhotoFeature;
 
   let artistId = req.body.artistId;
+  let package1 = req.body.submitData.packages[0];
   let package2 = req.body.submitData.packages[1];
   let package3 = req.body.submitData.packages[2];
   let twitter = req.body.submitData.twitter;

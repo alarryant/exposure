@@ -416,7 +416,7 @@ class Profile extends React.Component {
           </form>
         ) : (
           <div className="profile">
-            <div className="avatarSocMed">
+            <div className="avatarSocMed" >
               <Avatar name={this.state.fullName}
                 avatar={this.state.avatarImage} />
               <h5>FIND ME</h5>

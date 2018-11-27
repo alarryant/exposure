@@ -198,6 +198,7 @@ class Dashboard extends React.Component {
           <TabPanel>
             <Applicants
               currentUser={this.props.currentUser}
+              refresh={this.refresh}
               />
           </TabPanel>
         </Tabs>

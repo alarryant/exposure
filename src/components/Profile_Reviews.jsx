@@ -23,9 +23,9 @@ class ReviewsCard extends React.Component {
     return reviews.map(function (review) {
         return (
           <div className="reviewCard">
+            <h4>{review.rating}/5</h4>
             <h4>{review.first_name} said:</h4>
-            <p>{review.description}</p>
-            <h5>{review.rating}/5</h5>
+            <p style={{fontSize: '15px'}}>{review.description}</p>
             {currentUser === review.user_id ? <DeleteReview review={review}
               currentUser={currentUser}
               deleteReview={deleteReview} />  : ""}

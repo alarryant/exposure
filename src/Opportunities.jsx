@@ -137,7 +137,9 @@ class Opportunities extends Component {
         description: description,
         date: date,
         price: price,
-        location: location })
+        location: location,
+        creator_id: this.props.currentUser
+      })
       .then((res) => {
         let newEvents = res.data;
         this.setState({ opportunities: newEvents });
