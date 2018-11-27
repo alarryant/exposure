@@ -108,7 +108,7 @@ a {
 
 #tagline:after {
   content: '';
-  background-image: url(/static/media/logoWhite.a2f728a1.png);
+  background-image: url('/images/logoWhite.png');
   background-repeat: no-repeat;
   display: block;
   width: 750px;
