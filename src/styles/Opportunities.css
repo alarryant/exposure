@@ -25,10 +25,17 @@
   margin: auto;
 }
 
+.react-tabs {
+  position: relative;
+}
+
 .createbutton {
   margin-left: 15px;
   margin-bottom: 10px;
   float: left;
+  position: absolute;
+  top: 30px;
+  right: 40px;
 }
 
 .notification {
