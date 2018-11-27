@@ -371,7 +371,8 @@ class Profile extends React.Component {
               <h3>ABOUT</h3>
               <hr/>
               <EditProfileDesc bio={this.state.bio}
-                               sendBioForm={this.sendBioForm} />
+                               sendBioForm={this.sendBioForm}
+                               style={{margin: 'none'}} />
 
               </div>
 
@@ -415,7 +416,7 @@ class Profile extends React.Component {
           </form>
         ) : (
           <div className="profile">
-            <div className="avatarSocMed">
+            <div className="avatarSocMed" >
               <Avatar name={this.state.fullName}
                 avatar={this.state.avatarImage} />
               <h5>FIND ME</h5>
@@ -440,7 +441,7 @@ class Profile extends React.Component {
           <hr/>
           <ProfileDesc bio={this.state.bio} />
         </div>
-        <div className="featuredPortfolio">
+        <div className="featuredPortfolio" style={{border: '3px solid red'}}>
           <button className="toggleOn" onClick={this.changeShowState}>
             Featured Photos
           </button>
