@@ -99,9 +99,14 @@ class Home extends React.Component {
   return (
     <div className="homeContainer">
       {search}
-      <div className="splashcontainer">
+      <div className="jslider">
         <h1 id="tagline">FOCUS ON THE MOMENT</h1>
         <div className="overlay"></div>
+        {/* <div class=''> */}
+          <div class='jslide1'></div>
+          <div class='jslide2'></div>
+          <div class='jslide3'></div>
+        {/* </div> */}
       </div>
 
       <h1>WEDDING</h1>

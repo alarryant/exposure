@@ -42,7 +42,7 @@ a {
     background-color: #fff;
     min-width: 120px;
     /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
-    z-index: 1;
+    z-index: 2;
     top: 60px;
     border: 1px solid #888;
     border-radius: 3px;
@@ -73,7 +73,7 @@ a {
 }
 
 .splashcontainer {
-  display: flex;
+  /* display: flex;
   width: 95%;
   height: 700px;
   margin: 25px auto 0;
@@ -84,7 +84,7 @@ a {
   background-image: url('/images/SplashArt.jpg');
   background-size: cover;
   background-position: center center;
-  border-radius: 25px;
+  border-radius: 25px; */
 }
 
 #tagline {
@@ -94,7 +94,7 @@ a {
   font-size: 5em;
   color: white;
   float: left;
-  margin-top: 365px;
+  margin-top: 320px;
   margin-left: 50px;
   position: relative;
   text-align: left;
@@ -104,7 +104,7 @@ a {
   transform: translate(-50%);
   margin-left: 0;
   text-align: center;
-  z-index: 1;
+  z-index: 2;
   letter-spacing: 20px;
 }
 
@@ -113,11 +113,11 @@ a {
   background-image: url('/images/logoWhite.png');
   background-repeat: no-repeat;
   display: block;
-  width: 750px;
-  height: 140px;
+  width: 600px;
+  height: 115px;
   background-size: cover;
   left: 50%;
-  top: -170px;
+  top: -150px;
   -webkit-transform: translate(-50%);
   transform: translate(-50%);
   position: absolute;
@@ -141,11 +141,12 @@ a {
   opacity: 0.5;
   z-index: 0;
   border-radius: 5px;
+  z-index: 1;
 }
 
 .slider {
   background-color: white;
-  margin: 25px 150px;
+  margin: 25px 57px;
   max-height: 350px;
 }
 
@@ -159,6 +160,7 @@ a {
   height: 95%;
   width: 95%;
   margin: auto;
+  border-radius: 3px;
 }
 
 .homeContainer h1 {
@@ -209,6 +211,10 @@ a {
 .searchBar {
   width: 100%;
   display: flex;
+}
+
+.homeContainer .searchForm{
+  margin-top: 10px;
 }
 
 .searchForm{
@@ -277,7 +283,7 @@ button {
   position: absolute;
   border-radius: 50%;
   left: 160px;
-  top: 58px;
+  top: 38px; /* might be bad */
   overflow: hidden;
   border: 2px solid black;
   box-shadow: inset 0px 0px 0px 5px;
@@ -338,4 +344,62 @@ label {
 
 .oppHeader {
   display: flex;
+}
+
+
+
+
+
+.jslider {
+  width: 95%;
+  height: 600px;
+  position: relative;
+  min-width: 1024px;
+  margin: 25px auto 0;
+  position: relative;
+}
+.jslide1,.jslide2,.jslide3{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.jslide1 {
+  background: url('/images/SplashArt.jpg') no-repeat center ;
+  background-size: cover;
+  animation:fade 10s infinite;
+-webkit-animation:fade 10s infinite;
+
+} 
+.jslide2 {
+  background: url('/images/pho.jpg') no-repeat center ;
+  background-size: cover;
+  animation:fade2 10s infinite;
+-webkit-animation:fade2 10s infinite;
+}
+.jslide3 {
+  background: url('/images/sunset.jpg') no-repeat center ;
+  background-size: cover;
+  animation:fade3 10s infinite;
+-webkit-animation:fade3 10s infinite;
+}
+@keyframes fade
+{
+  0%   {opacity:1}
+  33.333% { opacity: 0}
+  66.666% { opacity: 0}
+  100% { opacity: 1}
+}
+@keyframes fade2
+{
+  0%   {opacity:0}
+  33.333% { opacity: 1}
+  66.666% { opacity: 0 }
+  100% { opacity: 0}
+}
+@keyframes fade3
+{
+  0%   {opacity:0}
+  33.333% { opacity: 0}
+  66.666% { opacity: 1}
+  100% { opacity: 0}
 }
