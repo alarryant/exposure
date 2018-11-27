@@ -61,6 +61,7 @@ class Profile extends React.Component {
     this.handleFileSelect = this.handleFileSelect.bind(this);
     this.handleUpload = this.handleUpload.bind(this);
     this.handleFormInput = this.handleFormInput.bind(this);
+    this.refreshApplybutton = this.refreshApplybutton.bind(this);
   }
 
   areFeaturedPhotos(photos = []) {
@@ -90,6 +91,24 @@ class Profile extends React.Component {
     } else {
       this.setState({ photoView: "statistics" })
     }
+  }
+
+
+// MANAGES DELETED APPLICATIONS TO EVENTS
+  refreshApplybutton() {
+    axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
+        .then(res => {
+          let appliedevent = res.data
+          let applied_eventid = []
+
+          appliedevent.forEach((i) => {
+            applied_eventid.push(i.eventref_id)
+          })
+        this.setState({
+          appliedopportunities: applied_eventid,
+          applicationsent: false
+        })
+    })
   }
 
 // MANAGES RENDER OF TABBED CONTENTS: PORTFOLIO, FEATURED PHOTOS, APPLIED EVENTS, STATISTICS
@@ -128,7 +147,7 @@ class Profile extends React.Component {
         <div className="eventsContainer">
           <h1>APPLIED EVENTS</h1>
           <hr/>
-          <OpportunitiesApplied usertype={this.props.usertype} currentUser={this.props.currentUser}/>
+          <OpportunitiesApplied refreshApplybutton={this.refreshApplybutton}usertype={this.props.usertype} currentUser={this.props.currentUser}/>
         </div>
       )
     } else {
@@ -316,6 +335,12 @@ class Profile extends React.Component {
       formData.append('title', this.state.title);
       formData.append('selectedFile', selectedFile);
 
+      this.setState({
+        image_owner: '',
+        title: '',
+        description: '',
+        category: ''});
+
       axios.post('/upload', formData)
         .then((result) => {
           this.setState({collection: result.data.images});
@@ -386,11 +411,19 @@ class Profile extends React.Component {
                   <input type="text"
                          name="title"
                          placeholder="Add a title for your image"
+                         value={this.state.title}
                          onChange={this.handleFormInput}/><br/>
                   <label>Description</label>
-                  <textarea name="description" placeholder="Add a description for your image" onChange={this.handleFormInput}/><br/>
+                  <textarea name="description"
+                            placeholder="Add a description for your image"
+                            onChange={this.handleFormInput}
+                            value={this.state.description}/><br/>
                   <label>Category</label>
-                  <input type="text" name="category" placeholder="Add applicable categories for your image" onChange={this.handleFormInput}/><br/>
+                  <input type="text"
+                         name="category"
+                         placeholder="Add applicable categories for your image"
+                         onChange={this.handleFormInput}
+                         value={this.state.category}/><br/>
                   <input id="file" type="file" accept="image/*" name="selectedFile" onChange={this.handleFileSelect}/>
                   <input id="upload" type="submit" value="Upload"/>
                 </form>
@@ -406,7 +439,8 @@ class Profile extends React.Component {
               <div className="dropDownMenu">
               <AvailabilityCard currentUser={this.props.currentUser}
                 disabledDays={this.state.disabledDays}
-                artistId={this.state.artistId} />
+                artistId={this.state.artistId}
+                editable={this.state.editable} />
               <EditPackagesCard packages={this.state.packages}
                 sendPackageField={this.sendPackageField}
               /></div>
@@ -441,6 +475,7 @@ class Profile extends React.Component {
           <hr/>
           <ProfileDesc bio={this.state.bio} />
         </div>
+      {/* need to add highlighted button when on that photoview*/}
         <div className="featuredPortfolio">
           <button className="toggleOn" onClick={this.changeShowState}>
             Featured Photos
@@ -448,12 +483,12 @@ class Profile extends React.Component {
           <button className="toggleOn" onClick={this.changeShowState}>
             Portfolio
           </button>
-          <button className="toggleOn" onClick={this.changeShowState}>
+          {this.state.artistId === this.props.currentUser ? <span><button className="toggleOn" onClick={this.changeShowState}>
             Applied Events
           </button>
           <button className="toggleOn" onClick={this.changeShowState}>
             Statistics
-          </button>
+          </button></span> : ''}
           {this.renderTabsContent(this.state.photoView)}
         </div>
         <div className="dropDownMenu">

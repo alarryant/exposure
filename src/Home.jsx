@@ -101,9 +101,7 @@ class Home extends React.Component {
       {search}
       <div className="splashcontainer">
         <h1 id="tagline">FOCUS ON THE MOMENT</h1>
-        <img className="splashart"
-             alt="splash"
-             src="/images/SplashArt.jpg" />
+        <div className="overlay"></div>
       </div>
 
       <h1>WEDDING</h1>

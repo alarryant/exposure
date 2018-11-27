@@ -74,31 +74,73 @@ a {
 
 .splashcontainer {
   display: flex;
-  width: 100%;
-  height: 840px;
-  margin-top: 50px;
-  background-color: #070935;
+  width: 95%;
+  height: 700px;
+  margin: 25px auto 0;
+  background-color: #000;
   border: 20px solid white;
-}
-
-.splashart {
-  height: 800px;
-  width: 100%;
-  float: left;
+  position: relative;
+  min-width: 1024px;
+  background-image: url('/images/SplashArt.jpg');
+  background-size: cover;
+  background-position: center center;
+  border-radius: 25px;
 }
 
 #tagline {
-  font-family: 'Nothing You Could Do', cursive;
-  min-width: 400px;
-  font-weight: 500;
+  font-family: 'Assistant', sans-serif;
+  min-width: 100%;
+  font-weight: 100;
   font-size: 5em;
-  font-style: bold;
   color: white;
   float: left;
-  margin-top: 300px;
+  margin-top: 365px;
   margin-left: 50px;
   position: relative;
   text-align: left;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translate(-50%);
+  transform: translate(-50%);
+  margin-left: 0;
+  text-align: center;
+  z-index: 1;
+  letter-spacing: 20px;
+}
+
+#tagline:after {
+  content: '';
+  background-image: url('/images/logoWhite.png');
+  background-repeat: no-repeat;
+  display: block;
+  width: 750px;
+  height: 140px;
+  background-size: cover;
+  left: 50%;
+  top: -170px;
+  -webkit-transform: translate(-50%);
+  transform: translate(-50%);
+  position: absolute;
+  -webkit-transition: .1s transform;
+  transition: .1s transform;
+}
+
+@media (max-width: 1300px) {
+  #tagline {
+    font-size: 3.5em;
+  }
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000;
+  opacity: 0.5;
+  z-index: 0;
+  border-radius: 5px;
 }
 
 .slider {
@@ -202,18 +244,6 @@ button {
   margin: 0 auto;
   width: 100%;
   height: auto;
-}
-
-.opportunities {
-  padding: 20px;
-}
-
-.eventcard {
-  width: 60%;
-  margin: auto;
-  margin-bottom: 20px;
-  padding: 30px;
-  border: 1px solid grey;
 }
 
 /* -------- LOGO ---------- */
