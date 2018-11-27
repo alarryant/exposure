@@ -16,7 +16,6 @@ import StarPhotographer from './components/Profile_Star.jsx';
 import AddReview from './components/AddReview.jsx';
 import OpportunitiesApplied from './Opportunities_Applied';
 import Statistics from './components/Statistics';
-// import { BrowserHistory } from 'react-router';
 import './styles/Profile.css';
 import './styles/SearchResults.css';
 
@@ -42,10 +41,11 @@ class Profile extends React.Component {
       artist: {},
       photoView: 'featured',
       editable: false,
-      uploadStatus: false
+      uploadStatus: false,
+      errorMsg: false
     }
 
-    this.handleUploadImage = this.handleUploadImage.bind(this);
+    // this.handleUploadImage = this.handleUploadImage.bind(this);
     this.addCarouselPhotos = this.addCarouselPhotos.bind(this);
     this.areFeaturedPhotos = this.areFeaturedPhotos.bind(this);
     this.changeShowState = this.changeShowState.bind(this);
@@ -59,6 +59,8 @@ class Profile extends React.Component {
     this.createReview = this.createReview.bind(this);
     this.deleteReview = this.deleteReview.bind(this);
     this.handleFileSelect = this.handleFileSelect.bind(this);
+    this.handleUpload = this.handleUpload.bind(this);
+    this.handleFormInput = this.handleFormInput.bind(this);
   }
 
   areFeaturedPhotos(photos = []) {
@@ -115,9 +117,10 @@ class Profile extends React.Component {
         <div className="featuredContainer">
           <h1>FEATURED</h1>
           <hr/>
-          <Slider {...settings}>
+          {this.numOfFeatured !== 0 ? <Slider {...settings}>
             {this.addCarouselPhotos(this.state.collection)}
-          </Slider>
+          </Slider> : <p>This artist has no featured photos.</p>}
+
         </div>
       )
     } else if (state === 'events') {
@@ -268,54 +271,63 @@ class Profile extends React.Component {
   }
 
   handleSubmit(event) {
-    this.props.handleProfileEditPath(`artists/${this.props.currentUser}`);
-    let submitData = {
-      packages: this.state.packages,
-      twitter: this.state.twitter,
-      facebook: this.state.facebook,
-      instagram: this.state.instagram,
-      website: this.state.website,
-      bio: this.state.bio
-    }
+    if (this.state.packages.length < 3) {
+      event.preventDefault();
+      this.setState({errorMsg: true})
+    } else {
+      this.props.handleProfileEditPath(`artists/${this.props.currentUser}`);
+      let submitData = {
+        packages: this.state.packages,
+        twitter: this.state.twitter,
+        facebook: this.state.facebook,
+        instagram: this.state.instagram,
+        website: this.state.website,
+        bio: this.state.bio,
+        errorMsg: false
+      }
 
-    axios.post(`/artists/${this.state.artistId}/edit`,
-      {
-        artistId: this.state.artistId,
-        submitData: submitData
-      })
-      .then((res) => {
-        this.setState({
-          packages: res.data.packages,
-          twitter: res.data[0].twitter_url,
-          facebook: res.data[0].facebook_url,
-          instagram: res.data[0].instagram_url,
-          website: res.data[0].website_url,
-          bio: res.data[0].bio
+      axios.post(`/artists/${this.state.artistId}/edit`,
+        {
+          artistId: this.state.artistId,
+          submitData: submitData
         })
-      })
-      .catch((err) => console.log(err))
+        .then((res) => {
+          this.setState({
+            packages: res.data.packages,
+            twitter: res.data[0].twitter_url,
+            facebook: res.data[0].facebook_url,
+            instagram: res.data[0].instagram_url,
+            website: res.data[0].website_url,
+            bio: res.data[0].bio
+          })
+        })
+        .catch((err) => console.log(err))
+    }
   }
 
-  handleUploadImage = (event) => {
+  handleUpload = (event) => {
      event.preventDefault();
       const { selectedFile } = this.state;
       let formData = new FormData();
 
       formData.append('image_owner', this.state.artistId);
+      formData.append('description', this.state.description);
+      formData.append('category', this.state.category);
+      formData.append('title', this.state.title);
       formData.append('selectedFile', selectedFile);
 
       axios.post('/upload', formData)
         .then((result) => {
-          // this.context.history.push(`/artists/${this.state.artistId}`);
-          // BrowserHistory.push(`/artists/${this.state.artistId}`);
-          // console.log("this is results in profile", JSON.parse(result.data));
-          // this.handleProfileEditPath(`/artists/${this.state.artistId}/editportfolio`)
-          // access results...
+          this.setState({collection: result.data.images});
         })
         .catch(function (response) {
-        //handle error
         console.log(response);
     });
+  }
+
+  handleFormInput = (event) => {
+    event.preventDefault();
+    this.setState({[event.target.name]: event.target.value});
   }
 
   handleFileSelect = (event) => {
@@ -345,7 +357,7 @@ class Profile extends React.Component {
       {this.state.editable ? (
         <form onSubmit={this.handleSubmit}>
           <div className="profile">
-            <div className="avatarSocMed">
+            <div className="avatarSocMedEdit">
               <Avatar name={this.state.fullName}
                     avatar={this.state.avatarImage} />
               <h5>FIND ME</h5>
@@ -362,26 +374,34 @@ class Profile extends React.Component {
                                sendBioForm={this.sendBioForm} />
 
               </div>
-            <div className="featuredPortfolio">
-              <div>
-              <form method="post" enctype="multipart/form-data" action="/upload" onSubmit={this.handleUpload}>
-                <input type="number" name="image_owner" value={this.state.artistId}/>
-                <label>Title</label>
-                <input type="text" name="title" placeholder="Add a title for your image"/>
-                <label>Description</label>
-                <input type="text" name="description" placeholder="Add a description for your image"/>
-                <label>Category</label>
-                <input type="text" name="category" placeholder="Add applicable categories for your image"/>
-                <input type="file" accept="image/*" name="selectedFile" onChange={this.handleFileSelect}/>
-                <input type="submit" value="Submit"/>
-            </form>
+
+              <div className="uploadContainer">
+                <h1>Add Portfolio Images</h1>
+                <form method="post" enctype="multipart/form-data" action="/upload" onSubmit={this.handleUpload}>
+                  <input type="number"
+                         name="image_owner"
+                         value={this.state.artistId}
+                         className="hidden"/>
+                  <label>Title</label>
+                  <input type="text"
+                         name="title"
+                         placeholder="Add a title for your image"
+                         onChange={this.handleFormInput}/><br/>
+                  <label>Description</label>
+                  <textarea name="description" placeholder="Add a description for your image" onChange={this.handleFormInput}/><br/>
+                  <label>Category</label>
+                  <input type="text" name="category" placeholder="Add applicable categories for your image" onChange={this.handleFormInput}/><br/>
+                  <input id="file" type="file" accept="image/*" name="selectedFile" onChange={this.handleFileSelect}/>
+                  <input id="upload" type="submit" value="Upload"/>
+                </form>
+                </div>
+                <div className="featuredPortfolio">
                 <h3>Select Feature Photos ({this.numOfFeatured.length}/10):</h3>
                   <div>
                     <EditPortfolio
                       changeFeaturePhotos={this.changeFeaturePhotos}
                       artistPhotos={this.state.collection} />
                   </div>
-                </div>
               </div>
               <AvailabilityCard currentUser={this.props.currentUser}
                 disabledDays={this.state.disabledDays}
@@ -391,6 +411,7 @@ class Profile extends React.Component {
               />
             </div>
             <input className="submitButton" type="submit" value="Submit" />
+            {this.state.errorMsg ? <p className="packageError">Sorry, please enter details for 3 packages!</p> : ''}
           </form>
         ) : (
           <div className="profile">

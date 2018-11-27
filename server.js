@@ -183,14 +183,14 @@ app.post('/artists/:id/review', (req, res) => {
 });
 
 app.post("/artists/:id/edit", (req, res) => {
-  // let photoSrc;
-  // if (req.body.clickedPhotoSrc) {
-  //   photoSrc = req.body.clickedPhotoSrc.slice(21);
-  // }
-  // let photoFeatured = req.body.clickedPhotoFeature;
+  let photoSrc;
+
+  if (req.body.clickedPhotoSrc) {
+    photoSrc = req.body.clickedPhotoSrc.slice(21);
+  }
+  let photoFeatured = req.body.clickedPhotoFeature;
 
   let artistId = req.body.artistId;
-  let package1 = req.body.submitData.packages[0];
   let package2 = req.body.submitData.packages[1];
   let package3 = req.body.submitData.packages[2];
   let twitter = req.body.submitData.twitter;
@@ -232,63 +232,49 @@ app.post("/artists/:id/edit", (req, res) => {
                 .join('users', 'price_packages.user_id', '=', 'users.id')
                 .where('price_packages.user_id', artistId).orderBy('tier')
                 .then((userData) => {
-                  // knex('images')
-                  //   .where('image_owner', req.session.user_id)
-                  //   .where('featured', 'true')
-                  //   .then(numOfFeatures => {
-                  //     if (numOfFeatures.length <= 10) {
-                  //       if (photoFeatured === 'true') {
-                  //         knex('images')
-                  //           .where('src', photoSrc)
-                  //           .update({'featured': 'false'})
-                  //           .then(data =>
-                  //             knex('images')
-                  //               .where('image_owner', req.session.user_id)
-                  //               .orderBy('id')
-                  //               .then(moredata => res.json(moredata)))
-                  //       } else {
-                  //         knex('images')
-                  //           .where('src', photoSrc)
-                  //           .update({'featured': 'true'})
-                  //           .then(data =>
-                  //             knex('images')
-                  //               .where('image_owner', req.session.user_id)
-                  //               .orderBy('id')
-                  //               .then(moredata => res.json(moredata)))
-                  //       }
-                  //     } else {
-                  //       res.status(400)
-                  //          .send("Sorry! The maximum number of feature photos is 10.");
-                  //     }
-                  //   });
-                  // console.log(userData);
-                  res.json(userData);
+                  knex('images')
+                    .where('image_owner', req.session.user_id)
+                    .where('featured', 'true')
+                    .then(numOfFeatures => {
+                      if (numOfFeatures.length <= 10) {
+                        if (photoFeatured === 'true') {
+                          knex('images')
+                            .where('src', photoSrc)
+                            .update({'featured': 'false'})
+                            .then(data =>
+                              knex('images')
+                                .where('image_owner', req.session.user_id)
+                                .orderBy('id')
+                                .then(moredata => res.json({userData: userData, images: moredata})))
+                        } else {
+                          knex('images')
+                            .where('src', photoSrc)
+                            .update({'featured': 'true'})
+                            .then(data =>
+                              knex('images')
+                                .where('image_owner', req.session.user_id)
+                                .orderBy('id')
+                                .then(moredata => res.json({userData: userData, images: moredata})))
+                        }
+                      } else {
+                        res.status(400)
+                           .send("Sorry! The maximum number of feature photos is 10.");
+                      }
+                    });
                 });
             });
         });
     });
-
 
   });
 
 // configure storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    /*
-      Files will be saved in the 'uploads' directory. Make
-      sure this directory already exists!
-    */
-    cb(null, './public/uploads');
+    cb(null, './public/images');
   },
+
   filename: (req, file, cb) => {
-    /*
-      uuidv4() will generate a random ID that we'll use for the
-      new filename. We use path.extname() to get
-      the extension from the original file name and add that to the new
-      generated ID. These combined will create the file name used
-      to save the file on the server and will be available as
-      req.file.pathname in the router handler.
-    */
     const newFilename = `${uuidv4()}${path.extname(file.originalname)}`;
     cb(null, newFilename);
   },
@@ -297,16 +283,11 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 app.post('/upload', upload.single('selectedFile'), (req, res) => {
-      /*
-        We now have a new req.file object here. At this point the file has been saved
-        and the req.file.filename value will be the name returned by the
-        filename() function defined in the diskStorage configuration. Other form fields
-        are available here in req.body.
-      */
-console.log("this is req.body", req.file);
+
+      let realPath = req.file.path.replace("public", '');
       knex('images')
         .insert({
-          src: req.file.path,
+          src: realPath,
           featured: "false",
           title: req.body.title,
           description: req.body.description,
@@ -324,19 +305,6 @@ console.log("this is req.body", req.file);
 
 app.post('/artists/:id/editavailability', (req, res) => {
   let artistId = req.params.id;
-
-  // this is ali's refactored version that doesn't work
-  // const getAllAvails = () => {
-  //   return knex('availabilities').where('artist_id', artistId);
-  // }
-
-  // knex('availabilities')
-  //   .insert({
-  //     artist_id: artistId,
-  //     date: req.body.selectedDay
-  //   })
-  //   .then(getAllAvails)
-  //   .then(res.json);
 
   knex('availabilities')
     .insert({
