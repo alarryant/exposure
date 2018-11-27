@@ -12,7 +12,7 @@
 }
 
 .oppHeader {
-  width: 60%;
+  width: 80%;
   margin: auto;
 }
 
@@ -34,4 +34,21 @@
 .notification {
   color: #0066ff;
 
+}
+
+.react-tabs {
+  max-width: 60%;
+  margin: 0 auto;
+}
+
+.opportunities {
+  padding: 20px;
+}
+
+.eventcard {
+  width: 80%;
+  margin: auto;
+  margin-bottom: 20px;
+  padding: 30px;
+  border: 1px solid grey;
 }
