@@ -30,7 +30,7 @@ class SearchResults extends Component {
     let handleShowFunction = this.handleShow;
     let handleCloseFunction = this.handleClose;
     if (!images || images.length === 0 ) {
-      return (<p> Sorry! Nothing matches this description!</p>)
+      return (<p className="error"> Sorry! Nothing matches this description!</p>)
     } else {
       return images.map((image) => {
         return (
@@ -81,7 +81,7 @@ class SearchResults extends Component {
     }
 
     return(
-      <div>
+      <div className="searchResultsWrapper">
         {search}
         <h2 className="results">
           Here's what we found on "{this.props.searchWord}"

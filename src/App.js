@@ -1,6 +1,12 @@
+// LIBRARIES & PACKAGES
 import React, { Component } from 'react';
-import './styles/App.css';
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import axios from 'axios';
+
+// STYLESHEETS
+import './styles/App.css';
+
+// PAGES & COMPONENTS
 import Navbar from './Navbar.jsx';
 import Footer from './Footer.jsx';
 import Home from './Home.jsx';
@@ -8,7 +14,6 @@ import Dashboard from './Dashboard.jsx';
 import SearchResults from './SearchResults.jsx';
 import ErrorPath from './Error404.jsx';
 import Profile from './Profile.jsx';
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Opportunities from './Opportunities.jsx';
 import About from './About.jsx';
 import Contact from './Contact.jsx';
@@ -49,7 +54,10 @@ class App extends Component {
     this.handleProfileEditPath = this.handleProfileEditPath.bind(this);
   }
 
-  //LOGIN FEATURE
+
+// AXIOS SERVER ROUTES
+
+  //LOGIN
   loginInfo(email, password) {
     axios.post("/login", { email: email, password: password })
       .then((res) => {
@@ -67,7 +75,7 @@ class App extends Component {
 
   }
 
-  //LOGOUT FEATURE
+  //LOGOUT
   logout(event) {
     axios.post("/logout")
       .then((res) => {
@@ -80,7 +88,7 @@ class App extends Component {
   }
 
 
-  //REGISTER FEATURE
+  //REGISTER
   signupInfo(firstName, lastName, email, password, userType) {
     axios.post("/register", {
       firstName: firstName,
@@ -90,7 +98,6 @@ class App extends Component {
       userType: userType
     })
       .then((res) => {
-        // console.log("This is my console log: ", res.data);
         localStorage.setItem('currentUser', res.data.currentUser);
         localStorage.setItem('user_type_id', res.data.userType);
         localStorage.setItem('currentUserFirstName', res.data.firstName);
@@ -104,7 +111,7 @@ class App extends Component {
       });
   }
 
-  //EDIT ACCOUNT FEATURE
+  //ACCOUNT SETTINGS
   changeAccountInfo(firstName, lastName, email, password) {
     axios.post('/settings', {
       firstName: firstName,
@@ -129,7 +136,7 @@ class App extends Component {
       });
   }
 
-  //EDIT PROFILE FEATURE
+  //EDIT PROFILE
   editProfileInfo(firstName, lastName, email, password, website, instagram, facebook, twitter, location) {
     axios.post('/artists/:id/edit', {
       firstName: firstName,
@@ -147,7 +154,7 @@ class App extends Component {
       });
   }
 
-  //SEARCH FEATURE
+  //SEARCH
   searchResult(word) {
     axios.get("/search", {
       params: {
@@ -158,7 +165,7 @@ class App extends Component {
         this.setState({ redirect: 'search', searchWord: word, searchimages: res.data });
       });
   }
-
+  
   renderRedirect = () => {
     if (this.state.redirect) {
       this.setState({ redirect: '' })
@@ -181,7 +188,6 @@ class App extends Component {
   render() {
     const currentUser = localStorage.getItem('currentUser');
     const user_type_id = localStorage.getItem('user_type_id');
-    console.log("this is in app", this.state.usertype);
     const currentUserName = localStorage.getItem('currentUserFirstName') + ' ' + localStorage.getItem('currentUserLastName');
     return (
       <BrowserRouter>
@@ -218,7 +224,7 @@ class App extends Component {
             <Route path='/settings' name='settings' render={(props) => <Settings {...props}
               currentUserName={currentUserName}
               changeAccountInfo={this.changeAccountInfo} />} />
-            <Route exact path="/" render={() => (<Redirect to="/home" />)} />
+            <Route exact path="/" render={() => <Redirect to="/home" />} />
             <Route component={ErrorPath} />
           </Switch>
           <Footer />

@@ -1,3 +1,8 @@
+.contentWrapper {
+  margin-left: 10%;
+  margin-right: 10%
+}
+
 .starredContainer {
   display: flex;
 }
@@ -8,22 +13,23 @@
   text-align: center;
 }
 
-.applicantcard {
-}
-
 th {
   font-weight: bold;
-  width: 5%;
+  width: 20%;
+  text-align: center;
 }
 
 td {
-  width: 5%;
+  width: 15%;
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
 }
 
 .right {
-  margin-top: 50px
+  /* margin-top: 50px */
 }
 
 .left {
-  margin-top: 50px
+  margin-top: 50px;
 }

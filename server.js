@@ -503,6 +503,7 @@ app.get('/api/opportunities/:id/applicants', (req, res) => {
     .join('events', 'eventref_id', '=', 'event_id')
     .join('users', 'users.id', '=', 'artist_id')
     .where('creator_id', req.params.id)
+    .orderBy('event_id')
     .then(function (events) {
       res.json(events);
     });
@@ -531,6 +532,25 @@ app.post('/opportunities/:id/add', (req, res) => {
         .then(moreData => res.json(moreData));
     });
 });
+
+app.post('/opportunities/:id/accept', (req, res) => {
+  knex('events')
+    .where('event_id', req.body.event_id)
+    .update('artist_accepted', req.body.artistid)
+    .then(data => {
+      knex('event_interests')
+        .join('events', 'event_id', '=', 'event_interests.eventref_id')
+        .join('users', 'users.id', '=', 'artist_id')
+        .where('creator_id', req.body.currentUser)
+        .orderBy('event_id')
+        .then(updatedlist => {
+          console.log(updatedlist)
+          res.json(updatedlist);
+        })
+    })
+})
+
+
 
 app.post("/opportunities/:id/delete", (req, res) => {
   knex('events')

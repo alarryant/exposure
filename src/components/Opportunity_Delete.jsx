@@ -42,7 +42,7 @@ class DeleteEvent extends Component {
   render() {
     return (
       <div>
-      <Button bsStyle="default" bsSize="small" onClick={this.handleShow}>
+      <Button className="deletebutton" bsStyle="default" bsSize="small" onClick={this.handleShow}>
           Delete Event
       </Button>
 

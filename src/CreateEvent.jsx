@@ -46,7 +46,7 @@ class CreateEvent extends Component {
   render() {
     return (
       <div>
-        <Button bsStyle="default" bsSize="small" onClick={this.handleShow}>
+        <Button className="createbutton" bsStyle="default" bsSize="small" onClick={this.handleShow}>
             Create Event
         </Button>
 

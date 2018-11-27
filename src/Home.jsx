@@ -3,7 +3,7 @@ import sampleSize from 'lodash.samplesize';
 import Slider from "react-slick";
 import SearchBar from './SearchBar.jsx';
 import { Link } from 'react-router-dom';
-import { Modal/*, Button*/ } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
 class Home extends React.Component {
 
@@ -100,10 +100,10 @@ class Home extends React.Component {
     <div className="homeContainer">
       {search}
       <div className="splashcontainer">
+        <h1 id="tagline">FOCUS ON THE MOMENT</h1>
         <img className="splashart"
              alt="splash"
              src="/images/SplashArt.jpg" />
-        <h1 id="tagline">FOCUS ON THE MOMENT</h1>
       </div>
 
       <h1>WEDDING</h1>

@@ -12,7 +12,7 @@ class OpportunityEventCard extends Component {
   }
 
   haveApplied(id) {
-    if ((this.props.appliedEvents).includes(id)) {
+    if ((this.props.appliedEvents).includes(id) || this.props.event.artist_accepted) {
       return ""
     } else {
       return (
@@ -27,6 +27,7 @@ class OpportunityEventCard extends Component {
   }
 
   render () {
+    console.log("EVENT CARD", this.props.event)
     const { event } = this.props
     const user_type_id = parseInt(this.props.usertype);
     const creator_id = parseInt(event.creator_id);
@@ -36,6 +37,7 @@ class OpportunityEventCard extends Component {
     return (
       <div className="eventcard">
         <h3>{ event.name }</h3>
+        { currentUser === creator_id && event.artist_accepted ? <h4> You've selected a photographer for this event! </h4> : <h4> You haven't selected anyone for this event yet </h4>}
         <p>Date: { this.props.date } -  Location: { event.event_location }</p>
         <p>Budget: ${ event.price }</p>
         <hr/>

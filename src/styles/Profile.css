@@ -392,7 +392,7 @@
   padding-left: 30px;
 }
 
-.toggleOn{
+.toggleOn:hover, .toggleOn:focus{
   color: #A0AAB2;
 }
 
@@ -402,7 +402,6 @@
   margin-bottom: 250px;
   width: 600px;
   float: right;
-  /*max-width: 800px;*/
 }
 
 .portfolioContainer {

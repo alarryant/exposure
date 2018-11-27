@@ -1,7 +1,5 @@
 import React from 'react';
 import Avatar from './components/Avatar.jsx';
-// import EditAvailability from './components/Availability.jsx';
-// import Statistics from './components/Statistics.jsx';
 import CreateEvent from './CreateEvent';
 import OpportunityEventCard from './components/Opportunity_EventCard.jsx'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -24,7 +22,7 @@ const right = {
 
 const tabStyle = {
   width: '80%',
-  margin: '0 auto'
+  margin: '50px auto'
 };
 
 class Dashboard extends React.Component {
@@ -36,15 +34,13 @@ class Dashboard extends React.Component {
       avatar: null,
       type: null,
       events: [],
-      userevents: [],
-      // totalapplicants: null
+      userevents: []
     }
 
     this.createEvent = this.createEvent.bind(this);
     this.renderLikedPhotographer = this.renderLikedPhotographer.bind(this);
     this.deleteEvent = this.deleteEvent.bind(this)
     this.refresh = this.refresh.bind(this)
-    // this.updateTotalApplicants = this.updateTotalApplicants.bind(this)
   }
 
   refresh() {
@@ -60,12 +56,6 @@ class Dashboard extends React.Component {
       });
     });
   }
-
-  // updateTotalApplicants(array) {
-  //   console.log("TOTAL APPS", array)
-  //   this.setState({totalapplicants: array.length})
-  // }
-
 
   deleteEvent(event, creator) {
     let currentUser = parseInt(this.props.currentUser)
@@ -158,9 +148,10 @@ class Dashboard extends React.Component {
     };
 
     const starredPhotographer__img = {
-      width: '100%',
+      width: '90%',
       float: 'left',
-      margin: '10px'
+      margin: '10px',
+      borderRadius: '50%'
     };
     return photographers.map((photographer) => {
       return (
@@ -198,15 +189,15 @@ class Dashboard extends React.Component {
 
           <TabPanel>
             <h2> Your Events </h2>
-            <p>Checkout other postings on the<NavLink to="/opportunities">Job Board</NavLink></p>
+            <p>Check out other postings on the<NavLink to="/opportunities">Job Board</NavLink></p>
             <CreateEvent createEvent={this.createEvent}/>
+
             { this.displayEvents(this.state.userevents) }
           </TabPanel>
 
           <TabPanel>
             <Applicants
               currentUser={this.props.currentUser}
-              // updateTotalApplicants={this.updateTotalApplicants}
               />
           </TabPanel>
         </Tabs>

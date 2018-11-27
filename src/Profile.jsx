@@ -103,7 +103,7 @@ class Profile extends React.Component {
       autoplay: true,
       focusOnSelect: true,
     };
-
+    
     if (state === "portfolio") {
       return(
         <div className="portfolioContainer">
@@ -128,7 +128,7 @@ class Profile extends React.Component {
         <div className="eventsContainer">
           <h1>APPLIED EVENTS</h1>
           <hr/>
-          <OpportunitiesApplied />
+          <OpportunitiesApplied usertype={this.props.usertype} currentUser={this.props.currentUser}/>
         </div>
       )
     } else {
@@ -403,14 +403,12 @@ class Profile extends React.Component {
                       artistPhotos={this.state.collection} />
                   </div>
               </div>
-              <div className="dropDownMenu">
-                <AvailabilityCard currentUser={this.props.currentUser}
-                  disabledDays={this.state.disabledDays}
-                  artistId={this.state.artistId} />
-                <EditPackagesCard packages={this.state.packages}
-                  sendPackageField={this.sendPackageField}
-                />
-              </div>
+              <AvailabilityCard currentUser={this.props.currentUser}
+                disabledDays={this.state.disabledDays}
+                artistId={this.state.artistId} />
+              <EditPackagesCard packages={this.state.packages}
+                sendPackageField={this.sendPackageField}
+              />
             </div>
             <input className="submitButton" type="submit" value="Submit" />
             {this.state.errorMsg ? <p className="packageError">Sorry, please enter details for 3 packages!</p> : ''}
@@ -425,12 +423,12 @@ class Profile extends React.Component {
                        facebook={this.state.facebook}
                        instagram={this.state.instagram}
                        website={this.state.website} />
-                {this.props.currentUser === id ?
+                {this.props.currentUser === id ? 
                   null
                   :
                   <span className="likeContact">
                   <MailButton email={this.state.email}
-                  name={this.props.currentUserName} />
+                  name={this.props.currentUserName} /> 
                   <StarPhotographer currentUser={this.props.currentUser}
                           artistId={id}
                           artistLiked={this.state.artistLiked} />
@@ -443,42 +441,18 @@ class Profile extends React.Component {
           <ProfileDesc bio={this.state.bio} />
         </div>
         <div className="featuredPortfolio">
-        {this.state.photoView === 'featured' ?
-          (<button className="toggleOn" onClick={this.changeShowState}>
+          <button className="toggleOn" onClick={this.changeShowState}>
             Featured Photos
           </button>
-          ) : (
-          <button onClick={this.changeShowState}>
-            Featured Photos
-          </button>
-          )}
-        {this.state.photoView === 'portfolio' ?
-          (<button className="toggleOn" onClick={this.changeShowState}>
+          <button className="toggleOn" onClick={this.changeShowState}>
             Portfolio
           </button>
-          ) : (
-          <button onClick={this.changeShowState}>
-            Portfolio
-          </button>
-          )}
-        {this.state.photoView === 'events' ?
-          (<button className="toggleOn" onClick={this.changeShowState}>
+          <button className="toggleOn" onClick={this.changeShowState}>
             Applied Events
           </button>
-          ) : (
-          <button onClick={this.changeShowState}>
-            Applied Events
-          </button>
-          )}
-        {this.state.photoView === 'statistics' ?
-          (<button className="toggleOn" onClick={this.changeShowState}>
+          <button className="toggleOn" onClick={this.changeShowState}>
             Statistics
           </button>
-          ) : (
-          <button onClick={this.changeShowState}>
-            Statistics
-          </button>
-          )}
           {this.renderTabsContent(this.state.photoView)}
         </div>
         <div className="dropDownMenu">

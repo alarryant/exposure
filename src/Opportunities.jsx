@@ -73,7 +73,6 @@ class Opportunities extends Component {
       .then((data) => {
         axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
         .then(res => {
-          console.log("res inside Opportunities", res.data)
           let appliedevent = res.data
           let applied_eventid = []
 
@@ -90,7 +89,6 @@ class Opportunities extends Component {
   refreshApplybutton() {
     axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
         .then(res => {
-          console.log("res inside Opportunities", res.data)
           let appliedevent = res.data
           let applied_eventid = []
 
@@ -108,13 +106,16 @@ class Opportunities extends Component {
   displayEvents(events) {
     if (!events || events.length === 0 ) {
       return (
-        <h2>
+        <div className="emptyevent">
+        <h4>
           There are currently no postings!
-        </h2>
+        </h4>
+        </div>
       )
     } else {
       return events.map((event) => {
         let date = event.event_date.toString().split('T')[0]
+        if (!event.artist_accepted)
         return (
           <OpportunityEventCard
               appliedEvents={this.state.appliedopportunities}
@@ -158,7 +159,6 @@ class Opportunities extends Component {
 
     axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
       .then(res => {
-        console.log("res inside Opportunities", res.data)
         let appliedevent = res.data
         let applied_eventid = []
         appliedevent.forEach((i) => {
@@ -170,13 +170,12 @@ class Opportunities extends Component {
 
   render() {
     let usertype = parseInt(this.props.usertype);
-    console.log("this is my user type", usertype);
-
     return (
+
       <Tabs>
         <TabList>
-          <Tab onClick={this.handleClick}> Job Board </Tab>
-          {usertype === 1 ? <Tab onClick={this.handleClick}> Applied Opportunities </Tab> : <Tab>My Events</Tab>}
+          <Tab style={{fontSize: '16px'}} onClick={this.handleClick}> Job Board </Tab>
+          {usertype === 1 ? <Tab style={{fontSize: '16px'}} onClick={this.handleClick}> Applied Opportunities </Tab> : <Tab style={{fontSize: '16px'}}>My Events</Tab>}
         </TabList>
 
         <TabPanel>
@@ -201,6 +200,7 @@ class Opportunities extends Component {
               refreshApplybutton={this.refreshApplybutton}
               />
           : <MyEvent
+              createEvent={this.createEvent}
               displayEvents={this.displayEvents}
               currentUser={this.props.currentUser}
               usertype={this.props.usertype}

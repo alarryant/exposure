@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 
+import './styles/Settings.css';
+
 class Settings extends Component{
 
     constructor(props){
@@ -26,7 +28,7 @@ class Settings extends Component{
 
     render() {
         return (
-            <div>
+            <div className="settingsWrapper">
                 <form onSubmit={this.handleSubmit}>
                     <h3>First Name</h3>
                     <input type='text' name='firstName' onChange={this.handleChange}/>
