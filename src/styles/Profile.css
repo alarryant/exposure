@@ -328,7 +328,7 @@
 
 .personalDetContainer {
   padding: 5px 25px 5px 10px;
-  max-height: 350px;
+  min-height: 350px;
   width: 55%;
   float: right;
   clear: right;

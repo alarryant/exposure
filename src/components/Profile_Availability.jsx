@@ -7,7 +7,7 @@ class AvailabilityCard extends React.Component {
     super();
 
     this.state = {
-      showMenu: false,
+      showMenu: false
     };
 
     this.showMenu = this.showMenu.bind(this);
@@ -33,13 +33,21 @@ class AvailabilityCard extends React.Component {
     }
   }
 
+  componentDidMount() {
+    if (this.props.editable) {
+      this.setState({showMenu: true});
+    }
+  }
+
   render() {
     // console.log("this is props in profile avail", this.props.currentUser);
     return (
       <div className="profilebtn">
-        <button onClick={this.showMenu}>
+        {this.props.editable ? <button>
           Availability
-        </button>
+        </button> : <button onClick={this.showMenu}>
+          Availability
+        </button>}
         { this.state.showMenu ? (
           <div className="menu"
             ref={ (element) => { this.dropdownMenu = element } }>
