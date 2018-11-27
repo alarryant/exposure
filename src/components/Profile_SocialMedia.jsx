@@ -35,24 +35,24 @@ class SocialMedia extends React.Component {
 
     return (
       <div className="socialMediaContainer">
-        {this.props.facebook !== "null" ?
+        {(this.props.facebook !== "null") && (this.parseUrl(this.props.facebook)) ?
           (
           <p>
             <i className="fab fa-facebook-f"></i>
             <a href={facebookUrl} target="_blank" rel="noopener noreferrer">{this.parseUrl(this.props.facebook)}</a>
           </p>) : ''}
-        {this.props.twitter !== "null" ?
+        {(this.props.twitter !== "null") && (this.parseUrl(this.props.twitter)) ?
         (
         <p>
           <i className="fab fa-twitter"></i>
           <a href={twitterUrl} target="_blank" rel="noopener noreferrer">{this.parseUrl(this.props.twitter)}</a>
         </p>) : ''}
-        {this.props.instagram !== "null" ?
+        {(this.props.instagram !== "null") && (this.parseUrl(this.props.instagram)) ?
           (
           <p><i className="fab fa-instagram"></i>
             <a href={instagramUrl} target="_blank" rel="noopener noreferrer">{this.parseUrl(this.props.instagram)}</a>
           </p>) : ''}
-        {this.props.website !== "null" ?
+        {(this.props.website !== "null") && (this.props.website) ?
           (
           <p><i className="fas fa-laptop"></i>
             <a href={websiteUrl} target="_blank" rel="noopener noreferrer">{(new Url(this.props.website)).host}</a>
