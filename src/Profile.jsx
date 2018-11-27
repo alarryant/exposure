@@ -19,18 +19,14 @@ import Statistics from './components/Statistics';
 import './styles/Profile.css';
 import './styles/SearchResults.css';
 
-
-
-class MailButton extends React.Component {
-  render() {
-    return (
-      <button className="contactMe">
-        <a href={`mailto:${this.props.email}?subject=${this.props.name} would like to book you for a photoshoot.`}>
-          Contact Me
-        </a>
-      </button>
-    )
-  }
+function MailButton(props) {
+  return (
+    <button className="contactMe">
+      <a href={`mailto:${props.email}?subject=${props.name} would like to book you for a photoshoot.`}>
+        Contact Me
+      </a>
+    </button>
+  )
 }
 
 class Profile extends React.Component {
@@ -45,7 +41,6 @@ class Profile extends React.Component {
       errorMsg: false
     }
 
-    // this.handleUploadImage = this.handleUploadImage.bind(this);
     this.addCarouselPhotos = this.addCarouselPhotos.bind(this);
     this.areFeaturedPhotos = this.areFeaturedPhotos.bind(this);
     this.changeShowState = this.changeShowState.bind(this);
@@ -104,10 +99,10 @@ class Profile extends React.Component {
           appliedevent.forEach((i) => {
             applied_eventid.push(i.eventref_id)
           })
-        this.setState({
-          appliedopportunities: applied_eventid,
-          applicationsent: false
-        })
+      this.setState({
+        appliedopportunities: applied_eventid,
+        applicationsent: false
+      })
     })
   }
 
@@ -160,7 +155,6 @@ class Profile extends React.Component {
       )
     }
   }
-
 
   sendSocialMediaForm = (socialmedia) => {
     if (!socialmedia.twitter) {
@@ -362,8 +356,8 @@ class Profile extends React.Component {
         break;
       default:
         this.setState({ [event.target.name]: event.target.value });
+    }
   }
-}
 
   render() {
     const { id } = this.props.match.params;
@@ -455,56 +449,53 @@ class Profile extends React.Component {
                 avatar={this.state.avatarImage} />
               <h5>FIND ME</h5>
               <SocialMedia twitter={this.state.twitter}
-                       facebook={this.state.facebook}
-                       instagram={this.state.instagram}
-                       website={this.state.website} />
-                {this.props.currentUser === id ?
-                  null
-                  :
-                  <span className="likeContact">
+                           facebook={this.state.facebook}
+                           instagram={this.state.instagram}
+                           website={this.state.website} />
+              {this.props.currentUser === id ? null :
+                <span className="likeContact">
                   <MailButton email={this.state.email}
                   name={this.props.currentUserName} />
                   <StarPhotographer currentUser={this.props.currentUser}
                           artistId={id}
                           artistLiked={this.state.artistLiked} />
-                  </span>
-                }
+                </span>}
             </div>
-        <div className="personalDetContainer">
-          <h3>ABOUT</h3>
-          <hr/>
-          <ProfileDesc bio={this.state.bio} />
-        </div>
-      {/* need to add highlighted button when on that photoview*/}
-        <div className="featuredPortfolio">
-          <button className="toggleOn" onClick={this.changeShowState}>
-            Featured Photos
-          </button>
-          <button className="toggleOn" onClick={this.changeShowState}>
-            Portfolio
-          </button>
-          {this.state.artistId === this.props.currentUser ? <span><button className="toggleOn" onClick={this.changeShowState}>
-            Applied Events
-          </button>
-          <button className="toggleOn" onClick={this.changeShowState}>
-            Statistics
-          </button></span> : ''}
-          {this.renderTabsContent(this.state.photoView)}
-        </div>
-        <div className="dropDownMenu">
-              <AvailabilityCard currentUser={this.props.currentUser}
-                disabledDays={this.state.disabledDays}
-                artistId={this.state.artistId} />
-              <PackagesCard packages={this.state.packages} />
-              <ReviewsCard reviews={this.state.reviews}
-                currentUser={this.props.currentUser}
-                artistId={this.state.artistId}
-                deleteReview={this.deleteReview} />
-              {this.props.currentUser !== this.state.artistId ? (
-                <AddReview currentUser={this.props.currentUser}
-                artistId={this.state.artistId}
-                createReview={this.createReview} />) : ''}
-                </div>
+          <div className="personalDetContainer">
+            <h3>ABOUT</h3>
+            <hr/>
+            <ProfileDesc bio={this.state.bio} />
+          </div>
+          {/* need to add highlighted button when on that photoview*/}
+          <div className="featuredPortfolio">
+            <button className="toggleOn" onClick={this.changeShowState}>
+              Featured Photos
+            </button>
+            <button className="toggleOn" onClick={this.changeShowState}>
+              Portfolio
+            </button>
+            {this.state.artistId === this.props.currentUser ? <span><button className="toggleOn" onClick={this.changeShowState}>
+              Applied Events
+            </button>
+            <button className="toggleOn" onClick={this.changeShowState}>
+              Statistics
+            </button></span> : ''}
+            {this.renderTabsContent(this.state.photoView)}
+          </div>
+          <div className="dropDownMenu">
+            <AvailabilityCard currentUser={this.props.currentUser}
+                              disabledDays={this.state.disabledDays}
+                              artistId={this.state.artistId} />
+            <PackagesCard packages={this.state.packages} />
+            <ReviewsCard reviews={this.state.reviews}
+                         currentUser={this.props.currentUser}
+                         artistId={this.state.artistId}
+                         deleteReview={this.deleteReview} />
+            {this.props.currentUser !== this.state.artistId ? (
+              <AddReview currentUser={this.props.currentUser}
+                         artistId={this.state.artistId}
+                         createReview={this.createReview} />) : ''}
+          </div>
         </div>)}
       </div>
     )
