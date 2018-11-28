@@ -221,7 +221,7 @@ a {
 }
 
 .contentWrapper {
-  overflow: hidden;
+  /* overflow: hidden; */
   margin-top: 0px;
 }
 
