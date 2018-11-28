@@ -72,21 +72,6 @@ a {
   text-align: center;
 }
 
-.splashcontainer {
-  /* display: flex;
-  width: 95%;
-  height: 700px;
-  margin: 25px auto 0;
-  background-color: #000;
-  border: 20px solid white;
-  position: relative;
-  min-width: 1024px;
-  background-image: url('/images/SplashArt.jpg');
-  background-size: cover;
-  background-position: center center;
-  border-radius: 25px; */
-}
-
 #tagline {
   font-family: 'Assistant', sans-serif;
   min-width: 100%;
@@ -351,24 +336,25 @@ label {
 
 
 .jslider {
-  width: 95%;
+  width: 93%;
   height: 600px;
   position: relative;
   min-width: 1024px;
   margin: 25px auto 0;
   position: relative;
+  border-radius: 20px;
 }
 .jslide1,.jslide2,.jslide3{
   position: absolute;
   width: 100%;
   height: 100%;
+  border-radius: 5px;
 }
 .jslide1 {
   background: url('/images/SplashArt.jpg') no-repeat center ;
   background-size: cover;
   animation:fade 10s infinite;
 -webkit-animation:fade 10s infinite;
-
 } 
 .jslide2 {
   background: url('/images/pho.jpg') no-repeat center ;
