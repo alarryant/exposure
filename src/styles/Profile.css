@@ -23,32 +23,49 @@
   border-color: #cccccc;
 }
 
+.socialMediaContainerEdit {
+  float: right;
+  width: 50%;
+  height: 368px;
+}
+
 .socialMediaContainerEdit i {
-  width: 20px;
+  font-size: 1.5em;
+  width: 10%;
   text-align: center;
-  margin-right: 10px;
+  margin-right: 0.5%;
 }
 
 .socialMediaContainerEdit input {
-  width: 170px;
+  width: 85%;
+  font-size: 1.5em;
+  padding: 0.5% 2%;
+}
+
+.socialMediaContainerEdit hr {
+  background-color: black;
+  border: 1px solid black;
+}
+
+.socialMediaContainer hr {
+  background-color: black;
+  border: 1px solid black;
 }
 
 .avatarSocMedEdit {
   position: relative;
-  height: 300px;
-  width: 38%;
+  padding: 1.3% 0 0 0;
+  width: 45%;
   float: left;
-  display: block;
-  padding: 25px 0px 0px 15px;
-  margin: 0px 0px 0px 25px;
   z-index: 3;
 }
 
 .avatarSocMedEdit h5 {
+  margin: 0;
   font-family: 'Assistant', sans-serif;
-  font-size: 2em;
+  font-size: 3em;
   font-weight: 700;
-  letter-spacing: 3px;
+  letter-spacing: 5px;
 }
 
 .avatarSocMedEdit a {
@@ -62,12 +79,15 @@
 }
 
 #upload {
+  font-family: 'Assistant', sans-serif;
   float: right;
-  width: 80px;
-  height: 35px;
   border-radius: 5px;
   font-size: 1.25em;
-  padding: 5px;
+  width: 18%;
+  text-transform: uppercase;
+  padding: 1%;
+  font-size: 1.5em;
+  letter-spacing: 2px;
 }
 
 #file {
@@ -76,13 +96,18 @@
 }
 
 .submitButton {
+  color: black;
   position: absolute;
-  left: 445px;
-  top: 430px;
-  padding: 5px 10px;
-  font-size: 1.25em;
+  bottom: 25px;
+  right: 0;
+  width: 20%;
+  padding: 7px 5px;
+  font-size: 1.5em;
   border-radius: 5px;
+  text-transform: uppercase;
+  font-family: 'Assistant', sans-serif;
   z-index: 6;
+  letter-spacing: 2px;
 }
 
 .submitButton:hover {
@@ -94,70 +119,100 @@
 }
 
 .uploadContainer {
-  width: 50%;
-  border: 1px solid darkgrey;
-  float: right;
-  padding: 3% 8%;
-  overflow: hidden;
-  margin: 30px 6% 30px 0;
+  font-size: 1.25em;
+  padding: 0 5%;
 }
 
-.uploadContainer h1 {
-  font-family: 'Assistant', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-size: 2em;
-  font-weight: 700;
+.uploadContainer form {
+  margin: auto;
+  width: 90%;
 }
 
 .uploadContainer label {
-  width: 100px;
+  font-size: 1.25em;
+  letter-spacing: 2px;
+  width: 25%;
+  margin: 0.5% 0;
+  text-transform: uppercase;
+  font-family: 'Assistant', sans-serif;
 }
 
+.descInput {
+  display: flex;
+}
+
+.outerUploadContainer {
+  width: 70%;
+  float: right;
+}
+
+.outerUploadContainer hr {
+  border: 1px solid black;
+  background-color: black;
+}
+
+.outerUploadContainer h1 {
+  font-family: 'Assistant', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  font-size: 3em;
+  font-weight: 700;
+}
+
+
 .uploadContainer input {
-  width: 350px;
-  height: 30px;
-  margin: 2px 0px;
+  width: 75%;
+  margin: 1% 0;
+  padding: 0.5% 1%;
 }
 
 .uploadContainer textarea {
   resize: none;
-  width: 350px;
+  width: 75%;
   height: 70px;
-  margin: 2px 0px;
+  margin: 1% 0;
+  padding: 0.5% 1%;
   border-color: #cccccc;
 }
 
 .packageForm {
-  margin: 10px 0px;
+  /*margin: 10px 0px;*/
 }
 
 .packageForm label {
-  margin-left: 20px;
-  width: 100px;
+  font-family: 'Assistant', sans-serif;
+  width: 40%;
+  margin-right: 5%;
+  text-transform: uppercase;
+  font-size: 1.5em;
+  letter-spacing: 2px;
+  text-align: right;
 }
 
 .tierinput {
-  width: 50px;
+  width: 55%;
+  font-size: 1.25em;
+  text-align: right;
+  padding: 0.5% 1%;
 }
 
 .priceinput {
-  width: 100px;
+  width: 55%;
+  font-size: 1.25em;
+  text-align: right;
+  padding: 0.5% 1%;
 }
 
 .descriptioninput {
   resize: none;
-  width: 250px;
-  height: 80px;
-  margin-left: 20px;
+  width: 100%;
+  height: 150px;
+  font-size: 1.25em;
+  padding: 0.5% 1%;
 }
 
 .hidden {
   display: none;
-}
-
-.statisticsContainer {
-  margin-bottom: 400px;
 }
 
 .reviewCard h4 {
@@ -179,10 +234,6 @@
   letter-spacing: 3px;
   font-size: 3em;
   font-weight: 700;
-}
-
-.eventsContainer {
-  margin-bottom: 400px;
 }
 
 .eventsContainer h1 {
@@ -229,14 +280,16 @@
 
 .editButton {
   position: absolute;
-  top: 405px;
-  left: 325px;
-  font-size: 1.25em;
+  bottom: 0;
+  margin-left: 10%;
+  font-size: 1.5em;
   border: 1px solid #cccccc;
   border-radius: 5px;
-  padding: 5px;
-  width: 75px;
+  padding: 7px 5px;
+  width: 25%;
   z-index: 5;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .editButton:hover {
@@ -245,29 +298,43 @@
 }
 
 .dropDownMenu {
-  float: left;
-  margin: 0 4% 15% 4%;
   position: absolute;
-  top: 375px;
-  font-size: 13px;
+  top: 430px;
+  float: left;
+  width: 25%;
+}
+
+.dropDownMenu h1 {
+  margin-top: 15%;
+  font-family: 'Assistant', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 3em;
+  padding: 2%;
+}
+
+.dropDownMenu hr {
+  border: 1px solid black;
+  background-color: black;
 }
 
 .avatarSocMed {
   position: relative;
-  height: 20%;
-  width: 35%;
+  padding: 1.3% 0;
+  width: 45%;
+  height: 386px;
   float: left;
-  display: block;
-  padding: 25px 0px 0px 15px;
-  margin: 0px 0px 0px 4%;
   z-index: 3;
 }
 
-.avatarSocMed h5 {
+.socialMediaContainer h5 {
+  margin-top: 2%;
   font-family: 'Assistant', sans-serif;
   font-size: 2em;
   font-weight: 700;
-  letter-spacing: 3px;
+  letter-spacing: 5px;
 }
 
 .avatarSocMed a {
@@ -289,14 +356,17 @@
   cursor: pointer;
 }
 .socialMediaContainer {
-  margin: 20px 0px 40px 10px;
+  margin: 0;
+  width: 50%;
+  font-size: 1.5em;
+  float: right;
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
 
 .socialMediaContainer i {
   font-size: 1.25em;
-  width: 25px;
+  width: 10%;
   text-align: center;
 }
 
@@ -317,18 +387,16 @@
 }
 
 .personalDetContainer {
-  padding: 5px 25px 5px 10px;
-  min-height: 350px;
-  width: 55%;
+  font-size: 1.5em;
+  width: 50%;
   float: right;
   clear: right;
-  margin-right: 4%;
 }
 
 .personalDetContainer h3 {
   font-family: 'Assistant', sans-serif;
   font-weight: 700;
-  font-size: 3em;
+  font-size: 2em;
   letter-spacing: 5px;
 }
 
@@ -358,17 +426,16 @@
   float: left;
 }
 
-.profilebtn {
-  width: 300px;
-  margin-right: 0px;
-}
-
 .profilebtn button {
-  width: 300px;
+  font-family: 'Assistant', sans-serif;
   border: 1px solid #cccccc;
   border-radius: 5px;
-  margin: 10px 10px 10px 25px;
-  font-size: 1.75em;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  padding: 5px;
+  width: 100%;
+  font-size: 2.5em;
+  margin: 2.5% 0;
 }
 
 .profilebtn button:hover {
@@ -376,16 +443,32 @@
 }
 
 .DayPicker {
-  font-size: 1.75rem;
+  font-size: 2.10rem;
+}
+
+.menu p {
+  font-size: 1.25em;
 }
 
 .menu {
-  width: 300px;
-  padding-left: 30px;
+  padding: 0 3%;
+  width: 100%;
+}
+
+.reviewMenu {
+  padding: 0 3%;
+  width: 100%;
+}
+
+.reviewMenu p {
+  font-size: 1.25em;
 }
 
 .toggleOn {
-  font-size: 18px;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  margin: 2% 1% 0 1%;
+  letter-spacing: 1px;
 }
 
 .toggleOn:hover, .toggleOn:focus {
@@ -393,28 +476,34 @@
 }
 
 .featuredPortfolio {
-  margin-left: 0px;
-  margin-right: 50px;
-  margin-bottom: 250px;
-  width: 54%;
+  width: 70%;
   float: right;
 }
 
+.featuredPortfolio h1 {
+  text-transform: uppercase;
+  font-family: 'Assistant', sans-serif;
+  letter-spacing: 5px;
+  font-weight: 700;
+  font-size: 3em;
+}
+
+.featuredPortfolio hr {
+  border: 1px solid black;
+  background-color: black;
+}
+
 .portfolioContainer {
-  margin-right: 5%;
-  width: 95%;
-  margin-top: 15px;
-  margin-bottom: 25%;
+  width: 100%;
 }
 
 .portfolioContainer h1 {
   font-family: 'Assistant', sans-serif;
-  width: 250px;
   text-align: center;
   font-weight: 700;
   font-size: 3em;
   letter-spacing: 5px;
-  margin-top: 0px;
+  text-align: left;
 }
 
 .portfolioContainer hr {
@@ -424,12 +513,10 @@
 
 .sliderContainer h1 {
   font-family: 'Assistant', sans-serif;
-  width: 250px;
-  text-align: center;
+  text-align: left;
   font-weight: 700;
   font-size: 3em;
   letter-spacing: 5px;
-  margin-top: 0px;
 }
 
 .sliderContainer hr {
@@ -454,16 +541,6 @@
 .searchResult {
   padding: 5px;
   width: 100%;
-}
-
-.sliderContainer {
-  margin-right: 100px;
-  margin-bottom: 250px;
-}
-
-.dropdown-container-profile {
-  margin: 20px 0px;
-  float: left;
 }
 
 .dropdown-profile {
@@ -501,11 +578,6 @@
     border: none;
     cursor: pointer;
     font-size: 1em;
-}
-
-.editPortfolio {
-  display: inline;
-  margin: 5px;
 }
 
 .addReviewModal textarea{

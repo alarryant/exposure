@@ -1,6 +1,5 @@
 import React from 'react';
 import DeleteReview from './DeleteReview.jsx';
-// import axios from 'axios';
 
 // https://blog.campvanilla.com/reactjs-dropdown-menus-b6e06ae3a8fe
 class ReviewsCard extends React.Component {
@@ -11,8 +10,6 @@ class ReviewsCard extends React.Component {
       user: Number(this.props.currentUser)
     };
 
-    this.showMenu = this.showMenu.bind(this);
-    this.closeMenu = this.closeMenu.bind(this);
     this.renderReviews = this.renderReviews.bind(this);
 
   }
@@ -25,7 +22,7 @@ class ReviewsCard extends React.Component {
           <div className="reviewCard">
             <h4>{review.rating}/5</h4>
             <h4>{review.first_name} said:</h4>
-            <p style={{fontSize: '15px'}}>{review.description}</p>
+            <p>{review.description}</p>
             {currentUser === review.user_id ? <DeleteReview review={review}
               currentUser={currentUser}
               deleteReview={deleteReview} />  : ""}
@@ -34,32 +31,15 @@ class ReviewsCard extends React.Component {
     })
   }
 
-  showMenu(event) {
-    event.preventDefault();
-    this.setState({ showMenu: true }, () => {
-      document.addEventListener('click', this.closeMenu);
-    });
-  }
-
-  closeMenu(event) {
-    if (!this.dropdownMenu)
-      return;
-    if (!this.dropdownMenu.contains(event.target)) {
-      this.setState({ showMenu: false }, () => {
-        document.removeEventListener('click', this.closeMenu);
-      });
-    }
-  }
-
   render() {
     return (
-      <div className="profilebtn" >
-        <button onClick={this.showMenu}>
+      <div >
+        <h1>
           Reviews
-        </button>
+        </h1>
+        <hr/>
         { this.state.showMenu ? (
-          <div className="menu"
-            ref={ (element) => { this.dropdownMenu = element } }>
+          <div className="reviewMenu">
             {this.renderReviews(this.props.reviews)}
           </div>
           ) : (

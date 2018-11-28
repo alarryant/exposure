@@ -47,6 +47,8 @@ class EditSocialMedia extends React.Component {
 
     return (
       <div className="socialMediaContainerEdit">
+        <h5>FIND ME</h5>
+        <hr/>
         <p>
           <i className="fab fa-facebook-f"></i>
           <input type="text"
