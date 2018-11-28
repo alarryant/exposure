@@ -6,13 +6,14 @@ body {
 }
 
 p {
-  font-size: 18px;
+  font-size: 17px;
 }
 
 a {
   text-decoration: none;
   padding: 10px;
   color: #000;
+  font-size: 15px;
 }
 
 .btn-lg {
@@ -336,7 +337,7 @@ label {
 
 .modal-body p {
   margin: 10px 0px 0px 10px;
-  font-size: 17px;
+  font-size: 18px;
 }
 
 .modal-body input {

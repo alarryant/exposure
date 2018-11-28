@@ -25,7 +25,7 @@ exports.seed = function(knex, Promise) {
         price: 20000,
         event_location: 'Vancouver',
         artist_accepted: null,
-        creator_id: 8,
+        creator_id: 7,
       }),
     knex('events').insert(
       { name: 'We need a family portrait',

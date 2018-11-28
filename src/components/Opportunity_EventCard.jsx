@@ -27,7 +27,6 @@ class OpportunityEventCard extends Component {
   }
 
   render () {
-    console.log("EVENT CARD", this.props.event)
     const { event } = this.props
     const user_type_id = parseInt(this.props.usertype);
     const creator_id = parseInt(event.creator_id);

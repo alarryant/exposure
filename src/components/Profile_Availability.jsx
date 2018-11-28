@@ -40,7 +40,6 @@ class AvailabilityCard extends React.Component {
   }
 
   render() {
-    // console.log("this is props in profile avail", this.props.currentUser);
     return (
       <div className="profilebtn">
         {this.props.editable ? <button>
