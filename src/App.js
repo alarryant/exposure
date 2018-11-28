@@ -165,7 +165,7 @@ class App extends Component {
         this.setState({ redirect: 'search', searchWord: word, searchimages: res.data });
       });
   }
-  
+
   renderRedirect = () => {
     if (this.state.redirect) {
       this.setState({ redirect: '' })
@@ -191,7 +191,6 @@ class App extends Component {
     const currentUserName = localStorage.getItem('currentUserFirstName') + ' ' + localStorage.getItem('currentUserLastName');
     return (
       <BrowserRouter>
-        <div>
           {this.renderRedirect()}
           <Navbar loginInfo={this.loginInfo}
             signupInfo={this.signupInfo}
@@ -228,7 +227,6 @@ class App extends Component {
             <Route component={ErrorPath} />
           </Switch>
           <Footer />
-        </div>
       </BrowserRouter>
     )
   }

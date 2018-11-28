@@ -2,27 +2,27 @@ exports.seed = function(knex, Promise) {
   return Promise.all([
     knex('artist_likes').insert(
       { client_id: 8,
-        artist_id: 1
+        artist_id: 9
       }),
     knex('artist_likes').insert(
       { client_id: 7,
-        artist_id: 2
-      }),
-    knex('artist_likes').insert(
-      { client_id: 7,
-        artist_id: 3
-      }),
-    knex('artist_likes').insert(
-      { client_id: 7,
-        artist_id: 4
+        artist_id: 9
       }),
     knex('artist_likes').insert(
       { client_id: 6,
-        artist_id: 5
+        artist_id: 9
       }),
     knex('artist_likes').insert(
-      { client_id: 6,
-        artist_id: 5
+      { client_id: 5,
+        artist_id: 9
+      }),
+    knex('artist_likes').insert(
+      { client_id: 4,
+        artist_id: 9
+      }),
+    knex('artist_likes').insert(
+      { client_id: 3,
+        artist_id: 9
       })
   ]);
 };

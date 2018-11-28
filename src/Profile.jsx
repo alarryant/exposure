@@ -453,11 +453,7 @@ class Profile extends React.Component {
             <div className="avatarSocMed" >
               <Avatar name={this.state.fullName}
                 avatar={this.state.avatarImage} />
-              <SocialMedia twitter={this.state.twitter}
-                           facebook={this.state.facebook}
-                           instagram={this.state.instagram}
-                           website={this.state.website} />
-              {this.props.currentUser === id ? null :
+                {this.props.currentUser === id ? null :
                 <span className="likeContact">
                   <MailButton email={this.state.email}
                   name={this.props.currentUserName} />
@@ -465,6 +461,10 @@ class Profile extends React.Component {
                           artistId={id}
                           artistLiked={this.state.artistLiked} />
                 </span>}
+              <SocialMedia twitter={this.state.twitter}
+                           facebook={this.state.facebook}
+                           instagram={this.state.instagram}
+                           website={this.state.website} />
                 {this.props.currentUser === id ? (
                 <button className="editButton" onClick={this.handleClickEdit}>
                   {this.state.editable ? "Return" : "Edit"}
@@ -504,7 +504,7 @@ class Profile extends React.Component {
                          currentUser={this.props.currentUser}
                          artistId={this.state.artistId}
                          deleteReview={this.deleteReview} />
-            {this.props.currentUser !== this.state.artistId ? (
+            {(this.props.currentUser !== this.state.artistId) && (this.props.usertype === 2) ? (
           <AddReview currentUser={this.props.currentUser}
                          artistId={this.state.artistId}
                          createReview={this.createReview} />) : ''}

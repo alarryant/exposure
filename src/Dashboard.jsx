@@ -11,13 +11,15 @@ import SearchBar from './SearchBar.jsx';
 import Applicants from './components/Opportunity_MyEvents_Applicants.jsx'
 
 const left = {
-  width: '20%',
-  float: 'left'
+  width: '40%',
+  float: 'left',
+  overflow: 'hidden'
 };
 
 const right = {
-  width: '80%',
-  float: 'right'
+  width: '60%',
+  float: 'left',
+  overflow: 'hidden'
 };
 
 const tabStyle = {
@@ -215,6 +217,7 @@ class Dashboard extends React.Component {
       <div className='contentWrapper'>
         {search}
         {/* start left */}
+        <h1 style={{fontSize: '3.5em'}}>Your Dashboard</h1>
         <div className='left' style={left}>
           <Avatar name={this.state.name} avatar={this.state.avatar} />
         </div>

@@ -31,7 +31,7 @@ class EditPortfolio extends React.Component {
           <div className="editPortfolio">
           { image.featured === 'true' ?
             <img className="searchResult"
-               style={{border: '3px solid lightgrey'}}
+               style={{border: '3px solid salmon'}}
                alt="portfolioimg"
                src={image.src}
                onClick={this.onFeatureClick}
