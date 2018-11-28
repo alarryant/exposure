@@ -196,6 +196,7 @@ a {
 .searchBar {
   width: 100%;
   display: flex;
+  margin-bottom: 5%;
 }
 
 .homeContainer .searchForm{
@@ -222,7 +223,7 @@ a {
 
 .contentWrapper {
   /* overflow: hidden; */
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 button {
