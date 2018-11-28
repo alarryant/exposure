@@ -102,18 +102,32 @@ exports.seed = function(knex, Promise) {
         user_type_id: 2
       }),
     knex('users').insert(
-      { first_name: 'Rondell',
-        last_name: 'Staton',
-        email: 'rrrondell@email.com',
+      { first_name: 'Jenny',
+        last_name: 'Chin',
+        email: 'jennychin@email.com',
         password: '1234',
         bio: '',
-        profile_image: '/images/rondell-avatar.jpg',
+        profile_image: '/images/jenny-avatar.jpg',
         website_url: 'null',
         instagram_url: 'null',
         facebook_url: 'null',
         twitter_url: 'null',
         location: 'null',
         user_type_id: 2
+      }),
+    knex('users').insert(
+      { first_name: 'Angela',
+        last_name: 'Chow',
+        email: 'angelachow@email.com',
+        password: '1234',
+        bio: 'Pets are just as much a part of our family as our children. I proudly hang photos of our family on our walls and I should also have photos of our beloved furballs. A personalized dog portrait session will create lasting images and beautiful artwork of your pet that you can proudly hang on your wall for years to come.  I take great pride in creating an individualized session with you to ensure we capture the unique personality of each dog we photograph so that you can have lasting memories that you can hang on your wall for years to come.',
+        profile_image: '/images/angela-avatar.jpg',
+        website_url: 'http://www.angela-chow.com/',
+        instagram_url: 'https://www.instagram.com/chowchow/',
+        facebook_url: 'http://www.facebook.com/photo.chowchow',
+        twitter_url: 'https://twitter.com/achowchow',
+        location: 'Burnaby',
+        user_type_id: 1
       })
   ]);
 };
