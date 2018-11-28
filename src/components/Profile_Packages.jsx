@@ -28,8 +28,7 @@ class PackagesCard extends React.Component {
       return (
         <div>
           <h4><strong>{tier} | ${pricePackage.price}</strong></h4>
-          {/* <p style={{fontSize: '15px'}}>${pricePackage.price}</p> */}
-          <p style={{fontSize: '16px'}}>{pricePackage.description}</p>
+          <p>{pricePackage.description}</p>
         </div>
         )
     })
