@@ -123,8 +123,8 @@ exports.seed = function(knex, Promise) {
         bio: 'Pets are just as much a part of our family as our children. I proudly hang photos of our family on our walls and I should also have photos of our beloved furballs. A personalized dog portrait session will create lasting images and beautiful artwork of your pet that you can proudly hang on your wall for years to come.  I take great pride in creating an individualized session with you to ensure we capture the unique personality of each dog we photograph so that you can have lasting memories that you can hang on your wall for years to come.',
         profile_image: '/images/angela-avatar.jpg',
         website_url: 'http://www.angela-chow.com/',
-        instagram_url: 'https://www.instagram.com/chowchow/',
-        facebook_url: 'http://www.facebook.com/photo.chowchow',
+        instagram_url: 'https://www.instagram.com/achowchow/',
+        facebook_url: 'http://www.facebook.com/photo.achowchow',
         twitter_url: 'https://twitter.com/achowchow',
         location: 'Burnaby',
         user_type_id: 1
