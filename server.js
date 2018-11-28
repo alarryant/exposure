@@ -197,7 +197,7 @@ app.post("/artists/:id/editfeatured", (req, res) => {
     .where('image_owner', currentUser)
     .where('featured', 'true')
     .then(numOfFeatures => {
-      if (numOfFeatures.length <= 10) {
+      if (numOfFeatures.length < 10) {
         if (photoFeatured === 'true') {
           knex('images')
             .where('src', photoSrc)
