@@ -54,7 +54,7 @@ app.post('/login', (req, res) => {
       if( bcrypt.compareSync(req.body.password, data[0].password)) {
         req.session.user_id = data[0].id;
       } else {
-        console.log("invalid email pw");
+        console.log("LOGIN - Invalid Password or Email");
       }
       res.json(data);
     });
@@ -206,7 +206,7 @@ app.post("/artists/:id/editfeatured", (req, res) => {
               knex('images')
                 .where('image_owner', currentUser)
                 .orderBy('id')
-                .then(moredata => 
+                .then(moredata =>
                   res.json({images: moredata})))
         } else {
           knex('images')
@@ -216,7 +216,7 @@ app.post("/artists/:id/editfeatured", (req, res) => {
               knex('images')
                 .where('image_owner', currentUser)
                 .orderBy('id')
-                .then(moredata => 
+                .then(moredata =>
                   res.json({images: moredata})))
         }
       } else {
@@ -554,7 +554,6 @@ app.post('/opportunities/:id/accept', (req, res) => {
         .where('creator_id', req.body.currentUser)
         .orderBy('event_id')
         .then(updatedlist => {
-          console.log(updatedlist)
           res.json(updatedlist);
         })
     })
@@ -618,7 +617,7 @@ app.post("/opportunities/:id/apply", (req, res) => {
       };
 
       mailgun.messages().send(data, function (error, body) {
-        console.log(body);
+        console.log("MESSAGE SENT");
       })
 
       res.send("Application successfully saved")

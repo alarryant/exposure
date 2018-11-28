@@ -7,8 +7,6 @@ function AppCard(props) {
   const { event } = props;
   const application_id = event.application_id;
 
-  console.log("APPCARD", props)
-
   return (
     <div className="eventcard">
       { props.event.artist_accepted === props.event.artist_id ? <h3 className="notification"> You've been hired! </h3> : ""}

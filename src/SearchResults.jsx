@@ -73,8 +73,6 @@ class SearchResults extends Component {
 
   render() {
 
-    console.log("this is current user on search results", this.props.currentUser);
-
     let search;
     if(this.props.search){
       search = <SearchBar searchResult={this.props.searchResult} />
