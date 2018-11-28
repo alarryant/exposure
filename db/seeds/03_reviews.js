@@ -29,6 +29,12 @@ exports.seed = function(knex, Promise) {
         description: 'Jenn is extremely personable, good humoured and most importantly she understood what we were looking for.',
         artist_id: 5,
         user_id: 7
+      }),
+    knex('reviews').insert(
+      { rating: 5,
+        description: 'Angela treated my dog like her own. Between the squeals of "OMG YOU&#39;RE SO CUTE" and aggressive shutter noises, she captured some amazing photos of my dog, Otis.',
+        artist_id: 9,
+        user_id: 5
       })
   ]);
 };
