@@ -112,7 +112,7 @@ class Profile extends React.Component {
     const settings = {
       infinite: true,
       centerMode: true,
-      slidesToShow: 2,
+      slidesToShow: 3,
       slidesToScroll: 1,
       rows: 1,
       autoplay: true,
@@ -367,26 +367,26 @@ class Profile extends React.Component {
     this.numOfFeatured = this.areFeaturedPhotos(this.state.collection);
 
     return (
-      <div>
-      {this.props.currentUser === id ? (
-        <button className="editButton" onClick={this.handleClickEdit}>
-          {this.state.editable ? "Return" : "Edit"}
-        </button>
-      ) : (
-        ''
-      )}
+      <div className="contentWrapper">
       {this.state.editable ? (
         <form onSubmit={this.handleSubmit}>
           <div className="profile">
             <div className="avatarSocMedEdit">
               <Avatar name={this.state.fullName}
                     avatar={this.state.avatarImage} />
-              <h5>FIND ME</h5>
               <EditSocialMedia twitter={this.state.twitter}
                                facebook={this.state.facebook}
                                instagram={this.state.instagram}
                                website={this.state.website}
                                sendSocialMediaForm={this.sendSocialMediaForm} />
+              {this.props.currentUser === id ? (
+                <button className="editButton" onClick={this.handleClickEdit}>
+                  {this.state.editable ? "Return" : "Edit"}
+                </button>
+              ) : (
+                ''
+              )}
+              <input className="submitButton" type="submit" value="Submit" />
             </div>
             <div className="personalDetContainer">
               <h3>ABOUT</h3>
@@ -395,9 +395,10 @@ class Profile extends React.Component {
                                sendBioForm={this.sendBioForm} />
 
               </div>
-
+              <div className="outerUploadContainer">
+              <h1>Add Portfolio Images</h1>
+              <hr/>
               <div className="uploadContainer">
-                <h1>Add Portfolio Images</h1>
                 <form method="post" enctype="multipart/form-data" action="/upload" onSubmit={this.handleUpload}>
                   <input type="number"
                          name="image_owner"
@@ -409,11 +410,13 @@ class Profile extends React.Component {
                          placeholder="Add a title for your image"
                          value={this.state.title}
                          onChange={this.handleFormInput}/><br/>
-                  <label>Description</label>
+                  <div className="descInput">
+                  <label className="descLabel">Description</label>
                   <textarea name="description"
                             placeholder="Add a description for your image"
                             onChange={this.handleFormInput}
                             value={this.state.description}/><br/>
+                  </div>
                   <label>Category</label>
                   <input type="text"
                          name="category"
@@ -424,8 +427,10 @@ class Profile extends React.Component {
                   <input id="upload" type="submit" value="Upload"/>
                 </form>
                 </div>
+                </div>
                 <div className="featuredPortfolio">
-                <h3>Select Feature Photos ({this.numOfFeatured.length}/10):</h3>
+                <h1>Select Feature Photos ({this.numOfFeatured.length}/10):</h1>
+                <hr/>
                   <div>
                     <EditPortfolio
                       changeFeaturePhotos={this.changeFeaturePhotos}
@@ -441,7 +446,6 @@ class Profile extends React.Component {
                 sendPackageField={this.sendPackageField}
               /></div>
             </div>
-            <input className="submitButton" type="submit" value="Submit" />
             {this.state.errorMsg ? <p className="packageError">Sorry, please enter details for 3 packages!</p> : ''}
           </form>
         ) : (
@@ -449,7 +453,6 @@ class Profile extends React.Component {
             <div className="avatarSocMed" >
               <Avatar name={this.state.fullName}
                 avatar={this.state.avatarImage} />
-              <h5>FIND ME</h5>
               <SocialMedia twitter={this.state.twitter}
                            facebook={this.state.facebook}
                            instagram={this.state.instagram}
@@ -462,6 +465,13 @@ class Profile extends React.Component {
                           artistId={id}
                           artistLiked={this.state.artistLiked} />
                 </span>}
+                {this.props.currentUser === id ? (
+                <button className="editButton" onClick={this.handleClickEdit}>
+                  {this.state.editable ? "Return" : "Edit"}
+                </button>
+              ) : (
+                ''
+              )}
             </div>
           <div className="personalDetContainer">
             <h3>ABOUT</h3>
@@ -482,6 +492,7 @@ class Profile extends React.Component {
             <button className="toggleOn" onClick={this.changeShowState}>
               Statistics
             </button></span> : ''}
+            <hr/>
             {this.renderTabsContent(this.state.photoView)}
           </div>
           <div className="dropDownMenu">
@@ -494,7 +505,7 @@ class Profile extends React.Component {
                          artistId={this.state.artistId}
                          deleteReview={this.deleteReview} />
             {this.props.currentUser !== this.state.artistId ? (
-              <AddReview currentUser={this.props.currentUser}
+          <AddReview currentUser={this.props.currentUser}
                          artistId={this.state.artistId}
                          createReview={this.createReview} />) : ''}
           </div>

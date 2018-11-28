@@ -35,6 +35,8 @@ class SocialMedia extends React.Component {
 
     return (
       <div className="socialMediaContainer">
+        <h5>FIND ME</h5>
+        <hr/>
         {(this.props.facebook !== "null") && (this.parseUrl(this.props.facebook)) ?
           (
           <p>

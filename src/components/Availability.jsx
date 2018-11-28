@@ -58,7 +58,6 @@ class EditAvailability extends React.Component {
   }
 
   render() {
-    // console.log("this is props", this.props);
 
     return(
 
