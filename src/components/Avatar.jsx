@@ -18,7 +18,7 @@ class Avatar extends React.Component {
 
   render() {
     return (
-      <div className='avatarContainer'>
+      <div className="avatarSocMedLeft">
         <div className='avatarWidget'>
           {this.props.avatar && <img className='avatarWidget__img'
                                 alt="profileimg"
