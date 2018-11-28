@@ -11,18 +11,21 @@ import SearchBar from './SearchBar.jsx';
 import Applicants from './components/Opportunity_MyEvents_Applicants.jsx'
 
 const left = {
-  width: '10%',
-  float: 'left'
+  width: '40%',
+  float: 'left',
+  overflow: 'hidden'
 };
 
 const right = {
-  width: '80%',
-  float: 'right'
+  width: '60%',
+  float: 'left',
+  overflow: 'hidden'
 };
 
 const tabStyle = {
-  width: '80%',
-  margin: '50px auto'
+  width: '100%',
+  margin: '50px auto',
+  fontSize: '18px'
 };
 
 class Dashboard extends React.Component {
@@ -162,7 +165,7 @@ class Dashboard extends React.Component {
           </Link>
 
         </div>
-        <h5>{photographer.first_name + ' ' + photographer.last_name}</h5>
+        <h3>{photographer.first_name + ' ' + photographer.last_name}</h3>
         </div>
       )
     })
@@ -214,6 +217,7 @@ class Dashboard extends React.Component {
       <div className='contentWrapper'>
         {search}
         {/* start left */}
+        <h1 style={{fontSize: '3.5em'}}>Your Dashboard</h1>
         <div className='left' style={left}>
           <Avatar name={this.state.name} avatar={this.state.avatar} />
         </div>

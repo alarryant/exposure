@@ -29,6 +29,7 @@ class Settings extends Component{
     render() {
         return (
             <div className="settingsWrapper">
+            <h2 style={{textAlign: 'center'}}>Change Your Account Settings</h2>
                 <form onSubmit={this.handleSubmit}>
                     <h3>First Name</h3>
                     <input type='text' name='firstName' onChange={this.handleChange}/>
