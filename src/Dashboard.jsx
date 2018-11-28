@@ -11,7 +11,7 @@ import SearchBar from './SearchBar.jsx';
 import Applicants from './components/Opportunity_MyEvents_Applicants.jsx'
 
 const left = {
-  width: '10%',
+  width: '20%',
   float: 'left'
 };
 
@@ -21,8 +21,9 @@ const right = {
 };
 
 const tabStyle = {
-  width: '80%',
-  margin: '50px auto'
+  width: '100%',
+  margin: '50px auto',
+  fontSize: '18px'
 };
 
 class Dashboard extends React.Component {
@@ -162,7 +163,7 @@ class Dashboard extends React.Component {
           </Link>
 
         </div>
-        <h5>{photographer.first_name + ' ' + photographer.last_name}</h5>
+        <h3>{photographer.first_name + ' ' + photographer.last_name}</h3>
         </div>
       )
     })
