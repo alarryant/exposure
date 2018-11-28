@@ -15,6 +15,11 @@ a {
   color: #000;
 }
 
+.btn-lg {
+  margin-top: 22%;
+  font-size: 2em;
+}
+
 .dropdown-container {
   margin: 20px 0px 0;
   float: right;
@@ -22,12 +27,11 @@ a {
 
 .dropbtn {
     background-color: white;
-    width: 90px;
+    width: 150px;
     padding: 10px 15px;
-    font-size: 16px;
     border: none;
     cursor: pointer;
-    font-size: 1em;
+    font-size: 2.5em;
 }
 
 .dropbtn i {
@@ -37,6 +41,7 @@ a {
 .dropdown {
     position: relative;
     display: inline-block;
+    font-size: 1.5em;
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -44,16 +49,23 @@ a {
     display: none;
     position: absolute;
     background-color: #fff;
-    min-width: 120px;
+    min-width: 200px;
     /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
     z-index: 2;
     top: 60px;
     border: 1px solid #888;
     border-radius: 3px;
+    /*font-size: 1.5em;*/
+}
+
+.dropdown.content.burger {
+  min-width: 170px;
+  max-width: 170px;
 }
 
 /* Links inside the dropdown */
 .dropdown-content a {
+  width: 150px;
     color: black;
     padding: 12px 16px;
     text-decoration: none;
@@ -153,10 +165,15 @@ a {
 }
 
 .homeContainer h1 {
-  width: 200px;
+  font-family: 'Assistant', sans-serif;
+  width: 100%;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 5em;
   text-align: center;
   margin: auto;
-  margin-top: 25px;
+  margin-top: 2%;
 }
 
 .Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
@@ -360,7 +377,7 @@ label {
   background-size: cover;
   animation:fade 10s infinite;
 -webkit-animation:fade 10s infinite;
-} 
+}
 .jslide2 {
   background: url('/images/pho.jpg') no-repeat center ;
   background-size: cover;

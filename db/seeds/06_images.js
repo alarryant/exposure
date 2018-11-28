@@ -487,6 +487,14 @@ exports.seed = function(knex, Promise) {
         category: 'portrait, family, children',
         src: '/images/jennrepp_portraits_027.jpg',
         image_owner: 5
+      }),
+    knex('images').insert(
+      { title: 'Desk Dog on the Job',
+        description: 'The best coworker.',
+        featured: 'true',
+        category: 'portrait, pet, dog, puppy',
+        src: '/images/Otis.jpg',
+        image_owner: 9
       })
   ]);
 };
