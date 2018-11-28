@@ -5,8 +5,8 @@
 }
 
 .avatarWidget {
-  width: 100%;
-  height: 100%;
+  width: 400px;
+  height: 400px;
   overflow: hidden;
   margin: auto;
   border-radius: 50%;
@@ -25,5 +25,6 @@
 
 .avatarWidget__img {
   width: 100%;
+  /*height: 100%;*/
 }
 

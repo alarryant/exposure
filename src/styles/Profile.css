@@ -389,6 +389,7 @@
 .personalDetContainer {
   font-size: 1.5em;
   width: 50%;
+  /*overflow: hidden;*/
   float: right;
   clear: right;
 }
@@ -407,6 +408,8 @@
 
 .personalDetContainer p {
   font-size: 1.20em;
+  height: 400px;
+  overflow-y: auto;
 }
 
 .likesContainer {
@@ -443,7 +446,7 @@
 }
 
 .DayPicker {
-  font-size: 2.10rem;
+  font-size: 2rem;
 }
 
 .menu p {
