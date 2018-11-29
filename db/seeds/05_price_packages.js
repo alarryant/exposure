@@ -90,6 +90,24 @@ exports.seed = function(knex, Promise) {
         user_id: 5,
         price: 800,
         description: "This is ideal for weddings and engagement shoots. Includes all-day photography and your choice of 2 16x10 prints, 5 8x10 prints, and 1 photobook."
+      }),
+    knex('price_packages').insert(
+      { tier: 1,
+        user_id: 9,
+        price: 150,
+        description: "This is ideal for a pet photoshoot. Includes a 3 hour session with 2 8x10 prints."
+      }),
+    knex('price_packages').insert(
+      { tier: 2,
+        user_id: 9,
+        price: 300,
+        description: "This is ideal for a pet photoshoot with 2 animals. Includes a 4 hour session with 4 8x10 prints."
+      }),
+    knex('price_packages').insert(
+      { tier: 3,
+        user_id: 9,
+        price: 500,
+        description: "This is ideal for a pet photoshoot with 5 animals. Includes all-day photography and your choice of 2 16x10 prints, 5 8x10 prints, and 1 photobook."
       })
   ]);
 };
