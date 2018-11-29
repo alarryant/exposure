@@ -154,8 +154,8 @@ a {
 
 .sliderImg {
   margin: 0 2%;
-  max-width: 600px;
-  max-height: 600px;
+  max-width: 500px;
+  max-height: 400px;
   overflow: hidden;
 }
 
