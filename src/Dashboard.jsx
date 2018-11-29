@@ -1,5 +1,5 @@
 import React from 'react';
-import Avatar from './components/Avatar.jsx';
+import AvatarProfile from './components/Avatar_Profile.jsx';
 import CreateEvent from './CreateEvent';
 import OpportunityEventCard from './components/Opportunity_EventCard.jsx'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -11,13 +11,14 @@ import SearchBar from './SearchBar.jsx';
 import Applicants from './components/Opportunity_MyEvents_Applicants.jsx'
 
 const left = {
-  width: '40%',
+  width: '30%',
+  margin: '0px',
   float: 'left',
   overflow: 'hidden'
 };
 
 const right = {
-  width: '60%',
+  width: '70%',
   float: 'left',
   overflow: 'hidden'
 };
@@ -127,6 +128,8 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
+    const pathName = this.props.location.pathname
+
     let currentUser = this.props.currentUser;
     axios.get(`/dashboard`, {
       params: {
@@ -219,7 +222,7 @@ class Dashboard extends React.Component {
         {/* start left */}
         <h1 style={{fontSize: '3.5em'}}>Your Dashboard</h1>
         <div className='left' style={left}>
-          <Avatar name={this.state.name} avatar={this.state.avatar} />
+          <AvatarProfile name={this.state.name} avatar={this.state.avatar} />
         </div>
         {/* start right */}
         {userType === 2 ? (
