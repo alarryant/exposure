@@ -1,5 +1,5 @@
 import React from 'react';
-import Avatar from './components/Avatar.jsx';
+import AvatarProfile from './components/Avatar_Profile.jsx';
 import CreateEvent from './CreateEvent';
 import OpportunityEventCard from './components/Opportunity_EventCard.jsx'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -25,7 +25,7 @@ class Dashboard extends React.Component {
     this.createEvent = this.createEvent.bind(this);
     this.renderLikedPhotographer = this.renderLikedPhotographer.bind(this);
     this.deleteEvent = this.deleteEvent.bind(this)
-    this.refresh = this.refresh.bind(this)
+    this.refresh = this.refresh.bind(this);
   }
 
   refresh() {
@@ -87,7 +87,6 @@ class Dashboard extends React.Component {
       this.refresh()
   }
 
-
   displayEvents(events) {
     if (!events || events.length === 0 ) {
       return (
@@ -109,6 +108,8 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
+    const pathName = this.props.location.pathname
+
     let currentUser = this.props.currentUser;
     axios.get(`/dashboard`, {
       params: {
@@ -182,6 +183,7 @@ class Dashboard extends React.Component {
 
           <TabPanel>
             <Applicants
+              saveApplicants = {this.saveApplicants}
               currentUser={this.props.currentUser}
               refresh={this.refresh}
               />

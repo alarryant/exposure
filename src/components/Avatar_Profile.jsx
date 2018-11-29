@@ -1,23 +1,22 @@
 import React from 'react';
 import '../styles/Avatar.css';
 
-class Avatar extends React.Component {
+class AvatarProfile extends React.Component {
 
   ComponentDidMount() {
 
   }
 
   render() {
-    console.log("this location", this.props)
     return (
-      <div className="avatarSocMedLeft">
-        <div className='avatarWidget'>
-          {this.props.avatar && <img className='avatarWidget__img'
+      <div>
+        <div className='avatarProfile'>
+          {this.props.avatar && <img className='avatarImgProfile'
                                 alt="profileimg"
                                 src={this.props.avatar}
                                  />}
         </div>
-          <h2 className='avatarWidget__name'>
+          <h2 className='avatarNameProfile'>
             {this.props.name}
           </h2>
       </div>
@@ -26,4 +25,4 @@ class Avatar extends React.Component {
 }
 
 
-export default Avatar;
+export default AvatarProfile;
