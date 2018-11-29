@@ -32,7 +32,7 @@ exports.seed = function(knex, Promise) {
       }),
     knex('reviews').insert(
       { rating: 5,
-        description: 'Angela treated my dog like her own. Between the squeals of "OMG YOU&#39;RE SO CUTE" and aggressive shutter noises, she captured some amazing photos of my dog, Otis.',
+        description: 'Angela treated my dog like her own. Between the squeals of "OMG SO CUTE" and aggressive shutter noises, she captured some amazing photos of my dog, Otis.',
         artist_id: 9,
         user_id: 5
       })

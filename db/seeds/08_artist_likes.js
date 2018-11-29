@@ -1,7 +1,7 @@
 exports.seed = function(knex, Promise) {
   return Promise.all([
     knex('artist_likes').insert(
-      { client_id: 8,
+      { client_id: 2,
         artist_id: 9
       }),
     knex('artist_likes').insert(
