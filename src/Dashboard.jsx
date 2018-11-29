@@ -25,7 +25,7 @@ const right = {
 const tabStyle = {
   width: '100%',
   margin: '50px auto',
-  fontSize: '18px'
+  fontSize: '25px'
 };
 
 class Dashboard extends React.Component {
@@ -43,7 +43,7 @@ class Dashboard extends React.Component {
     this.createEvent = this.createEvent.bind(this);
     this.renderLikedPhotographer = this.renderLikedPhotographer.bind(this);
     this.deleteEvent = this.deleteEvent.bind(this)
-    this.refresh = this.refresh.bind(this)
+    this.refresh = this.refresh.bind(this);
   }
 
   refresh() {
@@ -104,7 +104,6 @@ class Dashboard extends React.Component {
       })
       this.refresh()
   }
-
 
   displayEvents(events) {
     if (!events || events.length === 0 ) {
@@ -200,6 +199,7 @@ class Dashboard extends React.Component {
 
           <TabPanel>
             <Applicants
+              saveApplicants = {this.saveApplicants}
               currentUser={this.props.currentUser}
               refresh={this.refresh}
               />
