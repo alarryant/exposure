@@ -547,6 +547,13 @@
   border: 1px solid black;
 }
 
+.sliderImg {
+  padding: 0 3%;
+  width: 600px;
+  max-height: 750px;
+  overflow: hidden;
+}
+
 .wrapper {
   width: 100%;
   margin: auto;

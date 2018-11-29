@@ -38,7 +38,8 @@ class Profile extends React.Component {
       photoView: 'featured',
       editable: false,
       uploadStatus: false,
-      errorMsg: false
+      errorMsg: false,
+      featuredError: false
     }
 
     this.addCarouselPhotos = this.addCarouselPhotos.bind(this);
@@ -199,16 +200,22 @@ class Profile extends React.Component {
   }
 
   changeFeaturePhotos = (clickedPhotoSrc, clickedPhotoFeature) => {
-    axios.post("/artists/:id/editfeatured",
-      {
-        currentUser: this.props.currentUser,
-        clickedPhotoSrc: clickedPhotoSrc,
-        clickedPhotoFeature: clickedPhotoFeature
-      })
-      .then(res => {
-        let newCollection = res.data.images;
-        this.setState({ collection: newCollection });
-      })
+
+    if (this.state.numOfFeatured < 10) {
+      this.setState({featuredError: false});
+      axios.post("/artists/:id/editfeatured",
+        {
+          currentUser: this.props.currentUser,
+          clickedPhotoSrc: clickedPhotoSrc,
+          clickedPhotoFeature: clickedPhotoFeature
+        })
+        .then(res => {
+          let newCollection = res.data.images;
+          this.setState({ collection: newCollection });
+        })
+    } else {
+      this.setState({featuredError: true});
+    }
   }
 
   createReview(rating, review, artist, user) {
