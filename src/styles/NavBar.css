@@ -41,4 +41,6 @@ nav {
 .dropdown-content.burger {
   min-width: 120px;
   max-width: 120px;
+  top: 90px;
+  right: 25px;
 }

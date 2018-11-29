@@ -10,24 +10,6 @@ import './styles/Dashboard.css';
 import SearchBar from './SearchBar.jsx';
 import Applicants from './components/Opportunity_MyEvents_Applicants.jsx'
 
-const left = {
-  width: '40%',
-  float: 'left',
-  overflow: 'hidden'
-};
-
-const right = {
-  width: '60%',
-  float: 'left',
-  overflow: 'hidden'
-};
-
-const tabStyle = {
-  width: '100%',
-  margin: '50px auto',
-  fontSize: '18px'
-};
-
 class Dashboard extends React.Component {
 
   constructor(props) {
@@ -175,7 +157,7 @@ class Dashboard extends React.Component {
     const userType = this.state.type;
 
     const tabs = (
-      <div style={tabStyle}>
+      <div>
         <Tabs>
           <TabList>
             <Tab>Favorite Photographers</Tab>
@@ -218,16 +200,16 @@ class Dashboard extends React.Component {
         {search}
         {/* start left */}
         <h1 style={{fontSize: '3.5em'}}>Your Dashboard</h1>
-        <div className='left' style={left}>
+        <div className='left'>
           <Avatar name={this.state.name} avatar={this.state.avatar} />
         </div>
         {/* start right */}
         {userType === 2 ? (
-          <div className='right' style={right}>
+          <div className='right'>
             {tabs}
           </div>
         ) : (
-            <div className='right' style={right}>
+            <div className='right'>
             </div>
           )}
       </div>

@@ -4,12 +4,7 @@
   height: 300px;
   overflow: hidden;
   border-radius: 50%;
-  float: left;
-  clear: left;
-  margin-top: 10%;
-}
-.avatarName {
-  width: 50%;
+  margin: 0 auto;
 }
 
 .avatarWidget__name {
@@ -18,10 +13,10 @@
   text-transform: uppercase;
   font-family: 'Assistant', sans-serif;
   letter-spacing: 2px;
-  width: 50%;
+  width: 100%;
   text-align: center;
   float: right;
-  margin-right: 8%;
+  margin-top: 20px;
   color: black;
   border: 2px solid black;
   padding: 2% 0;
