@@ -56,7 +56,7 @@
 
 .avatarSocMedEdit {
   position: relative;
-  width: 50%;
+  width: 55%;
   float: left;
 }
 
@@ -331,7 +331,7 @@
 .avatarSocMed {
   position: relative;
   padding: 0;
-  width: 50%;
+  width: 55%;
   height: auto;
   float: left;
 
@@ -401,7 +401,7 @@
 
 .personalDetContainer {
   font-size: 1.5em;
-  width: 50%;
+  width: 45%;
   float: right;
   clear: right;
 }
@@ -504,6 +504,7 @@
 .featuredPortfolio {
   width: 70%;
   float: right;
+  margin-bottom: 25%;
 }
 
 .featuredPortfolio h1 {
