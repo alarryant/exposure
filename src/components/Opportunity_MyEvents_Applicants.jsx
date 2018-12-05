@@ -59,7 +59,7 @@ class Applicants extends Component {
 render() {
   return (
     <div>
-      <h2> List of Applicants </h2>
+      <h2> LIST OF APPLICANTS </h2>
       <p> Total number of applications to review: {this.state.applicants.length} </p>
      <table>
      <tbody>

@@ -176,15 +176,15 @@ class Opportunities extends Component {
 
       <Tabs>
         <TabList>
-          <Tab style={{fontSize: '18px'}} onClick={this.handleClick}> Job Board </Tab>
-          {usertype === 1 ? <Tab style={{fontSize: '16px'}} onClick={this.handleClick}> Applied Opportunities </Tab> : <Tab style={{fontSize: '16px'}}>My Events</Tab>}
+          <Tab style={{textTransform : "uppercase", fontFamily: "Assistant, sansSerif", letterSpacing: "2px", fontWeight: "700", fontSize: "1.5em"}} onClick={this.handleClick}> Job Board </Tab>
+          {usertype === 1 ? <Tab style={{textTransform : "uppercase", fontFamily: "Assistant, sansSerif", letterSpacing: "2px", fontWeight: "700", fontSize: "1.5em"}} onClick={this.handleClick}> Applied Opportunities </Tab> : <Tab style={{textTransform : "uppercase", fontFamily: "Assistant, sansSerif", letterSpacing: "2px", fontWeight: "700", fontSize: "1.5em"}}>My Events</Tab>}
         </TabList>
 
         <TabPanel>
           <section className="opportunities">
           {this.state.applicationsent ? this.showSuccessMsg() : ""}
             <div className="oppHeader">
-              <h2>Opportunities Board</h2>
+              <h2>OPPORTUNITIES BOARD</h2>
               {usertype === 2 ?
                 <CreateEvent createEvent={this.createEvent}/>
                 : ""

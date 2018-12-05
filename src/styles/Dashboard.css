@@ -1,6 +1,6 @@
 .contentWrapper {
-  margin-left: 10%;
-  margin-right: 10%
+  margin-left: 5%;
+  margin-right: 5%
 }
 
 .starredContainer {
@@ -15,6 +15,7 @@
 
 th {
   font-weight: bold;
+  font-size: 18px;
   width: 20%;
   text-align: center;
   padding: 0 15px;
@@ -28,9 +29,13 @@ td {
 }
 
 .right {
-  /* margin-top: 50px */
+  width: 65%;
+  float: right;
+  margin-bottom: 200px;
 }
 
 .left {
-  margin-top: 50px;
+  width: 30%;
+  float: left;
+  overflow: hidden;
 }

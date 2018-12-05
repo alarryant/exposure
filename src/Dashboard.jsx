@@ -180,20 +180,20 @@ class Dashboard extends React.Component {
       <div style={tabStyle}>
         <Tabs>
           <TabList>
-            <Tab>Favorite Photographers</Tab>
-            <Tab>My Events ({this.state.userevents.length}) </Tab>
-            <Tab>Applicants</Tab>
+            <Tab style={{textTransform : "uppercase", fontFamily: "Assistant, sansSerif", letterSpacing: "2px", fontWeight: "700"} }>Favorite Photographers</Tab>
+            <Tab style={{textTransform : "uppercase", fontFamily: "Assistant, sansSerif", letterSpacing: "2px", fontWeight: "700"} }>My Events ({this.state.userevents.length}) </Tab>
+            <Tab style={{textTransform : "uppercase", fontFamily: "Assistant, sansSerif", letterSpacing: "2px", fontWeight: "700"} }>Applicants</Tab>
           </TabList>
 
           <TabPanel>
-          <h2>Your Favourite Photographers</h2>
+          <h2>YOUR FAVORITE PHOTOGRAPHERS</h2>
             <div className="starredContainer">
             { (this.state.likedPhotographers) ? this.renderLikedPhotographer(this.state.likedPhotographers) : "You haven't saved any photographers!" }
             </div>
           </TabPanel>
 
           <TabPanel>
-            <h2> Your Events </h2>
+            <h2> YOUR EVENTS </h2>
             <p>Check out other postings on the<NavLink to="/opportunities">Job Board</NavLink></p>
             <CreateEvent createEvent={this.createEvent}/>
 
