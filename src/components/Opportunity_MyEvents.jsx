@@ -31,7 +31,7 @@ render() {
     <div>
       <section className="opportunities">
         <div className="oppHeader">
-          <h2>My Events </h2>
+          <h2>MY EVENTS </h2>
         </div>
         {this.props.displayEvents(this.state.myevents) }
       </section>

@@ -26,7 +26,7 @@ const right = {
 const tabStyle = {
   width: '100%',
   margin: '50px auto',
-  fontSize: '18px'
+  fontSize: '25px'
 };
 
 class Dashboard extends React.Component {
@@ -44,7 +44,7 @@ class Dashboard extends React.Component {
     this.createEvent = this.createEvent.bind(this);
     this.renderLikedPhotographer = this.renderLikedPhotographer.bind(this);
     this.deleteEvent = this.deleteEvent.bind(this)
-    this.refresh = this.refresh.bind(this)
+    this.refresh = this.refresh.bind(this);
   }
 
   refresh() {
@@ -105,7 +105,6 @@ class Dashboard extends React.Component {
       })
       this.refresh()
   }
-
 
   displayEvents(events) {
     if (!events || events.length === 0 ) {
@@ -181,20 +180,20 @@ class Dashboard extends React.Component {
       <div style={tabStyle}>
         <Tabs>
           <TabList>
-            <Tab>Favorite Photographers</Tab>
-            <Tab>My Events ({this.state.userevents.length}) </Tab>
-            <Tab>Applicants</Tab>
+            <Tab style={{textTransform : "uppercase", fontFamily: "Assistant, sansSerif", letterSpacing: "2px", fontWeight: "700"} }>Favorite Photographers</Tab>
+            <Tab style={{textTransform : "uppercase", fontFamily: "Assistant, sansSerif", letterSpacing: "2px", fontWeight: "700"} }>My Events ({this.state.userevents.length}) </Tab>
+            <Tab style={{textTransform : "uppercase", fontFamily: "Assistant, sansSerif", letterSpacing: "2px", fontWeight: "700"} }>Applicants</Tab>
           </TabList>
 
           <TabPanel>
-          <h2>Your Favourite Photographers</h2>
+          <h2>YOUR FAVORITE PHOTOGRAPHERS</h2>
             <div className="starredContainer">
             { (this.state.likedPhotographers) ? this.renderLikedPhotographer(this.state.likedPhotographers) : "You haven't saved any photographers!" }
             </div>
           </TabPanel>
 
           <TabPanel>
-            <h2> Your Events </h2>
+            <h2> YOUR EVENTS </h2>
             <p>Check out other postings on the<NavLink to="/opportunities">Job Board</NavLink></p>
             <CreateEvent createEvent={this.createEvent}/>
 
@@ -203,6 +202,7 @@ class Dashboard extends React.Component {
 
           <TabPanel>
             <Applicants
+              saveApplicants = {this.saveApplicants}
               currentUser={this.props.currentUser}
               refresh={this.refresh}
               />

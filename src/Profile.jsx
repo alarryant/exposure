@@ -201,8 +201,6 @@ class Profile extends React.Component {
 
   changeFeaturePhotos = (clickedPhotoSrc, clickedPhotoFeature) => {
 
-    if (this.state.numOfFeatured < 10) {
-      this.setState({featuredError: false});
       axios.post("/artists/:id/editfeatured",
         {
           currentUser: this.props.currentUser,
@@ -213,10 +211,7 @@ class Profile extends React.Component {
           let newCollection = res.data.images;
           this.setState({ collection: newCollection });
         })
-    } else {
-      this.setState({featuredError: true});
     }
-  }
 
   createReview(rating, review, artist, user) {
     axios.post("/artists/:id/newreview",
