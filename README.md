@@ -1,44 +1,32 @@
+# Exposure
+
+Exposure, an open platform that allows freelance photographers and potential clients to connect. Exposure allows users to search images by keyword and navigate to the photographer's profile that fits their style. Photographers can customize their profile by uploading images to their portfolio, provide pricing and update their availability on the calendar. This was a collaborative project where I took part in both front and back end development and was completed in two weeks.
+
+## Getting Started
+
+1. Install dependencies using the `npm install` command.
+2. Run migrations: `npm run knex migrate:latest`
+3. Run the seed: `npm run knex seed:run`
+4. Start the web server using the `npm start` command. Start the app server using `node server.js`.
+5. Go to <http://localhost:3000/> in your browser and explore Exposure!
+
+## Final Product
+!["Home Page"](https://github.com/alarryant/WeSource/blob/master/public/images/homepage.png)
+!["Client Dashboard"](https://github.com/alarryant/exposure/blob/master/public/images/dashboard.png)
+!["Opportunities Board"](https://github.com/alarryant/exposure/blob/master/public/images/opportunities.png)
+!["Photographer's Profile Page (Client View)](https://github.com/alarryant/exposure/blob/master/public/images/profile.png)
+!["Photographer's Profile Page (Photographer View)"](https://github.com/alarryant/exposure/blob/master/public/images/profile-artist-mode.png)
+!["Photographer's Profile Page (Edit Mode)"](https://github.com/alarryant/exposure/blob/master/public/images/profile-edit-mode.png)
+
+## Dependencies
+- React
+- React-router-dom
+- Axios
+- bcryptjs
+- knex
+- Mailgun
+- Multer
+- PostgreSQL
+- Webpack
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
