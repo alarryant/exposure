@@ -14,7 +14,7 @@ Exposure, an open platform that allows freelance photographers and potential cli
 
 ###Homepage
 
-!["Home Page"](https://github.com/alarryant/exposure/blob/master/public/images/homepage.png)
+["Home Page"](https://github.com/alarryant/exposure/blob/master/public/images/homepage.png)
 
 ###Client Dashboard
 
