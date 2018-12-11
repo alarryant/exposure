@@ -12,27 +12,27 @@ Exposure, an open platform that allows freelance photographers and potential cli
 
 ## Final Product
 
-###Homepage
+Homepage
 
-["Home Page"](https://github.com/alarryant/exposure/blob/master/public/images/homepage.png)
+!["Home Page"](https://github.com/alarryant/exposure/blob/master/public/images/homepage.png)
 
-###Client Dashboard
+Client Dashboard
 
 !["Client Dashboard"](https://github.com/alarryant/exposure/blob/master/public/images/dashboard.png)
 
-###Opportunities Board
+Opportunities Board
 
 !["Opportunities Board"](https://github.com/alarryant/exposure/blob/master/public/images/opportunities.png)
 
-###Photographer's Profile Page (Client's View)
+Photographer's Profile Page (Client's View)
 
 !["Photographer's Profile Page (Client View)](https://github.com/alarryant/exposure/blob/master/public/images/profile.png)
 
-###Photographer's Profile Page (Photographer's View)
+Photographer's Profile Page (Photographer's View)
 
 !["Photographer's Profile Page (Photographer View)"](https://github.com/alarryant/exposure/blob/master/public/images/profile-artist-mode.png)
 
-###Photographer's Profile Page (Edit Mode)
+Photographer's Profile Page (Edit Mode)
 
 !["Photographer's Profile Page (Edit Mode)"](https://github.com/alarryant/exposure/blob/master/public/images/profile-edit-mode.png)
 
