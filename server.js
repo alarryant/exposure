@@ -39,7 +39,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
 
-app.get('/api/homephotos', (req, res) => {
+app.get('/homephotos', (req, res) => {
   knex('images')
     .select('id', 'title', 'description', 'src', 'category', 'image_owner')
     .asCallback((err, data) => {
@@ -49,7 +49,7 @@ app.get('/api/homephotos', (req, res) => {
 });
 
 // LOGIN
-app.post('/api/login', (req, res) => {
+app.post('/login', (req, res) => {
   knex('users')
     .select('*')
     .where({
@@ -66,14 +66,14 @@ app.post('/api/login', (req, res) => {
 });
 
 // LOGOUT
-app.post('/api/logout', (req, res) => {
+app.post('/logout', (req, res) => {
   req.session.user_id = null;
   res.json(req.session.user_id);
 });
 
 
 // REGISTER
-app.post('/api/register', (req, res) => {
+app.post('/register', (req, res) => {
   let firstName = req.body.firstName;
   let lastName = req.body.lastName;
   let email = req.body.email;
@@ -105,7 +105,7 @@ app.post('/api/register', (req, res) => {
 
 
 // SEARCH
-app.get('/api/search', (req, res) => {
+app.get('/search', (req, res) => {
   let queryWord = (req.query.searchWord).toLowerCase();
   knex('images')
     .where(
@@ -121,13 +121,13 @@ app.get('/api/search', (req, res) => {
 });
 
 //IMAGE
-app.post('/api/images/:id', (req, res) => {
+app.post('/images/:id', (req, res) => {
   res.send('Images/:id');
 });
 
 
 //DASHBOARD
-app.get('/api/dashboard', (req, res) => {
+app.get('/dashboard', (req, res) => {
   let currentUser = req.query.currentUser;
   knex('users')
     .where('users.id', currentUser)
@@ -153,7 +153,7 @@ app.get('/api/dashboard', (req, res) => {
 
 
 //ARTIST PROFILE
-app.get('/api/artists/:id', (req, res) => {
+app.get('/artists/:id', (req, res) => {
   let artistId = req.params.id;
   let currentUser = req.query.currentUser;
     knex('images')
@@ -188,7 +188,7 @@ app.get('/api/artists/:id', (req, res) => {
 //   res.send('Artist Review');
 // });
 
-app.post("/api/artists/:id/editfeatured", (req, res) => {
+app.post("/artists/:id/editfeatured", (req, res) => {
 
   let photoSrc;
   let photoFeatured = req.body.clickedPhotoFeature;
@@ -231,7 +231,7 @@ app.post("/api/artists/:id/editfeatured", (req, res) => {
     });
 });
 
-app.post("/api/artists/:id/edit", (req, res) => {
+app.post("/artists/:id/edit", (req, res) => {
 
   let artistId = req.body.artistId;
   let package1 = req.body.submitData.packages[0];
@@ -298,7 +298,7 @@ const storage = multer.diskStorage({
 // create the multer instance that will be used to upload/save the file
 const upload = multer({ storage });
 
-app.post('/api/upload', upload.single('selectedFile'), (req, res) => {
+app.post('/upload', upload.single('selectedFile'), (req, res) => {
 
       let realPath = req.file.path.replace("public", '');
       knex('images')
@@ -319,7 +319,7 @@ app.post('/api/upload', upload.single('selectedFile'), (req, res) => {
         })
     });
 
-app.post('/api/artists/:id/editavailability', (req, res) => {
+app.post('/artists/:id/editavailability', (req, res) => {
   let artistId = req.params.id;
 
   knex('availabilities')
@@ -334,7 +334,7 @@ app.post('/api/artists/:id/editavailability', (req, res) => {
     });
 });
 
-app.post('/api/artists/:id/removeavailability', (req, res) => {
+app.post('/artists/:id/removeavailability', (req, res) => {
   let artistId = req.params.id;
   let selectedDay = req.body.selectedDay;
   knex('availabilities')
@@ -347,7 +347,7 @@ app.post('/api/artists/:id/removeavailability', (req, res) => {
     });
 });
 
-app.get('/api/artists/:id/availability', (req, res) => {
+app.get('/artists/:id/availability', (req, res) => {
   let artistId = req.params.id;
   knex('availabilities')
     .select('*')
@@ -357,7 +357,7 @@ app.get('/api/artists/:id/availability', (req, res) => {
     });
 });
 
-app.post('/api/artists/:id/like', (req, res) => {
+app.post('/artists/:id/like', (req, res) => {
   let artistId = req.body.artistId;
   let currentUser = req.body.currentUser;
   knex('artist_likes')
@@ -375,7 +375,7 @@ app.post('/api/artists/:id/like', (req, res) => {
     });
 });
 
-app.post('/api/artists/:id/unlike', (req, res) => {
+app.post('/artists/:id/unlike', (req, res) => {
   let artistId = req.body.artistId;
   let currentUser = req.body.currentUser;
   knex('artist_likes')
@@ -391,7 +391,7 @@ app.post('/api/artists/:id/unlike', (req, res) => {
     });
 });
 
-app.get('/api/artists/:id/totallikes', (req, res) => {
+app.get('/artists/:id/totallikes', (req, res) => {
   let artistId = req.params.id;
   let currentUser = req.query.currentUser;
   knex('artist_likes')
@@ -407,7 +407,7 @@ app.get('/api/artists/:id/totallikes', (req, res) => {
     });
 });
 
-app.post("/api/artists/:id/newreview", (req, res) => {
+app.post("/artists/:id/newreview", (req, res) => {
   let rating = req.body.rating;
   let description = req.body.description;
   let artist_id = req.body.artist_id;
@@ -427,7 +427,7 @@ app.post("/api/artists/:id/newreview", (req, res) => {
   });
 });
 
-app.post("/api/artists/:id/reviews/:reviewid", (req, res) => {
+app.post("/artists/:id/reviews/:reviewid", (req, res) => {
   knex('reviews')
     .del()
     .where('review_id', req.params.reviewid)
@@ -442,7 +442,7 @@ app.post("/api/artists/:id/reviews/:reviewid", (req, res) => {
 });
 
 
-app.post('/api/artists/:id/edit', (req, res) => {
+app.post('/artists/:id/edit', (req, res) => {
   let artistId = req.body.artistId;
   let package1 = req.body.submitData.packages[0];
   let package2 = req.body.submitData.packages[1];
@@ -495,7 +495,7 @@ app.post('/api/artists/:id/edit', (req, res) => {
 
 //OPPORTUNITIES
 
-app.get('/api/opportunities', (req, res) => {
+app.get('/opportunities', (req, res) => {
   knex('events')
     .select('*')
     .join('users', 'users.id', '=', 'events.creator_id')
@@ -504,7 +504,7 @@ app.get('/api/opportunities', (req, res) => {
     });
 });
 
-app.get('/api/opportunities/:id', (req, res) => {
+app.get('/opportunities/:id', (req, res) => {
   knex('events')
     .select('*')
     .join('users', 'users.id', '=', 'events.creator_id')
@@ -514,7 +514,7 @@ app.get('/api/opportunities/:id', (req, res) => {
     });
 });
 
-app.get('/api/opportunities/:id/applicants', (req, res) => {
+app.get('/opportunities/:id/applicants', (req, res) => {
   knex('event_interests')
     .join('events', 'eventref_id', '=', 'event_id')
     .join('users', 'users.id', '=', 'artist_id')
@@ -525,7 +525,7 @@ app.get('/api/opportunities/:id/applicants', (req, res) => {
     });
 });
 
-app.post('/api/opportunities/:id/add', (req, res) => {
+app.post('/opportunities/:id/add', (req, res) => {
   let cookie = req.body.creator_id;
   let title = req.body.title;
   let description = req.body.description;
@@ -548,7 +548,7 @@ app.post('/api/opportunities/:id/add', (req, res) => {
     });
 });
 
-app.post('/api/opportunities/:id/accept', (req, res) => {
+app.post('/opportunities/:id/accept', (req, res) => {
   knex('events')
     .where('event_id', req.body.event_id)
     .update('artist_accepted', req.body.artistid)
@@ -566,7 +566,7 @@ app.post('/api/opportunities/:id/accept', (req, res) => {
 
 
 
-app.post("/api/opportunities/:id/delete", (req, res) => {
+app.post("/opportunities/:id/delete", (req, res) => {
   knex('events')
     .del()
     .where('event_id', req.body.event_id)
@@ -579,7 +579,7 @@ app.post("/api/opportunities/:id/delete", (req, res) => {
     });
 });
 
-app.get("/api/opportunities/applied/:id", (req, res) => {
+app.get("/opportunities/applied/:id", (req, res) => {
   knex('event_interests')
     .where('artist_id', req.params.id)
     .join('events', 'event_id', '=', 'event_interests.eventref_id')
@@ -589,7 +589,7 @@ app.get("/api/opportunities/applied/:id", (req, res) => {
     })
 })
 
-app.post("/api/opportunities/applied/:id", (req, res) => {
+app.post("/opportunities/applied/:id", (req, res) => {
   knex('event_interests')
     .del()
     .where('application_id', req.body.application_id)
@@ -605,7 +605,7 @@ app.post("/api/opportunities/applied/:id", (req, res) => {
     })
 })
 
-app.post("/api/opportunities/:id/apply", (req, res) => {
+app.post("/opportunities/:id/apply", (req, res) => {
   let message = req.body.msg_des
   let artist_name = req.body.artist_name
   knex('event_interests')
@@ -629,7 +629,7 @@ app.post("/api/opportunities/:id/apply", (req, res) => {
     })
 });
 
-app.post("/api/settings", (req, res) => {
+app.post("/settings", (req, res) => {
   let newFirstName = req.body.firstName;
   let newLastName = req.body.lastName;
   let newEmail = req.body.email;

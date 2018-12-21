@@ -44,7 +44,7 @@ class Opportunities extends Component {
     let currentUser = parseInt(this.props.currentUser)
 
     if (creator === currentUser) {
-      axios.post(`/api/opportunities/${event}/delete`, {
+      axios.post(`/opportunities/${event}/delete`, {
           event_id: event,
           creatorid: creator
         })
@@ -52,7 +52,7 @@ class Opportunities extends Component {
         let newEvents = res.data;
         this.setState({ opportunities: newEvents });
       })
-      axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
+      axios.get(`/opportunities/applied/${this.props.currentUser}`)
         .then(res => {
           this.setState({'appliedopportunities': res.data })
         });
@@ -65,13 +65,13 @@ class Opportunities extends Component {
     let event_id = event
     let description = desc
     let artist_name = this.props.currentUserName
-    axios.post(`/api/opportunities/${event_id}/apply`,
+    axios.post(`/opportunities/${event_id}/apply`,
       { event_id: event_id,
         artist_id: artist,
         msg_des: description,
         artist_name: artist_name})
       .then((data) => {
-        axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
+        axios.get(`/opportunities/applied/${this.props.currentUser}`)
         .then(res => {
           let appliedevent = res.data
           let applied_eventid = []
@@ -87,7 +87,7 @@ class Opportunities extends Component {
 
 //PHOTOGRAPHER: IF DELETE APPLICATION, BUTTON REAPPEARS ON JOB BOARD
   refreshApplybutton() {
-    axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
+    axios.get(`/opportunities/applied/${this.props.currentUser}`)
         .then(res => {
           let appliedevent = res.data
           let applied_eventid = []
@@ -132,7 +132,7 @@ class Opportunities extends Component {
 
 //CLIENT: CAN CREATE EVENTS
   createEvent(title, description, date, price, location) {
-    axios.post("/api/opportunities/:id/add",
+    axios.post("/opportunities/:id/add",
       { title: title,
         description: description,
         date: date,
@@ -154,12 +154,12 @@ class Opportunities extends Component {
 //ON MOUNT FIND
   componentDidMount() {
     this.setState({applicationsent: false})
-    axios.get("/api/opportunities")
+    axios.get("/opportunities")
       .then(res => {
         this.setState({ opportunities: res.data.reverse() })
     });
 
-    axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
+    axios.get(`/opportunities/applied/${this.props.currentUser}`)
       .then(res => {
         let appliedevent = res.data
         let applied_eventid = []

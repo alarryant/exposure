@@ -93,7 +93,7 @@ class Profile extends React.Component {
 
 // MANAGES DELETED APPLICATIONS TO EVENTS
   refreshApplybutton() {
-    axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
+    axios.get(`/opportunities/applied/${this.props.currentUser}`)
         .then(res => {
           let appliedevent = res.data
           let applied_eventid = []
@@ -201,7 +201,7 @@ class Profile extends React.Component {
 
   changeFeaturePhotos = (clickedPhotoSrc, clickedPhotoFeature) => {
 
-      axios.post("/api/artists/:id/editfeatured",
+      axios.post("/artists/:id/editfeatured",
         {
           currentUser: this.props.currentUser,
           clickedPhotoSrc: clickedPhotoSrc,
@@ -214,7 +214,7 @@ class Profile extends React.Component {
     }
 
   createReview(rating, review, artist, user) {
-    axios.post("/api/artists/:id/newreview",
+    axios.post("/artists/:id/newreview",
       {
         rating: rating,
         description: review,
@@ -231,7 +231,7 @@ class Profile extends React.Component {
     let artist_id = review.artist_id;
     let review_id = review.review_id;
 
-    axios.post(`/api/artists/${artist_id}/reviews/${review_id}`, { review_id, artist_id })
+    axios.post(`/artists/${artist_id}/reviews/${review_id}`, { review_id, artist_id })
       .then((res) => {
         let newReviews = res.data.reverse();
         this.setState({ reviews: newReviews });
@@ -248,7 +248,7 @@ class Profile extends React.Component {
 
     this.setState({ artistId: id });
 
-    axios.get(`/api/artists/${id}`, {
+    axios.get(`/artists/${id}`, {
       params: {
         artistId: id,
         currentUser: this.props.currentUser
@@ -303,7 +303,7 @@ class Profile extends React.Component {
         errorMsg: false
       }
 
-      axios.post(`/api/artists/${this.state.artistId}/edit`,
+      axios.post(`/artists/${this.state.artistId}/edit`,
         {
           artistId: this.state.artistId,
           submitData: submitData
@@ -339,7 +339,7 @@ class Profile extends React.Component {
         description: '',
         category: ''});
 
-      axios.post('/api/upload', formData)
+      axios.post('/upload', formData)
         .then((result) => {
           this.setState({collection: result.data.images});
         })

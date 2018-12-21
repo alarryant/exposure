@@ -49,7 +49,7 @@ class Dashboard extends React.Component {
 
   refresh() {
     let currentUser = this.props.currentUser;
-    axios.get(`/api/dashboard`, {
+    axios.get(`/dashboard`, {
       params: {
         currentUser: currentUser
       }
@@ -64,7 +64,7 @@ class Dashboard extends React.Component {
   deleteEvent(event, creator) {
     let currentUser = parseInt(this.props.currentUser)
     if (creator === currentUser) {
-      axios.post(`/api/opportunities/${event}/delete`,
+      axios.post(`/opportunities/${event}/delete`,
         { event_id: event,
           creatorid: creator} )
       .then((res) => {
@@ -72,14 +72,14 @@ class Dashboard extends React.Component {
         this.setState({ opportunities: newEvents });
       })
 
-      axios.get(`/api/opportunities/applied/${this.props.currentUser}`).then(res => {
+      axios.get(`/opportunities/applied/${this.props.currentUser}`).then(res => {
         this.setState({'appliedopportunities': res.data })
       });
-    } this.refresh()
+    } this.refresh();
   }
 
    createEvent(title, description, date, price, location) {
-    axios.post(`/api/opportunities/${this.props.currentUser}/add`, {
+    axios.post(`/opportunities/${this.props.currentUser}/add`, {
         title: title,
         description: description,
         date: date,
@@ -130,7 +130,7 @@ class Dashboard extends React.Component {
     const pathName = this.props.location.pathname
 
     let currentUser = this.props.currentUser;
-    axios.get(`/api/dashboard`, {
+    axios.get(`/dashboard`, {
       params: {
         currentUser: currentUser
       }

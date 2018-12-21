@@ -19,7 +19,7 @@ class AppliedCard extends Component {
   }
 
   deleteApplication(app_id) {
-    axios.post(`/api/opportunities/applied/${this.props.currentUser}`, {
+    axios.post(`/opportunities/applied/${this.props.currentUser}`, {
       application_id: app_id,
       currentUser: this.props.currentUser
     })
@@ -27,7 +27,7 @@ class AppliedCard extends Component {
       let updatedAppList = res.data;
       this.setState({appliedopportunities: updatedAppList});
     });
-      this.props.refreshApplybutton()
+      this.props.refreshApplybutton();
   }
 
   displayAppliedEvents(events) {
@@ -36,7 +36,7 @@ class AppliedCard extends Component {
         <p style={{marginLeft:'10%'}}>You haven't applied to anything! Why not checkout the opportunities board? </p> )
     } else {
       return events.map((event) => {
-        let date = event.event_date.toString().split('T')[0]
+        let date = event.event_date.toString().split('T')[0];
         return (
           <AppCard deleteApplication={this.deleteApplication} event={event} date={date} usertype={this.props.usertype} currentUser={this.props.currentUser}/>
           )
@@ -45,9 +45,9 @@ class AppliedCard extends Component {
   }
 
   componentDidMount() {
-    axios.get(`/api/opportunities/applied/${this.props.currentUser}`)
+    axios.get(`/opportunities/applied/${this.props.currentUser}`)
       .then(res => {
-        this.setState({'appliedopportunities': res.data })
+        this.setState({'appliedopportunities': res.data });
     });
   }
 
