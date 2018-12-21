@@ -1,0 +1,53 @@
+{
+  "name": "exposure",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "cookie-session": "^2.0.0-beta.3",
+    "dotenv": "^6.1.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "history": "^4.7.2",
+    "knex": "^0.15.2",
+    "knex-logger": "^0.1.0",
+    "lodash.samplesize": "^4.2.0",
+    "mailgun-js": "^0.22.0",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.1",
+    "pg": "^7.6.1",
+    "react": "^16.6.3",
+    "react-bootstrap": "^0.32.4",
+    "react-day-picker": "^7.2.4",
+    "react-dom": "^16.6.3",
+    "react-router-dom": "^4.4.0-beta.6",
+    "react-scripts": "2.1.1",
+    "react-slick": "^0.23.2",
+    "react-sparklines": "^1.7.0",
+    "react-tabs": "^2.3.0",
+    "url-parse": "^1.4.4",
+    "uuid": "^3.3.2",
+    "webpack": "^4.19.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.1.6"
+  },
+  "proxy": "http://localhost:3001"
+}
