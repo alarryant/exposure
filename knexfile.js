@@ -15,39 +15,22 @@ module.exports = {
       ssl      : process.env.DB_SSL
     },
     migrations: {
-      directory: './client/db/migrations',
+      directory: __dirname + '/db/migrations',
       tableName: 'migrations'
     },
     seeds: {
-      directory: './client/db/seeds'
-    }
-  },
-
-  staging: {
-    client: 'pg',
-    connection: {
-      user     : process.env.DB_USER,
-      password : process.env.DB_PASS,
-      database : process.env.DB_NAME
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      tableName: 'knex_migrations'
+      directory: __dirname + '/db/seeds'
     }
   },
 
   production: {
     client: 'postgresql',
-    connection: process.env.DATABASE_URL + '?ssl=true',
-    pool: {
-      min: 2,
-      max: 10
-    },
+    connection: process.env.DATABASE_URL,
     migrations: {
-      tableName: 'migrations'
+      directory: __dirname + '/db/migrations',
+    },
+    seeds: {
+      directory: __dirname + '/db/seeds',
     }
   }
 
