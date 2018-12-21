@@ -7,7 +7,7 @@ import OpportunityAccept from './Opportunity_Accept.jsx';
 
 function MyApplicantCard(props) {
 
-    const { applicant } = props
+    const { applicant } = props;
 
     return (
 

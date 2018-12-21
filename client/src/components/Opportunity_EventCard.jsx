@@ -8,7 +8,7 @@ class OpportunityEventCard extends Component {
     constructor(props) {
     super(props);
 
-    this.haveApplied = this.haveApplied.bind(this)
+    this.haveApplied = this.haveApplied.bind(this);
   }
 
   haveApplied(id) {
@@ -27,11 +27,11 @@ class OpportunityEventCard extends Component {
   }
 
   render () {
-    const { event } = this.props
+    const { event } = this.props;
     const user_type_id = parseInt(this.props.usertype);
     const creator_id = parseInt(event.creator_id);
     const currentUser = parseInt(this.props.currentUser);
-    const eventid = event.event_id
+    const eventid = event.event_id;
 
     return (
       <div className="eventcard">

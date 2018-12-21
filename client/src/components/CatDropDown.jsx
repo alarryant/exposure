@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class CatDropDown extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         this.handleClick = this.handleClick.bind(this);
     }
 

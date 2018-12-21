@@ -36,7 +36,7 @@ class OpportunityApply extends Component {
     event.preventDefault();
     const event_id = this.props.eventid;
     const description = this.state.description;
-    const currentUser = parseInt(this.props.currentUser)
+    const currentUser = parseInt(this.props.currentUser);
     this.props.saveApplication(event_id, currentUser, description);
   }
 

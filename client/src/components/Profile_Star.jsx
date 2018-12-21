@@ -11,7 +11,7 @@ class StarPhotographer extends React.Component {
   }
 
   handleLikeClick() {
-    axios.post('/artists/:id/like',
+    axios.post('/api/artists/:id/like',
               { currentUser: this.props.currentUser,
                 artistId: this.props.artistId })
       .then((res) => {
@@ -21,7 +21,7 @@ class StarPhotographer extends React.Component {
   }
 
   handleUnlikeClick() {
-    axios.post('/artists/:id/unlike',
+    axios.post('/api/artists/:id/unlike',
               { currentUser: this.props.currentUser,
                 artistId: this.props.artistId })
       .then((res) => {
@@ -31,7 +31,7 @@ class StarPhotographer extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`/artists/${this.props.artistId}/totallikes`,
+    axios.get(`/api/artists/${this.props.artistId}/totallikes`,
              { params: {
                 currentUser: this.props.currentUser,
                 artistId: this.props.artistId }

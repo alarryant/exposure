@@ -49,7 +49,7 @@ class Dashboard extends React.Component {
 
   refresh() {
     let currentUser = this.props.currentUser;
-    axios.get(`/dashboard`, {
+    axios.get(`/api/dashboard`, {
       params: {
         currentUser: currentUser
       }
@@ -64,7 +64,7 @@ class Dashboard extends React.Component {
   deleteEvent(event, creator) {
     let currentUser = parseInt(this.props.currentUser)
     if (creator === currentUser) {
-      axios.post(`/opportunities/${event}/delete`,
+      axios.post(`/api/opportunities/${event}/delete`,
         { event_id: event,
           creatorid: creator} )
       .then((res) => {
@@ -79,7 +79,7 @@ class Dashboard extends React.Component {
   }
 
    createEvent(title, description, date, price, location) {
-    axios.post(`/opportunities/${this.props.currentUser}/add`, {
+    axios.post(`/api/opportunities/${this.props.currentUser}/add`, {
         title: title,
         description: description,
         date: date,
@@ -130,7 +130,7 @@ class Dashboard extends React.Component {
     const pathName = this.props.location.pathname
 
     let currentUser = this.props.currentUser;
-    axios.get(`/dashboard`, {
+    axios.get(`/api/dashboard`, {
       params: {
         currentUser: currentUser
       }

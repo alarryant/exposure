@@ -7,18 +7,18 @@ import axios from 'axios'
 
 class Applicants extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       applicants: []
-    }
+    };
 
-    this.displayApplicants = this.displayApplicants.bind(this)
-    this.acceptApplicant = this.acceptApplicant.bind(this)
+    this.displayApplicants = this.displayApplicants.bind(this);
+    this.acceptApplicant = this.acceptApplicant.bind(this);
   }
 
   acceptApplicant(artistid, eventid){
-   axios.post(`/opportunities/${eventid}/accept`,
+   axios.post(`/api/opportunities/${eventid}/accept`,
         { event_id: eventid,
           artistid: artistid,
           currentUser: this.props.currentUser })

@@ -5,24 +5,24 @@ import axios from 'axios'
 
 class MyEvent extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       myevents: []
-    }
+    };
   }
 
   componentDidMount() {
     axios.get(`/api/opportunities/${this.props.currentUser}`)
       .then(res => {
-        this.setState({ myevents: res.data.reverse() })
+        this.setState({ myevents: res.data.reverse() });
     });
   }
 
   componentDidUpdate() {
     axios.get(`/api/opportunities/${this.props.currentUser}`)
       .then(res => {
-        this.setState({ myevents: res.data.reverse() })
+        this.setState({ myevents: res.data.reverse() });
     });
   }
 

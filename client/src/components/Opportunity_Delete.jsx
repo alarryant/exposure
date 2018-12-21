@@ -35,7 +35,7 @@ class DeleteEvent extends Component {
   handleSubmit(event){
     event.preventDefault();
     const event_id = this.props.eventid;
-    const creatorId = this.props.event.creator_id
+    const creatorId = this.props.event.creator_id;
     this.props.deleteEvent(event_id, creatorId);
   }
 

@@ -3,12 +3,7 @@ import '../styles/Avatar.css';
 
 class Avatar extends React.Component {
 
-  ComponentDidMount() {
-
-  }
-
   render() {
-    console.log("this location", this.props)
     return (
       <div className="avatarSocMedLeft">
         <div className='avatarWidget'>

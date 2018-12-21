@@ -26,8 +26,8 @@ class OpportunityAccept extends Component {
 
   handleSubmit(event){
     event.preventDefault();
-    const artist_id = this.props.applicant.artist_id
-    const event_id = this.props.applicant.event_id
+    const artist_id = this.props.applicant.artist_id;
+    const event_id = this.props.applicant.event_id;
     this.props.acceptApplicant(artist_id, event_id);
   }
 

@@ -59,7 +59,7 @@ class App extends Component {
 
   //LOGIN
   loginInfo(email, password) {
-    axios.post("/login", { email: email, password: password })
+    axios.post("/api/login", { email: email, password: password })
       .then((res) => {
         localStorage.setItem('currentUser', res.data[0].id);
         localStorage.setItem('user_type_id', res.data[0].user_type_id);
@@ -77,7 +77,7 @@ class App extends Component {
 
   //LOGOUT
   logout(event) {
-    axios.post("/logout")
+    axios.post("/api/logout")
       .then((res) => {
         localStorage.removeItem('currentUser');
         localStorage.removeItem('user_type_id');
@@ -90,7 +90,7 @@ class App extends Component {
 
   //REGISTER
   signupInfo(firstName, lastName, email, password, userType) {
-    axios.post("/register", {
+    axios.post("/api/register", {
       firstName: firstName,
       lastName: lastName,
       email: email,
@@ -113,7 +113,7 @@ class App extends Component {
 
   //ACCOUNT SETTINGS
   changeAccountInfo(firstName, lastName, email, password) {
-    axios.post('/settings', {
+    axios.post('/api/settings', {
       firstName: firstName,
       lastName: lastName,
       email: email,
@@ -138,7 +138,7 @@ class App extends Component {
 
   //EDIT PROFILE
   editProfileInfo(firstName, lastName, email, password, website, instagram, facebook, twitter, location) {
-    axios.post('/artists/:id/edit', {
+    axios.post('/api/artists/:id/edit', {
       firstName: firstName,
       lastName: lastName,
       email: email,
@@ -156,7 +156,7 @@ class App extends Component {
 
   //SEARCH
   searchResult(word) {
-    axios.get("/search", {
+    axios.get("/api/search", {
       params: {
         searchWord: word
       }
@@ -179,9 +179,9 @@ class App extends Component {
 
   componentDidMount() {
     // sets the document title
-    document.title = "Welcome to Exposureca.com"
+    document.title = "Welcome to Exposureca.com";
 
-    axios.get("/homephotos")
+    axios.get("/api/homephotos")
       .then(res => this.setState({ homephotos: res.data }));
   }
 

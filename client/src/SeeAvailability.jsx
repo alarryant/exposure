@@ -21,13 +21,6 @@ class SeeAvailability extends React.Component {
 
   }
 
-  // new Date(2018, 11, 12),
-  //       new Date(2018, 11, 2),
-  //       {
-  //         after: new Date(2018, 11, 20),
-  //         before: new Date(2018, 11, 25),
-  //       },
-
   render() {
     return (
       <div className="RangeExample">

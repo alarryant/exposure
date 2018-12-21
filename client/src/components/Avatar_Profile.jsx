@@ -3,10 +3,6 @@ import '../styles/Avatar.css';
 
 class AvatarProfile extends React.Component {
 
-  ComponentDidMount() {
-
-  }
-
   render() {
     return (
       <div>

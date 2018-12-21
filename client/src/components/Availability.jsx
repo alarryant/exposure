@@ -25,7 +25,7 @@ class EditAvailability extends React.Component {
     });
 
     if (alreadyDisabled === true) {
-      return axios.post(`/artists/${this.props.artistId}/removeavailability`,
+      return axios.post(`/api/artists/${this.props.artistId}/removeavailability`,
                         {selectedDay: day})
         .then((res) => {
         this.setState({ selectedDay: day,
@@ -33,7 +33,7 @@ class EditAvailability extends React.Component {
                         message: `You're now available on ${day.toLocaleDateString()}.`});
       });
     } else {
-      return axios.post(`/artists/${this.props.artistId}/editavailability`,
+      return axios.post(`/api/artists/${this.props.artistId}/editavailability`,
                         {selectedDay: day})
         .then((res) => {
         this.setState({ selectedDay: day,
@@ -44,7 +44,7 @@ class EditAvailability extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`/artists/${this.props.artistId}/availability`)
+    axios.get(`/api/artists/${this.props.artistId}/availability`)
      .then((res) => {
         this.setState({ disabledDays: res.data,
                         message: 'Select a day to mark it as unavailable.'});

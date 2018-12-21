@@ -34,7 +34,7 @@ class DeleteApplication extends Component {
 
   handleSubmit(event){
     event.preventDefault();
-    const application_id = this.props.application_id
+    const application_id = this.props.application_id;
     this.props.deleteApplication(application_id);
   }
 

@@ -44,7 +44,7 @@ class Opportunities extends Component {
     let currentUser = parseInt(this.props.currentUser)
 
     if (creator === currentUser) {
-      axios.post(`/opportunities/${event}/delete`, {
+      axios.post(`/api/opportunities/${event}/delete`, {
           event_id: event,
           creatorid: creator
         })
@@ -65,7 +65,7 @@ class Opportunities extends Component {
     let event_id = event
     let description = desc
     let artist_name = this.props.currentUserName
-    axios.post(`/opportunities/${event_id}/apply`,
+    axios.post(`/api/opportunities/${event_id}/apply`,
       { event_id: event_id,
         artist_id: artist,
         msg_des: description,
@@ -132,7 +132,7 @@ class Opportunities extends Component {
 
 //CLIENT: CAN CREATE EVENTS
   createEvent(title, description, date, price, location) {
-    axios.post("/opportunities/:id/add",
+    axios.post("/api/opportunities/:id/add",
       { title: title,
         description: description,
         date: date,
