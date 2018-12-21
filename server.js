@@ -34,7 +34,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/api/homephotos', (req, res) => {
+app.get('/homephotos', (req, res) => {
   knex('images')
     .select('id', 'title', 'description', 'src', 'category', 'image_owner')
     .asCallback((err, data) => {
