@@ -7,7 +7,7 @@ var mailgun = require('mailgun-js')({ apiKey: api_key, domain: DOMAIN });
 
 const express = require('express');
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const cookieSession = require('cookie-session');
