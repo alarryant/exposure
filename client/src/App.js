@@ -131,7 +131,7 @@ class App extends Component {
         });
         localStorage.removeItem('currentUserFirstName');
         localStorage.removeItem('currentUserLastName');
-        localStorage.setItem('currentUserFirstName', newFirstName)
+        localStorage.setItem('currentUserFirstName', newFirstName);
         localStorage.setItem('currentUserLastName', newLastName);
       });
   }
@@ -199,7 +199,7 @@ class App extends Component {
             currentUserType={user_type_id}
             logout={this.logout} />
           <Switch>
-            <Route path='/' render={() => <Home homephotos={this.state.homephotos}
+            <Route path='/home' render={() => <Home homephotos={this.state.homephotos}
               currentUser={currentUser} search="true" searchResult = {this.searchResult} />}  />
             <Route path='/artists/:id' render={props =>
               <Profile {...props} currentUserName={currentUserName}
@@ -223,7 +223,7 @@ class App extends Component {
             <Route path='/settings' name='settings' render={(props) => <Settings {...props}
               currentUserName={currentUserName}
               changeAccountInfo={this.changeAccountInfo} />} />
-            {/*<Route exact path="/" render={() => <Redirect to="/home" />} />*/}
+            <Route exact path="/" render={() => <Redirect to="/home" />} />
             <Route component={ErrorPath} />
           </Switch>
           <Footer />
