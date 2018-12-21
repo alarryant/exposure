@@ -181,7 +181,7 @@ class App extends Component {
     // sets the document title
     document.title = "Welcome to Exposureca.com";
 
-    axios.get("/homephotos")
+    axios.get("/api/homephotos")
       .then(res => this.setState({ homephotos: res.data }));
   }
 

@@ -34,12 +34,7 @@ app.use((req, res, next) => {
   next();
 });
 
-
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname+'/client/build/index.html'));
-// });
-
-app.get('/homephotos', (req, res) => {
+app.get('/api/homephotos', (req, res) => {
   knex('images')
     .select('id', 'title', 'description', 'src', 'category', 'image_owner')
     .asCallback((err, data) => {
