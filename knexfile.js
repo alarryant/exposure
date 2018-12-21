@@ -15,11 +15,11 @@ module.exports = {
       ssl      : process.env.DB_SSL
     },
     migrations: {
-      directory: __dirname + '/db/migrations',
+      directory: __dirname + '/client/db/migrations',
       tableName: 'migrations'
     },
     seeds: {
-      directory: __dirname + '/db/seeds'
+      directory: __dirname + '/client/db/seeds'
     }
   },
 
@@ -27,10 +27,10 @@ module.exports = {
     client: 'postgresql',
     connection: process.env.DATABASE_URL,
     migrations: {
-      directory: __dirname + '/db/migrations',
+      directory: __dirname + '/client/db/migrations',
     },
     seeds: {
-      directory: __dirname + '/db/seeds',
+      directory: __dirname + '/client/db/seeds',
     }
   }
 
